@@ -1,0 +1,468 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Using AoE (ATA-over-Ethernet) (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Using AoE (ATA-over-Ethernet)</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+This
+is
+primarily
+aimed
+at
+users
+of
+Coraid
+devices.
+<a name="CONSOLE_ACCESS" /><h3>CONSOLE ACCESS</h3>
+
+<p class='para'>
+On
+Coraid
+devices,
+access
+is
+possible
+via
+the
+usual
+PC
+keyboard,
+mouse
+and
+video,
+or
+the
+serial
+port,
+or
+<a href="http://plan9.bell-labs.com/magic/man2html/8/cec"><i>cec</i>(8)</a>.
+Typically,
+invoking
+</p>
+
+<pre>
+cec /net/ether0
+</pre>
+
+<p class='para'>
+or
+</p>
+
+<pre>
+cec '#l1/ether1'
+</pre>
+
+<p class='para'>
+will
+produce
+a
+menu
+of
+Coraid
+devices
+by
+MAC
+address,
+and
+you
+choose
+one.
+</p>
+
+<p class='para'>
+You
+may
+have
+to
+(once
+only)
+first
+type
+this
+on
+your
+Coraid
+console:
+</p>
+
+<pre>
+cecon /net/ether0
+cecon /net/ether1
+cecon /net/ether2
+</pre>
+
+<a name="PROVISIONING_LUNS" /><h3>PROVISIONING LUNS</h3>
+
+<p class='para'>
+Once
+connected
+to
+the
+console,
+you
+can
+partition
+the
+available
+disks
+into
+Logical
+Units
+(LUNs).
+We'll
+assume
+a
+shelf
+number
+of
+1
+in
+these
+examples.
+If
+yours
+is
+different,
+use
+it
+in
+place
+of
+`1'.
+</p>
+
+<p class='para'>
+First
+declare
+some
+drives
+to
+be
+used
+as
+hot
+spares:
+</p>
+
+<pre>
+spare 1.13-14
+</pre>
+
+<p class='para'>
+To
+create
+a
+big
+RAID
+5
+LUN,
+you
+would
+type
+something
+like
+this:
+</p>
+
+<pre>
+make 0 raid5 1.0-1.10
+online 0
+</pre>
+
+<p class='para'>
+which
+will
+create
+LUN
+1.0
+from
+drives
+0
+through
+10
+of
+shelf
+1.
+This
+may
+take
+hours
+to
+finish,
+but
+you
+can
+use
+the
+LUN
+immediately.
+</p>
+
+<p class='para'>
+For
+single-drive
+LUNs,
+you
+would
+type
+something
+like
+this:
+</p>
+
+<pre>
+make 1 raidl 1.11
+online 1
+</pre>
+
+<p class='para'>
+which
+creates
+an
+un-RAIDed
+LUN
+of
+drive
+11
+of
+shelf
+1.
+</p>
+
+<a name="CLIENT_CONFIGURATION" /><h3>CLIENT CONFIGURATION</h3>
+
+<p class='para'>
+The
+stock
+kernels
+all
+include
+devaoe
+and
+sdaoe,
+so
+you
+shouldn't
+need
+to
+build
+a
+new
+kernel.
+</p>
+
+<p class='para'>
+Adding
+these
+lines
+to
+your
+plan9.ini
+or
+/cfg/pxe
+file
+should
+cause
+AoE
+to
+be
+enabled
+automagically
+at
+boot
+time,
+per
+<a href="http://plan9.bell-labs.com/magic/man2html/3/sdaoe"><i>sdaoe</i>(3)</a>:
+</p>
+
+<pre>
+aoeif=ether0
+aoedev=e!#æ/aoe/1.0
+</pre>
+
+<p class='para'>
+This
+assumes
+that
+your
+Plan
+9
+system
+has
+a
+single
+Ethernet
+interface.
+If
+you
+have
+several,
+choose
+the
+one
+that
+your
+AoE
+device
+is
+on.
+`1'
+is
+the
+shelf
+number
+of
+the
+AoE
+device.
+`1.0'
+is
+the
+logical
+unit
+you're
+interested
+in.
+`æ'
+is
+Unicode
+00e6.
+`e'
+is
+the
+controller
+letter
+you'd
+like
+to
+use
+for
+logical
+unit
+1.0.
+</p>
+
+<p class='para'>
+After
+your
+next
+boot,
+you
+should
+see
+a
+lightly
+populated
+/dev/sde0.
+Running
+`diskparts'
+should
+make
+any
+partitions
+visible.
+</p>
+
+<p class='para'>
+An
+AoE
+LUN
+appears
+to
+be
+a
+single
+large
+disk,
+often
+too
+large
+for
+the
+usual
+Microsoft
+partition
+table
+to
+address
+because
+it
+would
+require
+sector
+numbers
+greater
+than
+2^32,
+so
+we
+skip
+the
+Microsoft
+partition
+table
+(the
+one
+maintained
+with
+disk/fdisk)
+and
+just
+lay
+down
+a
+Plan
+9
+partition
+table
+with
+</p>
+
+<pre>
+disk/prep /dev/sde0/data
+</pre>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Thu Feb 18 14:54:01 EST 2010</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

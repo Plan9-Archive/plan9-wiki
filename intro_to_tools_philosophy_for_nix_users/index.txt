@@ -1,0 +1,4 @@
+Intro to tools philosophy for *nix users
+
+Cogito ergo sum.
+

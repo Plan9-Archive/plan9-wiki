@@ -1,0 +1,34 @@
+Raspberry Pi
+
+Plan 9 runs on the various Raspberry Pi models. The port is stable
+and performs reasonably, but there is more work to be done.
+
+TODO
+
+The Raspberry Pi contains a lot of interesting bits that we aren't
+yet doing anything with. Here's a (more or less complete) list of
+things we'd like to see done, with some info on each.
+
+The best starting point for an [overview of the Pi's hardware
+capabilities | http://elinux.org/RPi_Low-level_peripherals] is on
+their wiki.
+
+ *	[GPIO |
+	http://elinux.org/RPi_Low-level_peripherals#General_Purpose_Input.2FOutput_.28GPIO.29]
+
+Bakul Shah has been working on a GPIO driver for the Pi.
+
+ *	I²C
+ *	I²S
+ *	audio
+ *	pwm
+ *	spi
+
+ *	[DSI | http://www.mipi.org/specifications/display-interface] &
+	[CSI-2 | http://www.mipi.org/specifications/camera-interface]
+
+These are display and camera interfaces, located at S2 and S5 on the
+Pi, respectively. These are not widely supported on the various
+systems which run on the Pi, and compatible hardware is not very
+common. Compatible displays can be found in some smartphones.
+

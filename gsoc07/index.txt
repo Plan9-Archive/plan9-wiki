@@ -1,0 +1,234 @@
+GSoC07
+
+Google Summer of Code 2007
+
+STUDENTS
+
+Plan 9 is an excellent environment to learn about many aspects of
+computing: operating systems, distributed systems, programming
+languages, network protocols, etc.
+
+Plan 9 is not a difficult environment, and simplicity and elegance
+are its main qualities, but it is very *different* from anything else
+you might be used to!
+
+Fundamental requirements:
+
+ *	A very open mind to explore and embrace very different concepts
+	and environments.
+ *	You must enjoy challenges that stretch your preconceptions to
+	their limits.
+
+General recommended skills:
+
+ *	Understanding of basic Unix principles and philosophy (but note
+	that Plan 9 is *not* Unix. Plan 9 is meant to *replace* Unix.)
+ *	Some programming experience, ideally with C, but other languages
+	are fine.
+
+Recommended Reading
+
+ *	[The Plan 9 Documentation |
+	http://cm.bell-labs.com/sys/doc/index.html], particularly the [Plan
+	9 from Bell Labs | http://cm.bell-labs.com/sys/doc/9.html] intro.
+ *	[The Inferno Operating System |
+	http://www.vitanuova.com/inferno/papers/bltj.html], [A Descent into
+	Limbo | http://www.vitanuova.com/inferno/papers/descent.html] by
+	Brian W. Kernighan and [The Limbo Programming Language |
+	http://www.vitanuova.com/inferno/papers/limbo.html] by Dennis M.
+	Ritchie.
+ *	Rob Pike's [comments on style |
+	http://www.lysator.liu.se/c/pikestyle.html], as well as Russ Cox's
+	[more recent ones | http://swtch.com/~rsc/worknotes/]
+ *	The Practice of Programming, and The UNIX Programming Environment,
+	by Brian W. Kernighan, and Rob Pike, published by Addison-Wesley.
+ *	The [recommended readings] wiki page
+
+If you have any questions you can check our irc channel #plan9-gsoc
+in irc.freenode.org or join the [Plan 9 Google Summer of Code |
+http://groups.google.com/group/plan9-gsoc/] mailing list.
+
+To apply follow the instructions in the [Guide to the Google Summer
+of Code Student Applicants |
+http://groups.google.com/group/google-summer-of-code-announce/web/guide-to-the-gsoc-web-app-for-student-applicants] at the [GSoC website | http://code.google.com/soc/].
+
+All participating students will also receive an exclusive [Glenda |
+http://plan9.bell-labs.com/plan9/glenda.html] T-Shirt and an especial
+surprise gift!
+
+PROJECTS
+
+We like to find a project that ideally suit the students who take
+them on. For that reason we are very happy to hear (on #plan9-gsoc on
+Freenode or the [plan9-gsoc |
+http://groups.google.com/group/plan9-gsoc] Google group) your
+particular areas of interest and expertise. Because Plan 9 is a
+complete system, which expands beyond a single OS, no matter what
+your interests, we should be able to find a project that makes you
+happy (we know that happy developers make for happy projects).
+
+Here is a list of project ideas we have come up with as examples,
+Even if they seem complex and difficult, they are likely much simpler
+than you think. In Plan 9 everything is simpler ;)
+
+Misc:
+
+ *	New window manager different from rio(1), experiment with new
+	window management ideas.
+ *	CSS rendering for abaco web browser
+ *	General purpose boot loader based on Plan 9 kernel and /dev/reboot
+ *	[Zeroconf | http://www.zeroconf.org] network configuration support
+	(ideally, with a Plan 9 or Inferno twist)
+ *	Framework of scripts and tools to automatically detect and
+	configure hardware (screen resolution, keyboard, mouse, etc.)
+ *	Reincarnation of 'pico' image manipulation language, or native
+	graphics functions like those in NetPBM.
+ *	Documentation framework: a set of scripts to check that all man
+	pages and other documentation is up to date and in sync with tools
+	and APIs. And some way to manage and organize a centralized
+	documentation 'handbook' and FAQ.
+
+Security:
+ *	Ssh2 client/server (complete native implementation or port a new
+	one from another system.)
+ *	Add support for Inferno auth to Plan 9.
+
+File servers (for Plan 9 or Inferno, but probably best implemented in
+Limbo):
+
+ *	fs interface to a version control system(gitfs, hgfs or svnfs;
+	cvsfs already exists.)
+ *	Ircfs or imfs.
+ *	Bugfs: a bug tracking system with an fs interface.
+ *	webdavfs.
+ *	rssfs/webfeedfs.
+ *	ldapfs.
+ *	iPodfs.
+ *	cdfs(4) support for writting DVDs.
+ *	bluetoothfs.
+
+Port of foreign applications to Plan 9:
+
+ *	Video player (eg., port mplayer).
+ *	Update GCC port and have it accepted upstream.
+ *	Update X11 port.
+ *	Update python port.
+ *	Port Erlang.
+ *	Update [APE | http://plan9.bell-labs.com/sys/doc/ape.html] to be a
+	more complete POSIX environment.
+ *	Finish qemu port. Work on this project would require a good
+	understanding of x86 assembly language and interest in learning [a
+	non-gcc dialect of C | http://plan9.bell-labs.com/sys/doc/comp.html].
+
+Kernel related work:
+
+ *	Write a driver for a piece of hardware of your choice (eg.,
+	[finish ipw2200 wireless driver |
+	http://plan9.bell-labs.com/sources/contrib/rsc/ipw2200/])
+ *	OLPC port.
+ *	Profile and optimize a kernel component of your choice (IP stack,
+	vm, ...)
+ *	Increase "dynamicity" of network stack, including [detaching
+	devices in kernel |
+	http://groups.google.com/group/comp.os.plan9/msg/8d847c80107e3f34]
+	and appropriate user-space reactivity (e.g., dhcpclient deciding
+	whether to re-bind or destroy an existing network stack, for
+	possible inspiration see [Plan B /net paper |
+	http://ieeexplore.ieee.org/iel5/9476/30062/01377320.pdf?tp=&arnumber=1377320&isnumber=30062]). The kernel part and the user-space part are probably each large enough to qualify as independent projects.
+ *	Update SPARC or MIPS ports.
+ *	Kernel regresion and stress testing framework.
+
+[9P | http://cat-v.org/9p/] related projects:
+
+ *	fs driver for Solaris, FreeBSD, NetBSD, BeOS, or any other
+	operating system (for projects related to the existing Linux driver
+	see [v9fs | http://swik.net/v9fs/Summer+of+Code+2007+Ideas]).
+ *	9P implementation in your favorite programming language.
+ *	A framework to test the interoperativity of all existings 9P
+	implementations.
+ *	Implement a 9P interface to your favorite (non-plan9) application.
+ *	Implement 9P extension for 'batch requests' and improve
+	performance over high latency links.
+ *	9P implementation in JavaScript, so that a browser can access
+	resources sensibly (ie, not using HTTP/XML).
+
+[Inferno | http://www.vitanuova.com/inferno/papers/bltj.html] and
+[Limbo | http://www.vitanuova.com/inferno/papers/limbo.html]:
+
+ *	Complete 'native' [dis |
+	http://www.vitanuova.com/inferno/papers/hotchips.html] and improve
+	Inferno/Plan 9 integration so Inferno apps work like native Plan 9
+	apps.
+ *	Improve Inferno integration with Unix or Windows host OSes (allow
+	Inferno apps to be managed by native window manager, etc.)
+ *	A [fossil |
+	http://plan9.bell-labs.com/magic/man2html?man=fossil]-like ([paper |
+	http://www.cs.bell-labs.com/sys/doc/fossil.pdf]) snapshot file
+	server in Limbo using [venti |
+	http://plan9.bell-labs.com/sys/doc/venti.html] as backend.
+ *	Port [Omero | http://lsub.org/ls/export/omero.pdf] to Limbo.
+ *	PS3 port w/ppe file system interfaces and support for ps3 devices
+	(controllers) - either hosted on Linux and/or native on the PS3
+	hypervisor.
+ *	Finish Gumstix port.
+ *	Port [Inferno-plugin | http://code.google.com/p/inferno-plugin/]
+	to Mozilla/Firefox.
+ *	Native support for hypervisors (eg, Xen, PAPR, KVM, ...)
+ *	64 bit Inferno.
+ *	Native port to the Nokia N800.
+ *	Hosted port to Symbian OS.
+ *	[Other Inferno projects |
+	http://code.google.com/p/inferno-os/wiki/Project_Suggestions].
+ *	Web application development framework.
+ *	New window manager to replace wm.
+ *	New look for tk widgets.
+
+[Plan 9 from User Space | http://plan9.us] or other work in foreign
+systems:
+ *	Add missing kencc extensions to GCC.
+ *	Port [the Plan 9 compilers |
+	http://plan9.bell-labs.com/sys/doc/compiler.html] to Linux or BSD.
+ *	Glendix: Build a minimal Linux or BSD distribution using [Plan 9
+	from User Space | http://plan9.us].
+ *	Package [Plan 9 from User Space | http://plan9.us] and Inferno for
+	your favorite Linux or BSD distribution.
+ *	Mozilla/Firefox 9P Protocol Handler (i.e. 9P client XPCOM
+	component).
+
+For more ideas see: [TODO], [Inferno GSoC ideas page |
+http://code.google.com/p/inferno-os/wiki/Project_Suggestions] and
+[v9fs GSoC ideas page |
+http://swik.net/v9fs/Summer+of+Code+2007+Ideas].
+
+MENTORS
+
+ *	Dave Eckhardt (from [CMU | http://www.cs.cmu.edu/~davide/])
+ *	Devon H. O'Dell
+ *	Fariborz "Skip" Tavakkolian (from [9Netics |
+	http://www.9netics.com])
+ *	Francisco J Ballesteros (from [LSUB | http://lsub.org])
+ *	Kris Maglione
+ *	Charles Forsyth ( from [Vitanuova | http://www.vitanuova.com])
+ *	maht
+ *	garbeam
+ *	newmanbe
+ *	Uriel: uriel99 AT gmail.com
+ *	And others...
+
+Please, if you have any questions for the mentors, join the
+[plan9-gsoc | http://groups.google.com/group/plan9-gsoc] mailing list
+or #plan9-gsoc in irc.freenode.org.
+
+TIMELINE
+
+ *	March 14: List of accepted mentoring organizations published on
+	code.google.com; student application period opens
+ *	March 26: Student application deadline
+ *	April 9: List of accepted student applications published on
+	code.google.com
+ *	May 28: Students begin coding for their GSoC projects; Google
+	begins issuing initial student payments
+
+For a more detalied timeline see [the official GSoC site |
+http://code.google.com/support/bin/answer.py?answer=60325&topic=10729].
+

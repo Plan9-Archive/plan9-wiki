@@ -1,0 +1,150 @@
+Plan9 on Qemu on Windows
+
+Quick and dirty guide for running plan 9 under qemu Virtual Machine
+in windows xp (and possibly 2000+):
+
+Required Skill: Advanced: Networking experience is mandatory
+
+ *	Please read through and be sure you know exactly what you're
+	doing. Risks to software content and possibly hardware are plentiful
+	while responsibility are hold none.
+
+01. Download "qemu-0.9.0-windows.zip", "openvpn-2.0.9-install.exe"
+and "plan9.iso.bz2".
+
+02. Extract "plan9.iso" and "qemu-0.9.0-windows" to the same
+directory.
+
+03. Install "openvpn-2.0.9-install.exe".
+
+04. Rename the new network connection (found in Network Connections)
+to "TAP_OpenVPN".
+
+05. Bridge "TAP_OpenVPN" and your WAN/LAN Connection (usually "Local
+Area Connection", should be enabled and has packet changes when
+downloading) - This is done by choosing both connections and then in
+the properties menu choosing "Bridge".
+
+06. Notice your configurations now reside in the new "bridge
+connection" instead of "Local Area Connection".
+
+07. Use: "qemu.exe -L -m 128 -cdrom ..\plan9.iso -boot d -net
+nic,model=rtl8139 -net tap,ifname=TAP_OpenVPN -soundhw sb16
+-localtime" to start plan9, this command can be inserted into a batch
+file.
+
+08. In the VM (referred to as "guest machine") : In the boot options
+choose to boot from the CD or See [installing plan 9 on qemu].
+
+09. Guest: You can press "return/enter" for the rest of the questions
+presented by in the boot sequence - default will suffice.
+
+10. Done. Please read through the notes...
+
+ *	Ctrl+Alt to release the mouse from the qemu window
+
+ *	Set up networking using DHCP (good with the bridge explained above
+	and if router supplies IPs (dhcp)): "ip/ipconfig" "ndb/dns -r"
+	"ip/ping address" test by pinging your gateway/router using its ip
+	address, then try a site like www.google.com which you know will
+	return icmp (respond to ping).
+
+ *	When using acme in qemu with live boot iso, notice that file
+	creation is only possible in /tmp, not even in the /usr/glenda (the
+	user that you log in as) - this will be resolved if you install to
+	hard drive.
+
+ *	Installing to HardDisk: use "qemu-img.exe create plan9hd.img
+	1024M" to set a 1gig Virtual HardDisk, use "qemu.exe -L . -m 128
+	-hda plan9hd.img -cdrom ..\plan9.iso -boot d -net nic,model=rtl8139
+	-net tap,ifname=TAP_OpenVPN -localtime" to boot. You can install to
+	HD or mount the drive and format it to use as you wish, plan9 tends
+	to have a very slow install process in VM.
+
+ *	If you don't actually know how to use plan9,
+	http://plan9.bell-labs.com/sys/doc/ has some good info,
+	http://plan9.escet.urjc.es/who/nemo/9.intro.pdf will do even better.
+
+ *	qemu will emulate sb16 which is supported by plan9; however, I was
+	unable to verify its functionality.
+
+ *	Common Issue: the pc halts in different parts of the network
+	configuration process: This is due to other VM virtual nics
+	conflicting with the each other. Solutions vary from disabling to
+	deleting the other VM's nics. In the worst case plan 9 can run
+	without networking, though to what use ?
+
+ *	Common Issue: High CPU Usage: this is not a problem but the result
+	of the qemu normal functionality. If a process on the host machine
+	requires more CPU time, qemu will reduce the load itself - this can
+	be forced by reducing the process priority using the task manager.
+
+ *	Common Issue: "TAP_OpenVPN" always appears to be disconnected:
+	this is a false readout, ignore it as it has no ill effects.
+
+ *	Common Issue: 9P connectivity seems to be broken: firewall, router
+	firewall...
+
+ *	Play around with the res: 800x600x8 and above seems to be more
+	useful for working with acme...
+
+ *	For sound see the qemu readme, I never succeeded though it might
+	have been for lack of trying...
+
+ *	Less questions at boot: Download plan9.flp and replace plan9.ini
+	that with the following (use winimage or mount through loopback
+	device):
+
+#**** plan9.ini content starts here ******
+
+ *	nomp=1
+
+ *	nodumpstack=1
+
+partition=new
+
+mouseport=ps2
+
+vgasize=800x600x8
+
+monitor=xga
+
+distname=plan9
+
+ether0=rtl8139
+
+audio0=sb16 port=0x220 irq=7 dma=5
+
+bootargs=local!#S/sdD0/data
+
+bootfile=sdD0!cdboot!9pccd.gz
+
+adisk=/dev/sdD0/cdboot
+
+cdboot=yes
+
+#**** plan9.ini content ends here *****
+
+this will reduce the questions to one "press return", the cmd line
+will be: "qemu.exe -L -m 128 -fda plan9.flp -cdrom ..\plan9.iso -boot
+d -net nic,model=rtl8139 -net tap,ifname=TAP_OpenVPN -soundhw sb16
+-localtime"
+
+This strategy is unnecessary in hd boot.
+
+ToDo:
+
+1. Sound.
+
+2. Boot with no q&a: When not installing but rather using the live
+boot, you are presented whenever you start the machine with a series
+of questions (monitor, res, mouse), I managed to set plan9.ini in the
+floppy image so that only one question will be presented, but that is
+still one question too much.
+
+3. spellcheck, factcheck, sanitycheck, check to self ;-)
+
+Ram Kromberg
+
+ramkromberg@mail.com
+

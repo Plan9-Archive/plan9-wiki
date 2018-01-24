@@ -1,0 +1,43 @@
+HARE
+
+
+HOLISTIC AGGREGATE RESOURCE ENVIRONMENT
+
+OVERVIEW
+
+This project focuses on re-evaluation and exploration of operating
+system and runtime services at scales of up to a million cores. It is
+a joint project with Bell Labs, Carnegie Mellon University, Sandia
+National Labs, and Vita Nuova, funded by the Department of Energy's
+Office of Science.
+
+RESOURCES
+
+ *	[Project Home Page | http://www.research.ibm.com/hare]
+ *	[Source Code + Issue Tracking |
+	http://www.bitbucket.org/ericvh/hare]
+ *	[Mailing List | http://groups.google.com/group/plan9-bgp]
+
+DOCUMENTATION
+
+ *	Coming Soon
+
+LINKS
+
+ *	[Blue Gene Consortium | http://bgconsortium.org]
+ *	[Blue Gene Consortium Wiki | http://wiki.bgconsortium.org]
+ *	[ANL Open Source Wiki | http://wiki.bg.anl-external.org]
+ *	[Project Kittyhawk | http://www.research.ibm.com/kittyhawk]
+
+ACKNOWLEDGEMENT
+
+This work has been supported by the Department of Energy's Office of
+Science "Operating and Runtime Systems for Extreme Scale Scientific
+Computation" project under contract #DE-FG02-08ER25851.
+
+This work would not have been possible without the generous help of
+the DOE INCITE Program, the IBM Research Blue Gene Team, Argonne
+National Lab's Leadership Computing Facility, and the personal
+efforts of Volker Strumpen, Jonathan Appavoo, Volkmar Uhlig, and Amos
+Waterland. Thanks!
+

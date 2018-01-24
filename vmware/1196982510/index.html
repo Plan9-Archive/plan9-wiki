@@ -1,0 +1,425 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>VMWare (as of Thu Dec  6 18:08:30 EST 2007)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>VMWare</h1>
+<h2><i>-as of Thu Dec  6 18:08:30 EST 2007-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+The
+VmWare
+links
+below
+are
+a
+little
+old
+but
+should
+still
+work,
+however
+we
+now
+use
+VESA
+to
+access
+the
+VmWare
+framestore,
+and
+this
+does
+not
+support
+hardware
+acceleration.
+Thus
+you
+will
+need
+to
+disable
+this
+as
+soon
+as
+you
+have
+booted
+plan9,
+ideally
+put
+the
+command
+below
+in
+/rc/bin/termrc
+so
+it
+will
+be
+done
+for
+you.
+<pre>
+echo hwaccel off &gt; /dev/vgactl
+</pre>
+
+<p class='para'>
+In
+VMWare
+Server
+(and
+possibly
+other
+versions),
+although
+the
+installation
+can
+be
+done
+using
+either
+IDE
+or
+SCSI
+cdrom
+drives
+for
+the
+hosted
+OS,
+it
+is
+necessary
+to
+switch
+the
+virtual
+machine's
+cdrom
+type
+to
+SCSI
+prior
+to
+actually
+booting
+Plan
+9
+from
+the
+hard
+drive.
+</p>
+
+<p class='para'>
+See
+<a href="../../Vmware_playground_for_plan9">Vmware_playground_for_plan9</a>
+and
+<a href="../../vmware4">vmware4</a>
+</p>
+
+<p class='para'>
+AUDIO
+for
+VmWARE
+Server
+</p>
+
+<p class='para'>
+VmWare
+Server
+was
+made
+to
+bring
+up
+sb16
+emulation;
+however
+not
+without
+some
+extraneous
+artifacts
+in
+the
+audio.
+There
+seem
+to
+be
+timing
+problems.
+Perhaps
+someone
+knows
+a
+better
+setting
+to
+implement.
+Here
+is
+my
+setup:
+</p>
+
+<p class='para'>
+Find
+your
+vmx
+file
+where
+the
+Vmware
+Guest
+files
+are
+stored:
+(e.g.
+/var/lib/vmware/Virtual
+Machines/plan9/plan9.vmx)
+</p>
+
+<p class='para'>
+Make
+sure
+the
+configuration
+does
+not
+have
+a
+sound
+card
+installed
+by
+the
+Vmware
+wizard.
+</p>
+
+<p class='para'>
+Then
+edit
+your
+vmx
+configuration
+file
+with
+your
+favorite
+text
+editor,
+and
+add
+the
+following
+lines:
+</p>
+
+<pre>
+sound.present = "TRUE"
+sound.virtualDev = "sb16"
+sound.baseAddr = "0x220"
+sound.dma16 = "5"
+sound.dma8 = "1"
+sound.irq = "5"
+sound.mpu401baseAddr = "0x330"
+sound.Opl3BaseAddr = "0x388"
+sound.smallBlockSize = 1024
+sound.maxLength = 2048
+sound.buffering = "10000000000.0"
+sound.copyDelayFactor = "1000000.0"
+sound.directSound = "false" 
+sound.highPriority = "true"
+sound.ignoreOverflows = "true"
+sound.virtualrealcorrection ="10000000000.0"
+pciSound.priorityBoost = "true"
+</pre>
+
+<p class='para'>
+Then
+boot
+your
+Plan
+9
+guest
+and
+add
+the
+following
+to
+plan9.ini:
+</p>
+
+<pre>
+audio0=type=sb16 port=0x220 irq=5 dma=5
+</pre>
+
+<p class='para'>
+Before
+trying
+the
+audio
+feature,
+you
+must
+reboot
+your
+Plan
+9
+guest
+and
+once
+logged
+in,
+do:
+</p>
+
+<pre>
+term% bind -a '#A' /dev
+</pre>
+
+<p class='para'>
+Make
+sure
+the
+rio
+window
+covers
+a
+significant
+area
+of
+the
+screen,
+or
+otherwise
+the
+audio
+driver
+seems
+to
+give
+garbage
+beeps
+and
+groans
+instead
+of
+the
+audio
+you
+want.
+</p>
+
+<pre>
+term % cat a000 &gt; /dev/audio
+</pre>
+
+<p class='para'>
+The
+audio
+that
+comes
+out
+is
+interrupted
+by
+short
+and
+frequent
+timing
+jitters.
+When
+you
+resize
+the
+rio
+window
+while
+the
+audio
+is
+playing,
+the
+artifacts
+go
+away
+for
+awhile,
+but
+there
+is
+a
+more
+pronounced
+interruption
+during
+the
+resizing
+operation.
+</p>
+
+<p class='para'>
+Otto
+Schulze
+</p>
+
+<p class='para'>
+American
+Conservatory
+of
+Music
+<a href="http://www.americanconservatory.edu">http://www.americanconservatory.edu</a>
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Thu Dec  6 18:08:30 EST 2007</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

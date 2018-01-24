@@ -1,0 +1,900 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Setting up Venti (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Setting up Venti</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+You'll
+want
+to
+run
+Venti
+from
+raw
+disk
+partitions
+rather
+than
+files
+on
+a
+file
+system.
+<p class='para'>
+If
+you
+want
+to
+mirror
+your
+partitions
+using
+several
+disks,
+read
+the
+last
+section
+of
+<a href="../setting_up_fossil">setting
+up
+fossil</a>
+to
+see
+an
+example
+of
+how
+to
+use
+<a href="http://plan9.bell-labs.com/magic/man2html/3/fs"><i>fs</i>(3)</a>
+to
+do
+that.
+</p>
+
+<p class='para'>
+Venti
+storage
+is
+divided
+into
+a
+log
+holding
+the
+data
+and
+an
+index
+mapping
+SHA1
+hash
+to
+position
+in
+the
+log.
+The
+log
+is
+split
+into
+fixed-size
+(say,
+500MB)
+chunks
+called
+arenas.
+There
+may
+be
+more
+than
+one
+file
+holding
+arenas
+for
+the
+Venti
+server.
+Their
+concatenation
+forms
+the
+actual
+log.
+The
+index
+is
+made
+up
+of
+individual
+index
+section
+files.
+You
+want
+about
+5%
+as
+much
+index
+space
+as
+you
+have
+arena
+space.
+So
+if
+you
+have
+100GB
+of
+arenas,
+plan
+on
+5GB
+of
+index.
+</p>
+
+<p class='para'>
+Use
+disk/fdisk
+to
+create
+a
+Plan
+9
+partition
+on
+the
+disks
+you
+wish
+to
+use
+for
+Venti.
+Then
+use
+disk/prep
+to
+subdivide
+the
+Plan
+9
+partition
+into
+the
+arena
+files
+or
+index
+sections
+that
+Venti
+will
+use.
+The
+rest
+of
+this
+document
+assumes
+that
+you
+named
+the
+arena
+files
+/dev/sdC0/arenas{0,1}
+and
+that
+you
+named
+the
+index
+sections
+/dev/sdC0/isect{0,1}.
+</p>
+
+<p class='para'>
+Format
+the
+arenas
+with:
+</p>
+
+<pre>
+venti/fmtarenas arenas0 /dev/sdC0/arenas0
+venti/fmtarenas arenas1 /dev/sdC0/arenas1
+</pre>
+
+<p class='para'>
+Format
+the
+index
+sections
+with:
+</p>
+
+<pre>
+venti/fmtisect isect0 /dev/sdC0/isect0
+venti/fmtisect isect1 /dev/sdC0/isect1
+</pre>
+
+<p class='para'>
+Note
+that
+formatting
+the
+arenas
+and
+the
+index
+sections
+zeros
+the
+disk
+partitions,
+so
+it
+takes
+a
+long
+time.
+</p>
+
+<p class='para'>
+Create
+a
+venti.conf
+file
+containing:
+</p>
+
+<pre>
+# the name of the index
+index main
+
+# the index sections
+isect /dev/sdC0/isect0
+isect /dev/sdC0/isect1
+
+# the arenas
+arenas /dev/sdC0/arenas0
+arenas /dev/sdC0/arenas1
+</pre>
+
+<p class='para'>
+Format
+the
+index
+itself
+with:
+</p>
+
+<pre>
+venti/fmtindex venti.conf
+</pre>
+
+<p class='para'>
+Note
+that
+once
+you
+format
+the
+index
+you
+should
+not
+change
+the
+order
+of
+the
+index
+sections
+nor
+should
+you
+change
+the
+order
+of
+the
+arenas.
+It
+is
+safe
+to
+add
+new
+arenas.
+</p>
+
+<p class='para'>
+If
+you
+plan
+on
+booting
+the
+machine
+with
+venti/fossil
+as
+your
+root
+you
+should
+write
+the
+venti
+config
+into
+the
+arenas0
+file:
+</p>
+
+<pre>
+venti/conf -w /dev/sdC0/arenas0 &lt; venti.conf
+</pre>
+
+<p class='para'>
+Now
+the
+disks
+are
+ready.
+You
+can
+start
+the
+Venti
+server
+with
+</p>
+
+<pre>
+venti/venti -w
+</pre>
+
+<p class='para'>
+The
+file
+venti.conf
+must
+be
+in
+the
+current
+directory.
+</p>
+
+<p class='para'>
+Set
+the
+environment
+variable:
+venti=your-ip-address
+</p>
+
+<p class='para'>
+if
+required,
+you
+can
+put
+this
+in
+the
+startup
+scripts
+like
+/rc/bin/termrc.
+You
+can
+also
+add
+this
+line
+in
+plan9.ini
+</p>
+
+<p class='para'>
+Test
+the
+server
+with:
+</p>
+
+<pre>
+vac -f /tmp/x.vac /adm
+vacfs /tmp/x.vac
+ls -l /n/vac
+</pre>
+
+<p class='para'>
+Congratulations!
+You
+have
+a
+Venti.
+</p>
+
+<p class='para'>
+If
+you
+plan
+on
+booting
+with
+venti/fossil
+as
+your
+root
+you
+should
+add
+venti=/dev/sdC0/arenas0
+in
+your
+plan9.ini.
+During
+boot
+the
+configuration
+file
+previously
+written
+to
+the
+start
+of
+this
+partition
+with
+the
+venti/conf
+program
+will
+be
+read
+back
+and
+used.
+</p>
+
+<p class='para'>
+See
+<a href="http://plan9.bell-labs.com/magic/man2html/6/venti.conf"><i>venti.conf</i>(6)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/8/venti"><i>venti</i>(8)</a>,
+and
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ventiaux"><i>ventiaux</i>(8)</a>
+for
+more
+information.
+</p>
+
+<a name="PERFORMANCE" /><h3>PERFORMANCE</h3>
+
+<p class='para'>
+If
+you're
+worried
+about
+performance,
+start
+the
+subpartitions
+at
+sector
+offsets
+that
+are
+multiples
+of
+16
+so
+that
+8k
+reads
+will
+be
+8k-aligned
+on
+the
+disk.
+Or
+use
+type
+other
+in
+disk/fdisk
+for
+the
+partitions,
+but
+then
+you
+don't
+get
+such
+good
+partition
+names.
+</p>
+
+<p class='para'>
+Venti's
+performance
+is
+tied
+to
+the
+number
+of
+index
+sections.
+If
+you're
+going
+for
+high
+performance,
+get
+a
+handful
+of
+small
+disks
+to
+use
+for
+the
+index,
+so
+that
+many
+reads
+can
+happen
+in
+parallel.
+</p>
+
+<a name="SECURITY" /><h3>SECURITY</h3>
+
+<p class='para'>
+By
+default
+Venti
+accepts
+connections
+from
+anyone,
+anywhere.
+</p>
+
+<p class='para'>
+If
+you
+are
+running
+in
+a
+hostile
+environment
+and
+don't
+want
+just
+anyone
+connecting
+to
+your
+Venti
+server,
+you
+can
+run
+it
+on
+the
+loopback
+device.
+Add
+loopbackmedium
+to
+your
+kernel
+(it's
+already
+in
+the
+pccpu
+and
+pcauth
+kernels)
+and
+then
+run
+</p>
+
+<pre>
+ip/ipconfig loopback /dev/null 127.1
+</pre>
+
+<p class='para'>
+to
+set
+up
+a
+loopback
+IP
+address.
+(Note
+that
+the
+loopback
+medium
+is
+not
+compiled
+into
+the
+PC
+kernel
+by
+default).
+Then
+you
+can
+start
+Venti
+with
+</p>
+
+<pre>
+venti/venti -a tcp!127.1!venti -h tcp!127.1!http -w
+</pre>
+
+<p class='para'>
+and
+it
+will
+only
+take
+connections
+from
+127.1.
+</p>
+
+<a name="TEMPORARY_FILES_AND_DIRECTORIES" /><h3>TEMPORARY FILES AND DIRECTORIES</h3>
+
+<p class='para'>
+For
+some
+purposes
+it
+is
+desirable
+to
+exclude
+files
+or
+directories
+from
+being
+archived
+to
+venti.
+For
+example,
+if
+you
+want
+your
+$home/tmp
+excluded,
+set
+the
+'t'
+flag
+(temporary)
+for
+it
+(see
+<a href="http://plan9.bell-labs.com/magic/man2html/1/chmod"><i>chmod</i>(1)</a>
+for
+details):
+</p>
+
+<pre>
+chmod +t $home/tmp
+</pre>
+
+<p class='para'>
+After
+that,
+no
+files
+in
+tmp
+will
+be
+archived
+to
+venti.
+You
+can
+set
+the
+'t'
+flag
+for
+files,
+too
+</p>
+
+<a name="LIVING_WITH_VENTI:_VAC_SCORES_AND_FLFMT" /><h3>LIVING WITH VENTI: VAC SCORES AND FLFMT</h3>
+
+<p class='para'>
+The
+vac
+score
+given
+on
+the
+fossil
+console
+after
+an
+archival
+snapshot
+differs
+from
+the
+scores
+given
+by
+the
+vac
+command
+(on
+the
+console).
+Only
+the
+former
+contains
+/active,
+/snapshot
+and
+/archive.
+And
+only
+the
+former
+can
+therefore
+be
+used
+to
+do
+a
+flfmt
+-v
+&lt;score&gt;
+</p>
+
+<p class='para'>
+The
+vac
+command
+won't
+show
+up
+these
+root
+scores.
+But
+Russ
+Cox
+posted
+scripts
+to
+the
+9fans
+mailinglist.
+One
+of
+them
+gets
+the
+most
+recent
+root
+score
+of
+a
+particular
+fossil
+and
+the
+other
+one
+prints
+the
+scores
+subsequent
+to
+it.
+</p>
+
+<p class='para'>
+You
+can
+find
+the
+scripts
+(and
+his
+explanation)
+on
+<a href="http://lists.cse.psu.edu/archives/9fans/2003-March/023470.html">http://lists.cse.psu.edu/archives/9fans/2003-March/023470.html</a>
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Sat May 24 14:48:14 EDT 2008</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

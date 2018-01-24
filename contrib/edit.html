@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>Contrib (Editing Wed Apr 22 12:21:40 EDT 2009 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Contrib</b></font> (Editing Wed Apr 22 12:21:40 EDT 2009 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Contrib">
+<input type="hidden" name="version" value="1240417300">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+Sources/contrib is a directory in the [sources repository] where
+anyone can upload their Plan 9 related software. Things in
+sources/contrib are not "officially" part of the Plan 9 distribution,
+but are still very useful, they include ports of various Unix
+software, documentation, scripts, experimental patches, etc.
+
+To get your own directory in sources/contrib to upload your own code
+see [how to contribute].
+
+By convention, each contrib directory may have a README file, giving
+the name and contact information of the author, license terms, or
+other information, and an INDEX file, giving a brief description of
+the individual elements in that directory.
+
+The README and INDEX files are used to automatically generate the
+[Contrib index] every morning. The README file is formatted for width
+and the first 16 lines printed; an INDEX file can contain entries of
+the form:
+! package_name: Description here.
+
+Where 'package_name' is a path to a file or directory relative to
+that directory. INDEX files in the first two levels of directories
+will be included in the wiki index; package_name can refer to files
+at any level.
+
+FGB'S CONTRIB
+
+Another option is to use Federico G. Benavento's contrib package
+management system. To install this system, issue
+
+! /n/sources/contrib/fgb/root/rc/bin/contrib/install fgb/contrib
+
+The [Contrib index] tells you the names of all users that have
+packages available under this system. You can list all the packages
+of a given user by stating
+
+! contrib/list user
+
+or details of a specific package with
+
+! contrib/list user/package
+
+To install a package, issue
+
+! contrib/install user/package
+
+See contrib(1) after installation for details.
+
+SEE ALSO
+
+ *	[Contrib index]
+ *	[Staying up to date]
+ *	[How to contribute]
+ *	[Sources repository]
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

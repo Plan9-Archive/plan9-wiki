@@ -1,0 +1,35 @@
+Gmail on Plan9
+D1229379166
+Aa
+#It is currently not possible to access Gmail POP via upasfs(4) by
+#doing something like:
+#
+#! upas/fs -f /pops/pop.gmail.com
+#
+#See [this message | http://9fans.net/archive/2005/12/164] for
+#details. That message provides a pointer to a "pop3get" program
+#which can be used to fetch messages and subsequently deliver them to
+#a Plan 9 mailbox.
+#
+#Gmail offers an IMAP interface, however, that works nicely for
+#upasfs(4). Something like:
+#
+#! upas/fs -f /imaps/imap.gmail.com/user@gmail.com
+#
+#will enable reading Gmail with Plan 9 mail tools.
+#
+#In some circumstances, it may also be possible to use the Plan 9
+#mail tools to send via Gmail. If you change the last line of
+#/mail/lib/remotemail to:
+#
+#! exec /bin/upas/smtp -sa -u user@gmail.com -h $fd tcp!smtp.gmail.com!smtp $sender $*
+#
+#This will, however, send all mail on the system as that Gmail user.
+#Also, if mail is ever queued for later delivery, the factotum
+#visible to cron will need the keys to authenticate to Gmail.
+#
+#If you replace /sys/src/cmd/webfs/cookies.c with
+#/n/sources/contrib/fgb/cookies.c and rebuild webfs(4), it is
+#possible to use Gmail's "basic HTML" view in the abaco web browser
+#(see [Web browsers]).
+#

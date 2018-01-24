@@ -1,0 +1,82 @@
+Dual booting bare machine and vmware
+
+I run my Plan 9 terminal off of a second hard drive. The primary
+drive holds my linux partitions. Much of the time I run Plan 9 from a
+vmware virtual machine, but have occasion to boot straight to Plan 9
+occasionally. My linux boot loader (grub) allows me to boot Plan 9
+from a menu selection, but usually defaults to linux.
+
+I started by booting my virtual machine the obvious way - expose both
+drives to the VM, and select to boot Plan 9. Trouble comes up when I
+miss the time-out though: it tries to boot linux again from the same
+disk it's already running on - a risky proposition at the best of
+times.
+
+The next fix to try was to use the secondary drive as the primary
+drive of the VM, but this falls apart because fossil encodes the
+partition identifier on the file system itself.
+
+The simple solution (thanks to Takeshi Yamanashi) was to build a
+small virtual hard drive in VMWare, and to pre-load it with a master
+boot record and 9fat file system; I have to remember to update
+kernels in two places (there and on my secondary drive for cold-
+bootin) but it works like a charm.
+
+To make such a file system, use VMWare to add a new (small! 0.1Gig is
+plenty!) disk to a Plan 9 virtual machine that already boots. Boot
+your vm, and check what the new drive is called:
+
+! prompt% ls -d /dev/sd??
+! /dev/sdC0
+! /dev/sdC1
+! /dev/sdD0
+
+In my case the new drive was /dev/sdC1 - corresponding to ide0:1 in
+my vmware machine.
+
+Now you have to give that partition a master boot record, fdisk it,
+prep it, and format it. Before going any further, mount your dos
+partition:
+
+! prompt% 9fat:
+
+or else you'll have to go digging for 9load, a kernel, and your
+plan9.ini if you wait until you've built the 9fat we're going to put
+together (you can mount the 9fat drive later, but the 9fat: script
+fails when there is more than one 9fat partition available)
+
+Now we can start prepping the new virtual partition:
+
+WARNING:
+
+If you hit the wrong partition with these commands you *will* do
+damage to your system. In my example I'm using sdC1 - that might not
+be yours!
+
+So to start we give the new disk an MBR:
+
+! prompt% disk/mbr -m /386/pbs /dev/sdC1/data
+
+Then we fdisk it, making one large plan9 partition:
+
+! prompt% disk/fdisk -baw /dev/sdC1/data
+
+Next we prep it to make a 9fat sub-partition:
+
+! prompt% disk/prep -bw -a9fat /dev/sdC1/plan9
+
+And finally we format the new partition, telling format to add the
+9load, kernel, and plan9.ini files. I used the files from my working
+boot partition; the order you specify these in matters - 9load has to
+be first. See prep(8) for the other options:
+
+! prompt% disk/format -b /386/pbs -d -r 2 /dev/sdC1/9fat /n/9fat/9load /n/9fat/9pcf /n/9fat/plan9.ini
+
+You can, of course, use whatever kernel you want - 9pcf just happens
+to come with the distribution. You can also add more files to the
+list (including more kernels), although once the new 9fat fs is
+built, you can just mount it and copy more files there.
+
+I hope this works for you as well as it did for me.
+
+Paul Lalonde (plal[nospam]onde@[noise]telus.net) - November 1, 2004

@@ -1,0 +1,116 @@
+Mirroring with Fossil and Venti
+D1222778749
+Agp
+#The fs(3) device can be used to mirror your fossil and venti
+#partitions using several disks. For example, to setup a mirror named
+#/dev/fs/fossil that is a RAID of /dev/sdC0/fossil and
+#/dev/sdD0/fossil you need to
+#
+#! bind -a '#k' /dev
+#! echo mirror fossil /dev/sdC0/fossil /dev/sdD0/fossil >/dev/fs/ctl
+#
+#Then you can run fossil using /dev/fs/fossil. It is better to setup
+#the mirror before formatting the partition and setting up fossil on
+#it.
+#
+#If you already have a fossil and want to add another disk to mirror
+#it, you can setup the mirror as said before, with the original
+#fossil device (possibly a partition) being mirrored by the new disk,
+#start your fossil and while you are using it, use dd(1) to copy the
+#fossil device to the mirror device or partition. Since writes go to
+#all devices in the mirror but reads are performed just by the first
+#device (as long as it has no read errors), the copy can be made this
+#way with relative safety. Races are still possible, since dd might
+#read a block from the fossil device, fossil might change it and
+#write it to both devices (original fossil and mirror) and then dd
+#might write the now-stale block to the mirror, so it's safer to make
+#the copy when fossil (and venti, if you mirror it) are idle. This
+#might require booting your file server off another standalone Plan 9
+#file & cpu server. So, after the dd on an active fossil, cmp(1) the
+#original and mirror devices to be sure that a race didn't hit you
+#while copying. If it did, repeat the procedure or make the copy with
+#all disks idle.
+#
+#If you are using a standalone fossil system you need to set up devfs
+#to read the configuration from a file located somewhere on the disk.
+#The easiest way to do it (and the least error-prone) is to steal a
+#single-block partition from the ones already on the disk and to put
+#the configuration there, as you would do with the nvram partition.
+#Here's an example:
+#
+#!  # disk/prep /dev/sdC0/plan9
+#!    ...
+#!    swap               20482 1273392     (1252910 sectors, 611.77 MB)
+#!    ...
+#!  >>> d swap
+#!  >>> a fscfg 20482 20483
+#!  >>> a swap 20483 1273392
+#!  >>> w
+#!  >>> q
+#!  #
+#
+#(note that you may want to create such a partition on each disc that
+#is mirrored with devfs, and even mirror the partition itself, to
+#make sure that if a disk goes away the others will know about the
+#system's disk configuration)
+#
+#Now we need to copy the devfs configuration to the new partition.
+#First zero it to make sure there's nothing dangling in there:
+#
+#! # dd -if /dev/zero -of /dev/sdC0/fscfg -count 1
+#
+#Copy the devfs configuration file to a safe place where you can
+#modify it, and prepend 'fsdev:\n' to the beginning of it:
+#
+#! # echo 'fsdev:' > $home/devfs.conf
+#! # cat /dev/fs/ctl >> $home/devfs.conf
+#
+#Now your devfs.conf file should look something like:
+#
+#! # cat devfs.conf
+#! fsdev:
+#! mirror fossil /dev/sdC0/fossil /dev/sdD0/fossil
+#! #
+#
+#Copy that to the partition where the configuration will be stored:
+#
+#! # cp devfs.conf /dev/sdC0/fscfg
+#
+#If the configuration file is longer than 512 bytes you will need to
+#create a bigger partition in which to hold it. Repeat the disk/prep
+#part with as many blocks as you need. Note that devfs.c imposes a
+#hard limit of 1024 bytes per configuration.
+#
+#Now that the configuration file is in place, add a line to
+#plan9.ini, telling it where it is:
+#
+#! fsconfig=/dev/sdC0/fscfg
+#
+#You need to specify a particular disk, because devfs isn't started
+#yet, and /dev/fs doesn't exist.
+#
+#Another alternative is to place the config file into your kernel's
+#/boot. Just add the path to your conf file (eg
+#/usr/bootes/devfs.conf) to the bootdir section at the end of
+#/sys/src/9/pc/pccpuf (or whatever kernel configuration you're using)
+#and recompile (see [Compiling kernels]). Then in plan9.ini, add:
+#
+#! fsconfig=/boot/devfs.conf
+#
+#Now configure fossil to search for the disks in /dev/fs/* and you're
+#ready to boot. Here's a sample fossil proto file:
+#
+#! # cat flproto
+#! fsys main config /dev/fs/fossil
+#! fsys main open
+#! fsys main
+#! ...
+#! #
+#
+#Write the config file using fossil/conf to the disk where fossil
+#will search it for:
+#
+#! # cat flproto | fossil/conf -w /dev/fs/fossil
+#
+#And you should be set.
+#

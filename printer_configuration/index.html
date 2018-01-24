@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Printer Configuration (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Printer Configuration</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+The
+Plan
+9
+print
+spooler
+lp
+does
+not
+take
+the
+same
+arguments
+as
+the
+BSD
+lpr,
+nor
+as
+the
+lp
+that
+ships
+with
+some
+Unixes.
+It
+is
+worth
+reading
+the
+manual
+page
+<a href="http://plan9.bell-labs.com/magic/man2html/8/lp"><i>lp</i>(8)</a>
+to
+get
+up
+to
+speed
+on
+useful
+options.
+The
+file
+/sys/lib/lp/devices
+contains
+example
+devices
+for
+printing
+to
+printers
+on
+parallel
+ports
+or
+BSD
+lpr-based
+queues.
+<a name="NON-POSTSCRIPT_PRINTERS" /><h3>NON-POSTSCRIPT PRINTERS</h3>
+
+<p class='para'>
+In
+the
+most
+recent
+releases,
+lp
+can
+send
+to
+any
+printer
+whose
+format
+is
+output
+by
+Ghostscript
+(in
+addition
+to
+the
+usual
+Postscript
+printers).
+If
+you
+have
+a
+Ghostscript-supported
+printer,
+use
+``gs!devicename''
+instead
+of
+``post''
+or
+``post2''.
+Follow
+the
+example
+for
+canonbjc240l
+in
+the
+devices
+file.
+</p>
+
+<a name="NETWORK_PRINTERS" /><h3>NETWORK PRINTERS</h3>
+
+<p class='para'>
+To
+print
+to
+printers
+that
+speak
+BSD
+lpr
+(such
+as
+those
+using
+HP
+JetDirect
+cards)
+follow
+the
+example
+for
+vogon
+in
+/sys/lib/lp/devices.
+</p>
+
+<p class='para'>
+Charles
+Forsyth
+has
+a
+small
+program
+and
+additions
+to
+lp
+to
+print
+to
+Microsoft
+SMB
+print
+servers.
+For
+the
+distribution,
+see
+<a href="http://www.vitanuova.com/plan9/co/smb/index.html">http://www.vitanuova.com/plan9/co/smb/index.html</a>.
+</p>
+
+<p class='para'>
+Set
+your
+default
+printer
+destination
+using
+the
+enviroment
+variable:
+</p>
+
+<pre>
+        LPDEST
+</pre>
+
+<a name="FONTS" /><h3>FONTS</h3>
+
+<p class='para'>
+Postscript
+printers
+may
+not
+have
+the
+correct
+fonts
+to
+print
+the
+Plan9
+manual
+pages
+and
+documents.
+These
+can
+be
+downloaded
+automatically
+by
+the
+printer
+driver,
+you
+just
+need
+change
+the
+line:
+</p>
+
+<pre>
+@{bind -b $LPLIB/process /bin; $LPPROC} &lt; $j | /$cputype/bin/aux/lpdsend ...
+</pre>
+
+<p class='para'>
+in
+/sys/lib/lp/spooler/lpdspool
+by:
+</p>
+
+<pre>
+@{bind -b $LPLIB/process /bin; $LPPROC} &lt; $j | aux/download -f -H/sys/lib/postscript/font -mfontmap -plw+ | /$cputype/bin/aux/lpdsend ...
+</pre>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Wed Aug 10 20:22:02 EDT 2005</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

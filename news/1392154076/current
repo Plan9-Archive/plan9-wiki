@@ -1,0 +1,284 @@
+News
+D1392154076
+Ageoff
+#(This page is not updated with trivia, for other news about Plan 9,
+#Inferno and related technologies see [NineTimes |
+#http://ninetimes.cat-v.org])
+#
+#------------------------------------------------------ 
+#SSH REVERSION
+#
+#Bare `ssh' is now ssh1. ssh2 is still available as `ssh2'.
+#
+#- 11 February 2014
+#
+#------------------------------------------------------ 
+#RENUMBERING OUTSIDE MACHINES
+#
+#We're about to change the IPv4 addresses of our outside machines
+#(from 204.178.31.x to 135.104.24.y). There may be outages, we'll try
+#to keep them brief.
+#
+#IPv6 addresses will follow.
+#
+#- 19 November 2013
+#
+#------------------------------------------------------ 
+#NEW PORT: ROUTERBOARD RB450G (MIPS32)
+#
+#/sys/src/9/rb contains a port to the Mikrotik Routerboard RB450G.
+#
+#- 24 July 2013
+#
+#------------------------------------------------------ 
+#NEW PORT: RASPBERRY PI
+#
+#/sys/src/9/bcm contains Richard Miller's port to the Raspberry Pi
+#model B. See words in that directory.
+#
+#- 25 Jan 2013
+#
+#------------------------------------------------------ 
+#NEW PC BOOTSTRAPS
+#
+#9pxeload and 9load have replacements built from kernel source. They
+#should appear over the next few days.
+#
+#- 10 May 2012
+#
+#------------------------------------------------------ 
+#NEW ARM PORT: TRIMSLICE
+#
+#/sys/src/9/teg2 contains a port to the multi-core v7-architecture
+#Compulab Trimslice. See _announce in that directory.
+#
+#- 1 May 2012
+#
+#------------------------------------------------------ 
+#PC ACPI SUPPORT
+#
+#The kernel source on sources now contains minimal ACPI support in
+#the pc port. It's just enough to enable cores not described in the
+#MP table, but assumes the basic sanity of the MP table's interrupt
+#routing entries. Only the pccpu configuration includes it by default.
+#
+#This is no help to systems that have no MP table at all, such as
+#those built from Intel's ``legacy-free'' motherboards, alas.
+#
+#- 11 October 2011
+#
+#------------------------------------------------------ 
+#PLAN 9 APPLYING TO GOOGLE SUMMER OF CODE
+#
+#Plan 9 is again applying to participate in [GSoC]. Our application
+#is in and we're now awaiting the decision of the fine folks at
+#Google, on March 18th.
+#
+#- March 11, 2011
+#
+#------------------------------------------------------ 
+#SIXTH INTERNATIONAL WORKSHOP ON PLAN 9
+#
+#[IWP9 2011 | http://iwp9.org] will be held October 20—21 in Madrid,
+#Spain, hosted by [Francisco Ballesteros | http://lsub.org/who/nemo]
+#of Rey Juan Carlos University.
+#
+#------------------------------------------------------ 
+#FIFTH INTERNATIONAL WORKSHOP ON PLAN 9
+#
+#[IWP9 2010 | http://iwp9.quanstro.net] will be held October 11—13 in
+#Seattle, WA, USA, sponsored by the US Dept. of Energy.
+#
+#------------------------------------------------------ 
+#ARM PORTS
+#
+#A CPU server port for the Sheevaplug and Openrd-client has been
+#available in /sys/src/9/kw for a few months. USB support is now
+#working, as of today, in part due to the efforts of [Professor
+#Francisco Ballesteros | http://lsub.org/who/nemo].
+#
+#A new port for the IGEPv2 board is available, starting today, and
+#Rae McLellan of Bell Labs deserves thanks for helping to decrypt
+#what passes for hardware documentation these days. This port is
+#being made available now primarily as a basis for GSoC students; we
+#hope it will improve. USB is not yet working.
+#
+#- 23 April 2010
+#
+#------------------------------------------------------ 
+#ABACO
+#
+#The lightweight web browser abaco is now distributed as part of the
+#stock Plan 9 distribution.
+#
+#- July 30, 2009
+#
+#------------------------------------------------------ 
+#NEW USB STACK
+#
+#Thanks to a mountain of hard work done by [Professor Francisco
+#Ballesteros | http://lsub.org/who/nemo] of Rey Juan Carlos
+#University, we now have a [greatly-modernized USB stack |
+#http://9fans.net/archive/2009/05/186], including support for EHCI
+#(USB 2.0) and improved support for USB mice, keyboards, and storage
+#devices during booting. Thanks are due to Nemo for doing the work
+#and to Geoff for integrating it into the distribution.
+#
+#- May 26, 2009
+#
+#------------------------------------------------------ 
+#FOURTH INTERNATIONAL WORKSHOP ON PLAN 9
+#
+#IWP9 2009 will be held October 21—23 in Athens, Georgia, USA, hosted
+#by Coraid.
+#
+#The home page is [here | http://iwp9.quanstro.net].
+#
+#------------------------------------------------------ 
+#SOURCES BROWSING REINSTATED
+#
+#After a hiatus of about two months, sources browsing via HTTP has
+#been provisionally re-enabled. If it is overused and bogs down our
+#web server, it will go away again.
+#------------------------------------------------------ 
+#
+#THIRD INTERNATIONAL WORKSHOP ON PLAN 9
+#
+#! From: spyros lalis <lalis@inf...>;
+#! Subject: [9fans] next iwp9
+#! Date: Thu, 06 Mar 2008 22:07:28 +0200
+#! 
+#! Dear 9fans,
+#! 
+#! With the initiative of Francisco Ballesteros and
+#! Sape Mullender, a time and a place have been set
+#! for the next International Workshop on Plan 9.
+#! 
+#! IWP9 will be held on October 30 and 31 in Volos, Greece.
+#! (located by the sea, between Athens and Thessaloniki)
+#
+#The home page is [here | http://iwp9.inf.uth.gr].
+#
+#------------------------------------------------------ 
+#VENTI UPGRADE
+#
+#The newer version of venti (our block store) previously known as
+#nventi has been promoted to be the standard venti. The distribution
+#and sources are now up to date.
+#
+#------------------------------------------------------ 
+#SECOND INTERNATIONAL WORKSHOP ON PLAN 9
+#
+#On the 20th anniversary of Plan 9's creation:
+#
+#! Date: Thu, 9 Aug 2007 10:15:28 -0400
+#! From: Sape Mullender <sape@huygens.org>
+#! To: 9fans@cse.psu.edu
+#! Subject: [9fans] 2nd International Workshop on Plan 9
+#
+#! We have started preparations to host the Second very International
+#! Workshop on Plan 9 at Bell Labs MH in December of this year, almost
+#! certainly Monday December 3 and Tuesday December 4.
+#
+#The call for papers is [here | http://plan9.bell-labs.com/iwp9].
+#
+#For directions to Bell Labs MH, see [here |
+#http://netlib.bell-labs.com/where/].
+#
+#------------------------------------------------------ 
+#PLAN 9 AT THE GOOGLE SUMMER OF CODE 2007
+#
+#Plan 9 from Bell Labs is participating in the [Google Summer of Code
+#| http://code.google.com/soc/], see [gsoc.cat-v.org |
+#http://gsoc.cat-v.org] for more information.
+#
+#------------------------------------------------------ 
+#KERNEL CHANGES AND VESA SUPPORT
+#
+#VESA video support has been added to the default distribution and
+#the kernel has new PC MMU code that has a cleaner separation of
+#virtual and physical addresses, which should address the various
+#mmukmap2 panics that people have reported over the years.
+#
+#To boot one of these new kernels you will need to copy the new
+#/386/9load to your 9fat or floppy disk so that it can cope with the
+#new kernel load address. (It will still handle the old ones too.)
+#
+#The pc kernels use the BIOS E820 memory map when available rather
+#than poking at each megabyte until they decide there's no more. If
+#you have a system where this causes problems, you can put
+#"*noe820scan=" in plan9.ini, and then please LET US KNOW so we can
+#try to fix them.
+#
+#There is also a new driver sdmv50xx for the Marvell 88SX5040 family
+#of SATA cards. Thank you to [Coraid | http://www.coraid.com/].
+#
+#If you see any problems mail 9fans ([mailing lists]) or submit
+#patches ([how to contribute]).
+#
+#[uriel] - Thu Dec 15 2005 - from posts by [rsc]'s to 9fans:
+#[original announcement |
+#http://groups.google.com/group/comp.os.plan9/msg/1c487d634fee2e57],
+#[update |
+#http://groups.google.com/group/comp.os.plan9/msg/5894c18258c5e3a2?dmode=source].
+#
+#------------------------------------------------------ 
+#PLAN 9 LIVES ON
+#
+#[Peter Salus |
+#http://www.unixreview.com/documents/s=9846/ur0508l/ur0508l.html],
+#and later Slashdot, broke the news that Dept. 1127, the Computing
+#Science Research Center at Bell Labs and the birthplace of Unix and
+#Plan 9, has been broken up by Bell Labs management. The various
+#members will be reabsorbed into two or three other departments in
+#the latest internal reorganization.
+#
+#Sape Mullender wrote to 9fans to reassure that Plan 9 work continues:
+#
+#! 1127 ceased to exist some time ago.  The department was renamed and got a
+#! much longer number which, of course, I can no longer remember.  The current
+#! split of what's left of 1127 is not considered to be a big deal by most
+#! members of the department.  There have always been many interdepartmental
+#! collaborations, so 1127 has always been more of a management entity than a
+#! group/club/fraternity.
+#! 
+#! [...]
+#! 
+#! Plan 9 is alive and reasonably well as our current vehicle for wireless 
+#! systems research. Plan 9 has gone embedded (but rest assured, all our
+#! wireless software runs in user space, using Plan 9's real-time scheduler to
+#! make sure it runs when it needs to.
+#! 
+#! Using Plan 9, wireless code becomes useful in a fraction of the time that 
+#! code can be made to run on all those commercial embedded operating systems
+#! (which I do not care to mention) and also much quicker than on Linux which I
+#! am sorry to say is just too large and illegible.
+#
+#Releases will continue with their usual regularity.
+#
+#[uriel] - August 19, 2005 (updated by [rsc] - October 12, 2005)
+#------------------------------------------------------ 
+#
+#LIBRE SOFTWARE MEETING SLIDES
+#
+#The slides form Charles Forsyth talk at [Libre Software Meeting
+#2005] are online:
+#
+# *	Plan 9 slides: [http://www.9con.org/rml/slides/title.html]
+# *	9P slides: [http://www.9con.org/rml/slides/title.html]
+#
+#And as an extra, the paper [The Ubiquitous File Server in Plan 9 |
+#http://www.9con.org/rml/servers.pdf]
+#
+#[uriel] - August 2, 2005
+#------------------------------------------------------ 
+#
+#NEWS NEWS
+#
+#As agreed during WTH, a wiki page to collect the news from the Plan
+#9 community has been created, feel free to post news items at the
+#top of this page.
+#
+#[uriel] - August 1, 2005
+#------------------------------------------------------ 
+#

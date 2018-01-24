@@ -1,0 +1,25 @@
+FOSDEM 2005 9con
+
+The fifth [Free and Open source Software Developers' European Meeting
+| http://www.fosdem.org], 26 and 27 february 2005, Brussels.
+
+There will be enough 9fans (or rather, #plan9 people :-) there to
+make it a con' and uriel will give a [lightning talk |
+http://wiki.fosdem.org/tiki-index.php?page=LightningTalks] about Plan
+9.
+
+[Slides of the Plan 9 intro talk |
+http://www.9con.org/fosdem/slides.pdf]
+
+Photos:
+ *	[mechiels photos | http://www.xs4all.nl/~mechiel/fosdem2005/]
+ *	[boyds photos | http://www.insultant.net/be/FOSDEM2005]
+ *	[20h photos | http://www.r-36.net/fosdem05/fosdem05.html]
+
+Who was there?
+ *	20h
+ *	[boyd]
+ *	matthias teege
+ *	mechiel lukkien
+ *	[uriel]
+

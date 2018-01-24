@@ -1,0 +1,4 @@
+rsc
+
+Russ Cox, rsc@swtch.com. See [http://swtch.com/~rsc/].
+

@@ -1,0 +1,16 @@
+inferno-ds
+
+
+OVERVIEW
+
+There is an improving native port of Inferno for the Nintendo ds. It
+is beginning to be functional, the framebuffer and touchscreen both
+work. The system boots. However there's still a lot left to be done,
+including wifi and floating point support. We're looking for a
+student who has good low level knowledge and is interested in
+implementing device drivers and/or higher level interfaces to the
+more unique aspects of the DS(how to handle both screens etc...).
+
+Anyone interested can find potential projects by going to the [main
+project page | http://code.google.com/p/inferno-ds/source/list].
+

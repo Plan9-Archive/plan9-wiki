@@ -1,0 +1,259 @@
+TODO
+
+Please list the software you are working (or plan to be working) on
+in the first sections below. Listing the date and your name or email
+address for contact would be good too.
+
+The WISH LIST section below is for stuff in your to-do list that you
+would like others to do.
+
+IN PROGRESS
+
+none
+
+STUCK
+
+ *	upas/fs modified to leave mail messages on remote media rather
+	than loading them into RAM; see p9p's upas/fs.
+
+ *	Making the fmt library more portable by safer use of varargs and
+	adding %'d and %4$d POSIX extensions for internationalization. -- rob
+
+ *	[9P2000.u] (9/2004) UNIX extensions to the 9P2000 protocol --
+	[ericvh] & ron minnich
+
+ *	[TinyGL | http://fabrice.bellard.free.fr/TinyGL/]. A very light
+	implementation of a subset of the OpenGL graphics library. Already
+	ported to several non-X windowing environments -- mirtchov@cpsc,
+	stalled, better shoot for the real thing and port MesaGL. This has
+	also stalled for a year -- the software rendering compiles with
+	ape/pcc, but the driver for draw() is half-done.
+
+ *	[Coreboot | http://www.coreboot.org] Mods needed to get Plan9 to
+	load directly from flash (no 9load) via Coreboot. Also see if I can
+	get POST codes into the startup code -- makes debugging new
+	platforms tons easier. No impact once the node is up.
+
+ *	Read-only FFS (both UFS1 and UFS2) -- wkj
+
+ *	Native port of GSL (GNU Scientific Library): numerical integration
+	almost working, random distributions in progress -- -- [++pac]
+	2005Apr29
+
+ *	802.1x supplicant. in progress, /n/sources/contrib/axel/8021x .
+	Only supports ttls-pap. I can now also test peap here; no clue yet
+	whether it is worth to add support for it. --
+	axel.belinfante@cs.utwente.nl
+
+ *	DFS layer to go on top of aux/cifs - currently a working DFS
+	client has been bodged into cifs, the separate layer will grow from
+	this -- Steve
+
+ *	Add client authentication to TLS in libsec -- ckeen
+
+NEVER FINISHED
+
+ *	Port to PowerPC iMac [http://www.cs.cmu.edu/~412/projects/9mac/].
+	Apparently stopped in 2005.
+
+ *	PPC970 Port (in faith, haven't started yet, but going to shortly)
+	-- [ericvh]
+
+ *	htmlfmt to understand tables. - I am working on it now. You can
+	find the latest update at /n/sources/contrib/pietro/htmlfmt.tgz --
+	pietro
+
+ *	IBM Research Hypervisor Support for x86/ppc kernels (11/2004) --
+	[ericvh]
+
+ *	64-bit MIPS port. Currently targeted towards SGI's R4K+ systems.
+	-- tim at nop dot cx
+
+HARDWARE DRIVERS IN PROGRESS
+
+STALLED HARDWARE DRIVERS
+
+ *	GigE driver for the SysKonnect family of cards (work in progress)
+	-- cnielsen@pobox.com
+
+ *	Broadcom BCM5751M Gigabit ethernet. George Gensure was working on
+	this, see 9fans passim. [Overview |
+	http://www.broadcom.com/collateral/pb/5751M-PB02-R.pdf]
+
+ *	Centrino wifi driver, mostly written, needs to be finished, see
+	/n/sources/contrib/rsc/ipw2200
+
+WISH LIST
+
+ *	x86 emulator to run the VESA BIOS on PCs, basic emulator already
+	exists in /n/sources/contrib/rsc/8i. See x86emu.
+
+ *	Implement some form of compression in devssl and devtls and make
+	drawterm use it.
+
+ *	tiff(1) in a similar vein to jpg(1), png(1) etc. Andrey has
+	already ported libtiff see /n/sources/contrig/andrey/libtiff.tgz
+	which should help.
+
+ *	webdavfs - for MS Exchange
+
+ *	Kerberos 5 client
+
+ *	replica/pull to have a -m (3 way merge) option
+
+ *	GUI image manipulation program - page(1) crossed with sam(1) which
+	calls resample(1) and crop(1) (and other tools) [would love to see
+	this implemented in Acme.... -- [++pac]
+
+ *	A basic http/ftp proxy - maybe cache/regex advert stripping too.
+
+ *	A new option to the fossil console snap command, allowing an
+	already ingested vac score to be inserted into the /archive tree.
+
+ *	cryptfs (see [http://www.crypto.com/papers/cfs.pdf]).
+
+ *	GEOM-Based Disk Encryption (GBDE); see
+	[http://phk.freebsd.dk/pubs/bsdcon-03.gbde.paper.pdf] and
+	[http://lists.cse.psu.edu/archives/9fans/2005-February/040378.html].
+
+ *	LDAP File System Server
+
+ *	Linux binary emulator [linuxemu |
+	http://pdos.lcs.mit.edu/~rsc/linuxemu.tar.gz] in theory, linuxemu
+	ld-linux.so.1 bin/a.dynamic is supposed to work, but unfortunately
+	ld-linux.so.1 wants to be loaded where the linuxemu text segment is.
+	you'd need to move the linuxemu text segment somewhere else and then
+	segdetach it before calling elfload. it's entirely doable,
+	especially since x86 code is position independent. ... The libraries
+	have changed since I did the initial work ... looks like there are
+	new system calls to implement! -- Russ Cox
+
+ *	Tk emulator/port.
+
+ *	Input server for Chinese/Japanese/Korean.
+
+ *	Some sort of user space emulator, like qemu, for Plan 9.
+
+ *	A way for acme applications to set the 'scratch' flag (especially
+	for win)
+
+ *	Acme graphics capability & turning Acme to full UI Command window
+	instead of menus, or taglines, everywhere. Maybe a single system cmd
+	win connected to the last touched win -- [++pac]
+
+ *	DOS binary emulator, just plain DOS, not Win -- [++pac]
+
+ *	Fine-tuned mouse control (plenty of mice have more than three
+	buttons and it would be nice to see Plan 9 be able to remap the
+	buttons as desired). For example, I might want to have physical
+	button #5 interpreted as someone pressing logical button #1.
+
+HARDWARE DRIVERS WANTED
+
+ *	XHCI, USB 3
+
+ *	Bluetooth, probably via USB (see 9fans@hamnavoe.com and
+	9nut@9netics.com)
+
+ *	dual-display VGA support
+
+ *	IRDA comms
+
+ *	AC97 support
+
+ *	Nvidia Forcedeth Gigabit ethernet
+
+DONE PROJECTS
+
+ *	port to Routerboard RB450G - geoff
+
+ *	port to Raspberry Pi by Richard Miller.
+
+ *	new bootstraps that use normal kernel drivers - geoff
+
+ *	port to multi-core ARM v7 Compulab Trimslice - geoff
+
+ *	SSH v2, courtesy Brian Stuart. Requires manual setup; see ssh1(1),
+	ssh2(1) and ssh(4), especially the BUGS sections.
+
+ *	ACPI support, see http://www.acpi.info/. Minimal parsing of MADT
+	tables for secondary CPUs is working, early 2012.
+
+ *	64-bit PowerPC compilers [done: forsyth@vitanuova.com; gradually
+	moving into distrib]
+
+ *	Currently at sources: /nemo Redirfs: Fail over from one file
+	server to another. Working. Still on testing. --
+	nemo@plan9.escet.urjc.es.
+
+ *	A read-only version of upas/fs that you can export via 9P2000 to
+	be used for people to browse/search 9fans and plan9dev without
+	having to use Google: Use exportfs -R; the TIP9UG guys plan to set
+	this up on their public servers.
+
+ *	A port of AT&T GraphViz - open source graph drawing software (see
+	[http://www.graphviz.org/]). Compiled graphviz-1.10 with mk and pcc
+	(dot, neato, twopi). The plan9 source is at
+	[http://www2.davidashen.net/graphviz-p9.tbz] -- dvd@davidashen.net
+
+ *	64-bit (or 32-bit) version of /sys/src/fs with IDE DMA and RWM,
+	Intel Gbe driver, longer filename components and more
+	[http://www.collyer.net/sys/doc/fs64/fs.ps]. The distribution is
+	[http://www.collyer.net/who/geoff/9/fs64.tgz]. -- geoff
+
+ *	Unionfs. To merge several trees without binding each directory.
+	For example, to make a patch for a read only media. (see [Divergefs])
+
+ *	Snmpfs v1 and v2. To access snmp tables from devices. The source
+	is in [http://www.9grid.es]. -- gabidiaz
+
+ *	SPF [Sender Policy Framework | http://www.openspf.org]
+	parser/checker for use in /mail/lib/validatesender.
+	[http://www.9grid.es]. -- gabidiaz
+
+ *	SATA driver: Intel ICH7-M chipset with an 82801GBM AHCI SATA
+	interface [Datasheet |
+	http://download.intel.com/design/chipsets/datashts/30701302.pdf]
+	[Updates |
+	http://download.intel.com/design/chipsets/specupdt/30701418.pdf]
+
+ *	USB disk support, allowing access to IPods and other usb storage
+	devices.
+
+ *	USB keyboard driver. (Some motherboards provide BIOS options to
+	emulate USB keyboards as PS2 keyboards, but this doesn't work for
+	everyone.)
+
+ *	a mechanism to lock-focus in ACME (particularly for locking focus
+	in the menu bars) to help make things more useable in the face of
+	mouse drift: acme -b.
+
+ *	cdfs capable of writing DVDs & Blu-ray discs.
+
+ *	tarfs, and scuzz not limited to 2GB, to allow to burn tarDVD's --
+	[++pac].
+
+ *	SFTP client that will give file access to a remote ssh server
+
+ *	[CIFS Server | http://www.9fs.org/dist/aquarela].
+
+ *	EHCI high-speed USB
+
+------------------------------------------------------ 
+(The following sections are to be moved to their own page)
+
+PROJECTS
+
+ *	[Cross domain authentication], solved by factotum
+ *	Native dis/Limbo
+ *	[Plan 9 documentation task force]
+
+BLUE SKY
+
+ *	[Collaborative Environments]
+
+------------------------------------------------------ 
+SEE ALSO
+
+[Errata], [Future directions], [Software for Plan 9], [Contrib Index]
+

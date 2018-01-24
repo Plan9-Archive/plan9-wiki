@@ -1,0 +1,340 @@
+GSoC-2014-ideas
+D1392670114
+Aquanstro
+#Plan 9 and related technologies cover a huge range of topics. Below
+#we've put together a list of some ideas which we think would be good
+#candidates for stundents looking for summer-sized projects with us.
+#Each idea includes at least a brief description and a list of
+#"sponsors" for the idea (people who've suggested it or volunteered
+#to work with folks on it). Ideas are rated for estimated difficulty
+#from 1 to 5 stars (1=easy, 5=hard) and may contain links to further
+#information or discussion.
+#
+#Note! We actively encourage students to submit applications for
+#projects not on this list, too. We've accepted such projects most of
+#the years we've participated. Plan 9 (and its cousins) embody a
+#different way of approaching problems, and we get most excited when
+#we see a student (or anyone, for that matter) apply those ideas to
+#their own set of problems.
+#
+#In addition to this ideas page, prospective students should look
+#over our [GSoC Student Expectations] and be prepared to submit an
+#application matching our [GSoC Student Application]. For more
+#information, note our general [GSoC] page.
+#
+#If you're looking for additional ideas, you might check out the
+#todo, bugs, and ideas lists for [Inferno |
+#http://code.google.com/p/inferno-os/wiki/Project_Suggestions],
+#[9atom | http://www.quanstro.net/plan9/9atom/todo.html], and
+#[Acme-SAC | http://code.google.com/p/acme-sac/issues/list]. These
+#lists are more general and not everything on them will all be a good
+#size for a summer, but they are good sources of inspiration. Some of
+#the most promising fits are duplicated below. There's also our prior
+#editions of this page: [gsoc-2013-ideas], [gsoc-2012-ideas], and
+#[gsoc-2011-ideas].
+#
+#If you're a community member and you have an idea you'd be willing
+#to act as mentor for, please add it to this page! Just follow the
+#format given and provide a good summary of the project. If you'd
+#like, create and link a wiki page with as much detail as you'd like
+#(but please don't swamp this page). Please only add ideas you're
+#willing to mentor (or have directly spoken to whoever you're marking
+#down as mentor).
+#
+#Several of these ideas have the title linked to a page containing
+#more information on the project.
+#
+# *	[Graphics / UI / draw(3)-related ideas | #GRAPHICS_IDEAS]
+# *	[Kernel / port / low-level ideas | #KERNEL_IDEAS]
+# *	[Web-related ideas | #WEB_IDEAS]
+# *	[Compiler / dev tools / library ideas | #DEV_TOOLS_IDEAS]
+# *	[Application ideas | #APPLICATION_IDEAS]
+# *	[Networking ideas | #NETWORKING_IDEAS]
+# *	[Security ideas | #SECURITY_IDEAS]
+# *	[Other ideas | #OTHER_IDEAS]
+#
+#------------------------------------------------------ 
+#GRAPHICS IDEAS
+#
+#Ideas related to Plan 9's graphics systems, including kernel
+#devices, window systems, and supporting libraries.
+#
+# *	Create an [alternative window system] ✪✪ (Anthony Sorace)
+#
+#The Plan 9 windowing system is quite different from X11. Rendering
+#is handled by the kernel graphics driver itself, with a user-mode
+#application responsible for window management issues like placement,
+#sizing, labels, and visability. Today, the only such program is
+#rio(1). It would be fun to have a few alternatives. Design and
+#implement an alternative interface. Some popular ideas include
+#tiling interfaces (similar to acme(1) or X11's wmii or dwm),
+#exploring keyboard-driven control, or touch-based interaction.
+#
+#A student looking to work on a project in this area should be
+#familiar with Plan 9's existing windowing system, including rio(1)
+#and draw(3), at a minimum. It would be good to also review some of
+#the rio hacks found in the [contrib index].
+#
+# *	full color gamma corrector ✪ (Erik Quanstrom)
+#
+#Write a program to interactively gamma correct images. This project
+#may be too small for a summer, so please expand the scope if you
+#plan to work on this.
+#
+#A good place to start on this project is with mug(1).
+#
+# *	add panning and the ability to fill in tiles in imgloop(1) ✪✪
+#	(Erik Quanstrom)
+#
+#This will allow navigation of radar(1) images, or google maps. The
+#idea is to create a standalone program with no knowledge of how
+#image navigation works, but works with an external program to
+#identify and load images to allow for panning and zooming, such as
+#for map navigation for a map too large to display on the screen.
+#
+# *	implement hqx or another image beautifier ✪✪ (Erik Quanstrom)
+#
+#HQX allows for recovery of a decent looking image from a very small
+#and pixelated image. This could be useful stand-alone, or to allow
+#programs like faces(1) to scale their windows. This will allow
+#better interoperability with screens with retina resolution.
+#
+#------------------------------------------------------ 
+#KERNEL IDEAS
+#
+#Project ideas related to the kernel, the various ports, or driver
+#support. Note that we're always interested in ports to new hardware,
+#provided you can ensure that you and your mentors have the same
+#device. Pick anything and get Plan 9 working on it!
+#
+# *	Raspberry Pi work ✪✪
+#
+#The Raspberry Pi port, initially done by Richard Miller, has proven
+#a very popular platform for Plan 9. It works well, but there is more
+#that could be done with the hardware. We don't have any audio
+#support, for example, and more could be done with the video driver.
+#If you want to go a bit farther afield, we're not doing anything
+#with the DSI or CSI connectors (nobody really is), although that'd
+#involve getting the right hardware. It would be particularly fun to
+#do a project involving a creative use of the GPIO pins.
+#
+# *	Kernel lock analyzer for amd64 kernel ✪✪✪✪ (Erik Quanstrom)
+#
+#Write a lock analyzer that can detect conflicting lock usage. For
+#example, if lock a is held when lock b is acquired, then it would be
+#invalid to acquire lock b then lock a in another codepath.
+#
+#This project is advanced in concept, but the code should be
+#relatively straightforward.
+#
+# *	Kernel lock timing analyzer for amd64 kernel ✪✪✪ (Erik Quanstrom)
+#
+#Write a lock timing analyzer in the spirit of devws(9) and
+#wsprint(8), and a set of regression tests to track lock latency.
+#
+# *	MCS locks (i.e. queueing locks) for the kernel with a compatable
+#	calling interface to lock(9) ✪✪✪✪ (Erik Quanstrom)
+#
+#Invent a mechanism for implementing MCS locks with a compatable
+#interface to lock(9). This requires exploting the fact that plan 9
+#locks must be acquired and released on the same processor. The
+#student may wish to explot the fact that locks are typically stacked.
+#
+# *	A per-processor scheduler ✪✪✪ (Erik Quanstrom)
+#
+#Rewrite the scheduler to be fundamentally per-processor, instead of
+#per machine.
+#
+# *	Tune qmalloc(9), or write a replacement ✪✪✪✪ (Erik Quanstrom)
+#
+#Use lock analysis and automated test scripts to tune qmalloc(9), for
+#example by providing a different set of quick-list buckets.
+#alternatively, write a new malloc.
+#
+# *	A raid1 driver for sd(3) ✪✪✪ (Erik Quanstrom)
+#
+#Write a raid1 driver for sd(3). This driver should use a composable
+#header with a generic format on both disks. (so a raid1 of raid1s
+#... would be possible.) It should support hot spares, and drive
+#replacement. It should write any failures to any writable disks, so
+#that reboots do not confuse a failed drive with a good one.
+#
+#------------------------------------------------------ 
+#WEB IDEAS
+#
+#Project ideas related to the web, either in Plan 9 tools providing
+#web services or in ways to interact with Plan 9 systems.
+#
+# *	[Replace language for wikifs](4) ✪ (Anthony Sorace)
+#
+#The wikifs(4) in both Plan 9 and Inferno understand a very small set
+#of cues when generating HTML. That set can be limiting. Replace it
+#with something better, like Markdown. Markdown engines in C already
+#exist, so the Plan 9 part of this shouldn't be too hard. I'd suggest
+#doing the Inferno version as well, to make it a good summer sized
+#project. Use any remaining time to convert any existing wiki docs
+#that need it.
+#
+#------------------------------------------------------ 
+#DEV TOOLS IDEAS
+#
+#Project ideas related to compilers, development tools, or supporting
+#libraries.
+#
+# *	FXR/LXR-like tree comparisons for Plan 9 ✪✪✪ (Anthony Sorace,
+#	Jeff Sickel)
+#
+#[The LXR project | http://lxr.sourceforge.net] has created some very
+#useful tools for cross-referencing different source trees. This idea
+#has been productively expanded by [FXR | http://fxr.watson.org/] to
+#compare across operationg systems (FXR includes various BSDs,
+#Linuxes, and an old Plan 9 tree). As Plan 9 evolves, it would be
+#very useful to tree maintainers to have an easy way to find, track,
+#and explore differences between trees. This project would be to
+#provide tools to scan different source trees (at least the Bell Labs
+#tree, 9atom, and 9front; possibly Inferno, Plan 9 from User Space,
+#and others) and allow users to see specific changes, perhaps
+#including changes over time. Your proposal should describe the
+#interface you're thinking about providing (file server? web
+#application?), what you think some of the important issues are, and
+#clearly define the scope of work (for example, will you be doing
+#multi-way diffs, or just 1-to-1 comparisons?). Multiple Plan 9 sites
+#would be happy to host the results of this work.
+#
+# *	modify the mips linker (vl, see 8l(1)) to optionally produce
+#	pic32-compatable code ✪✪✪ (Erik Quanstrom)
+#
+#The PIC32 is a mips-like 32-bit processor with a lot of
+#capabilities, and perhaps very useful for sensors, etc. Add a flag
+#to the linker to emit code compatable with the PIC32. This project
+#will require that the student gain some understanding of how Ken's
+#toolchain works before the start of the coding period.
+#
+#------------------------------------------------------ 
+#APPLICATION IDEAS
+#
+#Ideas for applications; user-mode code in an existing environment.
+#
+# *	Port rtl-sdr to Plan 9 ✪✪✪ (Skip Tavakkolian)
+#
+#[rtl-sdr | http://sdr.osmocom.org/trac/wiki/rtl-sdr] is a C library
+#that enables using the Realtek RTL2832U based DVB-T receivers as
+#Software Defined Radio receivers (SDR). These inexpensive USB
+#dongles ($20-$30) have been used as receivers for a variety of
+#signaling systems and frequencies including ADS-B, GPS and GSM.
+#Typically additional signal processing is performed by GnuRadio on
+#data captured by rtl-sdr library. The main porting activity will
+#involve replacing the calls to [LibUSB | http://www.libusb.org/]
+#with an interface to Plan 9's usb server.
+#
+# *	Create additional modules for [pq] ✪✪ - ✪✪✪ (Anthony Sorace)
+#
+#The pq database is very modular. The principle data store is the ev
+#module. The distribution also included a module which speaks a
+#simple protocol to talk to an external pq server. Other modules have
+#existed in the past to retrieve data from other sorts of servers,
+#such as LDAP or SQL servers. It would be useful to have some of
+#these again. Define a few modules and implement them over the summer.
+#
+#This project can be relatively simple or very complex, depending on
+#what you decide to implemnt and how smart you want to make the
+#module.
+#
+# *	A ProtoFS. ✪✪ (Skip Tavakkolian, Anthony Sorace)
+#
+#Write a 9P file server that can be instructed to create a file tree
+#and associate each node with external directories, files or
+#processes. Very roughly, the prototype file tree instructions might
+#look something like:
+#
+#! 	/
+#! 		fst/			= /usr/fst/www/
+#! 		edit/
+#! 			snarf		> /dev/snarf
+#! 			paste	< /dev/snarf
+#! 		mouse		| fd0rw /dev/mouse
+#
+# *	S3venti revisited ✪✪✪ (Charles Forsyth)
+#
+#Several years ago, R C Bilson contributed a suite of programs that
+#provided a Venti-like service using Amazon's S3. (Venti is Plan 9's
+#archival storage system, and the Plan 9 file system fossil(4) sits
+#above venti.) Let's pull it out of the attic, dust it off, and set
+#to work improving it (it has got a bugs list). There are many
+#possible directions, which can depend on the interest and experience
+#of the student; an obvious one is adding caching to improve
+#performance. One application would be to provide archival storage
+#for (say) Raspberry Pi running Plan 9, or an Inferno system with a
+#Venti client.
+#
+# *	Ventilator ✪✪✪✪ (Charles Forsyth)
+#
+#Venti is a Plan 9 archival data service. It would be useful for
+#Inferno to have a simple file system implementation that uses an
+#existing Venti for its archive and initial state. It would have a
+#basic, straightforward implementation. Some might say naive, but
+#Plan 9's own Fossil is fairly complicated, at least for a summer
+#project, and in retrospect has some limitations. It could store or
+#cache file system metadata and data locally (and optionally
+#separately). It would allow disconnected operation. It could be
+#fairly slow (raw performance doesn't matter at this stage).
+#
+#------------------------------------------------------ 
+#NETWORKING IDEAS
+#
+#Ideas centered around network protocols, interoperability, and
+#communication, including with foreign systems.
+#
+# *	Teach Plan 9 to speak mDNS/Bonjour ✪✪✪ (Steve Stallion, Jeff
+#	Sickel)
+#
+#It would be nice for Plan 9 to be able to speak Bonjour. When in
+#heterogeneous networks, there are various services that Plan 9
+#cannot serve without being able to do so. Get the protocol working
+#and integrate it with Plan 9's existing ndb/cs infrastructure.
+#
+#------------------------------------------------------ 
+#SECURITY IDEAS
+#
+#Ideas centered around extending or enhancing authentication and
+#authorization capabilities of the system.
+#
+# *	Add support for OAuth2 Login (i.e. OpenID Connect) authentication
+#	to factotum ✪✪✪ (Skip Tavakkolian)
+# *	Implement TLS 1.2 in libsec. ✪✪✪
+#
+#------------------------------------------------------ 
+#OTHER IDEAS
+#
+#Project ideas that don't fit into - or span multiple of - the above
+#catagories.
+#
+# *	9p on Arduino Yun ✪✪✪ (Skip Tavakkolian)
+#
+#The Arduino Yun is sort of two systems in one: a MIPS-based linux
+#system with a more-or-less traditional Arduino on the same board.
+#It's a good platform for experimentation. Write a 9p driver that
+#exposes the Arduino's capabilities, such as access to the pins, and
+#write some sample applications. This project gets the extra fun of
+#defining the interface method, since there isn't something specific
+#the student needs to try and match. Doing this on top of the
+#existing Linux installation will be the easiest route; the more
+#ambitious option would be to replace the Linux installation outright
+#with a Plan 9 installation.
+#
+# *	Access to more host devices and subsystems for Inferno ✪✪-✪✪✪✪
+#	(Charles Forsyth)
+#
+#Hosted Inferno has been used to build portable applications,
+#especially distributed ones, but it is limited in its support for
+#host devices. Different systems often have rather different APIs to
+#access media devices, for instance. This project would pick one or
+#two of the more eccentric devices from the hosted system - ie. video
+#(from camera and/or video capture), tablet/pen controls w/pressure
+#sensitivity, 3D mice, etc.; write separate host programs that serve
+#a name space using 9P; and then write Inferno applications to use
+#them. In an object-oriented fashion, there could be different
+#instances of this project, with students working on interfaces for
+#different target devices. There might be relevant components in
+#[lsub.org's Octopus system | http://lsub.org/ls/projects.html].
+#

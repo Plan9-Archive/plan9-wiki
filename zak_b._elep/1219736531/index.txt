@@ -1,0 +1,11 @@
+Zak B. Elep
+
+I've been following Plan 9 since early 2007, but its only now (Aug
+2008) that I've begun to set up a full Plan 9 network for daily use.
+I'm starting with a CPU/file/auth server, `cloud9', and `pretzel', a
+terminal.
+
+I'll use this page to document my experience and set up of my Plan 9
+network. And maybe later on, as an index for stuff I'll be writing
+for and on Plan 9. ;-)
+

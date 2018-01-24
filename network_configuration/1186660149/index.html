@@ -1,0 +1,1861 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Network Configuration (as of Thu Aug  9 07:49:09 EDT 2007)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Network Configuration</h1>
+<h2><i>-as of Thu Aug  9 07:49:09 EDT 2007-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+The
+first
+section
+of
+this
+page
+describes
+the
+simplest
+possible
+setup
+for
+a
+standalone
+terminal,
+the
+rest
+of
+the
+page
+describes
+how
+to
+setup
+more
+complex
+Plan
+9
+network.
+<a name="STANDALONE_TERMINAL_NETWORK_SETUP" /><h3>STANDALONE TERMINAL NETWORK SETUP</h3>
+
+<p class='para'>
+To
+configure
+your
+network
+connection
+on
+a
+standalone
+terminal
+you
+only
+need
+to
+call
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ipconfig"><i>ipconfig</i>(8)</a>
+and
+run
+ndb/dns
+-r.
+</p>
+
+<p class='para'>
+If
+you
+have
+DHCP
+just
+run:
+<pre>
+	ip/ipconfig
+</pre>
+
+</p>
+
+<p class='para'>
+Or
+to
+explicitly
+set
+the
+configuration:
+<pre>
+	ip/ipconfig -g &lt;your-gateway&gt; ether /net/ether0 &lt;your-ip-address&gt; &lt;your-subnet-mask&gt;
+</pre>
+
+</p>
+
+<p class='para'>
+After
+calling
+ipconfig
+make
+sure
+to
+run
+ndb/dns
+-r
+to
+enable
+dns
+resolution.
+</p>
+
+<p class='para'>
+To
+make
+this
+configuration
+permanent
+edit
+your
+/rc/bin/termrc
+commenting
+out
+and
+editing(if
+needed)
+the
+corresponding
+lines
+that
+call
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ipconfig"><i>ipconfig</i>(8)</a>.
+</p>
+
+<p class='para'>
+You
+can
+use
+ip/ping
+to
+test
+that
+your
+network
+connection
+is
+working
+properly.
+If
+you
+have
+problems
+see
+the
+"troubleshooting"
+section
+below.
+</p>
+
+<a name="NETWORK_DATABASE" /><h3>NETWORK DATABASE</h3>
+
+<p class='para'>
+Plan
+9
+uses
+a
+single
+database
+for
+storing
+all
+the
+network-related
+configuration
+information
+in
+the
+system.
+</p>
+
+<p class='para'>
+The
+database
+stores
+the
+configuration
+for
+machines
+specifically
+identifiable
+by
+the
+local
+installation,
+default
+configurations
+for
+machines
+in
+particular
+subnets,
+domain
+name
+resolution
+information,
+and
+mappings
+between
+TCP
+service
+names
+and
+port
+numbers
+among
+other
+things.
+</p>
+
+<p class='para'>
+The
+database
+is
+assembled
+from
+a
+number
+of
+text
+files
+bearing
+a
+particular
+record
+structure.
+</p>
+
+<p class='para'>
+The
+default
+root
+of
+the
+database
+is
+the
+text
+file
+/lib/ndb/local.
+The
+most
+important
+entry
+in
+that
+file
+is
+the
+``database=''
+entry,
+which
+specifies
+a
+list
+of
+other
+files
+to
+include.
+For
+example,
+<pre>
+database=
+	file=/lib/ndb/local
+	file=/lib/ndb/local-cs
+	file=/lib/ndb/common
+</pre>
+
+</p>
+
+<p class='para'>
+It
+is
+from
+the
+contents
+of
+this
+file
+and
+those
+in
+the
+list
+that
+the
+database
+is
+assembled.
+These
+files
+are
+typically
+used
+by
+ndb/cs
+commands
+in
+the
+startup
+scripts(e.g.
+/rc/bin/cpurc).
+</p>
+
+<p class='para'>
+Conventionally,
+the
+file
+/lib/ndb/common
+is
+for
+standard
+port
+definitions
+and
+the
+like;
+the
+other
+files
+hold
+actual
+system
+configuration.
+</p>
+
+<a name="RECORD_STRUCTURE" /><h3>RECORD STRUCTURE</h3>
+
+<p class='para'>
+Lexically,
+a
+record
+is
+an
+unindented
+line
+followed
+by
+a
+series
+of
+indented
+lines.
+Thus
+an
+unindented
+line,
+a
+blank
+line,
+or
+a
+comment
+line
+(one
+beginning
+with
+#)
+ends
+a
+record.
+</p>
+
+<p class='para'>
+Semantically,
+a
+record
+is
+a
+series
+of
+``key=value''
+tuples.
+Tuples
+on
+the
+same
+line
+bind
+slightly
+more
+tightly
+than
+tuples
+on
+different
+lines,
+but
+usually
+that's
+not
+important.
+</p>
+
+<p class='para'>
+An
+example
+record
+is:
+<pre>
+	ip=10.247.62.235 ip=10.247.60.200 sys=lusitania ether=0060088bc416
+		proto=il
+		dom=lusitania.domain.dom
+</pre>
+
+</p>
+
+<p class='para'>
+This
+record
+defines
+a
+system
+named
+``lusitania''
+with
+a
+specified
+ethernet
+address,
+two
+IP
+addresses,
+and
+a
+fully
+qualified
+domain
+name.
+The
+``proto=il''
+tuple
+indicates
+that
+the
+system
+speaks
+IL,
+the
+Plan
+9
+transport
+protocol
+of
+choice.
+By
+default,
+systems
+are
+assumed
+only
+to
+speak
+TCP.
+</p>
+
+<p class='para'>
+Other
+useful
+attributes
+include:
+<pre>
+	auth           default Plan 9 authentication server
+	cpu            default Plan 9 cpu server
+	dns            default DNS server (can be more than one)
+	dnsdomain      default DNS domain suffix (can be more than one)
+	fs             default Plan 9 file server
+	ipgw           IP gateway
+	ipmask         IP network mask
+	ipsubmask      IP subnetwork mask
+	ntp            default NTP server
+	nntp           default NNTP server
+	smtp           default SMTP server
+</pre>
+
+</p>
+
+<a name="IP_HIERARCHY_WALKING" /><h3>IP HIERARCHY WALKING</h3>
+
+<p class='para'>
+Most
+information
+in
+the
+database
+is
+not
+stored
+in
+each
+system's
+record.
+Instead,
+the
+database
+query
+function
+ndbipinfo
+(see
+<a href="http://plan9.bell-labs.com/magic/man2html/2/ndb"><i>ndb</i>(2)</a>)
+and
+its
+simple
+command-line
+interface
+ndb/ipquery
+(see
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ndb"><i>ndb</i>(8)</a>)
+understand
+about
+the
+hierarchy
+of
+IP
+networks.
+</p>
+
+<p class='para'>
+When
+an
+attribute,
+say
+`fs',
+is
+needed
+for
+a
+system,
+the
+query
+routines
+start
+by
+looking
+up
+that
+system's
+network
+database
+record.
+If
+it
+has
+an
+fs=
+entry,
+ndbipinfo
+returns
+that
+value.
+Otherwise,
+ndbipinfo
+notes
+the
+system's
+IP
+address
+and
+walks
+down
+the
+IP
+hierarchy
+through
+the
+database,
+starting
+with
+the
+default
+IP
+network
+for
+the
+address.
+</p>
+
+<p class='para'>
+Specifically,
+it
+starts
+with
+the
+default
+IP
+mask
+for
+the
+address,
+and'ing
+it
+with
+the
+IP
+address
+to
+find
+the
+default
+IP
+network.
+Suppose
+our
+address
+is
+10.247.62.235,
+as
+above.
+The
+default
+IP
+mask
+for
+the
+address
+is
+255.0.0.0,
+so
+the
+default
+IP
+network
+is
+10.0.0.0.
+</p>
+
+<p class='para'>
+Ndbipinfo
+looks
+for
+an
+ip=10.0.0.0
+entry
+with
+an
+ipmask=255.0.0.0
+entry.
+Suppose
+we
+find
+<pre>
+	ipnet=ten-net ip=10.0.0.0 ipmask=255.0.0.0
+		ipsubmask=255.255.255.0
+		smtp=mailserver.domain.dom
+		ntp=ntpserver.domain.dom
+		fs=myfs
+</pre>
+
+</p>
+
+<p class='para'>
+The
+entry
+says
+that
+the
+network
+is
+composed
+of
+smaller
+subnetworks
+with
+mask
+255.255.255.0,
+so
+we
+look
+for
+an
+entry
+for
+IP
+network
+10.247.62.0
+with
+the
+appropriate
+mask.
+Suppose
+we
+find
+(the
+value
+in
+the
+ipnet=
+tuple
+is
+irrelevant)
+<pre>
+	ipnet=my-net ip=10.247.62.0 ipmask=255.255.255.0
+		fs=my-other-fs
+		ipgw=10.247.62.1
+</pre>
+
+</p>
+
+<p class='para'>
+Since
+there's
+no
+ipsubmask
+entry,
+we
+stop
+the
+walk,
+returning
+``my-other-fs'',
+as
+it
+is
+the
+fs=
+entry
+for
+the
+smallest
+subnet
+we
+found.
+Note
+that
+the
+my-net
+record
+entry
+trumps
+the
+ten-net
+record
+entry,
+just
+as
+an
+fs=
+entry
+in
+the
+lusitania
+record
+would
+trump
+both
+of
+them.
+If
+we
+hadn't
+found
+the
+fs=
+entry
+in
+my-net,
+we
+would
+have
+used
+the
+ten-net
+one.
+</p>
+
+<p class='para'>
+The
+program
+ndb/ipquery
+(see
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ndb"><i>ndb</i>(8)</a>)
+is
+good
+for
+testing
+that
+you
+have
+your
+network
+set
+up
+as
+you
+want,
+and
+that
+the
+IP
+hierarchy
+walks
+are
+happening
+as
+expected.
+</p>
+
+<p class='para'>
+The
+default
+IP
+submasks
+are
+determined
+by
+the
+first
+number
+in
+the
+address:
+<pre>
+	  0-127     255.0.0.0
+	128-191     255.255.0.0
+	192-223     255.255.255.0
+	224-239     These are reserved for multicast addresses
+	240-255     These are reserved for future use
+</pre>
+
+</p>
+
+<p class='para'>
+(This
+is
+an
+internet
+standard,
+not
+a
+Plan
+9
+one.)
+</p>
+
+<a name="CONFIGURATION" /><h3>CONFIGURATION</h3>
+
+<p class='para'>
+Having
+read
+the
+preceding
+sections
+you
+can
+begin
+to
+define
+the
+layout
+of
+your
+network.
+An
+example
+configuration
+exists
+at
+/lib/ndb/local.complicated.
+A
+minimal
+configuration
+is
+presented
+here.
+</p>
+
+<pre>
+database=
+	file=/lib/ndb/local
+	file=/lib/ndb/common
+
+ipnet=mynetwork ip=192.168.0.0 ipmask=255.255.255.0
+	ipgw=192.168.0.1
+	dns=1.2.3.4
+	auth=mauretania
+
+ip=192.168.0.2 sys=mauretania
+ip=192.168.0.3 sys=aquitania
+</pre>
+
+<p class='para'>
+In
+this
+example
+we'll
+setup
+up
+the
+machine
+'mauretania'
+as
+our
+first
+Plan
+9
+machine
+and
+make
+it
+the
+default
+authentication
+server
+for
+our
+192.168.0.x
+subnet.
+We'll
+give
+our
+machine
+the
+IP
+address
+192.168.0.2.
+</p>
+
+<p class='para'>
+If
+you
+don't
+intend
+to
+have
+internet
+connectivity
+you
+may
+omit
+the
+ipgw
+and
+dns
+items.
+</p>
+
+<a name="IPCONFIG" /><h3>IPCONFIG</h3>
+
+<p class='para'>
+Note
+that
+above
+we
+have
+defined
+two
+systems,
+one
+is
+'mauretania',
+the
+other
+is
+called
+'aquitania'.
+How
+does
+Plan
+9
+determine
+our
+machine
+is
+supposed
+to
+be
+'mauretania'?
+The
+answer
+is
+ip/ipconfig.
+</p>
+
+<p class='para'>
+When
+a
+Plan
+9
+machine
+boots,
+it
+runs
+the
+configuration
+script
+/rc/bin/termrc
+or
+/rc/bin/cpurc,
+depending
+on
+whether
+it
+is
+a
+terminal
+or
+a
+CPU
+server.
+</p>
+
+<p class='para'>
+In
+/rc/bin/termrc
+you
+will
+find
+the
+line
+</p>
+
+<pre>
+ip/ipconfig &gt;/dev/null &gt;[2=1]
+</pre>
+
+<p class='para'>
+This
+line
+causes
+the
+machine
+to
+look
+for
+a
+DHCP
+server
+to
+supply
+it
+with
+configuration
+information.
+You
+can
+set
+up
+a
+Plan
+9
+CPU/authentication
+server
+to
+run
+a
+DHCP
+server.
+When
+you
+do
+this
+the
+server
+will
+look
+up
+it's
+network
+database
+and
+serve
+out
+the
+configuration
+defaults.
+</p>
+
+<p class='para'>
+Nevertheless,
+there
+isn't
+yet
+enough
+information
+there
+to
+give
+a
+specific
+machine
+a
+fixed
+IP.
+One
+way
+of
+doing
+this
+is
+to
+bind
+a
+specific
+configuration
+to
+a
+specific
+network
+card's
+MAC
+address.
+Each
+physical
+network
+card
+is
+given
+an
+unique
+MAC
+address
+when
+manufactured.
+You
+can
+find
+out
+your
+card's
+MAC
+address
+by
+typing
+the
+line
+</p>
+
+<pre>
+	cat /net/ether0/addr
+</pre>
+
+<p class='para'>
+(If
+there
+isn't
+a
+/net/ether0
+directory
+then
+Plan
+9
+did
+not
+find
+an
+ethernet
+card
+on
+your
+system.)
+You
+can
+now
+add
+the
+MAC
+address
+as
+an
+attribute
+of
+the
+configuration
+line
+in
+the
+ndb
+like
+</p>
+
+<pre>
+ip=192.168.0.2 sys=mauretania ether=abc12345def
+</pre>
+
+<p class='para'>
+where
+'abc12345def'
+is
+the
+MAC
+address.
+Of
+course
+if
+there
+isn't
+a
+Plan
+9
+DHCP
+server
+on
+the
+network,
+this
+method
+won't
+work.
+When
+setting
+up
+your
+first
+Plan
+9
+machine,
+you
+can
+modify
+the
+ip/ipconfig
+line
+to
+specify
+a
+specific
+gateway,
+ip,
+and
+ip-mask
+to
+use.
+</p>
+
+<pre>
+ip/ipconfig -g 192.168.0.1 ether /net/ether0 192.168.0.2 255.255.255.0
+</pre>
+
+<p class='para'>
+You
+now
+have
+enough
+information
+to
+follow
+the
+instructions
+for
+<a href="../../Configuring_a_Standalone_CPU_Server">Configuring
+a
+Standalone
+CPU
+Server</a>.
+It
+will
+guide
+you
+in
+setting
+up
+a
+system
+suitable
+as
+any
+combination
+of
+CPU
+server,
+Authentication
+server,
+DHCP
+server,
+and
+even
+a
+light-weight
+kfs
+(file)
+server.
+For
+a
+proper
+file
+server
+see
+<a href="../../Installing_a_Plan_9_file_server">Installing
+a
+Plan
+9
+file
+server</a>.
+</p>
+
+<a name="TROUBLESHOOTING" /><h3>TROUBLESHOOTING</h3>
+
+<p class='para'>
+If
+ipconfig
+gives
+an
+error
+of
+the
+form
+</p>
+
+<pre>
+ip/ipconfig: binding device: '/net/ether0' cs: file does not exist
+</pre>
+
+<p class='para'>
+it
+indicates
+that
+the
+kernel
+has
+not
+detected
+your
+network
+card.
+For
+a
+PC,
+make
+sure
+that
+your
+<a href="http://plan9.bell-labs.com/magic/man2html/8/plan9.ini"><i>plan9.ini</i>(8)</a>
+file
+specifies
+the
+proper
+network
+driver.
+If
+that
+doesn't
+help,
+it
+could
+be
+that
+the
+proper
+network
+driver
+is
+not
+compiled
+into
+the
+kernel
+that
+you're
+using.
+See
+<a href="../../Compiling_kernels">Compiling
+kernels</a>
+for
+information
+on
+how
+to
+make
+a
+new
+kernel.
+</p>
+
+<p class='para'>
+If
+after
+installing
+a
+fossil+venti
+system
+you
+get
+an
+error
+message
+like
+</p>
+
+<pre>
+ndb/dns: can't read my ip address
+</pre>
+
+<p class='para'>
+you
+might
+want
+to
+edit
+the
+/rc/bin/termrc
+to
+omit
+the
+test
+conditions
+for
+both
+ip/ipconfig
+and
+ndb/dns
+-
+the
+relevant
+section
+should
+just
+read
+something
+like:
+</p>
+
+<pre>
+ip/ipconfig &gt;/dev/null &gt;[2=1]
+ndb/dns -rf $NDBFILE
+</pre>
+
+<a name="QUERY_TOOLS" /><h3>QUERY TOOLS</h3>
+
+<p class='para'>
+ndb/query
+and
+ndb/ipquery
+look
+directly
+in
+the
+ndb
+files.
+ndb/query
+does
+simple
+direct
+queries
+based
+on
+the
+given
+attribute
+and
+value,
+ndb/ipquery
+searches
+more
+extensively
+up
+through
+the
+subnet
+hierarchy.
+They
+are
+both
+good
+tools
+to
+check
+basic
+functioning
+of
+an
+ndb
+file.
+If
+they
+don't
+produce
+sensible
+results,
+it's
+unlikely
+cs
+will.
+ndb/query
+and
+(probably)
+ndb/ipquery
+do
+not
+talk
+to
+ndb/cs
+or
+ndb/dns
+at
+all.
+</p>
+
+<p class='para'>
+ndb/csquery
+simply
+opens
+/net/cs
+and
+speaks
+its
+protocol,
+which
+expects
+strings
+of
+the
+form
+<pre>
+	net!host!service
+</pre>
+and
+replies
+with
+translations
+of
+them:
+</p>
+
+<pre>
+	term% ndb/csquery
+	&gt; net!plan9.bell-labs.com!9fs
+	/net/il/clone 204.178.31.2!17008!fasttimeout
+	/net/tcp/clone 204.178.31.2!564
+	/net/il/clone 204.178.31.2!17008
+</pre>
+cs
+relies
+on
+dns
+to
+translate
+domain
+names
+to
+ip
+addresses.
+It
+does
+not
+expect
+a
+plain
+name
+such
+as
+`p9'.
+It
+translates
+<a href="http://plan9.bell-labs.com/magic/man2html/2/dial"><i>dial</i>(2)</a>
+addresses.
+<p class='para'>
+There's
+a
+special
+case
+that's
+also
+useful
+in
+checking
+whether
+your
+host,
+subnet
+and
+net
+defaults
+for
+services
+are
+reasonable.
+<pre>
+	net!$attr!service
+</pre>
+looks
+for
+the
+given
+attribute
+`attr'
+through
+the
+subnet
+hierarchy
+starting
+at
+the
+host
+and
+working
+up.
+Thus
+the
+<a href="http://plan9.bell-labs.com/magic/man2html/2/dial"><i>dial</i>(2)</a>
+string
+`net!$fs!9fs'
+dials
+the
+(default)
+file
+server
+configured
+for
+the
+current
+node,
+and
+the
+translation
+can
+be
+checked
+by:
+<pre>
+	term% ndb/csquery
+	&gt; net!$fs!9fs
+	/net/il/clone 144.32.112.69!17008!fasttimeout
+	/net/tcp/clone 144.32.112.69!564
+	/net/il/clone 144.32.112.69!17008
+</pre>
+i
+don't
+know
+without
+a
+lot
+of
+grepping
+how
+much
+the
+$attr
+is
+used
+now
+but
+it
+is
+used
+to
+find
+an
+authentication
+server
+in
+the
+absence
+of
+an
+authdom
+(see
+/sys/src/libauthsrv/authdial.c).
+It
+doesn't
+really
+matter
+because
+the
+point
+here
+is
+that
+$xyz
+can
+be
+used
+to
+check
+that
+cs
+gives
+a
+sensible
+value
+for
+xyz
+for
+the
+current
+node.
+</p>
+
+<p class='para'>
+ndb/dnsquery
+opens
+/net/dns
+and
+uses
+its
+protocol:
+<pre>
+	ndb/dnsquery
+	&gt; bell-labs.com ns
+	bell-labs.com ns	ns.research.att.com
+	bell-labs.com ns	yeats.pa.bell-labs.com
+	bell-labs.com ns	crufty.research.bell-labs.com
+	bell-labs.com ns	ns1.research.bell-labs.com
+	bell-labs.com ns	dirty.research.bell-labs.com
+	bell-labs.com ns	ns2.research.bell-labs.com
+	&gt; plan9.bell-labs.com
+	plan9.bell-labs.com ip	204.178.31.2
+</pre>
+
+</p>
+
+<a name="BOOTING_VIA_PXE" /><h3>BOOTING VIA PXE</h3>
+
+<p class='para'>
+To
+boot
+a
+machine
+using
+PXE
+set
+add
+an
+entry
+to
+/lib/ndb/local
+something
+like:
+</p>
+
+<pre>
+sys=doris ether=03294ea93902
+	ip=192.168.0.32
+	dom=doris.mydomain.com
+	bootf=/386/9pxeload
+	authdom=mydomain.com
+</pre>
+
+<p class='para'>
+The
+intial
+boot
+via
+DHCP
+will
+discover
+the
+ether
+config
+and
+download
+9pxeload.
+This
+will
+then
+pull
+down
+its
+plan9.ini
+file
+which
+it
+expects
+to
+find
+in
+the
+file:
+</p>
+
+<pre>
+	/cfg/pxe/&lt;mac address&gt;.
+</pre>
+
+<p class='para'>
+bootstrap
+then
+continues
+as
+usual.
+</p>
+
+<a name="SEE_ALSO" /><h3>SEE ALSO</h3>
+
+<p class='para'>
+<a href="../../Dialup_modem_config">Dialup
+modem
+config</a>,
+<a href="../../DNSMASQ">DNSMASQ</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ipconfig"><i>ipconfig</i>(8)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ndb"><i>ndb</i>(8)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/6/ndb"><i>ndb</i>(6)</a>,
+<a href="http://plan9.bell-labs.com/sys/doc/net.html">The
+Organization
+of
+Networks
+in
+Plan
+9</a>
+(
+/sys/doc/net/net.ps
+)
+</p>
+<hr />Todo:
+<a name="BOOTSTRAPPING_OTHER_SYSTEMS" /><h3>BOOTSTRAPPING OTHER SYSTEMS</h3>
+
+<p class='para'>
+...
+</p>
+
+<p class='para'>
+explain
+items
+in
+cpurc
+</p>
+
+<p class='para'>
+ndb/cs
+ndb/dns
+ip/dhcp
+ip/tftp
+aux/timesync
+/net/ndb
+auth/keyfs
+aux/listen
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Thu Aug  9 07:49:09 EDT 2007</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

@@ -1,0 +1,16 @@
+Public Plan 9 Servers
+
+A number of servers around the internet give out Plan 9 accounts. If
+you'd like to play around with the system but haven't yet gotten a
+cpu server of your own, this might be a good route for you.
+
+Current:
+ *	[9srv.net] Located in Ohio, United States.
+ *	[Nein | http://rootne.in] For haters.
+
+Historical:
+ *	[tip9ug] - Tokyo Inferno/Plan 9 Users Group The longest running
+	public system. Goes down sometimes. Located in Tokyo, Japan. For
+	access, see http://www.tip9ug.jp/en/accounts.html
+ *	[9grid.es | http://www.9grid.es] Located in Spain.
+

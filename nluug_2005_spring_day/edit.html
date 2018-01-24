@@ -1,0 +1,179 @@
+<html>
+<head>
+<title>NLUUG 2005 SPRING DAY (Editing Wed Jan 25 19:34:49 EST 2006 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>NLUUG 2005 SPRING DAY</b></font> (Editing Wed Jan 25 19:34:49 EST 2006 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="NLUUG 2005 SPRING DAY">
+<input type="hidden" name="version" value="1138235689">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+We hope to show the operating system Plan 9 from Bell Labs at the
+[NLUUG spring conference 2005 | http://www.nluug.nl/events/vj05/].
+
+We intend to give an impression of what Plan 9 is, and what (in our
+opinion) its strong points (and maybe also its less strong points)
+are. In accordance with the theme of the spring conference, we hope
+to be able to give an overview of how Plan 9 ``does'' email, but we
+do not intend to limit ourselves to that. :-) We will bring some
+machines for demo, and some papers to browse, and maybe some
+demo/install cd's for those interested enough to give it a try.
+
+Those interested enough to give it a ``test drive'' may do so by
+firing up a ``live cd'' (image downloadable from the Plan 9 page,
+link below), or by requesting an account on one or more of the public
+access Plan 9 installations, and downloading the Plan 9 remote
+desktop tool ``drawterm(8)'' for graphical access.
+
+Developed by the people who devised UNIX and C at Bell Labs, Plan 9
+takes OS development back into the realm of research. While UNIX can
+be said to be a research tool the OS principles remain largely the
+same throughout all developments. Plan 9 is an attempt to work on the
+operating system concepts from the ground up, reworking the whole
+idea using modern technology.
+
+It is difficult to say in only a few words what Plan 9 offers over
+Unix. For me, the main feature is _integration_, on many levels,
+giving us an integrated, distributed system, potentially on
+heterogeneous hardware, in which we have unified and transparent
+access to the resources available on the machines in the system. For
+example (in more or less random order):
+
+Integration of maintenance.
+ *	All files live on a central file server; an authentication server
+	takes care of checking a user's credentials; disk-less cpu-servers
+	provide processing power; disk-less terminals (simple machines with
+	graphical screen, keyboard and mouse) provide user access to the
+	system, but contain no ``state'' -- all ``state'' (all that may need
+	to be updated, maintained) is kept on the file-server (data) and on
+	the authentication server (user administration). That said, it is
+	very well possible to run Plan 9 on a single machine, even though
+	running a multi-machine set-up is more interesting.
+
+Integrated access to the past.
+ *	The usual file servers for data storage have integrated backup
+	facilities that allow transparent access to the files as they were
+	yesterday, or one year ago, or... Apart from the direct use -- oops,
+	edited this file and now it's worse than yesterday's version, let's
+	retry using that one, we can easily get at it using a command
+	well-name yesterday(1) -- it also provides historical information,
+	for example [The nightly snapshots of the Plan 9 kernel from
+	February 27, 1990 to March 25, 2003 |
+	http://swtch.com/plan9history/] give an interesting view into the
+	Plan 9 development process.
+
+Integrated/unified access to resources, both local and remote.
+ *	All resources are uniformly (even more than in Unix) acessable via
+	the file system interface (open, read, write, close, etc. -- no
+	ioctl, if necessary, the interface to a resources is provided via
+	multiple files, e.g. one for data, another to read/write control
+	messages). A network file protocol, 9P, offers remote access to
+	resources (the absence of ioctl makes this really transparent). This
+	allows Plan 9 to have commands that are similar in nature to ssh and
+	NFS but provide better integration between the local and remote
+	system and work more transparently. To provide access to a new
+	resource, it is sufficient to write a file server for it, that
+	dynamically serves the interface files that provide access to the
+	resource, like /proc in Unix. Such file servers typically run in
+	user space.
+ *	A particular remote resource is the sources file server at bell
+	labs on which the ``current'' version of Plan 9 is always available
+	(together with its past). The usual procedure to update one's Plan 9
+	installation -- replica(1) -- simply mounts the sources and copies
+	over the files that have been added or changed since the last
+	update. To see what has changed one can simply run diff to compare
+	local files with those on the sources file server.
+
+Integration of heterogenous hardware.
+ *	Each Plan 9 system has cross compilers for all supported
+	architectures. Doing cross-compilation is as simple as setting an
+	environment variable to indicate the target architecture before
+	starting a build. A simple naming scheme allows object files,
+	executables and libraries for multiple architectures to live
+	together on a single system. Per-process namespaces and union-mount
+	and bind allow for a uniform view of the system: /bin/ls always is
+	the program to list files, indepent from the architecture on which
+	it is run.
+
+Integrated single-signon.
+ *	The program ``factotum(4)'' acts as the authentication agent and
+	key manager for a user. In combination with the ``secure (file)
+	storage'' server for persistent, secure, storage of keys (also
+	accessed via ``secstore(1)'') this gives one single-signon for the
+	authentication protocols supported by factotum.
+
+More information can be found at:
+
+ *	[The Plan 9 page | http://plan9.bell-labs.com/plan9/]:
+	distribution (freely available under lucent public license), papers,
+	documentation, etc.
+ *	[Plan 9 Wiki |
+	http://plan9.bell-labs.com/wiki/plan9/plan_9_wiki/]: information
+	pertinent to installing, configuring, and using plan 9, but also
+	what people do like about plan 9.
+
+Plan 9 ideas are being brought to Unix variants (Solaris, *BSD,
+Linux, ...) for example in the following projects:
+
+ *	[v9fs | http://v9fs.sf.net]: 9P clients, servers and tools for
+	Linux and *BSD.
+ *	[Plan 9 from User Space | http://swtch.com/plan9port/] (aka
+	plan9port): A port of the bulk of the Plan 9 software to Unix,
+	including libraries and tools.
+
+[Inferno | http://www.vitanuova.com/inferno/] is a spin-off project
+that provides a compact operating system designed for building
+distributed and networked systems on a wide variety of devices and
+platforms based on the same concepts and technologies as Plan 9.
+Inferno can be run ``hosted'' on top of Windows and many Unix
+variants, or even as plug-in in some webbrowser, or ``natively'' on
+the bare hardware.
+
+One application of the Plan 9 ideas worth mentioning here is the
+[9grid | http://www.9grid.net/] where one uses the distributed nature
+of Plan 9 to do grid computing without needing specific grid toolkits
+- the basic features already present in Plan 9 suffice.
+
+------------------------------------------------------ 
+This page is linked from the [NLUUG Voorjaarsconferentie 2005 |
+http://www.nluug.nl/events/vj05/inleiding.html] page.
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

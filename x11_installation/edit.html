@@ -1,0 +1,131 @@
+<html>
+<head>
+<title>X11 installation (Editing Mon Apr 15 16:57:55 EDT 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>X11 installation</b></font> (Editing Mon Apr 15 16:57:55 EDT 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="X11 installation">
+<input type="hidden" name="version" value="1366059475">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+
+OFFICIAL X11 PORT
+
+The X11 iso image predates the fossil filesystem and unfortunately
+has some hard coded references to the kfs filesystem in its
+installation package; however once installed it is filesystem
+independant. The following will allow this package to be installed on
+a fossil filesystem.
+
+download the iso and uncompress it.
+! 	hget http://plan9.bell-labs.com/sources/extra/X11.iso.bz2 | bunzip2 > /tmp/X11.iso
+
+start the iso9660 filesystem server
+!        9660srv 
+
+disable the 9fs command by binding echo over it
+!        bind /386/bin/echo /rc/bin/9fs
+
+mount a pseudo /n/kfs pointing to the root of your fossil filesystem
+!        mount /srv/boot /n/kfs
+
+mount the iso
+! 	mount /srv/9660 /n/dist /tmp/X11.iso
+
+initialise the replica logs
+!        /n/dist/X11.setup
+
+do the pull
+!        replica/pull /n/dist/X11
+
+Next, you need to actually build X11. Close this rio window and open
+a new one. This will remove the bind on /rc/bin/9fs.
+
+There is a problem with one file that prevents X11 from building with
+current systems. Type
+!        9fs sources
+!        cp /n/sources/contrib/pietro/shape.c /sys/src/X11/programs/Xserver/Xext/shape.c 
+to fix the bug.
+
+NOTE: If you get this error when buidling X11:
+!        /sys/include/ape/u.h:4[stdin:7038] not a function
+!        /sys/include/ape/u.h:4[stdin:7038] syntax error, last name: header
+it is due to the fact that the preprocessor constant _PLAN9_SOURCE is
+not defined. The easiest way is to:
+!       cp /sys/include/ape/u.h /tmp/u.h
+modify /tmp/u.h as follows:
+!  #ifndef __U_H
+!  #define __U_H
+!  #ifndef _PLAN9_SOURCE
+! + #ifndef	BRAZIL
+!     This header file is an extension to ANSI/POSIX
+! + #endif
+!  #endif
+and bind the modified version over the original:
+!        bind /tmp/u.h /sys/include/ape/u.h
+and restart the build.
+
+Finally, to build and install, type
+!        cd /sys/src/X11
+!        ape/psh
+!        makew
+!        make install
+!        make clean
+
+It is a good idea to turn on scrolling for both rio windows so you
+could do something else while building (makew is a lengthy process).
+
+EQUIS
+
+Equis is an X11 server for Plan 9 created by Federico G. Benavento
+(fgb). It may be installed using the contrib system:
+
+! 	contrib/install fgb/X11
+
+or by copying the necessary files directly from his [contrib
+directory | http://plan9.bell-labs.com/sources/contrib/fgb/]:
+
+! 	mkdir /386/bin/X11 /386/lib/ape/X11
+! 	9fs sources
+! 	dircp /n/sources/contrib/fgb/root/386/bin/X11 /386/bin/X11
+! 	dircp /n/sources/contrib/fgb/root/386/lib/ape/X11 /386/lib/ape/X11
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

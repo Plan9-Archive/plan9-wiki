@@ -1,0 +1,25 @@
+v9fs
+
+Linux kernel 9P2000 client - [ericvh]
+
+v9fs was originally started and matinained by Ron Minnich. It was a
+[9P | http://9p.cat-v.org] implementation for linux and has been
+updated for 9P2000 and the 2.6 kernel.
+
+It is maintained on [Sourceforge |
+http://sourceforge.net/projects/v9fs] - look under CVS in the
+linux-9p directory.
+
+Check out the [V9FS Home Page | http://swik.net/v9fs] for up to date
+info.
+
+Current status:
+ *	2.6 client working on x86 and PPC against u9fs, plan9ports, and
+	Plan 9 file servers.
+ *	Available in the 2.6 mainline kernel tree as of 2.6.14
+
+Development:
+ *	[v9fs-roadmap] - future plans and todo items
+ *	[v9fs-2.1] - design plans for next release
+ *	[9p2010]
+

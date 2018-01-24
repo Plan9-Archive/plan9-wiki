@@ -1,0 +1,110 @@
+thm 2005-09-24 Summary
+
+Original agenda:
+ *	New website/wiki - [uriel]
+ *	9con.madrid - uriel/gorka?/annavaro?/nemo?
+ *	Plan B status. Services, utilities, and ideas. - nemo
+ *	Plans for our Plan B for Plan 9 (sorry, couldn't resist) - nemo
+
+NEW WEBSITE / WIKI -- URIEL
+
+ *	[Uriel] said, that the new design for the main Plan 9 website was
+	started after the last THM.
+ *	The link for the design he showed is:
+	http://glendy.se.cat-v.org/who/uriel/p9site/
+ *	One of the main ideas behind it is, that most of the links direct
+	to the wiki, so people can change its content.
+ *	What needs to be done is to fix the wiki, so its style looks more
+	like the frontpage.
+ *	[Uriel] would like to get more papers into the "papers" page.
+ *	Uriel asked, if the website should indicate, that there were
+	changes in the "Fourth Edition" of Plan 9, since its release.
+ *	Nemo said, that it is still the "Fourth Edition" and the status
+	could be indicated in the form "vX/X/X".
+ *	Uriel said that sources was unreliable lately and so more mirrors
+	of sources are needed.
+ *	Nemo offered a fileserver, web and 9fs access.
+ *	Uriel told, that one idea behind the new website is to have
+	everything in sources, so it can be mirrored.
+ *	Uriel asked for help with the "News" wiki page, so events, like
+	the Plan B release are written down there.
+ *	News items are everything and if someone thinks, that it is not
+	news, that he/she can edit the wiki page.
+
+INFERNO WIKI AND CHAOS (NOT PLANNED)
+
+ *	Uriel asked forsyth about the plan, to have a business oriented
+	and hacker style website, on the Inferno mailinglist.
+ *	Forsyth said, that the wiki, for which Caerwyn volunteered, should
+	be the hacker style website.
+ *	Uriel asked, if Inferno and Plan 9 things could be kept
+	centralized.
+ *	Forsyth said, that he does not disagree.
+ *	Nemo asked for a central service register.
+ *	Gdiaz said, that the 9grid nodes could be used for that role.
+ *	In the further discussion about the divergence of Plan 9 and
+	Inferno drivers was a new model, like /sys/src/pc-drivers
+ *	chaos
+
+9CON.MADRID -- URIEL
+
+ *	Uriel hopes to show up.
+ *	Nemo said, that they want to poll the university to get support.
+ *	Two options were given: december or may
+ *	Uriel said, that many of the people are at CCC and so december
+	would be overkill.
+
+PLAN B -- NEMO
+
+! 21:01 <Nemo> Well, we just wanted two things:
+! 21:01 <Nemo> - avoid static mounts and let the system adapt to FS availability
+! 21:02 <Nemo> - follow the "everything is a file" idea to the limit.
+! 21:02 <Nemo> For example, I was disappointed because in rio I couldnt
+! 21:02 <Nemo> use files to operate on widgets and the like.
+! 21:02 <Nemo> In the same way, I couldn't copy an mp3 file to somewhere to make it play.
+! 21:03 <Nemo> The same happen to other services. But most notably, the UI.
+! 21:03 <Nemo> What we do is to announce resources to the network, and then mount them using our
+! 21:04 <Nemo> volume stuff (dynamic mounts, really).
+! 21:04 <Nemo> For example, mount -U /what /what
+! 21:04 <Nemo> is what we use to get in /what
+! 21:04 <Nemo> the union of all file trees for information about things.
+! 21:04 <Nemo> A result is that you can ls /what to see what machines are around.
+! 21:05 <Nemo> The same for other resources. For example, we use du to locate
+! 21:05 <Nemo> things like button:Pause (pause buttons) in UIs found
+! 21:05 <Nemo> at /devs/*ui/ or any other place.
+! 21:05 <Nemo> Then we can 'echo press' >/devs/....../button:Pause/ctl
+! 21:06 <Nemo> to press the button. I think this gives the idea.
+! 21:06 <Nemo> There are two things that are really useful: being able to import
+! 21:07 <Nemo> resources without having to mount them by hand, and 2, having a
+! 21:07 <Nemo> very detailed interface for services (having a file for the button).
+
+ *	Nemo said, that he wants to include these ideas into Plan 9.
+ *	He said, that he finished volfs for Plan 9:
+
+! 21:12 <Nemo> The daemon sends/listens for announces,
+! 21:13 <Nemo> file servers register with /srv/vols to let volfs know that there's anew service.
+! 21:13 <Nemo> (if you want to, of course)
+! 21:13 <Nemo> So, your volfs knows of several FSs
+! 21:13 <Nemo> that have a given name, and a set of constraints.
+! 21:13 <Nemo> For example, /usr/nemo!Unemo!Lhome!Cok
+! 21:14 <Nemo> which means, this thing is a file tree for "/usr/nemo"
+! 21:14 <Nemo> that is owned by nemo, located at home (whatever that might mean), and the
+! 21:14 <Nemo> latency of the connection from your machine to the FS seems to be good enough
+! 21:14 <Nemo> to page-in binaries.
+! 21:15 <Nemo> Well, the point is that volfs has the list of known volumes.
+! 21:15 <Nemo> Then, you mount volumes from it:
+! 21:15 <Nemo> mount /srv/vols /usr/nemo /usr/nemo!Cok
+! 21:15 <Nemo> which means, you mount at /usr/nemo
+! 21:15 <Nemo> the spec "/usr/nemo/!Cok".
+! 21:16 <Nemo> The daemon takes care of supplying a file tree that matches your request.
+
+ *	Gdiaz asked, if it does hot swap.
+ *	Nemo answered, that it does something like this, as you request a
+	"resource" and not hold just the fid.
+ *	Nemo showed examples on the usage of volfs. (See the logs.)
+
+AFTERSHOW
+
+ *	Uriel asked about kencc.
+ *	Forsyth said, that he is working on the tarball.
+

@@ -1,0 +1,43 @@
+Town Hall Meetings
+
+
+PURPOSE
+
+Hour long meetings to promote discussion of current state of ongoing
+Plan 9 projects and encourage cooperation in the community. If you
+have a topic you'd like to discuss, please add it (and your IRC
+handle) to the proposed agenda before the meeting.
+
+STATUS
+
+Town Hall Meetings are abandoned due to missing interest. Thanks to
+all who contributed. Please use 9fans for further discussions.
+
+IRC
+
+See also the [IRC] page for information on other irc channels and irc
+clients for Plan 9.
+
+------------------------------------------------------ 
+PAST MEETINGS
+
+2005-09-24:
+ *	[thm 2005-09-24 Summary]
+ *	[thm 2005-09-25 Log]
+
+2005-08-15:
+ *	[thm 2005-08-15 Summary]
+ *	[thm 2005-08-15 Log]
+
+2005-06-23:
+ *	[thm 2005-06-23 Summary]
+ *	[thm 2005-06-23 Log]
+
+2005-05-19:
+ *	[thm 2005-05-19 Summary]
+ *	[thm 2005-05-19 Log]
+
+2005-04-12:
+ *	[thm 2005-04-12 Summary]
+ *	[thm 2005-04-12 Log]
+

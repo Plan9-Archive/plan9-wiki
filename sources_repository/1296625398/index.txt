@@ -1,0 +1,25 @@
+Sources repository
+
+The sources repository (known simply as "sources") is a public Plan 9
+file server running on sources.cs.bell-labs.com.
+
+You can use the command '9fs sources' to mount sources on /n/sources.
+You can also [browse | http://plan9.bell-labs.com/sources/] the
+sources on the web.
+
+ *	9grid/ - 9grid tools
+ *	contrib/ - [Contrib] directories for contributed code
+ *	extra/ - Random bits
+ *	lsr - Used for mirroring (see [Setting up a sources mirror]).
+ *	patch/ - patch(1) archive
+ *	plan9/ - The full source tree of the distribution
+ *	wiki/ - Copy of the wiki data
+ *	xen/ - Xen port
+
+Sources can be used to update your Plan 9 installation, see [staying
+up to date].
+
+There are several [mirrors] of Plan 9 ISO and the source tree.
+
+To setup your own mirror see: [Setting up a sources mirror].
+

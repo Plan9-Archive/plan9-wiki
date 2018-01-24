@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Connecting to other OSes (as of Sat Mar  2 22:26:52 EST 2013)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Connecting to other OSes</h1>
+<h2><i>-as of Sat Mar  2 22:26:52 EST 2013-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+Plan
+9
+provides
+the
+usual
+complement
+of
+ftp,
+telnet,
+and
+rexec
+clients
+and
+servers
+though
+the
+servers
+require
+secure
+challenge/response
+authentication
+using
+either
+a
+<a href="http://plan9.bell-labs.com/magic/man2html/8/securenet"><i>securenet</i>(8)</a>
+card
+or
+a
+software
+simulation
+of
+it.
+<ul>
+
+<li>
+Plan
+9
+has
+an
+ssh
+client
+and
+server,
+though
+these
+support
+only
+SSHv1
+at
+present,
+though
+SSHv2
+is
+in
+progress
+(see
+TODO
+list).
+Alternatively
+an
+OpenSSH
+port
+is
+available
+as
+a
+<a href="http://plan9.bell-labs.com/magic/man2html/1/contrib"><i>contrib</i>(1)</a>
+package,
+though
+sadly
+this
+fails
+to
+integrate
+with
+<a href="http://plan9.bell-labs.com/magic/man2html/4/factotum"><i>factotum</i>(4)</a>
+making
+it
+rather
+clunky
+to
+use.
+</li>
+</ul>
+
+<p class='para'>
+To
+enable
+ssh
+v1
+under
+OpenSSH
+on
+a
+debian
+based
+Linux
+machine.
+First
+ensure
+the
+/etc/ssh/sshd_config
+file
+contains
+the
+lines:
+<pre>
+Protocol 2,1
+HostKey /etc/ssh/ssh_host_key
+</pre>
+Then
+run
+the
+following
+commands
+as
+root:
+<pre>
+ssh-keygen -t rsa1 -f /etc/ssh/ssh_host_key
+chmod 644 /etc/ssh/ssh_host_key
+/etc/init.d/ssh restart
+</pre>
+No
+doubt
+other
+linuices
+are
+similar,
+but
+slightly
+different.
+</p>
+
+<ul>
+
+<li>
+NFS
+filesystems
+may
+be
+imported
+into
+a
+Plan
+9
+system
+using
+<a href="http://plan9.bell-labs.com/magic/man2html/4/nfs"><i>nfs</i>(4)</a>,
+Plan
+9
+also
+has
+an
+NFS
+server
+<a href="http://plan9.bell-labs.com/magic/man2html/8/nfsserver"><i>nfsserver</i>(8)</a>
+which
+may
+export
+parts
+of
+a
+Plan
+9
+file
+server
+to
+foreign
+systems.
+</li>
+</ul>
+
+<ul>
+
+<li>
+Posix
+systems
+may
+share
+their
+filesystems
+by
+running
+<a href="http://plan9.bell-labs.com/magic/man2html/4/u9fs"><i>u9fs</i>(4)</a>
+(usually
+invoked
+from
+inetd)
+which
+exports
+some
+or
+all
+of
+the
+local
+filesystem
+to
+a
+remote
+Plan
+9
+system
+using
+the
+native
+Plan
+9
+file
+protocol.
+Can
+run
+from
+inetd
+or
+start
+from
+Plan
+9
+using
+<a href="../../srvssh">srvssh</a>.
+</li>
+</ul>
+
+<ul>
+
+<li>
+Netware
+filesystems
+may
+be
+imported
+using
+<a href="http://plan9.bell-labs.com/magic/man2html/4/ncpfs"><i>ncpfs</i>(4)</a>
+which
+is
+distributed
+separately
+from
+the
+main
+Plan
+9
+release
+in
+/n/sources/contrib/steve/ncpfs.tar.bz2
+</li>
+</ul>
+
+<ul>
+
+<li>
+CIFS
+(Windows
+or
+samba)
+filesystems
+may
+be
+imported
+using
+cifs
+which
+is
+distributed
+separately
+from
+the
+main
+Plan
+9
+release
+by
+Steve
+Simon.
+To
+get
+it,
+you
+will
+first
+need
+Federico
+Benevento's
+contrib
+system,
+and
+then
+CIFS:
+</li>
+</ul>
+
+<pre>
+     9fs sources # if not already done
+     /n/sources/contrib/fgb/root/rc/bin/contrib/install fgb/contrib # get contrib system
+     contrib/install steve/cifs # get CIFS
+</pre>
+
+<ul>
+
+<li>
+Plan
+9
+files
+may
+be
+served
+to
+windows
+clients
+with
+<a href="http://plan9.bell-labs.com/magic/man2html/8/aquarela"><i>aquarela</i>(8)</a>.
+</li>
+</ul>
+
+<ul>
+
+<li>
+Plan
+9
+provides
+a
+<a href="http://plan9.bell-labs.com/magic/man2html/1/vnc"><i>vnc</i>(1)</a>
+client
+and
+server.
+(see
+<a href="../../Using_vncv">Using
+vncv</a>)
+</li>
+</ul>
+
+<ul>
+
+<li>
+Another
+option
+using
+the
+native
+9p
+protocol
+is
+the
+<a href="../../hubfs">hubfs</a>
+shell
+multiplexer.
+It
+functions
+similarly
+to
+screen/tmux
+and
+allows
+persistent
+shells
+shared
+from
+another
+operating
+system
+to
+Plan
+9
+and
+vice
+versa.
+It
+is
+found
+in
+contrib/mycroftiv/hubfs1.1.
+</li>
+</ul>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Sat Mar  2 22:26:52 EST 2013</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

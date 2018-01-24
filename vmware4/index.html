@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>vmware4 (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+vmware4</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+The
+VMware
+4
+disk
+image
+is
+now
+sorely
+outdated
+and
+is
+no
+longer
+distributed.
+You
+can
+install
+into
+a
+VMware4
+virtual
+machine
+using
+the
+install
+CD
+just
+like
+on
+a
+real
+computer.
+<p class='para'>
+Here
+are
+some
+tips
+on
+<a href="../dual_booting_bare_machine_and_vmware">dual
+booting
+bare
+machine
+and
+vmware</a>
+using
+the
+same
+physical
+disk
+for
+both,
+while
+avoiding
+a
+couple
+of
+pitfalls.
+</p>
+
+<p class='para'>
+Problems
+and
+work-arounds:
+<ul>
+
+<li>
+There
+is
+a
+problem
+with
+the
+CDROM
+in
+VMWare
+4.5.
+If
+you
+boot
+Plan9
+with
+a
+CDROM
+device
+attached
+to
+your
+virtual
+machine
+9Load
+will
+hang
+unless
+a
+CDROM
+is
+present
+("connected").
+If
+you
+don't
+need
+CDROM
+support
+it
+is
+recommended
+that
+you
+remove
+the
+CDROM
+device
+from
+your
+virtual
+machine.
+If
+you
+need
+this
+device,
+make
+sure
+to
+keep
+a
+CD
+image
+attached.
+</li>
+</ul>
+
+</p>
+
+<ul>
+
+<li>
+Problem
+with
+9load
+hanging
+when
+booting
+in
+VMWare
+can
+be
+avoided
+if
+you
+move
+the
+CD-ROM
+drive
+to
+the
+SCSI
+bus.
+VMWare
+allows
+SCSI
+simulation
+for
+ATA
+CD-ROM
+drives:
+just
+select
+appropriate
+radio
+button
+in
+the
+cd-rom
+settings
+dialog.
+SCSI
+controller
+(BT-958)
+is
+supported
+by
+Plan
+9.
+In
+this
+case
+use
+/dev/sd00
+for
+access
+to
+CDROM
+drive.
+</li>
+</ul>
+
+<ul>
+
+<li>
+There
+is
+a
+problem
+using
+more
+than
+two
+buttons
+on
+an
+IBM
+Thinkpad.
+Russ
+Cox
+described
+a
+workaround
+on
+9fans:
+</li>
+</ul>
+
+<pre>
+Date: Mon, 17 Feb 2003 09:43:25 -0500
+Subject: [9fans] VMware and Plan9
+
+Two things.  First, go into Control Panel -&gt; Mouse -&gt; Trackpoint
+and make sure that the middle button setting is "neither" (there
+are three choices: "scrolling", "zooming", and "neither").
+
+Second, start regedit.  Look for
+
+	HKEY_LOCAL_MACHINE
+	 System
+	  CurrentControlSet
+	   Enum
+	    ACPI
+	     IBM3780
+	      &lt;ugly hex&gt;
+	       DeviceParameters
+
+You may have to substitute something else for IBM3780 depending
+on who makes your laptop.  Find the one with keys named "MouseResolution",
+"MouseDataQueueSize", etc.  Add a new DWORD variable "NumberOfButtons"
+with value 3.  
+
+Now you should be okay.
+
+The problem is actually not the IBM-supplied mouse driver but the
+underlying Windows-supplied basic i8042 PS/2 mouse driver, on which
+the Trackpoint driver sits.
+
+The Windows driver expects the Trackpoint to respond to command E9
+as the Logitech mice do, giving the number of buttons as the second byte.
+Unfortunately, the Trackpoint sends back some form of sampling resolution
+instead, and even more unfortunately the default resolution is encoded
+as 0x02, tricking Windows into thinking that there are but two mouse
+buttons on the Trackpoint.  Since this is the Trackpoint controller simply
+implementing a different command E9, the only way to get the hardware
+to respond correctly is to turn it off in the BIOS, so that the external
+mouse can respond for itself.
+
+Happily, Windows is nothing if not configurable.  The registry key makes
+Windows ignore what it has incorrectly interpreted the hardware to have said.
+DirectInput (which VMware uses, but most apps don't) ignores the middle
+button when it thinks the mouse has only two buttons.  The stock Windows 
+mouse path has no problem with a "two"-button mouse generating middle-button
+events.
+
+Russ
+</pre>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Wed Jan 25 19:31:44 EST 2006</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

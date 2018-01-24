@@ -1,0 +1,234 @@
+Twente9con 2004
+D1103482899
+Aaxel (130.89.145.32)
+#Tuesday 21 + Wednesday 22 December 2004 at University of Twente,
+#Enschede, The Netherlands.
+#
+#You are cordially invited (but please register, see section
+#``ATTENDEES'' below).
+#
+#Enschede can be found at MGRS 32U LC 56316 87372 (WGS84 datum).
+#
+#We will meet in building Zilverling, building number 11 on [the
+#campus map | http://www.utwente.nl/en/services/route/]
+#
+# *	tuesday 21 we will be in room 5126
+# *	wednesday 22 we will be in room U1
+#
+#I propose we start the meeting at 10:00 in the morning.
+#
+#PROGRAM
+#
+#The meeting will probably in a BOF style, meaning: the agenda will
+#very much depend on the interests of and contributions by the people
+#present. Please add your ideas, proposals etc below (or send them to
+#me, axel). (Note: editing via a web browser is no longer supported,
+#editing of pages on this wiki is only possible via acme).
+#
+#In the same week as the twente9con, sape will give three lectures in
+#[a course on on the design of concurrent/parallel systems |
+#http://www.cs.utwente.nl/~jansen/courses/gs/] (to access you may
+#need the username and password that have been mentioned on [#plan9 |
+#http://mordor.tip9ug.jp/irclog/2004/1213/plan9_1102910481.txt]), in
+#which he will talk about Plan 9 as an example of such a system. We
+#are welcome at those lectures (provided we leave enough space in the
+#lecture room for the students). Schedule:
+# *	Dec 20 2004 10:40-12:25 GOS 3/4 in LA 1349 (building 17)
+# *	Dec 22 2004 13:45-15:30 GOS 5/6 in HT 1300 (WB, building 20)
+# *	Dec 24 2004 13:45-15:30 GOS 5/6 in HT 1300 (WB, building 20)
+#
+#To come up with something like an agenda, it might be nice to know
+#what people want to do or discuss, what people can contribute to the
+#program (tell about or show), and what people would like to consume
+#(learn, hear about or see); wether we will be able to match those
+#will depend very much on the people that will be present. If you add
+#an item to those three lists, please indicate your name.
+#
+#What people want to do or discuss:
+#
+# *	Plan 9 future, vision (matthias)
+#
+#What people offer to do or discuss, and can contribute to:
+#
+# *	I could show you my plan 9 machine(s) :-) (and the coffee room
+#	music setup; I _still_ should try to redirfs the sound) (axel)
+# *	if there is interest, we might discuss a bit about libcontrol (I
+#	made some changes for the music stuff, and have some thoughts of
+#	refining that, where feedback might be useful) (axel)
+# *	my LabelledTransitionSystemFS ideas I mentioned on 9fans some
+#	time ago (axel)
+# *	discuss testing with boyd? :-) (axel)
+# *	try to mount a TV card device from Japan (axel, matthias)
+# *	USB mass storage, smart cards (richard)
+#
+#What people would like to learn, hear and discuss about or see:
+#
+# *	inferno grid (axel) (i'll try to bring a copy --forsyth)
+# *	venti/backup/vac/vacfs/snapshot/archive/network usage (matthias)
+# *	programming hints/ideas (matthias)
+# *	seeing you guys working with acme and sam (matthias)
+# *	the music setup (matthias)
+# *	(learn what is needed to) add support for 802.1x (axel)
+# *	ipv6 on plan9 (mechiel)
+# *	setting up a `public' plan9 system (mechiel)
+#
+#ATTENDEES
+#
+#So far, three lists of attendees here:
+#
+# *	Those who have decided to come
+# *	Those who have expressed interest, but no definite decision
+# *	Those who have expressed interest, but unfortunately cannot be
+#	there
+#
+#Feel free to add yourself to the lists, and, for those in the
+#``maybe'' list, feel free to move yourself up to the ``will be'' or
+#down to the ``will not be'' lists, and/or mail me (axel) when you
+#know what you will be doing. I succeeded to arrange free lunches (if
+#there exists such a thing), so once you are sure that you will or
+#will not come please let me know. If you come let me (axel) know
+# *	evt dietary preferences (e.g. vegetarian)
+# *	if you intend to bring wifi equipment, the mac address(es) - see
+#	below.
+# *	(optionally) your mobile phone number, to support regrouping in
+#	case we all get lost (also consider adding it to your name in the
+#	list below)
+#
+#Who will be there?
+#
+# *	boyd roberts (mobile: +33 6 09 11 60 02)
+# *	matthias teege (mobile: +49 176 24 05 89 20, arriving evening19th)
+# *	charles forsyth (arriving afternoon 20th)
+# *	richard miller
+# *	devon o'dell
+# *	vincent van gelderen (only tuesdag 21)
+# *	mechiel lukkien (mobile: +31 6 149 75 760, home enschede: +31 53
+#	430 8238, email: mechiel@xs4all.nl)
+# *	omer sinan kaya
+# *	sape mullender
+# *	axel belinfante (office phone: +31 53 489 3774, mobile: +31 6 47
+#	38 46 34)
+#
+#Who may be there?
+#
+# *	dave lukes
+# *	heiko dudzus
+# *	sascha wildner
+#
+#Who will not be there? (potential attendees who unfortunately will
+#not be able to attend).
+#
+# *	jean mehat
+# *	lodewijk smit
+#
+#PRACTICAL
+#
+#Cost:
+#
+#For the meeting itself I anticipate no costs, but all I offer for
+#that is the place to meet, some coffee, tea during the meeting, and
+#lunches (dutch ``second breakfast'' style - bread etc) (I succeeded
+#to arrange some funding for lunches and refreshments). I expect each
+#to book his own accomodation and (apart from lunches) pay his own
+#food in the university cafetaria etc. Also, both mechiel and I have
+#some space for ``mattrass on the floor'' guests; if you are
+#interested contact us (or me, axel) in time.
+#
+#Getting to the venue, and maps:
+#
+# *	dutch train information [http://www.ns.nl]; button ``English'' at
+#	the top of the page.
+# *	''door to door'' travel information [http://www.ovr.nl] (includes
+#	bus information, but only in dutch)
+#
+#There is a railway station ``Enschede Drienerlo'' near the campus
+#(ca. 20 min walk, or fewer by bus [line 1 |
+#http://tinyurl.com/4cepn]). Only ``slow'' trains stop there, so if
+#you travel by ``intercity'' or ``fast train'' from elsewhere in the
+#netherlands you have to change, e.g. in Hengelo. If you have to
+#change in Hengelo anyway, it is probably faster to take a bus (see
+#below).
+#
+#There are buses from Hengelo central station to the campus
+#
+# *	[line 15 | http://tinyurl.com/5mp3n] to Universiteit Twente (not
+#	in the weekend) The bus stop is closest to our building is
+#	indicated on the campus map by the ``H'' at the ``hallenweg'' near
+#	building number 5.
+# *	[line 3 | http://tinyurl.com/6pazj] to ''Glanerbrug''. (note: the
+#	url gives the timetable for sunday (zondag), click the buttons for
+#	weekdays (Maandag tot en met Vrijdag), or saterday (zaterdag) There
+#	is a bus stop near the campus, on the viaduct where the
+#	``Hengelosestraat'' (the road between Enschede and Hengelo) crosses
+#	(goes over) the road that leads to the entrance of the university.
+#
+#There are buses from Enschede central station to the campus
+#
+# *	[line 1 | http://tinyurl.com/6g6lt] to ''Universiteit,
+#	Langenkampweg''. Has its final destination on the campus, makes a
+#	nice detour through living quarters of enschede. The bus stop
+#	closest to our building is indicated on the campus map by the ``H''
+#	at the ``hallenweg'' near building number 5. Warning: line 15 that
+#	stops here as well will bring you to Hengelo.
+# *	lines [3 | http://tinyurl.com/4loaj] (all day), 17 early
+#	mornings), 18 (around lunchtime), go straight from Enschede to
+#	nearby city Hengelo. There is a bus stop near the campus, on the
+#	viaduct where the ``Hengelosestraat'' (the road between Enschede
+#	and Hengelo) crosses (goes over) the road that leads to the
+#	entrance of the university.
+#
+#[Maporama | http://www.maporama.com] can show a map of the city,
+#using e.g. postal codes. In the netherlands postal codes consist of
+#4 digits followed by 2 letters. For the campus, you can use:
+#postcode: 7522 NB , city: Enschede , which will show you the campus,
+#but not exactly the building we meet in, for that see the info at
+#the top of this page. For postal codes of hotels, follow the links
+#in the accomodation section below (they will be in the contact info
+#of the hotel).
+#
+#Wifi access:
+#
+#Our university seems to have "Europe's largest Wi-Fi hotspot"
+#(according to some web page here). To arrange (guest) access it will
+#be useful to have your mac-addresses in advance.
+#
+#[practical information about the campus |
+#http://www.utwente.nl/en/practical_information/] includes:
+# *	[information about traveling in the netherlands |
+#	http://www.utwente.nl/en/practical_information/getting_there/transport/]
+# *	[how to get to the university |
+#	http://www.utwente.nl/en/practical_information/getting_there/]
+# *	[university campus map | http://www.utwente.nl/en/services/route/]
+# *	[information about accomodation |
+#	http://www.utwente.nl/en/practical_information/accommodation/hotels.doc/]
+#
+#The [web pages of the QEST conference |
+#http://www.qest.org/qest2004/] that was held here last summer
+#contain more information that may be interesting and/or still valid
+#(like information about the ``venue'' and about ``transportation'').
+#
+#A bit more about accomodation:
+#
+#In addition to the [university information about accomodation |
+#http://www.utwente.nl/en/practical_information/accommodation/hotels.doc/] there is [accomodation info from the QEST conference | http://www.qest.org/qest2004/accomodation] that still kind of applies. In addition to that information I have tried to find information about the less-expensive hotels here.
+#
+#On-campus there is ``logica''. Most rooms have no own toilet or
+#shower (shared on coridor). Room price approx. EUR 42 (incl
+#breakfast). Contact info under QEST link; when booking there,
+#mention ``twente9con''. The also on-campus ``drierburgt'' is more
+#expensive, see their website (eg via QEST accomodation page).
+#
+#Off-campus there is, among others, the parkhotel (contact info under
+#QEST link). The parkhotel has rooms with (prices include breakfast)
+# *	neither shower nor toilet in the room, but shared on the coridor
+#	(single EUR 35, double EUR 55)
+# *	shower in the room, but toilet shared on the coridor (single EUR
+#	40, double EUR 65)
+# *	both shower and toilet in the room (single EUR 50, double EUR 75)
+#
+#There is a bus stop for lines 3, 17, 18 (see above) near the
+#parkhotel.
+#
+#This page is in progress, let me know your feedback at
+#Axel.Belinfante@cs.utwente.nl
+#

@@ -1,0 +1,38 @@
+9P2010
+D1221753930
+Aericvh
+#
+#MOTIVATION
+#
+#In my use of 9P within the Linux and IBM communities there have been
+#several requests for extensions to better support Linux environments
+#or features not currently a part of the protocol (locking, caching,
+#batch operations, storage networking, etc.) As such, I'd like to
+#work towards a specification of the protocol which can accomodate
+#these extensions in as non-intrusive a way as possible (the
+#counter-example being 9P2000.u which while negotiated ends up
+#complicating clients and servers who wish to use it).
+#
+#BASICS
+#
+#The core protocol (size prefix, operation, tag) remains the same.
+#The existing 9P2000 operations remain the same, 9P2000.u will be
+#depricated by the new extension model. Extensions will exist in a
+#complimentary namespace -- that is to say operation identifiers will
+#not overlap with existing operations, and all extensions will use
+#new operations as opposed to changes to existing operations.
+#Alternate extension op-codes spaces may be negotiated by optional
+#prefixes during Tversion negotiation -- but every effort will be
+#made to keep operations within the existing namespace.
+#
+#The extensions are OPTIONAL, servers which don't wish to implement
+#them (or any subset of them) simply returns Rerror -- well behaved
+#clients will fall back to the core 9P2000 operations.
+#
+#OPERATION CODE RESERVATION
+#
+#To facilitate complimentary extensions, we'll use a wiki page
+#[9P2010 Operations] to coordinate op-code reservation for specific
+#extensions. It will be the definitive registration resource for the
+#time being.
+#

@@ -1,0 +1,15 @@
+pq
+
+PQ is an implict-relational database. It is flexible, light-weight,
+and fast.
+
+The main limitation of pq as a system is that there is no defined
+protocol for updates. The system has mostly been used for
+directory-like data, where occasional batch imports happen, and are
+enough. Various update mechanisms have existed in the past, but none
+have been made publicly available.
+
+Another significant limitation (although less systematic) is that ev,
+the current on-disk data store, has no provision for binary data. One
+can work with encoded data, but not arbitrary binary data directly.
+

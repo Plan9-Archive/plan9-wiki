@@ -1,0 +1,412 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Adding your face (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Adding your face <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Wed Feb  6 12:35:59 EST 2013</a>, a
+</div><hr /><a href="http://plan9.bell-labs.com/magic/man2html/6/face"><i>face</i>(6)</a>
+files
+are
+low
+resolution
+images
+that
+symbolize
+a
+person
+or
+group
+of
+people,
+for
+example
+a
+user,
+a
+company,
+a
+network
+provider,
+or
+a
+country.
+<p class='para'>
+These
+files
+are
+read
+by
+the
+<a href="http://plan9.bell-labs.com/magic/man2html/1/faces"><i>faces</i>(1)</a>
+command
+which
+uses
+them
+to
+display
+in
+its
+window,
+a
+small
+image
+for
+each
+user's
+mail
+box
+message.
+</p>
+
+<p class='para'>
+face
+files
+are
+usually
+created
+by
+rescaling
+either
+a
+gif
+or
+jpg
+image.
+</p>
+
+<pre>
+jpg -c myface.jpg  | iconv -c m8 | resample -x 48 -y 48 &gt; myface.1
+</pre>
+
+<p class='para'>
+If
+the
+image
+contains
+more
+than
+just
+your
+face
+or
+if
+the
+exposure
+is
+non-optimal,
+Russ
+Cox
+has
+written
+a
+tool
+which
+allows
+you
+to
+trim
+and
+adjust
+your
+image,
+though
+this
+only
+writes
+black
+and
+white
+images.
+</p>
+
+<p class='para'>
+Mug
+insists
+for
+its
+input
+to
+be
+at
+least
+100x100
+pixels
+and
+the
+line
+below
+adds
+a
+white
+border
+around
+the
+image
+which
+is
+useful
+-
+giving
+you
+room
+to
+maneuver
+when
+editing.
+</p>
+
+<pre>
+jpg -c myface.jpg |  resample -x 100  |  crop -b 255 255 255 -i -30 |  mug &gt; face.1
+</pre>
+
+<p class='para'>
+The
+manual
+page
+is
+<a href="http://plan9.bell-labs.com/magic/man2html/1/mug"><i>mug</i>(1)</a>.
+</p>
+
+<p class='para'>
+Once
+you
+have
+created
+your
+face,
+install
+it
+in
+/lib/face/48x48x8/f/face.1
+(your
+directory
+path
+may
+vary)
+and
+edit
+/lib/face/.machines
+and
+/lib/face/48x48x8/.dict
+as
+appropriate
+(see
+<a href="http://plan9.bell-labs.com/magic/man2html/1/faces"><i>faces</i>(1)</a>).
+</p>
+
+<p class='para'>
+<a href="../9srv.net">9srv.net</a>
+maintains
+a
+public
+faces
+database.
+If
+you
+do
+not
+have
+a
+9srv
+account,
+you
+can
+execute
+<pre>
+cd /lib/face &amp;&amp; con -l tcp!9srv.net!50001 | gunzip | tar -x
+</pre>
+which
+will
+create
+a
+README
+file,
+a
+"people"
+directory,
+and
+a
+"domains"
+directory.
+This
+will
+not
+overwrite
+anything
+in
+the
+standard
+distribution
+or
+changes
+you've
+made
+to
+.machinelist
+or
+any
+of
+the
+48x48xn
+directories.
+The
+README
+file
+contains
+more
+examples
+for
+generating
+faces.
+If
+your
+email
+address
+consists
+of
+only
+the
+characters
+<a href="mailto:a-zA-Z0-9.@">a-zA-Z0-9.@</a>,
+you
+can
+add
+your
+face
+to
+the
+list
+by
+sending
+a
+correctly-generated
+<a href="http://plan9.bell-labs.com/magic/man2html/6/face"><i>face</i>(6)</a>
+file
+as
+an
+email
+attachment
+to
+add
+at
+face
+dot
+9srv
+dot
+net.
+Submissions
+for
+folks
+with
+other
+email
+addresses,
+as
+well
+as
+for
+additional
+domains,
+will
+be
+handled
+manually;
+email
+a
+at
+9srv
+dot
+net.
+</p>
+
+<a name="SEE_ALSO" /><h3>SEE ALSO</h3>
+
+<p class='para'>
+<a href="http://doc.cat-v.org/bell_labs/face_the_nation/">Face
+the
+Nation
+by
+Rob
+Pike
+and
+David
+L.
+Presotto</a>.
+</p>
+
+<p class='para'>
+There
+is
+a
+database
+of
+faces
+(picons
+in
+their
+terminology)
+at
+Indinana
+University.
+This
+includes
+the
+Usenix
+Face
+saver
+project
+archives,
+many
+company
+logos,
+and
+other
+misc
+images.
+<a href="http://ftp.cs.indiana.edu/pub/faces/picons/">http://ftp.cs.indiana.edu/pub/faces/picons/</a>
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Wed Feb  6 12:35:59 EST 2013</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

@@ -1,0 +1,37 @@
+GSoC
+
+Plan 9 participates in Google's Summer of Code event. We have
+participated in 2007, 2009, 2010, 2011, 2013, and are again applying
+as a mentoring organization in 2014. This has been a really positive
+experience for us and for our students, and we hope to make this the
+best year yet for all involved.
+
+Things are underway for 2014. (See the [program timeline |
+http://www.google-melange.com/gsoc/events/google/gsoc2014].)
+
+If you're a prospective student, now's a good time to look over our
+[gsoc-2014-ideas] page and think about what you'd like to do for the
+summer. Don't be shy about suggesting your own projects, too; we are
+always happy to discuss project ideas related to the Plan 9 family of
+technologies. You should also probably sign up for [9fans |
+http://mail.9fans.net/listinfo/9fans], or main mailing list, if you
+aren't already on it. You can also check out our [GSoC Student
+Application] template and our [GSoC Student Expectations].
+
+The entire community is encouraged to contribute good summer-sized
+ideas to the [gsoc-2014-ideas] page.
+
+Anyone who wants to follow along in all the GSoC fun is invited to
+join our [Google Group | http://groups.google.com/group/plan9-gsoc/].
+We do a lot of planning and discussion of the program there, and
+that's where all the regular student and mentor reports will go (with
+consolidated summaries sent to 9fans).
+
+If you're a prospective mentor and you're not on our mentor's mailing
+list, contact Anthony Sorace (a@9srv.net).
+
+To make sure everyone's on the same page going in, we've tried to
+make our expectations on various parties explicit. To that end, we
+have pages for [GSoC Student Expectations], [GSoC Mentor
+Expectations], and [GSoC Admin Expectations].
+

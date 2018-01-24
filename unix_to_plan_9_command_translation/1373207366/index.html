@@ -1,0 +1,470 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>UNIX to Plan 9 command translation (as of Sun Jul  7 10:29:26 EDT 2013)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>UNIX to Plan 9 command translation</h1>
+<h2><i>-as of Sun Jul  7 10:29:26 EDT 2013-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+The
+command
+set
+of
+Plan
+9
+is
+similar
+to
+that
+of
+UNIX.
+The
+commands
+fall
+into
+several
+broad
+classes.
+<p class='para'>
+Some
+are
+new
+programs
+for
+old
+jobs:
+programs
+like
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ls"><i>ls</i>(1)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cat"><i>cat</i>(1)</a>,
+and
+<a href="http://plan9.bell-labs.com/magic/man2html/1/who"><i>who</i>(1)</a>
+have
+familiar
+names
+and
+functions
+but
+are
+new,
+simpler
+implementations.
+Who,
+for
+example,
+is
+a
+shell
+script,
+while
+ps
+is
+just
+163
+lines
+of
+C
+code.
+</p>
+
+<p class='para'>
+Some
+commands
+are
+essentially
+the
+same
+as
+their
+UNIX
+ancestors:
+<a href="http://plan9.bell-labs.com/magic/man2html/1/awk"><i>awk</i>(1)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/1/troff"><i>troff</i>(1)</a>,
+and
+others
+have
+been
+converted
+to
+ANSI
+C
+and
+extended
+to
+handle
+Unicode,
+but
+are
+still
+the
+familiar
+tools.
+</p>
+
+<p class='para'>
+Some
+are
+entirely
+new
+programs
+for
+old
+niches:
+the
+shell
+<a href="http://plan9.bell-labs.com/magic/man2html/1/rc"><i>rc</i>(1)</a>,
+text
+editors
+<a href="http://plan9.bell-labs.com/magic/man2html/1/acme"><i>acme</i>(1)</a>
+and
+<a href="http://plan9.bell-labs.com/magic/man2html/1/sam"><i>sam</i>(1)</a>,
+debuggers
+<a href="http://plan9.bell-labs.com/magic/man2html/1/acid"><i>acid</i>(1)</a>
+and
+<a href="http://plan9.bell-labs.com/magic/man2html/1/db"><i>db</i>(1)</a>,
+and
+others
+displace
+the
+better-known
+UNIX
+tools
+with
+similar
+jobs.
+</p>
+
+<p class='para'>
+Compatibility
+was
+not
+a
+requirement
+for
+the
+system.
+Where
+the
+old
+commands
+or
+notation
+seemed
+good
+enough,
+we
+kept
+them.
+When
+they
+didn't,
+we
+replaced
+them.
+</p>
+
+<p class='para'>
+The
+following
+list
+of
+some
+UNIX
+commands,
+files,
+and
+shell
+terminology,
+which
+you
+can
+emulate
+in
+a
+Plan
+9
+system:
+</p>
+
+<pre>
+UNIX                       Plan 9 from Bell Labs
+
+`command`                  `{ command }
+
+.profile                   $home/lib/profile
+
+^C (Ctrl+C)                DEL key -- doesn't work without rio(4) though.
+
+~                          $home
+                           /usr/$user/
+
+~username                  /usr/username
+
+"$@"                       $*
+
+1&gt;&amp;2                       &gt;[2=1]
+
+apropos                    lookman(1) 
+
+at specific-time           while (! ~ (`{ date }) (specific-time)); commands
+
+cc                         one of ones in 0c(1) followed by the same of 0l(1)
+                           pcc(1) for Standard C/POSIX programs
+
+cp -r /foo/ /bar/          mkdir /bar/foo/ &amp;&amp; dircp /foo/ /bar/foo/
+
+crontab -e                 sam /cron/$user/cron
+
+curl http://foo/bar
+wget http://foo/bar        hget http://foo/bar &gt; bar
+                           (progress bar, -t for ascii) hget -v -o bar http://foo/bar |[2] aux/statusbar [-t] 'downloading'
+
+cut                        awk -F ...
+
+apt-get dist-upgrade
+rpm -Ua
+yum -c update              /usr/glenda/bin/rc/pull
+
+apt-get install
+rpm -i package
+yum -c install package     9fs sources ; cd /n/sources/
+                           /n/sources/contrib/fgb/root/rc/bin/contrib/install fgb/contrib ; contrib/install $who/$what
+
+df                         disk/kfscmd check 
+                           echo fsys all df | con -l /srv/fscons
+                           df in fossilcons(8)
+
+ee
+emacs
+jim
+joe
+nano
+pico
+vi
+xedit                      sam
+                           acme
+
+expr                       hoc -e
+
+find                       du -a | grep pattern 
+                           grep pattern `{du -a root} 
+   -name                   du -a root | grep name 
+   pattern in a file       grep -n pattern `{du -a root | awk '{print $2}'}
+   -exec cp '{}' x ';'     cp `{ du -a | grep pattern } x
+
+fsck                       echo fsys all check fix | con -l /srv/fscons
+                           if running venti, for a thorough fix: echo fsys all check fix venti snapshot | con -l /srv/fscons
+
+ftp                        ftpfs host.domain (Remote files apear in /n/ftp).
+
+ftpd                       aux/listen ftp
+
+getopt                     getflags(8)
+
+groff -l                   troff | lp
+
+grops                      dpost - see troff(1)
+
+head                       sed 10q
+
+hwclock                    cat '#r/rtc'
+                           aux/timesync
+
+id                         echo $user 
+                           cat /dev/user 
+                           grep `{cat /dev/user} /adm/users 
+                           grep $user /adm/users
+
+iostat                     iostats(4)
+
+ifconfig(IP address)       cat /net/ndb
+
+ifconfig                   ip/ipconfig ether /net/ether0 add 192.168.1.32
+                           ip/ipconfig # let dhcp do it
+
+kill pid                   stop processname | rc
+                           echo stop &gt; /proc/pid/ctl
+                           (in both cases, switch stop with start to get it back)
+
+kill -9 pid
+kill -KILL pid             slay processname | rc
+                           echo kill &gt; /proc/pid/ctl
+
+ld                         one of the ones in 0l(1)
+
+ls                         lc -F
+
+lspci                      pci -v
+
+make                       mk (not exactly the same)
+                           if necessary, use make in ape/psh
+
+man -k                     lookman(1)
+
+less
+more                       p
+
+mount [-p flag]            bind(1) 
+                           unmount(1) 
+                           9fs(1) 
+                           srv(1) 
+                           import(4)
+                           exportfs(4) 
+   -p                      ns(1)
+
+mount /dev/fd0 /mnt        a: ; cd /n/a:
+
+mount /dev/acd0 /mnt       9660srv
+                           mkdir /n/9660
+                           mount /srv/9660 /n/9660 /dev/sdD0/data
+
+netcat -l                  aux/listen1 -t tcp!*!$port command
+
+netstat [-r flag]          netstat(1) 
+   -r                      cat /net/iproute
+
+nfsstat                    iostats(4)
+
+nslookup                   ndb/dnsquery
+
+passwd                     auth/changeuser username (first time)
+                           passwd (subsequent times)
+
+paste [FILE] ...           pr -m [FILE] ...
+
+PATH=$PATH:...             bind -a directory /bin
+
+ping                       ip/ping
+
+pkginfo                    wrap(8)
+
+reboot                     fshalt -r (note that there is a reboot command, but it doesn't call fshalt)
+
+rmdir                      rm(1)
+                           With contents inside: rm -r dir
+
+sh                         rc(1)
+                           if necessary, ape/psh
+
+shutdown                   fshalt(8)
+                           echo reboot &gt; /dev/reboot
+                           echo panic &gt; /dev/reboot
+
+snoop                      snoopy(8)
+
+source                     .
+
+startx
+launch (Andrew Project)
+mux (Blit's wm)            rio (replaces 8½ and help)
+
+tar xzf file.tgz           tar xf file.tgz
+
+tcpdump                    snoopy(8)
+
+traceroute                 ip/traceroute
+
+tree                       du $* | awk '{print $2}' | sort | sed 's/[^\/]+\//	/g'
+
+ufs{dump|restore}          yesterday(1) 
+                           history(1) 
+                           fs(4)
+
+vigr
+vipw                       [Adding a new user]
+
+vlock                      http://mirtchovski.com/lanlp9/rlock
+                           (specify password at invocation)
+
+vmstat                     stats(1) 
+                           cat /dev/sysstat 
+                           cat /dev/swap
+
+which                      whatis
+
+xbiff                      faces
+
+xclock                     clock
+                           games/catclock
+                           faces
+
+xditview                   troff | page
+                           troff | proof
+
+xload                      stats -l
+
+xlock                      /n/sources/contrib/steve/conslock
+                           (authenticates against authentication server)
+
+xlogo                      window 'hget http://plan9.bell-labs.com/plan9/img/plan9bunnysmblack.jpg | page'
+
+xman cat                   man -t cat | page
+
+xv file.jpg                page file.jpg
+
+xwininfo                   winwatch
+
+yes                        while() { echo y }
+   yes arg                 while() { echo arg }
+
+</pre>
+
+<a name="OTHER_APPLICATIONS:" /><h3>OTHER APPLICATIONS:</h3>
+
+<ul>
+
+<li>
+<a href="../../Web_browsers">Web
+browsers</a>
+</li>
+
+<li>
+Word
+processing:
+<a href="http://plan9.bell-labs.com/magic/man2html/1/troff"><i>troff</i>(1)</a>
+</li>
+</ul>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Sun Jul  7 10:29:26 EDT 2013</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

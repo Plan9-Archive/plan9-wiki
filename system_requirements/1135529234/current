@@ -1,0 +1,22 @@
+System Requirements
+D1135529234
+Agkscott (24.1.148.190)
+#An x86-based PC with:
+#
+# *	32MB of RAM
+# *	a supported video card (see [Supported PC hardware |
+#	http://plan9.bell-labs.com/wiki/plan9/Supported_PC_hardware/index.html]).
+# *	a hard disk with 300 MB of unpartitioned space with a free
+#	primary partition slot
+#
+#These are the requirements for the installation procedure. A machine
+#with 16MB of memory and no free disk space at all will work as a
+#terminal but won't run the installer so you need a file server and
+#auth server first.
+#
+#If you wish to install from local media, you need a FAT file system
+#or a CD-ROM drive (and a CD writer or some other way to get the
+#distribution archive on a CD). If you wish to install over the
+#internet, you need a supported Ethernet card or a PPP dial-up
+#account using a modem (not a Winmodem).
+#

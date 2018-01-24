@@ -1,0 +1,58 @@
+Adding A New User
+D1361601579
+Amycroftiv
+#Creating a new user typically requires three steps:
+# *	Create the user on the file server
+# *	Create the user on the authentication server(not required for
+#	standalone terminals)
+# *	When the user logs in the first time, he should execute
+#	/sys/lib/newuser
+#
+#FILE SERVER
+#
+#To create a new user, first create the user on the file server. When
+#running fossil(4), you can use
+#
+#! con -l /srv/fscons
+#
+#to connect to the file server console. To disconnect, type ctl-\ and
+#then type q at the >>> prompt. Type enter to see a prompt.
+#
+#Fossilcons(8) describes the fossil console commands in detail. To
+#create a new user run(replacing <user> with the desired user name):
+#
+#! uname <user> <user>
+#
+#To allow the user to make changes to the system (configuration)
+#files, which are writable by group sys, add the user to sys:
+#
+#! uname sys +<user>
+#
+#And similarly if desired for the files in /adm:
+#
+#! uname adm +<user>
+#
+#If you are using the (old) WORM-based file server, the equivalent
+#commands are
+#
+#! newuser <user>
+#! newuser sys +<user>
+#
+#See fs(8) for details.
+#
+#AUTH SERVER
+#
+#If you are running a Plan 9 auth server, you will also need to
+#create an account on the authentication server, using
+#auth/changeuser (see auth(8)). This step is not required for a
+#standalone machine.
+#
+#SETUP
+#
+#When the user logs in for the first time, he or she should run
+#/sys/lib/newuser to create a minimal Plan 9 home directory.
+#
+#SEE ALSO
+#
+#fossil(4), users(6), fossilcons(8), newuser(8), auth(8)
+#

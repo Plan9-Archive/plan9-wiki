@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Setting the right keyboard map (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Setting the right keyboard map</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+To
+change
+the
+default
+ASCII
+keyboard
+map
+to
+your
+local
+one
+(e.g
+German)
+use
+<pre>
+% kbmap
+</pre>
+
+<p class='para'>
+Select
+your
+preferred
+keyboard
+map
+from
+one
+of
+the
+entries
+in
+the
+list
+with
+mouse
+button
+three
+(right
+button)
+and
+then
+exit
+with
+the
+q
+key.
+</p>
+
+<p class='para'>
+Alternatively
+you
+could
+also
+drop
+the
+following
+in
+your
+9term:
+<pre>
+% cat /sys/lib/kbmap/de &gt; /dev/kbmap
+</pre>
+
+</p>
+
+<p class='para'>
+To
+make
+this
+setting
+durable
+for
+$user
+edit
+/usr/$user/lib/profile
+and
+add
+the
+above
+mentioned
+line
+before(!)
+the
+switch
+where
+rio
+is
+executed.
+It
+should
+look
+something
+like
+this:
+</p>
+
+<pre>
+bind -a $home/bin/rc /bin
+bind -a $home/bin/$cputype /bin
+bind -c $home/tmp /tmp
+font = /lib/font/bit/pelm/euro.9.font
+switch($service){
+case terminal
+	plumber
+	upas/fs
+	echo -n accelerated &gt; '#m/mousectl'
+	echo -n 'res 3' &gt; '#m/mousectl'
+	prompt=('term% ' '	')
+	fn term%{ $* }
+	cat /sys/lib/kbmap/de &gt; /dev/kbmap
+	exec rio
+(rest of the file...)
+</pre>
+
+<p class='para'>
+Instead
+of
+the
+German
+"de"
+layout
+you
+could
+also
+use
+the
+French
+"azerty"
+or
+whatever
+else.
+</p>
+
+<p class='para'>
+(Todo:
+How
+to
+make
+that
+setting
+global
+in
+/rc/bin/termrc)
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Mon Dec 21 18:04:22 EST 2009</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

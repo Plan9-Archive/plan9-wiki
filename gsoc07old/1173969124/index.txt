@@ -1,0 +1,117 @@
+GSoC07
+
+Google Summer of Code 2007
+
+STUDENTS
+
+Plan 9 is an excellent environment to learn about many aspects of
+computing: operating systems, distributed systems, programming
+languages, network protocols, etc.
+
+Plan 9 is not a difficult environment, and simplicity is its main
+quality, but it is very *different* from anything else you might be
+used to!
+
+Fundamental requirements:
+
+ *	A very open mind to explore and embrace very different concepts
+	and environments.
+ *	To enjoy challenges that stretch your preconceptions to the limit.
+
+General recommended skills:
+
+ *	Understanding of basic Unix principles and philosophy.
+ *	Some programming experience, ideally with C but other languages
+	are fine.
+
+If you have any questions you can check our irc channel #plan9-gsoc
+in irc.freenode.org or join the [Plan 9 Google Summer of Code |
+http://groups.google.com/group/plan9-gsoc/] mailing list.
+
+PROJECTS
+
+Here is a list of projects we suggest, even if they seem complex and
+difficult, they are probably much simpler than you think, in Plan 9
+everything is simpler ;)
+
+Please don't hesitate to check with us to discuss projects and feel
+free to suggest any new project that is both exciting and innovative.
+
+Misc and various projects:
+ *	[Cross domain authentication]
+ *	General purpose boot loader based on Plan 9 kernel and /dev/reboot
+ *	Ssh2 client/server (complete native implementation or port a new
+	one from another system)
+ *	System for automatic detection/selection of screen resolution
+ *	[Zeroconf | http://www.zeroconf.org] network configuration support
+	(ideally, with a Plan 9 twist)
+
+User space native Plan 9 applications:
+
+ *	Bugfs: a bug tracking system with an fs interface
+ *	Complete native dis (to run Inferno applications like native apps)
+ *	CSS rendering for abaco web browser
+
+Port of foreign applications:
+
+ *	Video player (eg., port mplayer)
+ *	Update GCC port and have it accepted upstream
+ *	Do a port of the [Erlang | http://www.erlang.org] language
+	(including appropriate parts of the library support).
+
+Kernel related work:
+
+ *	Write a driver for a piece of hardware of your choice
+ *	OLPC port
+ *	Finish Inferno port to the Nintendo DS
+
+[9P | http://cat-v.org/9p/] related projects:
+
+ *	fs driver for Solaris, FreeBSD, OpenBSD, NetBSD, Windows, BeOS, or
+	any other operating system (a Linux filesystem already exis)
+ *	9P implementation in your favorite programming language.
+ *	A framework to test the interoperativity of all existings 9P
+	implementations.
+ *	Implement 9P extension for 'batch requests'
+ *	9P client implementation in JavaScript, so that a browser can
+	access resources sensibly (ie, not using HTTP/XML).
+ *	Firefox (and/or other browser plug-in) implementing 9P server(s)
+	to make browser resources visible with 9P
+
+[Plan 9 from User Space | http://plan9.us] or other work in foreign
+systems:
+ *	Add missing kencc extensions to GCC
+ *	Port compilers to Linux or BSD
+
+Please add any other project suggestions to the list, see also:[TODO].
+
+MENTORS
+
+ *	John-Galt: fbsdaemon AT gmail.com
+ *	npe: noah.evans AT gmail.com
+ *	maht: Maht.Lawless AT gmail.com
+ *	garbeam: garbeam AT gmail.com
+ *	newmanbe: btd.newman AT gmail.com
+ *	fgb: benavento AT gmail.com
+ *	uriel: uriel99 AT gmail.com
+
+(We expect to have a few more mentors in the next few days)
+
+TIMELINE
+
+ *	March 14: List of accepted mentoring organizations published on
+	code.google.com; student application period opens
+ *	March 24: Student application deadline
+ *	April 9: List of accepted student applications published on
+	code.google.com
+ *	May 28: Students begin coding for their GSoC projects; Google
+	begins issuing initial student payments
+
+For a more detalied timeline see [the official GSoC site |
+http://code.google.com/support/bin/answer.py?answer=60325&topic=10729].
+
+SEE ALSO
+
+Our syster project Inferno is also participating in GSoC07, see:
+[http://code.google.com/p/inferno-os/wiki/SummerOfCode_Applicants].
+

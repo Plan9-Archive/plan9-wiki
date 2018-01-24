@@ -1,0 +1,184 @@
+GSoC Student Application
+D1392217539
+Aa
+#
+#PLAN 9 GOOGLE SUMMER OF CODE STUDENT APPLICATION TEMPLATE
+#
+#Please use this template as a guide for information you send in any
+#project application. Unless specifically stated otherwise, all
+#information we request is required. Ensuring that your application
+#is properly and fully filled out saves us all time, so please be
+#thorough and accurate!
+#
+#Students are encouraged to stop by #plan9-gsoc on Freenode ([IRC])
+#if they've got questions, or to mail 9fans (on our [mailing lists]
+#page). They should also review the [GSoC Student Expectations] and
+#be comfortable with what's described there.
+#
+#------------------------------------------------------ 
+#PERSONAL INFORMATION
+#
+#CONTACT INFORMATION
+#
+# *	Name and Email: Your full name and a valid email address. This
+#	will serve as our initial primary method of communication, so
+#	please make sure it is correct!
+#
+# *	Chat and Instant Messaging: Real-time chat is free (or at least
+#	inexpensive) and is a great way to stay in touch with mentors and
+#	others throughout the course of the summer. For example: "dhobsd on
+#	AIM; evildho on IRC (freenode, efnet)." We require at least one of
+#	these, and strongly encourage participation in our IRC channel,
+#	#plan9-gsoc on irc.freenode.net.
+#
+# *	Phone number: We'll only use this after exhausting all other
+#	means of contact (and once before accepting students, to verify
+#	it). Please enter a full international phone number (for example,
+#	"+1 216 555 1212").
+#
+#EDUCATIONAL INFORMATION
+#
+# *	Institution: What college or university are you attending?
+#
+# *	Location: Where will you be working from? Some of our mentors
+#	prefer to work with students in nearby time zones.
+#
+#BIOGRAPHICAL INFORMATION
+#
+# *	Bio, Resumé, or C.V.: Help us get to know you better. Tell us
+#	about your skills, experience, and interest. This needn't be too
+#	fancy, but some information on what you've done and what you're
+#	interested in would help a lot.
+#
+# *	Code Samples: Summer of Code projects are inherently
+#	code-focused, and we'd like to see some pointers to code you've
+#	written, either from your own projects or projects you've
+#	contributed to. We're especially interested in things which help us
+#	see why you're a good match for the particular project you're
+#	applying for.
+#
+# *	Interest in Plan 9: Plan 9 has lots of great ideas, but they're
+#	different from what you find in other environments; we want to make
+#	sure you're not coming in expecting Unix. We'd like to know what it
+#	is about Plan 9 (or related technologies) that you find intriguing;
+#	have you used them before? Which ones (Plan 9, Inferno, v9fs, etc)?
+#	Have you read the papers?
+#
+#CODE CHALLENGE
+#
+#We want to be sure you understand the basics of Plan 9 concepts and
+#coding. Please take a look at one (or more) of the following options
+#and submit your solution along with your application. If you need
+#any clarification, or have any general questions on any of these
+#topics, please feel free to get in touch either via the #plan9 or
+##plan9-gsoc channels on Freenode, or via the plan9-gsoc mailing list
+#at http://groups.google.com/group/plan9-gsoc.
+#
+# *	Write a 9p/styx server to do something trivial. Something a bit
+#	more involved than "Hello, World", but it needn't be anything
+#	fancy. Perform rot-13 on a block of text, or fetch and return the
+#	weather, for example.
+#
+# *	Write a simple Acme client that does something interesting. The
+#	[Inferno Programmer's Notebook | http://ipn.caerwyn.com/] has some
+#	[interesting ideas | http://ipn.caerwyn.com/search/label/acme] done
+#	in Inferno, but feel free to pick the Acme in Inferno, Plan 9, or
+#	Plan 9 from User Space.
+#
+# *	Fix a bug and submit a patch. Pick any issue in the [Inferno |
+#	http://code.google.com/p/inferno-os/issues/list] issues list or the
+#	[9atom | http://www.quanstro.net/plan9/9atom/todo.html] todo list
+#	and submit a patch addressing it.
+#
+# *	Port a Unix application to Plan 9. Either pick a small program
+#	and do it without using APE, or use APE for a medium/large program.
+#
+# *	srvssh posts a mode-666 entry into /srv. Fix this to use saner
+#	permissions.
+#
+# *	The example code on the tlssrv(8) man page is dangerous:
+#	tcp!*!xxx allows anybody on your local network to hijack your
+#	tunnel. Submit a patch to the man page to make the example safer.
+#
+#A few older, somewhat more involved ideas:
+#
+# *	I think [http://9fans.net/archive/2005/12/221] means that the
+#	longjmp() and waserror() documentation should be patched
+#
+# *	Port SoftFloat/TestFloat
+#	([http://www.jhauser.us/arithmetic/SoftFloat.html]); please include
+#	manual pages as appropriate.
+#
+# *	Investigate, identify, and fix issues with 4096-bit SSH keys in
+#	native sshserve.
+#
+# *	Wiki bug (via http access): creating a page with a name
+#	containing an underscore interacts "poorly" with the "map spaces to
+#	underscores" name mangling.
+#
+# *	vncv has some possible issues with ^Z. Identify and address.
+#
+#------------------------------------------------------ 
+#PROJECT INFORMATION
+#
+#PROJECT OVERVIEW
+#
+#Tell us about the specific project you'd like to work on. If you've
+#picked something from our ideas page, please make the title match
+#what's on that page. Regardless, you should be able to describe the
+#project in your own words (even if it's just to show us you
+#understand what an existing idea is looking for). Especially if your
+#proposal is your own idea, be sure to include enough detail so that
+#we understand your idea.
+#
+#Do *not* copy / paste an idea from the ideas page verbatim.
+#
+#SCHEDULE / TIMELINE
+#
+#Part of effective engineering is being able to break a project down
+#into component parts and evaluate those. Do so: tell us what the
+#component parts of your project are and build a schedule for them.
+#
+#We'd like you to break down your project into weekly (or smaller, if
+#it makes sense) milestones. This will allow you to get a great feel
+#for the work required for your project, and will give everyone
+#involved a schedule to help guide project planning along the way. It
+#will also help us evaluate the scope and complexity of your project,
+#as well as how well-formed your idea is.
+#
+#We understand that this schedule will change as the summer goes on,
+#based on experience working on the project and discussions with your
+#mentor. The objective here is not to hold you rigidly to what you
+#say here, but rather to demonstrate your understanding of the
+#project.
+#
+#AVAILABILITY
+#
+#Summer of Code is a significant commitment. If selected, you'll be
+#undertaking a project designed to fill the summer. Please tell us
+#about any other commitments you have during the summer. How many
+#hours per week are you prepared to dedicate to this? Will you be
+#taking courses, as well? Working? Any vacation time planned? This
+#should already be included in your proposed schedule above, but call
+#out any vacation, late start or other such exceptional issues
+#explicitly here.
+#
+#MENTOR COMMUNICATION
+#
+#Summer of Code is a mentoring arrangement, and communication with
+#your mentor is key. Please describe your expectations for
+#communication with your mentor. Are you prepared to provide progress
+#updates at least a few times a week? How are you most comfortable
+#communicating (email, blog, IRC, so on)? While our mentors are
+#making a commitment to give you time and attention over the summer,
+#"stuff happens"; what would you do if your mentor disappeared for a
+#week during the summer?
+#
+#OPTIONAL: SUGGESTED MENTOR
+#
+#If you've spoken to someone in our community about this project, and
+#they've agreed to mentor you for the summer, list them here. This is
+#optional, but is particularly valuable if you're proposing a project
+#not on our list. If it is on our ideas list, we can mostly figure
+#this out.
+#

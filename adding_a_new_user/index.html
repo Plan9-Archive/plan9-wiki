@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Adding A New User (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Adding A New User</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+Creating
+a
+new
+user
+typically
+requires
+three
+steps:
+<ul>
+
+<li>
+Create
+the
+user
+on
+the
+file
+server
+</li>
+
+<li>
+Create
+the
+user
+on
+the
+authentication
+server(not
+required
+for
+standalone
+terminals)
+</li>
+
+<li>
+When
+the
+user
+logs
+in
+the
+first
+time,
+he
+should
+execute
+/sys/lib/newuser
+</li>
+</ul>
+
+<a name="FILE_SERVER" /><h3>FILE SERVER</h3>
+
+<p class='para'>
+To
+create
+a
+new
+user,
+first
+create
+the
+user
+on
+the
+file
+server.
+When
+running
+<a href="http://plan9.bell-labs.com/magic/man2html/4/fossil"><i>fossil</i>(4)</a>,
+you
+can
+use
+</p>
+
+<pre>
+con -l /srv/fscons
+</pre>
+
+<p class='para'>
+to
+connect
+to
+the
+file
+server
+console.
+To
+disconnect,
+type
+ctl-\
+and
+then
+type
+q
+at
+the
+&gt;&gt;&gt;
+prompt.
+Type
+enter
+to
+see
+a
+prompt.
+</p>
+
+<p class='para'>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/Fossilcons"><i>Fossilcons</i>(8)</a>
+describes
+the
+fossil
+console
+commands
+in
+detail.
+To
+create
+a
+new
+user
+run(replacing
+&lt;user&gt;
+with
+the
+desired
+user
+name):
+</p>
+
+<pre>
+uname &lt;user&gt; &lt;user&gt;
+</pre>
+
+<p class='para'>
+To
+allow
+the
+user
+to
+make
+changes
+to
+the
+system
+(configuration)
+files,
+which
+are
+writable
+by
+group
+sys,
+add
+the
+user
+to
+sys:
+</p>
+
+<pre>
+uname sys +&lt;user&gt;
+</pre>
+
+<p class='para'>
+And
+similarly
+if
+desired
+for
+the
+files
+in
+/adm:
+</p>
+
+<pre>
+uname adm +&lt;user&gt;
+</pre>
+
+<p class='para'>
+If
+you
+are
+using
+the
+(old)
+WORM-based
+file
+server,
+the
+equivalent
+commands
+are
+</p>
+
+<pre>
+newuser &lt;user&gt;
+newuser sys +&lt;user&gt;
+</pre>
+
+<p class='para'>
+See
+<a href="http://plan9.bell-labs.com/magic/man2html/8/fs"><i>fs</i>(8)</a>
+for
+details.
+</p>
+
+<a name="AUTH_SERVER" /><h3>AUTH SERVER</h3>
+
+<p class='para'>
+If
+you
+are
+running
+a
+Plan
+9
+auth
+server,
+you
+will
+also
+need
+to
+create
+an
+account
+on
+the
+authentication
+server,
+using
+auth/changeuser
+(see
+<a href="http://plan9.bell-labs.com/magic/man2html/8/auth"><i>auth</i>(8)</a>).
+This
+step
+is
+not
+required
+for
+a
+standalone
+machine.
+</p>
+
+<a name="SETUP" /><h3>SETUP</h3>
+
+<p class='para'>
+When
+the
+user
+logs
+in
+for
+the
+first
+time,
+he
+or
+she
+should
+run
+/sys/lib/newuser
+to
+create
+a
+minimal
+Plan
+9
+home
+directory.
+</p>
+
+<a name="SEE_ALSO" /><h3>SEE ALSO</h3>
+
+<p class='para'>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/fossil"><i>fossil</i>(4)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/6/users"><i>users</i>(6)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/8/fossilcons"><i>fossilcons</i>(8)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/8/newuser"><i>newuser</i>(8)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/8/auth"><i>auth</i>(8)</a>
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Sat Feb 23 01:39:39 EST 2013</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

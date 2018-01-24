@@ -1,0 +1,323 @@
+<html>
+<head>
+<title>Expanding your Grid (Editing Sat Mar  2 22:08:38 EST 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Expanding your Grid</b></font> (Editing Sat Mar  2 22:08:38 EST 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Expanding your Grid">
+<input type="hidden" name="version" value="1362280118">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+Plan 9 was designed as a distributed system. After you install the
+distribution from the cd, you have a self-sufficient one machine
+system, a standalone terminal. We will consider this as "Level 0" -
+how do you proceed from here to a network of Plan 9 machines and
+provide Plan 9 services to other clients? Note that this guide does
+not imply a strict dependence on the previous level, it is entirely
+possible to setup a Plan 9 DHCP/PXE boot server (described in level
+7) without performing all the steps described in previous levels.
+This is a rough guide which proceeds in the order of increasing
+number of machines used and increasing elaboration and customization
+of configuration.
+
+LEVEL 1: UPGRADING THE INSTALL TO A CPU SERVER
+
+The traditional first step is following the [Configuring a Standalone
+CPU Server] wiki page. The transformation from terminal to cpu server
+provides many additional capabilities:
+
+ *	Remote access via cpu(1)
+ *	Multiple simultaneous users if desired
+ *	Exportfs(4) and other services such as ftpd(8)
+ *	Authentication with authsrv(6) for securing network services
+ *	Integration with other operating systems via Drawterm
+
+Even if you are only planning on making use of a single Plan 9
+system, it is highly recommended to configure it as a cpu server. You
+probably use other operating systems as well as Plan 9, and
+configuring your Plan 9 system as a cpu server will make it vastly
+more useful to you by enabling it to share resources easily with
+non-Plan 9 systems.
+
+It should also be noted that the division between terminals and cpus
+is mostly a matter of conventional behavior. It is possible to
+configure all services to run on a machine using the terminal kernel,
+but there is no particular advantage to this. The cpu kernel is easy
+to compile and can run a local gui and be used as a combined
+terminal/cpu server.
+
+LEVEL 2: CPU AND DRAWTERM CONNECTIONS BETWEEN MULTIPLE MACHINES
+
+The core functionality of a cpu server is to provide cpu(1) service
+to Plan 9 machines and Drawterm clients from other operating systems.
+The basic use of cpu(1) is similar to ssh in unix or remote desktop
+in Windows. You connect to the remote machine, and have full use of
+its resources from your terminal. However, Plan 9 cpu(1) also makes
+the resources of the terminal available to the cpu at /mnt/term. This
+sharing of namespace is actually the method of control also, because
+the cpu accesses the terminal's devices (screen, keyboard, mouse) by
+binding them over its own /dev. If you are a new Plan 9 user, you are
+not expected to understand this.
+
+Drawterm from other operating systems behaves the same way. When you
+[drawterm] to a Plan 9 cpu server, your local files will be available
+at /mnt/term. This means you can freely copy files between Plan 9 and
+your other os without the use of any additional protocols. In other
+words, when working with drawterm, your environment is actually a
+composite of your local os and the Plan 9 system - technically it is
+a three node grid, because the Drawterm program acts as an
+ultra-minimal independent Plan 9 terminal system, connecting your
+host os to the Plan 9 cpu server.
+
+For many home users, this style of small grid matches their needs. A
+single Plan 9 cpu/file/auth server functions both as its own
+terminal, and provides [drawterm] access to integrate with other
+operating systems. Some users like to add another light terminal only
+Plan 9 system as well. Recently (2013) Raspberry Pi's have become
+popular for this purpose. Another option with surprising benefits is
+using virtual machines for a cpu server. Because of Plan 9's network
+transparency, it can export all of its services and its normal
+working environment through the network.
+
+LEVEL 3: A SEPARATE FILE SERVER AND TCP BOOT CPUS
+
+A standard full-sized Plan 9 installation makes use of a separate
+file server which is used to tcp boot at least one cpu server and
+possibly additional cpus and terminals. A tcp booted system loads its
+kernel and then attaches to a root file server from the network. Some
+of the strengths of the Plan 9 design become more apparent when
+multiple machines share the same root fs.
+
+ *	Sharing data is automatic when the root fs is shared
+ *	Configuration and administration for each machine is located in
+	one place
+ *	Hardware use is optimized by assigning systems to the best-suited
+	role (cpu/file/term)
+ *	New machines require almost no configuration to join the grid
+
+If you have already configured a standalone cpu server, it can also
+act as a file server if you instruct its fossil(4) to listen on the
+standard port 564 for 9p file service. Choosing "tcp" at the "root is
+from" option during bootup allows you to select a network file
+server. You can use plan9.ini(8) to create a menu with options for
+local vs tcp booting. A single file server can boot any number of cpu
+servers and terminals.
+
+The first time you work at a terminal and make use of a cpu server
+when both terminal and cpu are sharing a root fs from a network file
+server is usually an "AHA!" moment for understanding the full Plan 9
+design. In Plan 9 "everything is a file" and the 9p protocol makes
+all filesystems network transparent, and applications and system
+services such as the sam(1) editor and the plumber(4) message passing
+service are designed with distributed architecture in mind. A
+terminal and cpu both sharing a root fs and controlled by the user at
+the terminal can provide a unified namespace in which you can easily
+forget exactly what software is running on which physical machine.
+
+LEVEL 4: SHARING /SRV /PROC AND /DEV BETWEEN MULTIPLE CPUS
+
+The use of synthetic (non-disk) filesystems to provide system
+services and the network transparent 9p protocol allow Plan 9 to
+create tightly coupled grids of machines. This is the point at which
+Plan 9 surpasses traditional unix - in traditional unix, many
+resources are not available through the file abstraction, nfs does
+not provide access to synthetic file systems, and multiple interfaces
+and abstractions such as sockets and TTYs must be managed in addition
+to the nfs protocol.
+
+In Plan 9 a grid of cpus simply import(4) resources from other
+machines, and processes will automatically make use of those
+resources if they appear at the right path in the namespace(4). The
+most important file trees for sharing between cpus are /srv, /proc,
+and some files from /dev and /mnt. In general all 9p services running
+on a machine will post a file descriptor in /srv, so sharing /srv
+allows machines to make new attaches to services on remote machines
+exactly as if they were local. The /proc filesystem provides
+management and information about running processes so import of /proc
+allows remote machines to control each other's processes. If machines
+need to make use of each other's input and output devices (the cpu(1)
+command does this) access is possible via import of /dev. Cpus can
+run local processes on the display of remote machines by attaching to
+the remote rio(4) fileserver and then binding in the correct /mnt and
+/dev files.
+
+LEVEL 5: SEPARATE ARCHIVAL DATA SERVERS AND MULTIPLE FILE SERVERS
+
+This guide has been referring to "the file server" and not making a
+distinction between systems backed by venti(8) and those without. It
+is possible and recommended to use venti(8) even for a small single
+machine setup. As grids become larger or the size of data grows, it
+is useful to make the venti server separate from the file server.
+Multiple fossil(4) servers can all use the same venti(8) server.
+Because of data deduplication multiple independent root filesystems
+may often be stored with only a slight increase in storage capacity
+used.
+
+Administering a grid should include a system for tracking the
+rootscores of the daily fossil snapshots and backing up the venti
+arenas. A venti-backed fossil by default takes one archival snapshot
+per day and the reference to this snapshot is contained in a single
+vac: score. See vac(1). Because fossil(4) is really just a temporary
+buffer for venti(8) data blocks and a means of working with them as a
+writable fs, fossils can be almost instantaneously reset to use a
+different rootscore using flfmt -v.
+
+To keep a full grid of machines backed-up, all that is necessary is
+to keep a backup of the venti(8) arenas partitions and a record of
+the fossil(4) rootscores of each machine. The rootscores can be
+recovered from the raw partition data, but it is more convenient to
+track them independently for faster and easier recovery. The simplest
+and best system for keeping a working backup is keeping a second
+active venti server and using venti/wrarena to progressively backup
+between them. This makes your backup available on demand simply by
+formatting a new fossil using a saved rootscore and setting the
+backup venti as the target. If the data blocks have all been
+replicated, the same rootscores will be available in both. See
+venti-backup(8).
+
+LEVEL 6: MULTI-OS GRIDS USING U9FS, 9PFUSE, INFERNO, PLAN9PORT, 9VX
+
+The 9p protocol was created for Plan 9 but is now supported by
+software and libraries in many other operating systems. It is
+possible to provide 9p access to both files and execution resources
+on non Plan 9 systems. For instance, Inferno speaks 9p (also called
+"styx" within Inferno) and can run commands on the host operating
+system with its "os" command. Thus an instance of Inferno running on
+Windows can bring those resources into the namespace of a grid.
+Another example is using plan9port, the unix version of the rc shell,
+and 9pfuse to import a [hubfs] from a Plan 9 machine and attach a
+local shell to the hubs. This provides persistent unix rc access as a
+mountable fs to grid nodes.
+
+Please see [connecting to other OSes] and [connecting from other
+OSes].
+
+LEVEL 7: STANDALONE AUTH SERVER, PLAN 9 DHCP, PXE BOOT, DNS SERVICE, /NET IMPORTS, /NET.ALT
+
+Plan 9 provides mechanisms to manage system roles and bootup from a
+DHCP/PXE boot server. At the size of grid used by an institution such
+as Bell Labs itself or a university research department, it is useful
+to separate system roles as much as possible and automate their
+assignment by having Plan 9 function to assign system roles and ips
+to Plan 9 machines via pxe boot and Plan 9 specific dhcp fields. This
+requires configuring ndb(8) to know the ethernet addresses of client
+machines and which kernel to serve them and a well-controlled local
+network.
+
+One of the most common specialized roles in a mid-to large sized grid
+is the standalone auth-only server. Because auth is so important and
+may be a single point of failure of a grid, as well as for security
+reasons, it is often a good idea to make the auth server an
+independent standalone box which runs nothing at all except auth
+services and is hardened and secured as much as possible against
+failure and presents the minimal attack surface. In an institution
+with semi-trusted users such as a university, the auth server should
+be in a physically separate and secure location from user terminals.
+
+A grid of this size will probably also have use for DNS service. For
+personal users on home networks, variables such as the authentication
+domain are often set to arbitrary strings. For larger grids which
+will probably connect to public networks at some nodes, the ndb(8)
+and authsrv(6) configuration will usually be coordinated with the
+publicly assigned domain names. It is also at this point
+(public/private interface) where machines may be connected to
+multiple networks using /net.alt (simply a conventional place for
+binding another network interface or connection) and may make use of
+one of Plan 9's most famous applications of network transparency -
+the import(4) of /net from another machine. If a process replaces the
+local /net with a remote /net, it will transparently use the remote
+/net for outgoing and incoming connections.
+
+LEVEL 8: RESEARCH AND COMPUTATION GRIDS WITH CUSTOM CONTROL LAYERS AND UNIQUE CAPABILITIES
+
+In its role as a research operating system, the capabilities of Plan
+9 as a distributed system are often extended by specific projects for
+specific purposes or to match specific hardware. Plan 9 does not
+include any built-in capability for things like task dispatch and
+load balancing between nodes. The Plan 9 approach is to provide the
+cleanest possible set of supporting abstractions for the creation of
+whatever type of high-level clustering you wish to create. Some
+examples of research grids with custom software and capabilities:
+
+ *	The main Bell Labs Murray Hill installation includes additional
+	software and extensive location specific configuration
+ *	The [Laboratorio de Sistemas | http://lsub.org] and project leader
+	Francisco J Ballesteros (Nemo) created Plan B and the Octopus,
+	derived from Plan 9 and Inferno respectively.
+ *	The [XCPU project | http://xcpu.sourceforge.net] is clustering
+	software for Plan 9 and other operating systems created at the Los
+	Alamos National Laboratory
+ *	The [Plan 9 on IBM Blue Gene |
+	http://doc.cat-v.org/plan_9/blue_gene] project utilizes special
+	purpose tools to let Plan 9 control the architecture of the IBM Blue
+	Gene L.
+ *	The [ANTS | http://ants.9gridchan.org] Advanced Namespace ToolS
+	are a 9gridchan project for creating failure-tolerant grids and
+	persistent LAN/WAN user environments.
+
+These are examples of projects which are built on 9p and the Plan 9
+design and customize or extend the operating system for additional
+clustering, task management, and specific purposes. The flexibility
+of Plan 9 is one of its great virtues. Most Plan 9 users customize
+their setups to a greater or lesser extent with their own scripts or
+changes to the default configuration. Even if you aren't aspiring to
+build a 20-node "Manta Ray" swarm to challenge Nemo's Octopus,
+studying these larger custom systems may help you find useful
+customizations for your own system, and the Plan 9 modular design
+means that some of the software tools used by these projects are
+independently useful.
+
+LEVEL 9: POWER SET GRIDS?
+
+Because existing grids already have the label "9grid" it is theorized
+the as-yet unreached Ninth Level of Gridding corresponds to the power
+set operation. The previously described eight levels of gridding
+already encompass an infinite Continuum of possibilities. To surpass
+the existing level requires finding a way to construct the power set
+of this already infinite set. Level Nine grids are therefore
+transfinite, not merely infinite, and it is an open question if
+current physical reality could accommodate such structures. At the
+present moment, research indicates such hypothetical Level Nine grids
+would need to post mountable file descriptors from quasars and
+pulsars and store information by entropic dissipation through black
+hole event horizons. See astro(7) and scat(7).
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

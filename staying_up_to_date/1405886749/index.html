@@ -1,0 +1,628 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Staying up to Date (as of Sun Jul 20 16:05:49 EDT 2014)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Staying up to Date</h1>
+<h2><i>-as of Sun Jul 20 16:05:49 EDT 2014-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+Once
+you
+have
+Plan
+9
+installed,
+you'll
+probably
+want
+to
+keep
+your
+installation
+up
+to
+date
+with
+respect
+to
+the
+changes
+that
+come
+out
+of
+the
+labs.
+Assuming
+you
+have
+decent
+network
+access,
+the
+easiest
+way
+to
+do
+this
+is
+to
+use
+replica/pull.
+<p class='para'>
+The
+instructions
+on
+this
+page
+assume
+you
+are
+updating
+a
+server
+or
+standalone
+machine
+with
+x86
+architecture.
+For
+a
+standalone
+ARM
+computer
+such
+as
+the
+Raspberry
+Pi,
+read
+this
+page
+for
+background
+and
+then
+see
+<a href="../../Updating_an_ARM_system">Updating
+an
+ARM
+system</a>.
+</p>
+
+<a name="UPDATING" /><h3>UPDATING</h3>
+
+<p class='para'>
+To
+update
+your
+system,
+a
+script
+named
+'pull'
+is
+available
+and
+is
+located
+in
+the
+directory
+'/usr/glenda/bin/rc'
+(user
+glenda's
+home
+directory).
+Note
+that
+this
+script
+assumes
+you
+are
+using
+the
+<a href="http://plan9.bell-labs.com/magic/man2html/4/kfs"><i>kfs</i>(4)</a>
+file
+system,
+which
+nowadays
+is
+not
+likely
+to
+be
+the
+case.
+If
+your
+system
+uses
+<a href="http://plan9.bell-labs.com/magic/man2html/4/fossil"><i>fossil</i>(4)</a>,
+see
+the
+next
+paragraph
+below.
+</p>
+
+<p class='para'>
+To
+execute
+the
+'pull'
+script,
+just
+type:
+</p>
+
+<pre>
+pull
+</pre>
+
+<p class='para'>
+Your
+system
+will
+be
+updated
+and
+you
+should
+see
+the
+files
+which
+are
+updated
+scrolling
+down
+your
+window.
+If
+you
+do
+not
+have
+the
+pull
+script
+installed,
+see
+the
+instructions
+below
+for
+your
+filesystem
+type.
+</p>
+
+<p class='para'>
+For
+more
+information,
+see
+<a href="http://plan9.bell-labs.com/magic/man2html/1/replica"><i>replica</i>(1)</a>.
+</p>
+
+<p class='para'>
+When
+the
+update
+is
+finished,
+old
+versions
+of
+binary
+files
+in
+/bin
+and
+/bin/*/
+will
+have
+been
+renamed
+by
+prefixing
+with
+an
+underscore
+character.
+These
+can
+safely
+be
+deleted.
+</p>
+
+<p class='para'>
+Pull
+uses
+the
+file
+server
+sources.cs.bell-labs.com.
+You
+can
+poke
+around
+by
+running:
+</p>
+
+<pre>
+9fs sources
+cd /n/sources
+lc
+</pre>
+
+<a name="FOSSIL" /><h3>FOSSIL</h3>
+
+<p class='para'>
+To
+update
+your
+fossil
+file
+system,
+you
+can
+usually
+just
+run
+the
+following
+command:
+</p>
+
+<pre>
+replica/pull -v /dist/replica/network
+</pre>
+
+<p class='para'>
+The
+-v
+option
+puts
+pull
+in
+verbose
+mode,
+allowing
+you
+to
+see
+the
+current
+activity
+it
+is
+performing.
+This
+is
+useful
+if
+you're
+interested
+in
+seeing
+what's
+being
+updated,
+but
+can
+produce
+lots
+of
+output,
+so
+it's
+best
+to
+run
+it
+in
+a
+scrolling
+window
+or
+omit
+the
+-v.
+</p>
+
+<p class='para'>
+Note
+that
+replica/pull
+takes
+care
+not
+to
+overwrite
+local
+changes,
+and
+flags
+conflicts
+with
+error
+messages
+so
+that
+you
+can
+resolve
+them
+by
+hand.
+</p>
+
+<p class='para'>
+If
+you
+have
+done
+local
+modifications,
+pull
+will
+not
+overwrite
+the
+changed
+file
+if
+an
+update
+occurs
+on
+sources.
+Use
+<pre>
+pull -s path/to/file
+</pre>
+(where
+'path/to/file'
+is
+the
+absolute
+path
+without
+the
+leading
+/)
+to
+get
+the
+server-version
+of
+the
+specified
+file,
+or
+subtree
+if
+'file'
+is
+a
+directory,
+where
+in
+contrast
+-c
+keeps
+the
+client-version.
+Be
+aware
+of
+running
+'pull
+-s/'
+which
+specifies
+the
+server-version
+of
+all
+files,
+as
+local
+configuration
+files
+may
+be
+updated
+undesirably.
+You
+can
+do
+a
+"dry
+run"
+using
+the
+-n
+option,
+which
+will
+print
+the
+list
+of
+files
+which
+would
+be
+updated
+but
+not
+perform
+the
+actual
+update.
+</p>
+
+<a name="OTHER_ACCESS" /><h3>OTHER ACCESS</h3>
+
+<p class='para'>
+You
+can
+also
+get
+access
+to
+the
+bleeding-edge
+sources
+and
+extra
+software
+by
+typing:
+<pre>
+9fs sources
+ls /n/sources
+</pre>
+
+</p>
+
+<p class='para'>
+In
+case
+you
+don't
+have
+a
+Plan
+9
+network
+connection,
+you
+can
+always
+download
+the
+nightly
+CD
+image
+from
+the
+download
+page
+and
+use
+it
+to
+update.
+</p>
+
+<pre>
+mount /srv/9660 /n/dist /tmp/plan9.iso
+</pre>
+
+<p class='para'>
+If
+you
+burned
+a
+CD
+with
+the
+unpacked
+image,
+the
+steps
+are
+</p>
+
+<pre>
+9660srv
+mount  /srv/9660 /n/dist /dev/sdD0/data
+replica/pull -v /dist/replica/cd
+</pre>
+
+<p class='para'>
+assuming
+you
+have
+the
+CDROM
+drive
+as
+the
+master
+on
+the
+second
+IDE
+controller.
+</p>
+
+<a name="SEE_ALSO" /><h3>SEE ALSO</h3>
+
+<p class='para'>
+<a href="../../Updating_an_ARM_system">Updating
+an
+ARM
+system</a>,
+<a href="../../Sources_repository">Sources
+repository</a>,
+<a href="../../Use_latest_kernel_after_a_pull">Use
+latest
+kernel
+after
+a
+pull</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/1/replica"><i>replica</i>(1)</a>
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Sun Jul 20 16:05:49 EDT 2014</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

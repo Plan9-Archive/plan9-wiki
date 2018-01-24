@@ -1,0 +1,1546 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Vmware playground for plan9 (as of Thu Jan 19 14:36:36 EST 2006)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Vmware playground for plan9</h1>
+<h2><i>-as of Thu Jan 19 14:36:36 EST 2006-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+
+<a name="0_-_WHAT_WILL_YOU_GET" /><h3>0 - WHAT WILL YOU GET</h3>
+
+<ul>
+
+<li>
+a
+standalone
+fs/auth/fileserver
+</li>
+
+<li>
+a
+couple
+of
+cpu
+servers
+booted
+from
+network
+</li>
+
+<li>
+a
+couple
+of
+terminal
+booted
+from
+network
+or
+a
+drawterm
+:)
+</li>
+</ul>
+
+<p class='para'>
+With
+that
+i
+will
+practice
+distributed
+programming
+with
+plan9
+using
+one
+computer
+connected
+to
+internet.
+</p>
+
+<p class='para'>
+It
+would
+be
+better
+if
+you
+try
+to
+install
+a
+terminal
+and
+play
+a
+bit
+with
+it,
+to
+get
+used
+to
+use
+the
+plan9
+environment
+properly.
+</p>
+
+<p class='para'>
+And
+even
+better
+if
+you
+have
+a
+couple
+of
+supported
+machines
+to
+see
+the
+real
+thing
+:=)
+</p>
+
+<a name="1_-_INSTALL_YOUR_VMWARE_LIKE_SOFTWARE" /><h3>1 - INSTALL YOUR VMWARE_LIKE SOFTWARE</h3>
+
+<p class='para'>
+The
+following
+considerations
+must
+be
+done
+prior
+to
+select
+a
+virtual
+machine
+software:
+</p>
+
+<ul>
+
+<li>
+Boot
+from
+PXE
+support
+</li>
+
+<li>
+Multiple
+concurrent
+instances
+</li>
+
+<li>
+Supportfor
+bridget
+network
+with
+the
+host
+</li>
+</ul>
+
+<p class='para'>
+I
+choosed
+vmware
+4.5.2
+as
+its
+support
+all
+of
+the
+above
+and
+it
+is
+supported
+by
+Plan9
+graphics
+system.
+</p>
+
+<p class='para'>
+The
+vmware
+5.0
+machine
+can
+be
+used
+but
+the
+install
+process
+must
+be
+done
+using
+text
+only,
+so
+if
+you're
+not
+proficent
+with
+ed,
+you
+better
+choose
+4.5.2.
+</p>
+
+<p class='para'>
+qemu
+can
+be
+used
+as
+well
+but
+i
+know
+nothing
+about
+it,
+so
+may
+be
+someone
+wants
+to
+make
+this
+brief
+more
+complete.
+</p>
+
+<a name="2_-_INSTALLING_THE_FIRST_VIRTUAL_MACHINE" /><h3>2 - INSTALLING THE FIRST VIRTUAL MACHINE</h3>
+
+<ul>
+
+<li>
+Task:
+configfs
+</li>
+</ul>
+
+<p class='para'>
+Here
+we
+select
+fossil+venti
+as
+we
+first
+will
+set
+up
+a
+standalone
+plan9
+auth/cpu/file
+server.
+</p>
+
+<p class='para'>
+Later
+we
+split
+that
+in
+different
+machines
+</p>
+
+<p class='para'>
+I
+suggest
+you
+to
+use
+the
+default
+partition
+layout
+and
+default
+slices
+layout.
+</p>
+
+<ul>
+
+<li>
+Follow
+the
+in
+screen
+instructions
+and
+finish
+the
+installation.
+</li>
+</ul>
+
+<p class='para'>
+You
+should
+be
+able
+to
+do
+it
+without
+more
+indications
+as
+the
+installation
+program
+is
+intuitive
+enough.
+</p>
+
+<a name="3_-_BOOT_AND_INITIAL_SET_UP" /><h3>3 - BOOT AND INITIAL SET UP</h3>
+
+<ul>
+
+<li>
+Log
+in
+as
+glenda
+</li>
+</ul>
+
+<p class='para'>
+At
+this
+moment
+fossil
+will
+start
+the
+first
+snapshot
+to
+venti
+so
+disk
+will
+be
+crazy
+for
+a
+little
+while.
+</p>
+
+<p class='para'>
+Take
+a
+coffe
+in
+the
+mean
+while,
+and
+later
+follow
+with
+the
+configuration
+instructions.
+</p>
+
+<ul>
+
+<li>
+Add
+glenda
+to
+sys
+and
+adm
+groups
+</li>
+</ul>
+
+<pre>
+	% con /srv/fscons 
+	prompt: fsys main 
+	main: uname sys +glenda 
+	main: uname adm + glenda
+</pre>
+
+<ul>
+
+<li>
+Configure
+minimal
+NDB
+</li>
+</ul>
+
+<pre>
+ipnet=devel.net ip=192.168.1.1 ipmask=255.255.255.0 
+	ipgw=192.168.1.1
+	dns=130.206.1.3 
+	fs=kenshin 
+	auth=kenshin 
+	authdom=lloth.net
+
+sys=kenshin ip=192.168.1.200 ether=000c29a15062
+	dom=kenshin.devel.net 
+	bootf=/386/9pccpuf 
+	proto=il
+</pre>
+
+<ul>
+
+<li>
+Set
+up
+the
+internet
+connection
+through
+your
+gateway
+</li>
+</ul>
+
+<pre>
+	% ip/ipconfig -g 192.168.1.1 ether /net/ether0 192.168.1.200 255.255.255.0 
+	% echo refresh &gt; /net/cs 
+	% echo refresh &gt; /net/dns 
+	% ip/ping www.google.com
+</pre>
+
+<p class='para'>
+If
+you
+can't
+reach
+google
+look
+through
+the
+wiki
+and
+9fans
+archives
+to
+configure
+your
+network.
+</p>
+
+<ul>
+
+<li>
+Update
+your
+plan9
+installation
+from
+sources
+</li>
+</ul>
+
+<pre>
+	% pull -v
+</pre>
+
+<ul>
+
+<li>
+Compile
+the
+cpu/auth/fileserver
+standalone
+kernel
+and
+install
+it
+</li>
+</ul>
+
+<pre>
+	% cd /sys/src/9/pc 
+	% mk 'CONF=pccpuf' install 
+	% 9fat: 
+	% cp 9pccpuf.gz /n/9fat/ 
+	% acme /n/9fat/plan9.ini set the bootfile to 9pccpuf.gz
+</pre>
+
+<ul>
+
+<li>
+Set
+up
+boot
+process
+for
+a
+cpu
+</li>
+</ul>
+
+<pre>
+	% acme /rc/bin/cpurc
+</pre>
+
+<p class='para'>
+Put
+the
+ip/ipconfig
+line
+to
+boot
+with
+network
+configured
+before
+the
+ndb/cs
+line
+and
+uncomment
+the
+lines
+marked
+as
+needed
+for
+booting
+other
+systems
+and
+for
+auth
+servers
+</p>
+
+<ul>
+
+<li>
+Add
+bootes
+user
+and
+add
+it
+to
+the
+groups
+sys
+and
+adm
+and
+remove
+user
+glenda
+</li>
+</ul>
+
+<ul>
+
+<li>
+Initialize
+nvram
+storage
+</li>
+</ul>
+
+<pre>
+	% echo blah &gt; /dev/sdC0/nvram
+</pre>
+
+<ul>
+
+<li>
+Set
+up
+your
+timezone
+</li>
+</ul>
+
+<pre>
+	% cp /adm/timezone/CET /adm/timezone/local
+</pre>
+
+<ul>
+
+<li>
+Edit
+/lib/ndb/auth
+and
+uncomment
+the
+lines
+</li>
+</ul>
+
+<pre>
+	% con /srv/fscons 
+	prompt: fsys main 
+	main: uname bootes bootes 
+	main: uname sys +bootes 
+	main: uname adm +bootes 
+	main: uname sys -glenda
+	main: uname adm -glenda
+</pre>
+
+<a name="4._FIRST_BOOT" /><h3>4. FIRST BOOT</h3>
+
+<ul>
+
+<li>
+Set
+up
+the
+nvram
+</li>
+</ul>
+
+<pre>
+	authid: bootes 
+	authdom: devel.net 
+	secstore: 	invent_a_secstore_password 
+	password: invent_a_bootes_password
+</pre>
+
+<ul>
+
+<li>
+Initialize
+user
+</li>
+</ul>
+
+<pre>
+	% /sys/lib/newuser 
+</pre>
+This
+will
+not
+bring
+you
+to
+rio
+<pre>
+	% auth/changeuser bootes 
+</pre>
+Put
+the
+same
+password
+you
+invented
+in
+the
+last
+step,
+you
+can
+enter
+the
+other
+data
+as
+you
+want
+<ul>
+
+<li>
+First
+Drawterm
+</li>
+</ul>
+
+<pre>
+	c:\&gt; drawterm-windows -a 192.168.1.200 -c 192.168.1.200 
+	user[none]: bootes 
+	password: you know what to put here :)
+</pre>
+
+<p class='para'>
+This
+will
+give
+you
+a
+rio
+environment.
+</p>
+
+<p class='para'>
+5.
+Set
+up
+the
+multiboot
+environment
+</p>
+
+<ul>
+
+<li>
+Set
+up
+the
+/cfg
+directory
+</li>
+</ul>
+
+<pre>
+	% con /srv/fscons 
+	prompt: fsys main
+	main: create /active/cfg sys sys d775 
+	main: % mkdir /cfg/pxe 
+	% mkdir /cfg/kenshin
+</pre>
+
+<ul>
+
+<li>
+Set
+up
+multiboot
+cpurc
+as
+jmk
+posted
+on
+9fans
+(save
+the
+old
+one):
+</li>
+</ul>
+<hr />
+<pre>
+	#!/bin/rc
+	boottime=`{date}
+	boottime=$"boottime
+	
+	# parallelism for mk
+	NPROC=`{wc -l /dev/sysstat}
+	NPROC=`{echo $NPROC|sed 's/ .*//'}
+	
+	# get rid of need for dirs in /n
+	mntgen -s slashn &amp;&amp; chmod 666 /srv/slashn
+	
+	# cs sets /dev/sysname
+	ndb/cs
+	sysname=`{cat /dev/sysname}
+	prompt=($sysname^'# ' ' ')
+	
+	# site specific startup
+	if(test -e /rc/bin/cpurc.local)
+	       . /rc/bin/cpurc.local
+	
+	# cpu specific startup
+	if(test -e /cfg/$sysname/cpurc)
+	       . /cfg/$sysname/cpurc
+	
+	# if we're not a server, start a dns resolver
+	if(! test -e /srv/dns)
+	       ndb/dns -r
+	
+	# reboot if we lose the file server
+	aux/reboot
+	
+	# turn on dong's tcp port hog defense
+	if( test -e /net/tcp/clone)
+	       echo -n tcpporthogdefense on &gt; /net/tcp/0/ctl
+	
+	# keep other bootes processes from creating capabilities
+	rm '#¤/caphash' &gt; /dev/null &gt;[2=1]
+	
+	# start up internet if we don't already have an address
+	if(! grep u /net/ipselftab | grep -sv 127.0.0.1)
+	       ip/ipconfig
+	if(! grep -s 127.0.0.1 /net/ipselftab)
+	       ip/ipconfig loopback /dev/null 127.1
+	
+	# start listeners if it hasn't already been done (dicey check)
+	if(! netstat -n | grep -s 'tcp.*Listen.* (7|9|21|22|23|25|110|113|565|993|17007|17009|17010) .*')
+	       aux/listen -q tcp
+	if(! netstat -n | grep -v 17008 | grep -s il.*Listen)
+	       aux/listen -q il
+	
+	if(! ps|grep -s timesync)
+	       aux/timesync -s /net -nl -d /sys/log/timesync.d oncore achille
+	
+	# cpu specific startup
+	if(test -e /cfg/$sysname/cpustart)
+	       . /cfg/$sysname/cpustart
+	
+	exit 0
+</pre>
+<hr />
+<ul>
+
+<li>
+Now
+use
+the
+old
+cpurc
+to
+generate
+what
+we
+need
+for
+the
+standalone
+server
+/cfg/kenshin/cpurc
+</li>
+</ul>
+<hr />
+<pre>
+	#!/bin/rc
+
+	ip/ipconfig -g 192.168.1.1 ether /net/ether0 192.168.1.200 255.255.255.0
+
+	ndb/dns -r
+
+	prompt=($sysname^'# ' ' ')
+
+	aux/timesync hora.rediris.es
+
+	ip/dhcpd ip/tftpd
+
+	auth/keyfs -wp -m /mnt/keys /adm/keys &gt;/dev/null &gt;[2=1] 
+	auth/cron &gt;&gt;/sys/log/cron &gt;[2=1] &amp;
+
+	aux/listen -q -t /rc/bin/service.auth -d /rc/bin/service il
+	aux/listen -q -t /rc/bin/service.auth -d /rc/bin/service tcp
+</pre>
+<hr />
+<ul>
+
+<li>
+Make
+fossil
+listen
+for
+network
+connections.
+Generate
+a
+flproto
+file
+like:
+</li>
+</ul>
+
+<pre>
+	cpu% cat flproto 
+	fsys main config /dev/sdC0/fossil 
+	fsys main open -c 3000 
+	fsys main snaptime -s 60 -a 0500 -t 2880 
+	listen tcp!*!564 
+	cpu% cat flproto | fossil/conf -w /dev/sdC0/fossil
+</pre>
+
+<p class='para'>
+6.
+Test
+the
+new
+cpurc
+files,
+so
+reboot
+the
+machine
+</p>
+
+<p class='para'>
+If
+something
+fails,
+i
+hope
+the
+error
+message
+would
+be
+enought
+to
+let
+you
+fix
+the
+problem
+:)
+</p>
+
+<p class='para'>
+7.
+Now
+create
+other
+virtual
+machine.
+</p>
+
+<ul>
+
+<li>
+This
+one
+will
+need
+only
+a
+very
+small
+disk
+to
+store
+nvram.
+Will
+be
+enough
+with
+1Kb
+but
+vmware
+will
+only
+let
+you
+choose
+0.1GB,
+that
+is
+100Mb.
+</li>
+</ul>
+
+<p class='para'>
+8.
+Add
+a
+new
+machine
+</p>
+
+<ul>
+
+<li>
+Set
+up
+the
+NDB
+</li>
+</ul>
+<hr />
+<pre>
+sys=ant ip=192.168.1.201 ether=000c29a15062 
+	dom=ant.lloth.net
+	bootf=/386/9pxeload 
+	proto=il
+</pre>
+<hr />
+<p class='para'>
+You
+will
+need
+to
+put
+the
+mac
+of
+the
+virtual
+machine
+so
+check
+it
+on
+your
+virtual
+machine
+(
+in
+vmware
+set
+up
+to
+boot
+from
+network
+and
+copy
+the
+mac
+address
+)
+</p>
+
+<ul>
+
+<li>
+Set
+up
+the
+/cfg
+entry
+</li>
+</ul>
+
+<p class='para'>
+Create
+a
+file
+ith
+the
+mac
+address
+as
+name
+<pre>
+	% acme /cfg/pxe/mac
+</pre>
+
+</p>
+
+<p class='para'>
+That
+file
+must
+contain
+a
+plan9.ini
+file<hr />
+<pre>
+	bootfile=ether0!/386/9pccpu 
+	bootargs=tcp!192.168.1.200!564
+
+	*nomp=1
+	 *nodumpstack=1 
+	partition=new
+</pre>
+<hr />
+</p>
+
+<p class='para'>
+-
+Create
+the
+cpurc
+for
+this
+machine
+under
+/cfg/ant/cpurc
+</p>
+<hr />
+<pre>
+	#!/bin/rc
+
+	prompt=($sysname^'# ' ' ')
+
+	aux/timesync hora.rediris.es
+
+	aux/listen -q -t /rc/bin/service.auth -d /rc/bin/service il
+	aux/listen -q -t /rc/bin/service.auth -d /rc/bin/service tcp
+</pre>
+<hr />9.
+Boot
+the
+new
+cpu
+machine
+<ul>
+
+<li>
+It
+will
+ask
+you
+for
+the
+nvram
+data,
+but
+this
+time
+you
+haven't
+created
+the
+partition,
+so
+it
+will
+fail
+to
+store
+it.
+</li>
+</ul>
+
+<ul>
+
+<li>
+Create
+the
+nvram
+partition
+as
+follows:
+</li>
+</ul>
+
+<pre>
+	% disk/mbr /dev/sdC0/data 
+	% disk/fdisk /dev/sdC0/data 
+	&gt;&gt;&gt; a p0 start
+	cylinder: 0 
+	end [0..208] 208 
+	&gt;&gt;&gt; w 
+	&gt;&gt;&gt; q 
+	% disk/prep /dev/sdC0/plan9
+	&gt;&gt;&gt; a 9fat 
+	start sector: 0 
+	end [0..209715] 200000 
+	&gt;&gt;&gt; a nvram start
+	sector: 200000 
+	end [200000..209715] 209715 
+	&gt;&gt;&gt; w
+	&gt;&gt;&gt; q 
+	% disk/fdisk -p /dev/sdC0/data &gt; /dev/sdC0/ctl
+</pre>
+
+<ul>
+
+<li>
+Reboot
+the
+cpu
+server
+and
+put
+the
+hostid
+info
+again
+</li>
+</ul>
+
+<p class='para'>
+Now
+we
+got
+the
+first
+machine
+booted
+from
+network
+up
+and
+running
+</p>
+
+<p class='para'>
+10.
+Testing
+auth
+</p>
+
+<p class='para'>
+cpu%
+cpu
+-h
+ant
+-c
+rc
+<pre>
+Adding key: dom=lloth.net proto=p9sk1
+user[bootes]: bootes 
+password:
+
+	cpu% cat /dev/sysname 
+	antcpu%
+</pre>
+
+</p>
+
+<ul>
+
+<li>
+We
+can
+log
+to
+the
+cpu
+server
+and
+run
+tasks
+there
+</li>
+</ul>
+
+<p class='para'>
+Now
+that
+we
+have
+two
+machines,
+we
+can
+configure
+our
+prompt
+to
+show
+us
+where
+we
+are.
+Put
+this
+on
+/usr/bootes/lib/profile
+</p>
+
+<pre>
+	fn cd { builtin cd $1;awd; prompt=(`{cat /dev/sysname}^' '^`{pwd}^'%' ' ') }
+
+	cpu% fn cd { builtin cd $1;awd; prompt=(`{cat /dev/sysname}^' '^`{pwd}^'% ' ' ') } 
+	cpu% cd 
+	kenshin /usr/bootes% acme lib/profile
+	kenshin /usr/bootes% cpu -h ant -c rc 
+	ant /usr/bootes% 
+	ant /usr/bootes% 
+	ant /usr/bootes%
+</pre>
+
+<p class='para'>
+Usually
+the
+path
+is
+too
+fancy.
+</p>
+
+<p class='para'>
+11.
+Clone
+a
+machine
+and
+start
+up
+a
+new
+cpu
+server
+</p>
+
+<p class='para'>
+vmware
+5
+will
+let
+you
+clone
+machines,
+so
+i
+upgraded
+to
+it.
+I
+will
+not
+explain
+how
+to
+clone
+vmware
+machines
+as
+may
+be
+you
+just
+used
+other
+virtualization
+software
+(or
+even
+the
+real
+hardware)
+</p>
+
+<p class='para'>
+To
+start
+up
+a
+new
+server,
+when
+we
+have
+the
+machine
+ready,
+and
+its
+MAC
+address
+written
+somewhere
+is:
+</p>
+
+<ul>
+
+<li>
+Set
+up
+the
+NDB
+file
+with
+the
+new
+machine
+</li>
+
+<li>
+Set
+up
+the
+/cfg
+environment
+for
+that
+machine
+</li>
+</ul>
+
+<pre>
+		/cfg/pxe/mac file
+		/cfg/system_name/cpurc
+</pre>
+
+<ul>
+
+<li>
+and
+boot
+it
+from
+the
+network
+</li>
+</ul>
+
+<p class='para'>
+I
+created
+5
+machines
+with
+64MB
+of
+ram
+each
+one.
+</p>
+
+<p class='para'>
+As
+terminal
+i
+will
+use
+drawterm,
+as
+i
+upgraded
+to
+vmware
+5,
+and
+vga
+is
+not
+supported
+and
+there
+are
+problems
+with
+cut&amp;paste.
+.
+.
+</p>
+
+<p class='para'>
+12.
+Adding
+users
+to
+the
+playground
+</p>
+
+<p class='para'>
+In
+the
+console
+of
+kenshin
+our
+main
+file
+server/auth/cpu
+we
+can
+add
+users
+as
+described
+in
+the
+wiki.
+</p>
+
+<pre>
+	% auth/changeuser gdiaz 
+	% con/srv/fscons 
+	prompt: fsys main 
+	main: uname gdiaz gdiaz 
+	%
+</pre>
+
+<p class='para'>
+Now
+i
+can
+drawterm
+with
+the
+new
+user
+</p>
+
+<p class='para'>
+And
+make
+my
+first
+distributed
+application
+with
+plan9
+:)
+</p>
+<hr />
+<pre>
+	#!/bin/rc
+	
+	servers=(kenshin ant shrek niki connor kirk)
+	timezones=(CET EDT Canada_Pacific Japan US_Hawaii Singapore)
+	
+	minx=0
+	miny=0
+	maxx=100
+	maxy=100
+	i=1
+	for (s in $servers) {
+			echo  vars: $timezones($i), $i, $minx , $maxx
+			script=''''^'cat /adm/timezone/'^$timezones($i)^' &gt; /env/timezone; clock'^''''
+			window -r $minx $miny $maxx $maxy cpu -h $s -c $script
+			i = `{ echo $i+1 | bc }
+			minx = `{echo $i^'*100'  | bc }
+			maxx = `{echo $minx^'+'^100 | bc }		
+	}
+</pre>
+<hr />
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Thu Jan 19 14:36:36 EST 2006</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

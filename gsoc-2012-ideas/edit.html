@@ -1,0 +1,410 @@
+<html>
+<head>
+<title>GSoC-2012-ideas (Editing Fri Mar 29 13:28:06 EDT 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>GSoC-2012-ideas</b></font> (Editing Fri Mar 29 13:28:06 EDT 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="GSoC-2012-ideas">
+<input type="hidden" name="version" value="1364578086">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+Plan 9 and related technologies cover a huge range of topics. Below
+we've put together a list of some ideas which we think would be good
+candidates for stundents looking for summer-sized projects with us.
+Each idea includes at least a brief description and a list of
+"sponsors" for the idea (people who've suggested it or volunteered to
+work with folks on it). Ideas are rated for estimated difficulty from
+1 to 5 stars (1=easy, 5=hard) and may contain links to further
+information or discussion.
+
+Note! Every year Plan 9 has participated in GSoC we've accepted
+student-submitted projects not from our list, and that's awesome. You
+are highly encourage to think about how the ideas and capabilities of
+Plan 9 (or its cousins) could be used to solve some problem you care
+about and submit a project for that. We are especially fond of things
+that present their solution in the form of a 9p/styx file server.
+
+In addition to this ideas page, prospective students should look over
+our [GSoC Student Expectations] and be prepared to submit an
+application matching our [GSoC Student Application]. For more
+information, note our general [GSoC] page.
+
+There is a separate list of [Inferno-related project ideas |
+http://code.google.com/p/inferno-os/wiki/Project_Suggestions] on
+their site. Many may be larger than is suitable for GSoC, but they
+might prove useful ideas. The ones that seem most suitable have been
+included below.
+
+ *	[Graphics / UI / draw(3)-related ideas | #GRAPHICS_IDEAS]
+ *	[Kernel / port / low-level ideas | #KERNEL_IDEAS]
+ *	[Web-related ideas | #WEB_IDEAS]
+ *	[Compiler / dev tools / library ideas | #DEV_TOOLS_IDEAS]
+ *	[Application ideas | #APPLICATION_IDEAS]
+ *	[Other ideas | #OTHER_IDEAS]
+
+------------------------------------------------------ 
+GRAPHICS IDEAS
+
+Ideas related to Plan 9's graphics systems, including kernel devices,
+window systems, and supporting libraries.
+
+ *	Create an alternative window manager ✪✪ (John Floren, Anthony
+	Sorace)
+
+For some, rio represents a barrier to entry--complaints that it is
+hard to use or ugly have frequently appeared. It would be nice to
+have an alternative window manager for those people who don't like
+rio, perhaps something with more traditional title bars,
+minimize/maximize/close buttons, etc. Rio could serve as a base for
+this effort if desired, since it already handles the necessary
+multiplexing and drawing operations.
+
+A related but different approach would be to see how multi-touch
+capable devices could work with the Plan 9 windowing systems. From a
+previous GSoC we have a drawterm(8) implementation that runs on iOS
+devices (it could use some refreshing), and more recent work has
+given Plan9port on OS X some multi-touch recognition. Still, these
+aren't a perfect fit for rio(1) and acme(1) as they exist today.
+
+In either case, a student looking to work on these projects should be
+familiar with the existing Plan 9 windowing systems.
+
+ *	Make a widget library ✪✪✪ (John Floren)
+
+Libpanel is old and unmaintained, libcontrol doesn't include e.g. a
+multi-line text entry area, and both look rather outdated. It would
+be nice to have a widget library including buttons, drop-down menus,
+multiple-line text entry, radio buttons, scrollbars, etc. The tk
+library in Inferno does pretty much everything desired.
+
+ *	teach libdraw/libframe to deal with variable height fonts ✪✪✪✪
+	(Erik Quanstrom)
+
+The cannonical example is accented caps, such as u+0000c2, Â.
+
+This would involve creating an analogue to stringwidth(2),
+stringheight(2), and using the result in the frame(2) library.
+
+ *	write a panning image viewer for plan 9. ✪✪ (Erik Quanstrom)
+
+There are a few plan 9 programs like [gmap(1) |
+http://www.quanstro.net/magic/man2html/1/gmap] and [radar(1) |
+http://www.quanstro.net/magic/man2html/1/radar] that would benefit
+from a panning viewer. The image-generating programs should provide
+the panner enough information to generate adjacent images without any
+private knowledge.
+
+ *	modify ttf2subf to allow font combining. ✪ (Erik Quanstrom)
+
+Almost no truetype fonts provide good Unicode coverage and good
+quality. Ttf2subf is a Plan 9 Ports program for turning ttf files
+into plan 9 fonts. Since a single subfont in plan 9 has a limited
+size, ttf2subf tries to create the minimal set of subfonts possible
+for the given ttf. This results in subfonts that cross Unicode [block
+| http://www.unicode.org/Public/UNIDATA/Blocks.txt] boundaries. If
+ttf2subf instead broke fonts at block boundaries, similar fonts could
+be mixed according to quality and coverage.
+
+ *	Hosted OpenGL in Inferno. ✪✪✪ (Charles Forsyth)
+
+Give hosted Inferno a basic interface to OpenGL or OpenVG on a Linux
+or MacOS host. "Basic" means a small subset of OpenGL or OpenVG, to
+test ideas and keep the project manageable. Ideally, unlike most
+OpenGL interfaces, this one would use novelties such as data
+structures. It could be either a module interface, or a name space,
+or a module interface to a name space (in the style of draw(2)). For
+GSoC, best to keep it small and basic, but enough to draw some
+interesting or amusing things.
+
+This suggestion came from the Inferno ideas page.
+
+------------------------------------------------------ 
+KERNEL IDEAS
+
+Project ideas related to the kernel, the various ports, or driver
+support. Note that we're always interested in ports to new hardware,
+provided you can ensure that you and your mentors have the same
+device. Pick anything and get Plan 9 working on it!
+
+ *	Port BSD NDISulator ✪✪✪✪ (Dave Eckhardt)
+
+The NDISulator is a FreeBSD utility which facilitates using device
+drivers for Windows network cards in FreeBSD. Plan 9 faces the same
+problems that led the FreeBSD folks to this, most especially vendors
+who don't release decent information on their parts. Port the
+NDISulator so that we can use drivers written for Windows within Plan
+9.
+http://people.freebsd.org/~murray/presentations/20050429-msu-freebsd/img36.html http://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/config-network-setup.html
+
+ *	x2apic ✪✪✪✪ (Erik Quanstrom)
+
+Erik has working xapic code that does cluster, flat and physical mode
+and can handle 1 < n < 255 apics. It's not clear that x2apic is worth
+it, but most of the fun would be in working out that problem on
+24-core machines driving 10gbe. It's also not a very hard problem,
+since it's mostly a matter of organization.
+
+ *	pci extended configuration space ✪✪ (Erik Quanstrom)
+
+Plan 9 currently has no access to pci extended configuration space.
+[Wikipedia | http://en.wikipedia.org/wiki/PCI_configuration_space]
+has a good overview of what extended configuration space is. The goal
+would be to make extended-space access possible on as many machines
+as possible.
+
+ *	KVM/Virtio Drivers ✪✪✪ (Eric Van Hensbergen)
+
+One of the environments many people run Plan 9 under is Qemu/KVM --
+but the virtio drivers (which are required for high-performance disk
+or network access) aren't currently supported in mainline Plan 9. The
+student(s) would get virtio drivers for first the network and then
+the block device (or perhaps one student for each) working and in a
+form suitable for acceptance in the mainline Plan 9 kernel against
+either the tip Qemu or a recent Qemu/KVM distribution (say Ubuntu
+10.10). I believe this task is relatively straightforward and
+requires no special hardware outside of a PC capable of running Qemu.
+If there was sufficient time the student could work on other virtio
+drivers (native 9P, console, etc) The student will also be
+responsible for doing a base-level performance evaluation of virtio
+drivers versus emulated drivers for some standard operations (disk
+access, fossil access, venti access, network stream, etc.) The cool
+thing is, it'd be honest kernel work, and have tangible results we
+could all use within a month or so of effort.
+
+Look in /n/sources/contrib/rminnich/lguest for some starting points
+
+It is important that the student have Plan 9 experience for this
+project and know how to compile and run their own kernels.
+
+See also http://bender.eugenics-research.org/doc/plan_9/GSoC/
+
+ *	NAT ✪✪✪ (Erik Quanstrom)
+
+In Plan 9 (and Inferno) networks, you don't need NAT: just import the
+gateway's network. Sadly, we don't live in a Plan 9-only world. Write
+what's needed to allow Plan 9 to act as a NAT gateway for other
+systems. The implementation needs to support the TCP mss hack, and
+ftp. This can be implemented in user space. If performance is an
+issue, it should be easy to move into the kernel if the student has
+completed the work.
+
+------------------------------------------------------ 
+WEB IDEAS
+
+Project ideas related to the web, either in Plan 9 tools providing
+web services or in ways to interact with Plan 9 systems.
+
+ *	Replace html generation in wikifs(4) ✪ (Anthony Sorace)
+
+The wikifs(4) in both Plan 9 and Inferno understand a very small set
+of cues when generating HTML. That set can be limiting. Replace it
+with something better, like Markdown. Markdown engines in C already
+exist, so the Plan 9 part of this shouldn't be too hard. I'd suggest
+doing the Inferno version as well, to make it a good summer sized
+project. Use any remaining time to convert any existing wiki docs
+that need it.
+
+ *	Make wikifs(4) authenticate against an auth server ✪✪ (Anthony
+	Sorace)
+
+Our wikifs(4) doesn't currently do any authentication. Our web server
+and supporting libraries have support for http authentication, but
+using data stored in the file system directly. It would be nice if
+web applications could authenticate against a real Plan 9
+authentication server. A student submitting a proposal for this
+should also investigate what's involved in getting wikifs working
+over https (it shouldn't be much) to ensure passwords are submitted
+securely.
+
+ *	A simple draw server for HTML5 browsers. ✪✪✪✪ (Skip Tavakkolian)
+
+Adapt an existing Javascript implementation of Styx/9P to use HTML5
+WebSockets -- or implement one from scratch -- and create a 9P file
+server that provides a simple draw device using keyboard, mouse event
+handling and either an SVG or a Canvas element for display. Develop a
+Plan 9 or Inferno client to interact with it.
+
+ *	Stateful Iferno httpd ✪✪✪ (Charles Forsyth)
+
+Modify one of the Inferno httpd implementations to allow a process
+(or a set of processes) to maintain state for a logical http session,
+so the server-side application is written as a (fairly) normal
+process. Write some useful applications.
+
+Originally from the Inferno Idas page.
+
+ *	Make Acme-sac's Charon use another acme(1) ✪✪ (Anthony Sorace)
+
+The Inferno fork [Acme-sac | http://code.google.com/p/acme-sac/] has
+a version of the web browser Charon which provides a text-only
+interface via acme(4). For users who already run acme under Plan 9 or
+Plan 9 from User Space, it is frustrating to have that separate. Make
+the text-only charon interface work by importing the acme(4) file
+system from Plan 9 or Plan 9 from User Space. Some extensions to the
+target acme may be needed.
+
+------------------------------------------------------ 
+DEV TOOLS IDEAS
+
+Project ideas related to compilers, development tools, or supporting
+libraries.
+
+ *	Get kencc to generate Windows object files ✪✪✪✪ (Steve Simon)
+
+Plan 9's C compiler has generated other types of object files in the
+past; it would be useful if it could generate things Windows
+understands. This is a major undertaking as windows has a variety of
+calling conventions and very different register use. However mingw
+has tools to generate gcc compatible .a libraries which are very
+similar to 8l ones. linking could initially be done with gld as. It's
+noteworthy that the Go toolchain, which is derived from kencc (by
+Ken!), can already do this.
+
+ *	Native asn.1 DER encode/decode library ✪✪ (Steve Simon)
+
+Write a native (non-APE) library for encoding and decoding ASN.1 DER
+data. This is a useful step towards future LDAP work. This shouldn't
+be too hard (and there's lots of reference code), but it will involve
+reading lots of RFCs and testing.
+
+ *	TLS/SSL3.0 in Inferno ✪✪✪ (Charles Forsyth)
+
+From the Inferno Ideas page:
+
+/appl/lib/crypt/ssl3.b has an implementation of SSL3(TLS),
+/appl/lib/crypt/sslsession.b implements some form of SSL session
+cache, and /*/port/devtls.c has support for the record structure and
+control operations of SSL3 (but ssl3.b doesn't use it). Check ssl3.b
+etc. against the specification, and change it to suit. You might also
+need to change x509.b. (GW)
+
+------------------------------------------------------ 
+APPLICATION IDEAS
+
+Ideas for applications; user-mode code in an existing environment.
+
+ *	Implement tls 1.2 ✪✪ (Erik Quanstrom)
+
+Plan 9 currently implements an older version of tls. Bring this
+up-to-date with the current standards. This project will likely not
+require as much code as reading of standards.
+
+ *	Interact with Google APIs ✪✪ (Charles Forsyth)
+
+Create file servers in (Plan 9 or Inferno) or modules (in Inferno) to
+give access to some of the more interesting [Google APIs |
+http://code.google.com/more/], where "more interesting" means you
+also write a useful and/or amusing application that uses the API(s)
+just implemnted.
+
+Originally from the Inferno Ideas page, also applicable to Plan 9.
+
+ *	Interact with Amazon's AWS APIs ✪✪ (Charles Forsyth)
+
+Create file servers (in Plan 9 or Inferno) or modules (in Inferno) to
+give access to the [Amazon Web Services APIs |
+http://aws.amazon.com/], and write a useful and/or amusing
+application that uses them.
+
+Originally from the Inferno Ideas page, also applicable to Plan 9.
+
+ *	A ProtoFS. ✪✪ (Skip Tavakkolian, Anthony Sorace)
+
+Write a 9P file server that can be instructed to create a file tree
+and associate each node with external directories, files or
+processes. Very roughly, the prototype file tree instructions might
+look something like:
+
+! 	/
+! 		fst/			= /usr/fst/www/
+! 		edit/
+! 			snarf		> /dev/snarf
+! 			paste	< /dev/snarf
+! 		mouse		| fd0rw /dev/mouse
+
+ *	Make a keyboard file server ✪ (Erik Quanstrom, Anthony Sorace)
+
+There are several cases where it would be useful to have a
+stand-alone software console. The in-kernel console (rightly) doesn't
+handle interrupts and does only the most basic keyboard processing.
+Other software, like telnet, implements its own console handling, as
+does rio. It would be nice to refactor this into a stand-alone file
+server that handles these functions and could be used by all these
+functions, or directly on the cga console.
+
+------------------------------------------------------ 
+OTHER IDEAS
+
+Project ideas that don't fit into - or span multiple of - the above
+catagories.
+
+ *	Kernel.org for Plan 9 ✪✪✪✪ (Ron Minnich)
+
+The Linux kernel.org provides a very rich environment for prototyping
+linux enhancements. It also uses a well-known SCM (git) which removes
+one barrier to entry for new users. This project would set up a
+kernel.org-like entity that uses mercurial, supports forks, and has a
+well-defined path for inclusion into the base "kernel.org" repo. It
+would also support a process for regular updates from sources.
+Finally, all contrib packages would be included, but not integrated
+into /sys/src (to make pulls from sources viable); rather, they would
+live in a seperate tree called /contrib (both source and binary).
+Learning the lessons from kernel.org is strongly encouraged, but
+implementing this system in a Plan 9-friendly manner is essential.
+
+ *	Clean up eqn(1) output ✪ (Jeff Sickel)
+
+Eqn has problems generating clean output for brackets and sqrt. This
+is prevalent especially when using ps2pdf. Track down and fix the
+errors so eqn | troff output is clean for publishing pdf papers.
+
+ *	9P servers (Jeff Sickel (after reading an email from Charles))
+
+Write a 9P server and supporting clients for relevant systems.
+Suggested areas are:
+
+ *	Atmel, Arduino
+ *	dsPIC projects
+ *	motor control systems
+ *	Jtag
+ *	Modbus
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

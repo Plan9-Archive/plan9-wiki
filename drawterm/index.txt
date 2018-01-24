@@ -1,0 +1,40 @@
+Drawterm
+
+Drawterm(8) is not a Plan 9 program. It is a program that users of
+non-Plan 9 systems can use to establish graphical cpu(1) connections
+with Plan 9 CPU servers. Just as a real Plan 9 terminal does,
+drawterm serves its local name space as well as some devices (the
+keyboard, mouse, and screen) to a remote CPU server, which mounts
+this name space on /mnt/term and starts a shell. Typically, either
+explicitly or via the profile, one uses the shell to start rio(1).
+
+DOWNLOAD
+
+To get the latest source for drawterm from a system with Mercurial:
+
+! $ hg clone http://code.swtch.com/drawterm
+
+In the Plan 9 distribution: [/sys/src/cmd/unix/drawterm/ |
+http://plan9.bell-labs.com/sources/plan9/sys/src/cmd/unix/drawterm/]
+(sometimes out of date)
+
+For more information and binaries for various systems see:
+[http://swtch.com/drawterm/]
+
+NOTES
+
+When drawterm-linux starts you might well see an error message like
+this : cpu: failed to chdir to $dir where $dir is, in fact, pwd on
+your linux box. I haven't looked very far to find out where that
+happens because I added fn drawterm {@{cd /; drawterm-linux $* }} to
+$home/.rcrc and cd to the top of lib/profile to put me in $home on
+startup.
+
+To access a Plan 9 cpu(1) server behind a packet filter, you need to
+allow access to the following ports: 17010, 17013 and 567 (to the
+auth(8) server).
+
+SEE ALSO
+
+[Drawterm to your terminal], drawterm(8), [http://swtch.com/drawterm/]
+

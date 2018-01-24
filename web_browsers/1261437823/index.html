@@ -1,0 +1,470 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Web browsers (as of Mon Dec 21 18:23:43 EST 2009)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Web browsers</h1>
+<h2><i>-as of Mon Dec 21 18:23:43 EST 2009-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+Plan9
+has
+several
+options
+for
+web
+browsers,
+though
+none
+supports
+perfectly
+the
+most
+complex(or
+broken)
+websites
+some
+of
+them
+are
+quite
+useable.
+<a name="ABACO" /><h3>ABACO</h3>
+
+<p class='para'>
+As
+of
+July
+2009
+the
+lightweight
+web
+browser
+abaco
+is
+now
+distributed
+as
+part
+of
+the
+stock
+Plan
+9
+distribution.
+It
+is
+a
+web
+browser
+that
+started
+as
+a
+rewrite
+of
+webpage,
+with
+many
+new
+improvements
+including
+tables
+support.
+A
+testing
+snapshot
+can
+be
+found
+at:
+/n/sources/contrib/fgb
+</p>
+
+<a name="CHARON" /><h3>CHARON</h3>
+
+<p class='para'>
+Charon
+is
+the
+web
+browser
+supplied
+with
+the
+Inferno
+OS.
+It
+supports
+Javascript
+and
+https.
+It
+has
+very
+few
+features
+(a
+good
+thing)
+but
+requires
+the
+inferno
+runtime
+environment.
+Charon
+is
+packaged
+as
+part
+of
+<a href="http://www.vitanuova.com/inferno/downloads.html">Inferno</a>
+</p>
+
+<a name="WEBPAGE" /><h3>WEBPAGE</h3>
+
+<p class='para'>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/webfs"><i>webfs</i>(4)</a>
+and
+<a href="http://plan9.bell-labs.com/magic/man2html/2/html"><i>html</i>(2)</a>
+were
+written
+at
+Bell
+labs
+as
+the
+backend
+for
+a
+new
+web
+browser;
+unfortunately
+the
+project
+stalled.
+Aki
+Nyrhinen
+has
+since
+written
+a
+simple
+frontend
+called
+webpage
+for
+these
+which
+does
+an
+amazingly
+good
+job
+of
+rendering
+basic
+web
+pages;
+it
+also
+makes
+interesting
+use
+of
+the
+plumber
+to
+support
+hyperlinks.
+This
+work
+also
+stalled
+and
+has
+been
+superseded
+by
+abaco.
+</p>
+
+<a name="LINKS" /><h3>LINKS</h3>
+
+<p class='para'>
+Links
+is
+a
+graphical
+web
+browser
+which
+renders
+pages
+fairly
+well.
+It
+is
+not
+quite
+stable,
+crashing
+on
+some
+pages
+but
+usable
+for
+google
+searches
+and
+the
+like.
+It
+supports
+CSS
+and
+javascript
+but
+not
+java
+or
+https
+(though
+this
+would
+not
+take
+a
+great
+deal
+to
+fix).
+The
+current
+implementation
+is
+fairly
+graphics
+hungry
+and
+should
+be
+run
+on
+a
+local
+terminal
+for
+best
+peformance.
+The
+greatest
+annoyance
+with
+links
+is
+the
+lack
+of
+support
+for
+cut
+and
+paste
+between
+links
+windows
+and
+the
+plan9
+snarf
+buffer.
+The
+source
+is
+availabe
+in
+Andrey
+Mirtchov's
+<a href="../../contrib">contrib</a>
+dir:
+/n/sources/contrib/andrey/links.tgz
+</p>
+
+<a name="MOTHRA" /><h3>MOTHRA</h3>
+
+<p class='para'>
+Mothra
+was
+written
+by
+Tom
+Duff
+for
+the
+second
+edition
+of
+plan9.
+It
+is
+very
+basic
+and
+does
+not
+support
+ftp,
+java,
+javascript,
+https
+or
+CSS.
+On
+the
+other
+hand
+it
+is
+very
+fast
+and
+compiles
+natively
+for
+plan9.
+The
+sources
+relies
+on
+the
+second
+edition
+panel
+library
+which
+has
+also
+been
+released,
+see
+/n/sources/extra/mothra.
+</p>
+
+<a name="HGET_|_HTMLFMT" /><h3>HGET | HTMLFMT</h3>
+
+<p class='para'>
+The
+plan9
+tools
+<a href="http://plan9.bell-labs.com/magic/man2html/1/hget"><i>hget</i>(1)</a>
+and
+<a href="http://plan9.bell-labs.com/magic/man2html/1/htmlfmt"><i>htmlfmt</i>(1)</a>
+can
+be
+used
+to
+fetch
+and
+render
+simple
+web
+pages
+but
+are
+most
+useful
+for
+scripted
+fetches
+(e.g.
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ap"><i>ap</i>(1)</a>)
+</p>
+
+<a name="VNC_TO_WINDOWS_OR_*NIX" /><h3>VNC TO WINDOWS OR *NIX</h3>
+
+<p class='para'>
+The
+best
+way
+to
+get
+a
+fully
+supported
+web
+browser
+under
+plan9
+is
+to
+use
+the
+vnc
+client
+to
+connect
+to
+a
+linux
+or
+Windows
+box.
+This
+performs
+very
+well
+if
+used
+over
+a
+fast
+network
+connection.
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Mon Dec 21 18:23:43 EST 2009</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

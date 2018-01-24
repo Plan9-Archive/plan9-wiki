@@ -1,0 +1,742 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>thm 2005-08-15 Log (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+thm 2005-08-15 Log</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+IRC
+log
+started
+Mon
+Aug
+15
+09:29
+<pre>
+*** Signoff: quintile (Remote closed the connection)
+*** quintile (n=steve@cpc1-sout4-6-0-cust141.sot3.cable.ntl.com) has joined channel #plan9dev
+*** axelb9 (N=belinfan@demeter.ewi.utwente.nl) has joined channel #plan9dev
+*** forsyth (i=none@spc1-york1-5-0-cust142.seac.broadband.ntl.com) has joined channel #plan9dev
+&lt;uriel&gt; hey forsyth!
+&lt;__20h__&gt; hi forsyth
+&lt;uriel&gt; forsyth: glad that you came
+*** hyperion_ (n=6thgate@2002:5062:fa7e:1848:0:0:0:0) has joined channel #plan9dev
+&lt;hyperion_&gt; hi everyone :)
+&lt;_Ulli_&gt; ...gong...
+&lt;uriel&gt; hi hyperion_ 
+*** pz (n=none@adsl-144-76-89.ard.bellsouth.net) has joined channel #plan9dev
+&lt;vt3&gt; it's 20 GMT :)
+&lt;ericvh&gt; so it is.
+*** zimba (n=zimba@22.171.79.83.cust.bluewin.ch) has joined channel #plan9dev
+&lt;ericvh&gt; Okay, I guess we'll get things rolling.
+&lt;__20h__&gt; 6min to go.
+&lt;__20h__&gt; No, bad synced clock.
+&lt;uriel&gt; __20h__: :)
+&lt;ericvh&gt; you or vt3 and me?
+&lt;vt3&gt; you, please.
+&lt;uriel&gt; ericvh: __20h__ 
+&lt;vt3&gt; sorry for the miscommunication last month.
+&lt;ericvh&gt; okay.  As I have an overdue paper -- I have a vested interest in keeping things moving along.
+&lt;__20h__&gt; Moderator - me?
+&lt;ericvh&gt; no problem, sorry you have to be up so late.
+&lt;__20h__&gt; Ok, if everyone aggrees, then I'll moderate it.
+&lt;vt3&gt; seconded
+&lt;__20h__&gt; Ok, I count this as "yes".
+&lt;__20h__&gt; Logging on?
+&lt;__20h__&gt; I think so.
+&lt;__20h__&gt; ton_t here?
+*** fgb (n=fgb@OL74-98.fibertel.com.ar) has joined channel #plan9dev
+&lt;__20h__&gt; tony_t
+&lt;__20h__&gt; No, so that is skipped.
+&lt;fgb&gt; hy
+&lt;__20h__&gt; Nemo here?
+&lt;__20h__&gt; Skipped too.
+&lt;hyperion_&gt; :(
+&lt;__20h__&gt; Gorka/Eric is next, about "9P Reliability Project Status".
+&lt;ericvh&gt; Gorka may be on soon, he may be able to speak for nemo and team.
+&lt;__20h__&gt; Ok, so we go on.
+&lt;ericvh&gt; Until he gets here, I'll report on the 9P reliability.
+&lt;__20h__&gt; You're online.
+&lt;uriel&gt; __20h__: can we please keep some order?
+*** de0u (n=davide@dsl093-172-091.pit1.dsl.speakeasy.net) has joined channel #plan9dev
+&lt;ericvh&gt; Gorka has completed his initial port of Russ' recover application to the current distribution.
+&lt;uriel&gt; and can someone please take notes?
+&lt;ericvh&gt; It basically allows one to recover a session that is lost due to network error, server reboot, etc.
+&lt;__20h__&gt; Notes can be taken out of the log.
+&lt;ericvh&gt; It also has some functionality to support failing over to alternate servers (assuming some sort of mirroring of resources) -- but we haven't tested that much.
+&lt;ericvh&gt; It works under both Plan 9 native and Plan 9 Ports.  We are currently putting the finishing touches on a paper describing how it works and then we'll release to sources and p9p.
+&lt;ericvh&gt; Downside is it incurs about a 2x performance penalty on loopback under Plan 9 and 8x penalty under p9p on Linux.
+&lt;ericvh&gt; This overhead is likely less visible on higher latency connections than loopback.
+&lt;__20h__&gt; 2min presentation done.
+&lt;ericvh&gt; The only way around the overhead would be to push the recovery code inside the kernel instead of providing it as a user application.
+&lt;ericvh&gt; done
+&lt;__20h__&gt; Any questions?
+&lt;uriel&gt; ericvh: how much of p9p does it depend on?
+&lt;ericvh&gt; its a user-level file system, so the same set that other file systems (like ramfs, etc.) depend on.
+&lt;uriel&gt; ericvh: I mean, this would be useful for plain v9fs, so I guess it would make sense to package it on it's own
+&lt;ericvh&gt; wait..strike that...that's not true.
+&lt;axelb9&gt; ericvh: will the paper discuss the resason of the performance penalty?
+&lt;ericvh&gt; I'm not exactly sure what it depends on, mostly just the protocol multi-plexing/demultiplexing -- and the thread code.
+&lt;ericvh&gt; axelb9: yes, it should.  The reason is straightforward copy overhead.
+&lt;ericvh&gt; The extra overhead on p9p under Linux is crappy threads.
+&lt;__20h__&gt; Is it a filesystem on top of /net?
+&lt;ericvh&gt; I mispoke early, its actually an interposer for 9p, so its more like an interposer on top of srv.
+&lt;__20h__&gt; Ok. More questions?
+&lt;ericvh&gt; instead of srv sources.cs.bell-labs.com, you recover sources.cs.bell-labs.com, then mount /srv/sources.cs.bell-labs.com.
+&lt;uriel&gt; ericvh: what is required for ahving a fallback server?
+&lt;ericvh&gt; that's an unresolved question.  It depends on what you are failing over.
+&lt;__20h__&gt; The last question before going on.
+*** lucho (n=lucho@pcp09875681pcs.ewndsr01.nj.comcast.net) has joined channel #plan9dev
+&lt;ericvh&gt; For file systems it could be some sort of synchronous mirror -- Plan B has some facilities for this, but we haven't tried using them yet.
+&lt;__20h__&gt; Ok, next is - for mixing reasons - uriel, with:"Propaganda efforts and documentation issues."
+&lt;ericvh&gt; (that should have been for static file systems)
+&lt;uriel&gt; lots of people in 9fans complaingin/asking about docs
+&lt;uriel&gt; but no one seems to be doing much...
+*** Signoff: forsyth (SendQ exceeded)
+&lt;uriel&gt; would be good to have some input on what direction to take with the docs
+*** forsyth (i=none@spc1-york1-5-0-cust142.seac.broadband.ntl.com) has joined channel #plan9dev
+&lt;uriel&gt; so far I'm trying to put as much stuff in the wiki, so at least nothing is lost
+&lt;vt3&gt; openness on best practices would be good too.
+&lt;uriel&gt; I recovered the papers from the 1st and 2nd ed which were in leo.org(or something)
+&lt;uriel&gt; vt3: ?
+*** paurea (n=paurea@pixpat.austin.ibm.com) has joined channel #plan9dev
+&lt;uriel&gt; I would like to setup a mirror of all papers, ideally in sources
+&lt;uriel&gt; (and make sure that all papers are in decent condition on all formats)
+&lt;__20h__&gt; With sources it would be mirrored to 9grid.de.
+&lt;__20h__&gt; Ok, 2min over.
+&lt;__20h__&gt; Questions?
+&lt;uriel&gt; having a reliable sources web interface would be nice, I'm not sure linking to 9grid.de from the main wiki is a great idea
+&lt;uriel&gt; __20h__: that is the main point, to have things mirrored
+&lt;__20h__&gt; And it is a good idea, to get documentation into Plan 9.
+&lt;uriel&gt; ah, and I gave some interviews on the radio about Plan 9 at WTH
+&lt;uriel&gt; it was interesting, people knows very little about Plan 9
+&lt;__20h__&gt; Yes, and we had some talks at 4 o'clock and good beer.
+&lt;zimba&gt; uriel: is there somewhere a list of who is responsible for what ?
+&lt;uriel&gt; zimba: hah!
+&lt;uriel&gt; zimba: that is a good question... any takers?
+&lt;__20h__&gt; The two minutes for discussion are over.
+&lt;uriel&gt; zimba: it seems no one cares... oh well... this is Plan 9, pure anarchy
+&lt;zimba&gt; uriel: my first impression on p9 from the website is : it's static, what is going on there ?  no changelog or somethin ?
+&lt;__20h__&gt; Can discuss it more afterwards or in #plan9.
+&lt;uriel&gt; zimba: exactly
+&lt;uriel&gt; __20h__: it wont happen
+&lt;zimba&gt; okay
+&lt;uriel&gt; __20h__: see first item in agenda
+&lt;__20h__&gt; Next is: Eric, with "Jim Getty's SNAP vision"
+&lt;ericvh&gt; Didn't want to go too deep here, just re-iterate some stuff I said on #plan9 about my OLS experience.
+&lt;uriel&gt; __20h__: follow up discusions are not happening, I thoght that was the first item in the agenda, oh well
+&lt;paurea&gt; I am late
+&lt;paurea&gt; did you already talk about Plan B?
+&lt;paurea&gt; and recover?
+&lt;uriel&gt; paurea: no
+&lt;ericvh&gt; Jim Getty's is pushing his vision is the way the universe should look, particularly in the home network environment.
+&lt;uriel&gt; paurea: yes
+&lt;ericvh&gt; If you look at his OLS paper (google Getty's and SNAP), you'll see it looks somewhat familiar -- very much like the Inferno/Plan 9 vision, at least on the high level.
+*** Signoff: rkl ("leaving")
+&lt;uriel&gt; Jim Getty is a total shithead (doing a boyd, but someone had to do it)
+&lt;ericvh&gt; Jim seemed to be very open to Plan 9 style ideas, so it may not be a bad carrier to push Plan 9 ideas.
+&lt;paurea&gt; I think he is not
+&lt;ericvh&gt; Plan 9 technology seems to provide a lot more of what he wants than the alternatives he mentions in his paper(s).
+&lt;uriel&gt; paurea: boyd thought so, and I agree, but I guess that doesn't matter one bit if he can help push Plan 9
+&lt;ericvh&gt; That's basically it.  I talked to him a bit about v9fs, and p9p, and venti, and what not.
+&lt;__20h__&gt; Yes, it's time for the 2min discussion.
+&lt;ericvh&gt; done./
+&lt;uriel&gt; ericvh: what about freedesktop.org?
+&lt;uriel&gt; ericvh: they are pushing that dbus crap
+&lt;ericvh&gt; yeah, that's different level.
+&lt;uriel&gt; ericvh: any chance to push 9p there?
+&lt;ericvh&gt; Getty's was pushing lots of devices talking to eachother.
+&lt;hyperion_&gt; uriel, You know... There will be logs... What about not swearing meaninglessly? Thanks...
+&lt;ericvh&gt; I have no problem with pushing 9p on freedesktop.org as well.
+&lt;forsyth&gt; re: SNAP: he is Jim Gettys, so that to get him interested you need to show him something he thinks he can't do or prove to him you can do it better.
+&lt;uriel&gt; hyperion_: sorry
+&lt;uriel&gt; forsyth: :)
+&lt;__20h__&gt; 2min over.
+&lt;uriel&gt; like network transparency? :)
+&lt;__20h__&gt; Next item is either Plan B or uriel with "future 9cons".
+&lt;ericvh&gt; paurea=gorka.
+&lt;paurea&gt; nemo is not around
+&lt;paurea&gt; yes
+&lt;__20h__&gt; Good, Plan B is on the run.
+&lt;__20h__&gt; 2min to go.
+&lt;paurea&gt; we are probably
+&lt;paurea&gt; packaging an image with everything for september
+&lt;paurea&gt; so people can look at it
+&lt;paurea&gt; an maybe merge whatever they like into plan 9
+&lt;paurea&gt; our idea was to get the good ideas in it
+&lt;paurea&gt; into sources somehow
+&lt;uriel&gt; paurea: "they"? 
+&lt;paurea&gt; i meant the community
+&lt;paurea&gt; sorry
+&lt;paurea&gt; I meant you
+&lt;uriel&gt; hehehe..
+&lt;__20h__&gt; 2min for discussion begin.
+* uriel wonders how the community will ever agree on anything
+uriel #plan9dev ACTION wonders how the community will ever agree on anything
+&lt;paurea&gt; well there are many many changes in Plan B
+&lt;uriel&gt; paurea: any hardware support and other non-controversial bits that could make it into Plan 9?
+&lt;__20h__&gt; Are there still plans to have Plan B running native on hardware?
+&lt;paurea&gt; no
+&lt;zimba&gt; paurea: since where are you working on PlanB ?
+&lt;paurea&gt; it is running on a modified version of the kernel
+&lt;paurea&gt; two years probably
+&lt;uriel&gt; paurea: how do you plan to stay in sync
+&lt;paurea&gt; but there have been many strategy changes
+&lt;paurea&gt; we dont
+&lt;paurea&gt; we realease it
+&lt;garbeam&gt; paurea: how many LOC did you approx. changed/added?
+&lt;zimba&gt; paurea: what is the goal of your search group ?
+&lt;__20h__&gt; One after another please.
+&lt;paurea&gt; a second
+&lt;paurea&gt; yes
+&lt;paurea&gt; we plan to release it
+&lt;paurea&gt; and the most changes which make it to sources
+&lt;paurea&gt; the less we have to maintain
+&lt;paurea&gt; if some ideas are bad
+&lt;paurea&gt; we drop them
+&lt;__20h__&gt; zimba, look for the Plan B homepage.
+&lt;paurea&gt; there are many lines of code
+&lt;paurea&gt; I have no idea
+&lt;uriel&gt; paurea: why no open discuion and no public codebase?
+&lt;paurea&gt; we wanted to be free to experiment
+&lt;XTL&gt; paurea: will there be nore more development, then, for the bits that don't make it?
+&lt;paurea&gt; depends on how interesting they seem to us
+&lt;paurea&gt; :-)
+&lt;__20h__&gt; 2min more for discussion.
+&lt;uriel&gt; paurea: ok, any reason to wait until sep to release the src?
+&lt;paurea&gt; we are on holidays/traveling
+&lt;uriel&gt; ok, any plans to continue developement independently from Plan 9?
+&lt;vt3&gt; on topic: announce and adopt an open source model with a open core team.
+* uriel sighs
+uriel #plan9dev ACTION sighs
+&lt;__20h__&gt; vt3, we can handle that after uriel.
+&lt;paurea&gt; I dont know what is going to happen
+&lt;paurea&gt; we will release it
+&lt;__20h__&gt; Ok, the two min are over.
+&lt;uriel&gt; paurea: ok, I see
+&lt;paurea&gt; see what people think about it
+&lt;__20h__&gt; Now is the last topic on list: "future 9con", with uriel as speaker.
+&lt;paurea&gt; we will see
+&lt;__20h__&gt; 2min to go.
+&lt;uriel&gt; I'd like to organize a 9con in Madrid this fall
+&lt;paurea&gt; I wanted to help with that
+&lt;uriel&gt; (actually I was talking with anavarro, and counting on nemo and his kids to do most of the work ;P)
+&lt;paurea&gt; his kids?
+&lt;uriel&gt; paurea: just kidding ;)
+&lt;uriel&gt; paurea: ok, you think you can provide location?
+&lt;paurea&gt; I think we could
+&lt;paurea&gt; I wanted to actually organize it
+&lt;uriel&gt; cool, people interested in comming?
+&lt;paurea&gt; but I got into many things and couldn't
+&lt;forsyth&gt; yes
+&lt;uriel&gt; great..
+&lt;__20h__&gt; Depends on when it is.
+&lt;mjsottile&gt; depends on when
+&lt;zimba&gt; me too
+&lt;paurea&gt; if we make it with enough time
+&lt;uriel&gt; oct-nov sounds good to me
+&lt;__20h__&gt; 2min discussion begin.
+&lt;uriel&gt; then there is CCC
+&lt;paurea&gt; we may get money for bringing people willing to give conferences
+&lt;paurea&gt; talkd
+&lt;__20h__&gt; (After that: topic by vt3)
+&lt;paurea&gt; talks
+&lt;paurea&gt; sorry
+&lt;uriel&gt; paurea: oh, cool
+&lt;uriel&gt; anyone commint to CCC?
+&lt;__20h__&gt; No, paurea, free talk means that. ;)
+&lt;paurea&gt; the thing is that I need time to do the paperwork for that
+&lt;uriel&gt; 20h, me and mtgx will probably be there
+&lt;uriel&gt; paurea: ok, in worst case we would just hang out and drink beer/wine ;P
+&lt;__20h__&gt; We will have a place in the "hacking center", for Plan 9, on CCC.
+&lt;uriel&gt; (and tea for me ;))
+&lt;forsyth&gt; showing my ignorance or age or something, what is CCC?
+&lt;paurea&gt; ?
+&lt;uriel&gt; forsyth: see 9con page in wiki ;)
+&lt;__20h__&gt; Chaso Computer Congress, forsyth.
+&lt;forsyth&gt; oh yes, i know that one.
+&lt;__20h__&gt; It's organised by the Chaos Computer Club.
+&lt;uriel&gt; 27-30 dec
+&lt;uriel&gt; (IIRC)
+&lt;__20h__&gt; In Berlin.
+&lt;garbeam&gt; 26-31 inofficially
+&lt;uriel&gt; garbeam and I are planning to give talk
+&lt;uriel&gt; s
+&lt;uriel&gt; garbeam: right?
+&lt;garbeam&gt; yes
+&lt;__20h__&gt; Discussion is over.
+&lt;__20h__&gt; Now to vt3's topic.
+&lt;vt3&gt; announce and adopt an open source model with a open core team.
+&lt;__20h__&gt; You have 2min vt3.
+&lt;vt3&gt; what do we want to do as a community? 
+&lt;hyperion_&gt; I think we'd all like to see that
+&lt;uriel&gt; __20h__: I think this topic fits the topic you submited: Future of Plan 9
+&lt;hyperion_&gt; But it depends on jmk and rsc
+&lt;uriel&gt; hyperion_: I don't think everyone would like to see that
+&lt;uriel&gt; hyperion_: many people is happy with the status quo
+&lt;__20h__&gt; We have a half OpenSource model, as you can take out the distribution and publish it on your own.
+&lt;hyperion_&gt; uriel, Well I'm not then
+&lt;uriel&gt; we need a way to show to the rest of the world that Plan 9 development is not dead
+&lt;hyperion_&gt; uriel, Who is happy with it?
+&lt;uriel&gt; hyperion_: I'm not either
+&lt;__20h__&gt; Noone complained about the differences of the 9grid.de ISOs.
+&lt;uriel&gt; hyperion_: f2f, ericvh, axelb9, ....
+*** pzz (n=none@adsl-1-232-203.ard.bellsouth.net) has joined channel #plan9dev
+&lt;uriel&gt; __20h__: see the disaster in 9fans today
+&lt;uriel&gt; but that is another topic
+&lt;uriel&gt; hyperion_: people that have more direct access to info/contact from russ/jmk are happy, everyon else is unhappy
+&lt;vt3&gt; i have no further comments
+&lt;__20h__&gt; The THW (Technical Help Organisation [of Germany]) is alarmed.
+&lt;uriel&gt; __20h__: ?
+&lt;__20h__&gt; So I open free discussion.
+* axelb9 is happy, has no special access to info/contact from russ/jmk
+axelb9 #plan9dev ACTION is happy, has no special access to info/contact from russ/jmk
+&lt;forsyth&gt; i'd suspect that the best thing to show it not-dead is to apply it more, esp. to do interesting things (or boring things in an interesting way)
+&lt;__20h__&gt; Anyone knows htfilefs?
+&lt;uriel&gt; forsyth: yes, I agree
+&lt;_Ulli_&gt; btw, why is there only 9fans?  maybe something like a web forum would be more convenient for some people...
+&lt;paurea&gt; I am happy
+&lt;uriel&gt; forsyth: but things like the public page, which are our public face, need work
+&lt;zimba&gt; p9's website is dead except of the wiki
+&lt;__20h__&gt; htfilefs -m /tmp http://www.9grid.de/plan9/plan9.iso; 9660srv; mount /srv/9660 /n/cdrom /tmp/plan9.iso;
+&lt;forsyth&gt; that's really why linux surpassed bsd: hardly because it was better, but programmers wrote for linux
+&lt;axelb9&gt; so it's about marketing?
+&lt;XTL&gt; popularity often is, more or less
+&lt;uriel&gt; most people see the web site as dead, see what zimba  just said, and about everyone I know that has looked at it has thought Plan 9 is dead
+&lt;forsyth&gt; and to be most accurate, universities supported it
+&lt;paurea&gt; if you want people to use plan 9
+&lt;paurea&gt; port mozilla
+&lt;vt3&gt; axelb9, yes
+&lt;hyperion_&gt; the problem with BSD is that it's fragmented
+&lt;hyperion_&gt; there are 5 or more bsds
+&lt;garbeam&gt; you need a central site which contains everything in one place (maybe as mirror) - gain 9.org
+&lt;uriel&gt; paurea: wont happen
+&lt;forsyth&gt; there are more linuxes than you might think, but it doesn't matter as much
+&lt;forsyth&gt; it's the one people talk about in the singular
+&lt;uriel&gt; forsyth: yup, and bsds do fine anyway
+&lt;lucho&gt; there are not enough people using Plan9, hence not enough developers wanting to write for it :)
+&lt;paurea&gt; I think this discussion is void of content
+&lt;uriel&gt; the clear problem IMHO(and in the opinion of many others) is total lack of direction in Plan 9 developement, and total lack of acepted authority
+&lt;forsyth&gt; bsds do, but not as much as they should wrt their quality compared to linux, if you look only at kernels
+&lt;paurea&gt; If you want to attract people
+&lt;paurea&gt; you need applications
+&lt;__20h__&gt; paurea, I thought about having something like User Mode Linux for Plan 9.
+&lt;uriel&gt; forsyth: true, but still infinitely more than Plan 9
+&lt;zimba&gt; maybe you all have a PhD, but it's not easy to convince simple people that your OS is great. Work on graphics, etc.. is needed
+&lt;lucho&gt; uriel, not having direction is not a problem for Linux :)
+&lt;__20h__&gt; So we emulate a PC for the kernel and so don't have to port all applications.
+&lt;uriel&gt; lucho: spending all time in-fighting and duplicating work is a problem from Plan 9 where resources are very scarce
+&lt;forsyth&gt; sorry, my point wasn't a jab at bsd, because i think it is better than linux, but rather a remark emphasising applications over kernels
+&lt;hyperion_&gt; zimba, no need to "convince" people
+&lt;paurea&gt; yes
+&lt;paurea&gt; i agree with forsyth
+&lt;lucho&gt; uriel, I don't see anybody doing duplicate work or fighting (except probably you ;)
+&lt;forsyth&gt; the relevance is that anyone is free to make a plan 9 application and put it up
+&lt;vt3&gt; zimba, basically make it provide common everyday solutions like other OSes.
+&lt;zimba&gt; hyperion_: who do you want to attract developers then ?
+&lt;ericvh&gt; Is there anyone from Eckardt's CMU group here?  Is there status on the iMac port?
+&lt;forsyth&gt; on any convenient web site.  it doesn't have to go on sources any more than linux applications do
+&lt;de0u&gt; Eckhardt is here.
+&lt;ericvh&gt; (or perhaps the possibility of a Mac mini port?)
+&lt;lucho&gt; forsyth, one of the problems is that there is no C++ compiler, and unfortunately almost everything these days is in C++ :(
+&lt;uriel&gt; forsyth: stuff that doesn't go to sources disapears without a trace
+&lt;__20h__&gt; de0u, want to talk about it?
+&lt;paurea&gt; it is not only the compiler
+&lt;forsyth&gt; sorry, i didn't mean porting existing applications i meant doing nice interesting new-ish ones (or old ones newish-ly) for Plan 9
+&lt;uriel&gt; forsyth: not to mention that no one ever finds about it, because there is lots of people doing work in Plan 9, but they are all incredibly secretive abou what they do
+&lt;de0u&gt; I'd mostly rather let the students make an announcement.
+&lt;lucho&gt; forsyth, another problem is that it is not easy to write GUI apps for Plan9. That was one of the reasons I was interested in having "native" Limbo interpreter
+&lt;de0u&gt; What I will say is:
+*** Signoff: pz (Connection timed out)
+&lt;paurea&gt; omero should make that easier
+&lt;uriel&gt; forsyth: for app developement better integration with Inferno/Limbo would be great ;) (and I know you are working on it, and that work is great)
+&lt;XTL&gt; Beside the "core" part, bsd's and Linux distributions have some sort of collection of ported and packaged things more or less in one place.
+&lt;__20h__&gt; forsyth, I agree.
+&lt;paurea&gt; (omero is plan B widget filesystem)
+&lt;uriel&gt; paurea: can omero run on Plan 9?
+&lt;de0u&gt; What they have runs and has run on a mini.  There are N pieces of 1-person-sized work.  There is a relevance issue, though, given that G5's don't have BATs and that Apple is ditching PPC.
+&lt;paurea&gt; yes
+&lt;XTL&gt; That's something between disappearing and random upstreams and right in there with the system sources.
+&lt;__20h__&gt; Like Inferno runs on Plan 9 with TK.
+&lt;__20h__&gt; Did it change something?
+*** Signoff: mjsottile (Remote closed the connection)
+&lt;uriel&gt; de0u: interesting
+&lt;zimba&gt; paurea: how is omero extensible. for example if I want to make a new widget ? I didn't get it from the paper
+&lt;axelb9&gt; Inferno is something on top, if omero can be native plan9, it makes a difference, I gues
+&lt;__20h__&gt; Axel, still are people missing who will use it.
+&lt;paurea&gt; You have to recompile it
+&lt;paurea&gt; but it is very easy
+&lt;uriel&gt; proposal for next THM: 5 min is just too short, and too much stuff waits for the end and then there is chaos
+&lt;paurea&gt; though you shouldnt be adding many widgets
+&lt;paurea&gt; I mean new ones
+&lt;forsyth&gt; i'll make it more concrete: if i want to deploy a DNS server or mail server, i can probably do that using plan 9.  that's good.  NAT(P)?  simple things that people do to test things out.  that sort of thing.  i didn't mean Word or Excel
+&lt;zimba&gt; paurea: some applications domains could need it
+&lt;uriel&gt; forsyth: people can hardly manage to install Plan 9... 
+&lt;lucho&gt; omero or no omero, still C is not a good language to write GUI apps :)
+&lt;paurea&gt; zimba: ok
+&lt;uriel&gt; (BTW, there was a topic on the installer that got lost)
+&lt;vt3&gt; to digress: if you want to standout from other OSes then add user auditing features. this is what corporations do to standard windows and *ix machines. 
+&lt;paurea&gt; the idea was to have a widget filesystem
+&lt;__20h__&gt; Ok, stop.
+&lt;paurea&gt; so you can write your program in whatever
+&lt;paurea&gt; even limbo
+&lt;lucho&gt; a good browser is the most important app that plan9 is missing
+* uriel votes to have ericvh moderate next THM
+uriel #plan9dev ACTION votes to have ericvh moderate next THM
+&lt;__20h__&gt; Next topic:"Installer plans/work(problems with lack of testing ...)"
+&lt;__20h__&gt; Who wants to talk?
+&lt;uriel&gt; I can talk: see 9fans today
+&lt;__20h__&gt; uriel, 2min.
+&lt;uriel&gt; or see people asking me if they need a floppy to install Plan 9
+&lt;uriel&gt; the installer needs to be simplified
+&lt;uriel&gt; otherwise testing is impossible, and users are confused
+&lt;hyperion_&gt; it's no more complex than windows' installer
+&lt;uriel&gt; also it's  problem with the website
+&lt;fgb&gt; the installer is simple
+&lt;hyperion_&gt; it's simpler for me even
+&lt;__20h__&gt; It can be done simpler, I think.
+&lt;uriel&gt; it's unclear that you can even insttall from an ISO, or when teh iso is generated
+&lt;hyperion_&gt; yeah. the installer is fine
+&lt;uriel&gt; hyperion_: in the installer there are 4 kernels
+&lt;_Ulli_&gt; i'm a confused newbie, but I think it's more about after-installation stuff, applications, and maybe about getting started how the whole system is organized, how programs are designed in the plan9 context.
+&lt;vt3&gt; hyperion, meaning it isn't broken
+&lt;uriel&gt; hyperion_: four different kernels: cd install kernel, installed kernel, floppy boot kernel, bootable cd kernel
+&lt;axelb9&gt; uriel: the more you know, the more nits you can pick? maybe the newby cares less
+&lt;uriel&gt; _Ulli_: there is a recomended reading section in the wiki
+&lt;uriel&gt; _Ulli_: but no one checks the wiki
+&lt;__20h__&gt; 2min discussion begin.
+&lt;uriel&gt; axelb9: maybe you can read the mess in 9fans today?
+&lt;_Ulli_&gt; ok, i'll do that, uriel
+&lt;hyperion_&gt; vt3, well yes
+&lt;uriel&gt; no one sees the wiki
+&lt;XTL&gt; As a newbie, I could also say that the tallest wall seems to be waiting after the installation  in learning all the ideas and configurations and setting up systems. Wiki is pretty sparse and many spells don't neccessarily work.
+&lt;__20h__&gt; uriel, the kernels are differnt, because the media from where they boot is different.
+&lt;uriel&gt; the main Plan 9 website has a bunch of stuff that is dead: 9grid link to begin with
+&lt;zimba&gt; uriel: who owns the website ?
+&lt;__20h__&gt; Still the kernel configuration specifies where to boot from.
+&lt;vt3&gt; it is broken, network installs don't work correctly.
+&lt;uriel&gt; screen shot and rel notes are are useless
+&lt;zimba&gt; why don't you setup a bugtracker ?
+&lt;XTL&gt; And there really is little or no way to sneak in and do things in non-p9 way.
+&lt;uriel&gt; zimba: bell labs, it was agreed at WTH that we would try to make a new website, and submit it to the powers that be and pray that they accept it
+&lt;zimba&gt; and make a plan of what misses
+&lt;garbeam&gt; uriel: wrong, screenshots are the most important things if you count web hits
+&lt;zimba&gt; like a map
+&lt;uriel&gt; zimba: oh, bug tracker!
+&lt;uriel&gt; garbeam: the scrreenshot linked there is crap
+&lt;garbeam&gt; uriel: that I agree on
+&lt;uriel&gt; garbeam: there are many more sshots in the wiki
+&lt;uriel&gt; the whole public website is an embarrasement for anyone new to Plan 9 because the people mantaining it don't care about such public
+&lt;uriel&gt; (and they don't care if it looks dead, oh, nevermind, no one is maintaining the site)
+&lt;hyperion_&gt; yea that's the key
+&lt;hyperion_&gt; they don't care
+&lt;__20h__&gt; So, what we agree on: New frontsite and a common way of documentation?
+&lt;hyperion_&gt; but we cannot change that :(
+&lt;zimba&gt; yes
+&lt;paurea&gt; ok. when you say they who are you talking about?
+&lt;uriel&gt; __20h__: who does agree on that?
+&lt;zimba&gt; we can  do our own website and ask that they link it
+&lt;__20h__&gt; uriel, people interested in it.
+&lt;uriel&gt; paurea: bell albs
+&lt;paurea&gt; who is responsible for the web site?
+&lt;hyperion_&gt; paurea, well jmk and rsc
+&lt;paurea&gt; ok
+&lt;hyperion_&gt; i think
+&lt;lucho&gt; paurea, "they" you don't now "they"? ;)
+&lt;uriel&gt; paurea: no clue, I have emailed them a few times, got no answer
+&lt;paurea&gt; talk to them and set an alternative website
+&lt;fgb&gt; if you dont like the oficial site make your own
+&lt;axelb9&gt; question is: what do 'we' want to achive? what is the audience?
+&lt;paurea&gt; vitanuova will host it for sure
+&lt;uriel&gt; paurea: the wiki is already an alternative web site
+&lt;paurea&gt; no
+&lt;zimba&gt; also I was wondering why you don't put some kind of p9forge for all p9 related projects ?
+&lt;paurea&gt; the wiki is a wiki
+&lt;garbeam&gt; an own _central_ website needs to be coordinated
+&lt;uriel&gt; axelb9: audience shoudl be devlopers
+&lt;XTL&gt; Then there's the grids' pages
+&lt;__20h__&gt; So the website should be controlled by the community?
+&lt;uriel&gt; axelb9: which brings me to encourage everyone here to register at advogato.org and post comments about Plan 9 and wahtever
+&lt;uriel&gt; __20h__: I'd say so, but what does it matter what I say?
+&lt;__20h__&gt; uriel, this is a Town Hall Meeting and many people are around.
+&lt;hyperion_&gt; i dont think we should force anyone to try/use plan9, uriel
+&lt;XTL&gt; The wiki is actually a wiki if you have access to it through acme. Otherwise it's static pages, I believe. You can't edit.
+* uriel sees a split, between old guard and new people that is used to other OSS project
+uriel #plan9dev ACTION sees a split, between old guard and new people that is used to other OSS project
+&lt;uriel&gt; hyperion_: when did I say that?
+&lt;uriel&gt; hyperion_: we just should make it clear that Plan 9 is not dead
+&lt;garbeam&gt; uriel: you need a responsibility concept to realize those things, otherwise it's not more than hot air
+&lt;uriel&gt; hyperion_: and the current public web site makes it look like it's dead
+&lt;hyperion_&gt; well it's not?
+&lt;__20h__&gt; So, to ask the round: Any topics that are important, have to be discussed?
+* hyperion_ hides
+hyperion_ #plan9dev ACTION hides
+&lt;__20h__&gt; Because the documentation things is getting uncontrollable.
+&lt;uriel&gt; garbeam: well, I have been "responsible" of the wiki, I see many people talking, no one working on it
+&lt;fgb&gt; who thinks that plan9 is dead?
+&lt;uriel&gt; fgb: everyone you ask?
+&lt;hyperion_&gt; fgb, Well in a sense Plan9 _is_ dead
+&lt;paurea&gt; hyperion_ is it?
+&lt;uriel&gt; in many senses Plan 9 has been dead for a long time
+&lt;paurea&gt; I see changes in pull sources
+&lt;garbeam&gt; uriel: just begin with counting responsibilities of volunteers from the community
+&lt;paurea&gt; all the time
+&lt;XTL&gt; dead plan9 looks a lot like dead hurd, I think.
+&lt;fgb&gt; paurea: agree
+&lt;hyperion_&gt; fgb, I was very happy about Plan B becuase it had a lot of new ideas. Research. Plan 9 had no such things
+&lt;hyperion_&gt; lately
+&lt;uriel&gt; garbeam: sounds like and idea
+&lt;uriel&gt; maybe we should make a list of tasks, and asign them to people?
+&lt;XTL&gt; Both run and are going on and are intriguing, but just somehow appear dead.
+&lt;paurea&gt; hyperion_: think them, write them, send them
+&lt;garbeam&gt; uriel: exactly
+&lt;uriel&gt; I got a rather long public TODO list on my wiki page
+&lt;garbeam&gt; uriel: and later one can check for status
+&lt;uriel&gt; ok, who wants to work on a new public web site?
+&lt;garbeam&gt; and possibly re-assign tasks
+&lt;zimba&gt; uriel: I'm interested
+&lt;garbeam&gt; uriel: count me as volunteer
+&lt;uriel&gt; (would be really small, just a front end to various things and the wiki)
+&lt;axelb9&gt; hyperion_: I see a link between what you say and forsyth's remark about being able to do/show interesting things
+&lt;__20h__&gt; uriel, you need someone for design, implementation and then for running.
+&lt;__20h__&gt; Pleased to implement it.
+&lt;uriel&gt; __20h__: ok
+&lt;hyperion_&gt; axelb9, yea
+&lt;uriel&gt; who wants to help fix the wiki look?
+&lt;fgb&gt; hyperion: in that context you are maybe right
+&lt;uriel&gt; and then there is the news section, which I already started in the wiki, that everyone can post to
+&lt;zimba&gt; uriel: I have good notions in html/css
+&lt;__20h__&gt; uriel, it's not about the Wiki, it's about the frontpage.
+&lt;de0u&gt; I think a changelog on the web would increase sense of life.  Is there an easy way to partially automate it by periodically snarfing the descriptive text of submitted patches?
+&lt;uriel&gt; zimba: so do I, that is not the problem with wikifs, wikifs needs c hackers
+&lt;paurea&gt; uriel?
+&lt;uriel&gt; de0u: I have a script that generates notification emails when patches are accpeted
+&lt;__20h__&gt; de0u, a cronjob and uriel's plog.
+&lt;paurea&gt; uriel: what do you want to do to the wiki?
+&lt;uriel&gt; see plog in my sources dir
+&lt;uriel&gt; paurea: fix it's html generation code to begin with
+&lt;__20h__&gt; So we just have to get things together, for a new frontpage.
+&lt;uriel&gt; paurea: so sane CSS can be applied to it
+&lt;__20h__&gt; Would be a good result for this THM.
+&lt;garbeam&gt; paurea: make it look like today's state of the art and not like 80s?
+&lt;paurea&gt; I was just asking
+&lt;uriel&gt; it should be simple, but look good
+&lt;de0u&gt; uriel: will see plog, thanks.  Feeding that into a "changelog" wiki (which people could add to) might be low-hanging fruit.
+&lt;uriel&gt; (like google.com? ;))
+&lt;XTL&gt; hopefully not ad agency soa, but something sane
+&lt;zimba&gt; do you people use weblogs ?
+&lt;paurea&gt; please keep it simple
+&lt;uriel&gt; de0u: yes, taht is an idea
+&lt;uriel&gt; de0u: problem is, not all changes go thru patch(1)
+&lt;uriel&gt; de0u: people at bell labs refuse to use patch(1)
+&lt;paurea&gt; I still want to be able to see it with links
+&lt;paurea&gt; uriel: they have the right to, sorry
+&lt;paurea&gt; uriel: they wrote the system
+&lt;uriel&gt; paurea: sure, still a problem to keep track on what the hell is going on
+&lt;axelb9&gt; :-)
+&lt;uriel&gt; paurea: and no, russ didn't write the system, ken and rob did, but nevermind
+&lt;paurea&gt; diff?
+&lt;paurea&gt; well
+&lt;paurea&gt; fossil
+&lt;uriel&gt; paurea: diff is not enough for people
+&lt;paurea&gt; rio graphic moddle
+&lt;paurea&gt; model
+&lt;fgb&gt; uriel : I have applied to patches and both were accepted
+&lt;paurea&gt; ...
+&lt;uriel&gt; paurea: not everyone has time to read every line of change
+&lt;de0u&gt; uriel: It won't catch everything, but as long as it catches some things there will be more appearance of "life".
+&lt;fgb&gt; s/to/2/
+&lt;hyperion_&gt; well
+&lt;uriel&gt; de0u: ok, if no one says no, I will point plog at 9fans, and I will make it add something to the wiki
+&lt;hyperion_&gt; maybe we could convince jeremy to add Plan9 to kerneltrap.org
+&lt;__20h__&gt; http://www.tip9ug.jp/rlog/
+&lt;__20h__&gt; For thos who want changes.
+&lt;__20h__&gt; those
+&lt;uriel&gt; (adding something to the wiki is tricky though, but I will figure something out)
+&lt;hyperion_&gt; it's a good site to track major BSD/Linux changes...
+&lt;hyperion_&gt; adding Plan9 would raise awareness
+&lt;uriel&gt; hyperion_: adding Plan 9 to kernel trap is in my TODO list
+&lt;uriel&gt; hyperion_: but I need content and news
+&lt;hyperion_&gt; oh
+&lt;paurea&gt; uriel: there was some bug in wikifs which russ cox was fixing
+&lt;uriel&gt; hyperion_: I was going to submit forsyth paper, which was great
+&lt;paurea&gt; uriel: talk to him, he may be testing a new version
+&lt;uriel&gt; paurea: dunno, I have been fixing bugs on wikifs too, the code base isn't too great :/
+&lt;uriel&gt; paurea: axelb9 fixed a bunch of bugs in Wiki the other day
+&lt;axelb9&gt; adding features
+&lt;uriel&gt; paurea: problem with the wiki is: no one works on it
+&lt;paurea&gt; ?
+&lt;uriel&gt; paurea: no one reads it
+&lt;uriel&gt; paurea: take a look at the "recent changes" page
+&lt;axelb9&gt; (devils advocate: so it is worth spending _lots_ of energy?)
+&lt;uriel&gt; paurea: http://plan9.bell-labs.com/wiki/plan9/what's_new
+&lt;__20h__&gt; It's a bad looking Wiki.
+&lt;__20h__&gt; So who wants to work with it?
+&lt;hyperion_&gt; it's not that bad-looking
+&lt;uriel&gt; who wants to work on making the wiki look better(needs fixing wikifs and fixing look)
+&lt;vt3&gt; the wiki is just a small problem.
+&lt;uriel&gt; vt3: we have to deal with the small problems first
+&lt;vt3&gt; To flail a dead rabbit: no organization, no infrastructure, no policies nor direction, then we'll be here again next year discussing the same things. doing the same things and expecting different results is ... Well, we need to resolve the internal issues.
+&lt;__20h__&gt; uriel, the frontpage has to be fixed.
+&lt;paurea&gt; I think that what you need is a graphics designer
+&lt;uriel&gt; __20h__: yes, that absolutely
+&lt;forsyth&gt; why don't people write up what they do with the system?  just a thought.
+&lt;uriel&gt; forsyth: and post it on a blog? ;)
+&lt;vt3&gt; bbl. off to work
+&lt;uriel&gt; vt3: take care
+&lt;__20h__&gt; forsyth, because that is as interesting as Apple's TV spots.
+&lt;uriel&gt; forsyth: advogato.org is good for that
+&lt;__20h__&gt; vt3, cya.
+&lt;paurea&gt; I think forsyth is right
+&lt;XTL&gt; presuming anyone is doing anything interesting (repeat planB comments above here)
+&lt;paurea&gt; we should write what we do with the system
+&lt;paurea&gt; somewhere
+&lt;uriel&gt; paurea: yes, but write it up and then do what?
+&lt;uriel&gt; paurea: the wiki?
+&lt;hyperion_&gt; some people do
+&lt;paurea&gt; think of better ways to do it
+&lt;paurea&gt; and implement them
+&lt;__20h__&gt; And my recommendation is to get good looking girls and a TV show for Plan 9.
+&lt;uriel&gt; __20h__: heheh
+&lt;hyperion_&gt; http://cm.bell-labs.com/wiki/plan9/9blogs
+&lt;axelb9&gt; if we cannot write up what we do, in a way that might make it be convincing to 'outsiders' what do we have to offer?
+&lt;paurea&gt; like doing nat just by mountint /net
+&lt;paurea&gt; mounting /net
+&lt;uriel&gt; forsyth: are you ok if I post your paper to kerneltrap.org?
+&lt;lucho&gt; paurea, but people want to use nat on windows or linux
+&lt;uriel&gt; forsyth: (and probably osnews.com too)
+&lt;de0u&gt; Oh, I wanted to ask this... should the "mux" M.S. thesis be on the "papers" page?
+&lt;paurea&gt; lucho well you can have a plan 9 gateway
+&lt;paurea&gt; on a virtual machine
+&lt;paurea&gt; I dont know
+&lt;uriel&gt; forsyth: and can we get at least a stub up at kencc.sf.net?
+&lt;uriel&gt; forsyth: I can do that if you give me the perms, I promise to be responsible and not offend anyone ;)
+&lt;__20h__&gt; de0u, if it's interesting, yes.
+&lt;forsyth&gt; i meant it in the most general sense of `write up': whatever suits the topic or your time
+&lt;uriel&gt; de0u: sure
+&lt;de0u&gt; I am partway through and it is readable.  It also is a "liveness" datum.  Who controls that page?
+&lt;uriel&gt; forsyth: yes, but post it where? who is the audience? and where do we post that?
+&lt;uriel&gt; de0u: what page?
+&lt;garbeam&gt; the papers page I guess
+&lt;uriel&gt; which papers page? the wiki one?
+&lt;__20h__&gt; de0u, while asking for changes to the "Papers" site, you could ask for the status of the frontpage and if there could be some public access to it.
+&lt;uriel&gt; the other one should go away and be replaced with the wiki version
+&lt;forsyth&gt; i didn't necessarily mean `posting', i left that open.  proper papers (as for ericvh) are great, but it depends what suits.  just put it in google space somehow.
+&lt;__20h__&gt; (access as changing it)
+&lt;de0u&gt; Sorry:  should http://pdos.csail.mit.edu/papers/plan9:jmhickey-meng.pdf appear on  http://cm.bell-labs.com/sys/doc/index.html?
+&lt;uriel&gt; __20h__: don't ask for changes in the papers page, we should move that stuff to the wiki so we are not dependant on whoever maintains that page
+&lt;uriel&gt; de0u: forget http://cm.bell-labs.com/sys/doc/index.html
+&lt;__20h__&gt; uriel, we should get the frontpage to be the Wiki.
+&lt;uriel&gt; de0u: that page has not been properly maintained for years, see the papers page in the wiki
+&lt;uriel&gt; __20h__: or just a front end for mostly wiki pages
+&lt;uriel&gt; the "ports" page also should go into the wiki, lots of people outside BL workin on ports
+&lt;garbeam&gt; what about 9.org, anyone has got contacts to ICANN?
+&lt;garbeam&gt; s/got/good/
+&lt;uriel&gt; garbeam: you can be asigned to do that ;P
+* uriel writes down: garbeam -&gt; 9.org
+uriel #plan9dev ACTION writes down: garbeam -&gt; 9.org
+* uriel made a bid for p9.org
+uriel #plan9dev ACTION made a bid for p9.org
+&lt;hyperion_&gt; 9$/years
+&lt;hyperion_&gt; maybe less
+&lt;hyperion_&gt; but what would be it's content?
+&lt;garbeam&gt; he, I could try to contac Mueller-Maguhn, dunno if he's still related to icann
+&lt;__20h__&gt; 9.org is reserved by ICANN.
+&lt;hyperion_&gt; ooh
+&lt;uriel&gt; BTW, I'm making 80 badges with glenda, and 250 stikers
+&lt;hyperion_&gt; __20h__, why? i didnt know that
+&lt;__20h__&gt; Because "9" is too common, I think.
+&lt;uriel&gt; so, who is interested in working on the main web site?
+&lt;hyperion_&gt; interesting...
+* uriel is writing down
+uriel #plan9dev ACTION is writing down
+* __20h__ waves his G-36
+__20h__ #plan9dev ACTION waves his G-36
+&lt;uriel&gt; and sho is interested in working on wikifs to make it look more 'modern'?
+&lt;uriel&gt; s/sho/who/
+&lt;garbeam&gt; uriel: I'd like to make some proposals soon
+&lt;hyperion_&gt; why reinvent the wheel? there are many "modern" wikis
+&lt;uriel&gt; who is interested in working on the docs? (lots of people moaming in 9fans aobut this)
+&lt;uriel&gt; garbeam: no proposals, code please
+&lt;uriel&gt; hyperion_: they don't run on Plan 9
+&lt;garbeam&gt; code should be independent of style
+&lt;uriel&gt; garbeam: sure
+*** Signoff: lucho ("ircII EPIC4-1.0.1 -- Are we there yet?")
+&lt;uriel&gt; garbeam: but code has to be fixed first
+&lt;zimba&gt; uriel: I'd be happy to contibute on C code, but I'm still new to this language
+&lt;uriel&gt; garbeam: generated html currently is crap, so can't be properly formated with CSS, otherwise it would have been done long ago
+&lt;hyperion_&gt; uriel, perl runs on plan9
+&lt;__20h__&gt; Anyone heared of the guy who nearly finished the SQLfs?
+&lt;garbeam&gt; uriel: my first p9 project will be maybe ircfs
+&lt;hyperion_&gt; so does python
+&lt;paurea&gt; hyperion_: shudders
+&lt;uriel&gt; hyperion_: apache does not, and i dont' care, we have wikifs, we should fix it
+&lt;__20h__&gt; It was around mid 2004, when he posted the SQLfs to 9fans.
+&lt;uriel&gt; __20h__: boyd had a 'plan' for a sqlfs... 
+&lt;uriel&gt; forsyth: please could you answer about the paper and about kencc.sf.net?
+&lt;uriel&gt; forsyth: if you want in private
+&lt;XTL&gt; I don't know if apache is neccessary, if there's just "normal" cgi.
+&lt;forsyth&gt; sorry, i've been wandering in and out
+&lt;uriel&gt; forsyth: no problem
+&lt;uriel&gt; forsyth: I just want kencc to look like at least it's something, just put a tarball with what we have and a web site with on paragraph explaining what it is
+&lt;uriel&gt; (and a link to the tarball)
+&gt; hello. 
+&lt;uriel&gt; re newsham 
+&lt;__20h__&gt; Newsham's back from Web Services. ;)
+&lt;__20h__&gt; uriel, where did you put the Link to the THM's on the Wiki?
+&gt; just the part where we give them the bad news.
+</pre>
+
+<p class='para'>
+IRC
+log
+ended
+Mon
+Aug
+15
+11:17
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Mon Aug 15 21:18:00 EDT 2005</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

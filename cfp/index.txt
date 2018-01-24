@@ -1,0 +1,37 @@
+CFP
+
+
+CALL FOR PAPERS
+
+Please update if you know of a good conference or journal to submit
+Plan 9 papers to. Also please add a quick comment if you are planning
+on submitting a paper to a particular conference. See also [9con].
+
+UPCOMING DEADLINES
+
+PAST DEADLINES
+
+01/01/2006 - USENIX 2006 (Conference June)
+
+24/10/2005 - SANE 2006 [http://www.sane.nl/sane2006/CfP.html]
+
+10/10/2005 - NSDI 2006 (Conference May 8-10 San Jose, CA)
+
+01/10/2005 - [22C3] Chaos Communication Congress in Berlin, (garbeam,
+20h and uriel have submitted papers)
+
+01/08/2005 - WORLDS 2005 (Conference Dec 13 San Francisco)
+
+13/07/2005 - FAST 2005 (Conference Dec 14-16 San Francisco)
+
+01/06/2005 - [Libre Software Meeting 2005] (Jul 5-9 in Dijon, France)
+([details | http://lwn.net/Articles/126644/])
+
+--[forsyth] is listed in the tentative program as giving a talk (or
+talks?) about Plan 9
+[http://www.rencontresmondiales.org/sections/conference/noyau_et_systeme] 01/05/2005 - WHAT THE HACK (July 28-31 2005 The Netherlands) [http://www.whatthehack.org]
+
+25/03/2005 - SOSP 2005 (Conference Oct 23-26 in Brighton, UK)
+
+(NOTE: Please use dd/mm/yyyy format for dates!)
+

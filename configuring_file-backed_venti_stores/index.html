@@ -1,0 +1,569 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Configuring file-backed Venti stores (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Configuring file-backed Venti stores</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+Since
+I
+needed
+this,
+I
+figured
+it
+might
+be
+useful
+for
+others.
+Venti
+can
+be
+used
+with
+files
+on
+your
+Fossil
+as
+backing
+storage.
+There
+is
+no
+steadfast
+need
+to
+create
+partitions
+for
+Venti
+to
+run
+(and
+in
+some
+cases,
+this
+configuration
+may
+even
+be
+more
+convenient,
+for
+example
+when
+you're
+on
+a
+laptop
+with
+frequently
+added
+and
+erased
+data).
+I
+was
+bitten
+by
+a
+couple
+of
+problems
+that
+I
+figured
+out
+after
+reading
+the
+manpages
+several
+times,
+so
+I'll
+list
+them
+here
+so
+that
+you
+don't
+have
+to.
+<p class='para'>
+My
+first
+step
+was
+to
+create
+the
+index
+file.
+I
+have
+no
+idea
+how
+large
+this
+needs
+to
+be,
+mathematically,
+compared
+to
+the
+size
+of
+the
+Venti
+arena.
+I
+suppose
+it
+would
+be
+something
+like:
+</p>
+
+<p class='para'>
+(arena_size
+/
+arena_block_size)
+/
+x
+</p>
+
+<p class='para'>
+Where
+x
+is
+however
+large
+a
+Venti
+index
+datastructure
+is.
+I
+could
+find
+this
+if
+I
+read
+the
+paper
+or
+source,
+but
+I'm
+too
+lazy
+right
+now.
+</p>
+
+<p class='para'>
+To
+create
+these
+files,
+I
+simply
+ran:
+</p>
+
+<pre>
+	% dd -if /dev/zero -of isect0 -bs 8192 -count 10000
+	% dd -if /dev/zero -of arenas0 -bs 8192 -count 40000
+</pre>
+
+<p class='para'>
+When
+these
+completed,
+the
+following
+files
+were
+present:
+</p>
+
+<pre>
+	--rw-rw-r-- M 8 dho dho 327680000 Apr  3 20:10 arenas0
+	--rw-rw-r-- M 8 dho dho  81920000 Apr  3 20:10 isect0
+</pre>
+
+<p class='para'>
+After
+this,
+I
+simply
+created
+a
+venti.conf
+file
+that
+was
+the
+same
+as
+the
+one
+in
+the
+manpage:
+</p>
+
+<pre>
+	% cat &gt; venti.conf
+	index main
+	isect /usr/dho/isect0
+	arenas /usr/dho/arenas0
+	
+	%
+</pre>
+
+<p class='para'>
+Then
+I
+had
+the
+task
+of
+formatting
+these
+files.
+First
+I
+ran:
+</p>
+
+<pre>
+	% venti/fmtisect isect0 isect0
+</pre>
+
+<p class='para'>
+This
+took
+a
+little
+while.
+In
+retrospect,
+I
+could
+have
+used
+-Z,
+since
+I
+created
+this
+file
+with
+/dev/zero.
+The
+-Z
+flag
+tells
+fmtisect
+and
+fmtarenas
+to
+not
+zero
+the
+``partition''
+first,
+which
+is
+superfluous
+since
+we
+created
+the
+files
+from
+zero.
+</p>
+
+<p class='para'>
+After
+this,
+I
+ran:
+</p>
+
+<pre>
+	% venti/fmtarenas arenas0 arenas0
+</pre>
+
+<p class='para'>
+I
+should
+have
+used
+-Z
+here
+as
+well.
+Hereafter,
+</p>
+
+<pre>
+	% venti/fmtindex venti.conf
+</pre>
+
+<p class='para'>
+Yay,
+all's
+well,
+right?
+</p>
+
+<pre>
+	% venti/venti -c /usr/dho/venti.conf
+	% venti=127.0.0.1
+	% vac -f test.vac testfile
+</pre>
+
+<p class='para'>
+Instead
+of
+getting
+anything
+useful,
+I
+got
+some
+error
+about
+how
+I
+had
+no
+space
+in
+my
+arena.
+This
+didn't
+make
+much
+sense
+until
+I
+read
+the
+fmtarenas
+section
+of
+the
+manpage
+a
+few
+more
+times:
+Venti
+creates
+its
+arenas
+with
+a
+default
+size
+of
+500MB.
+Mine's
+smaller,
+and
+since
+it
+didn't
+fulfill
+the
+size
+requirement,
+I
+didn't
+get
+_any_
+Venti
+storage.
+Lame.
+</p>
+
+<p class='para'>
+So,
+I
+went
+back
+through
+and
+ran:
+</p>
+
+<pre>
+	% venti/fmtisect isect0 isect0
+	% venti/fmtarenas -a 327680000 arenas0 arenas0
+	% venti/fmtindex venti.conf
+</pre>
+
+<p class='para'>
+I
+didn't
+use
+-Z
+here,
+since
+the
+fmtindex
+actually
+writes
+to
+the
+index
+file.
+(And
+I
+wasn't
+sure
+if
+it
+wrote
+to
+the
+arenas
+file
+too).
+The
+-a
+flag
+specifies
+a
+size
+other
+than
+512MB
+to
+use
+for
+the
+arena.
+Apparently
+this
+value
+should
+always
+be
+set
+to
+the
+size
+of
+the
+arena
+file
+or
+partition.
+(Fancy
+that!)
+</p>
+
+<p class='para'>
+After
+this:
+</p>
+
+<pre>
+	% vac -f test.vac test
+	packet: 1/9 frag: 1/6 small mem: 1/1 big mem: 1/8
+	% ls -l
+	d-rwxrwxr-x M 8 dho dho  0 Apr  3 19:15 test
+	--rw-rw-r-- M 8 dho dho 45 Apr  3 20:10 test.vac
+	% cat test.vac
+	vac:d3d2b67810fb0fc289073c4b0c3ac6d9b01010fb
+</pre>
+
+<p class='para'>
+Hope
+that's
+useful
+to
+someone.
+</p>
+
+<p class='para'>
+--dho
+</p>
+
+<p class='para'>
+Does
+this
+procedure
+basically
+work
+on
+Plan
+9
+Port
+for
+Unix-like
+systems
+as
+well?
+(Dave
+Leimbach)
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Mon May 24 21:11:08 EDT 2010</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

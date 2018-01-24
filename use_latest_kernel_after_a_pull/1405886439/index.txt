@@ -1,0 +1,17 @@
+Use latest kernel after a pull
+
+While updating your system using pull (as per [Staying_up_to_date]),
+your system binaries will be updated. But your kernel does not
+automatically get updated, and you may encounter problems. For
+example, in May 2014, a new system call was added to the kernel and
+some system binaries were recompiled to make use of this system call.
+
+To solve this problem, you will need to reboot using the updated
+kernel that you have pulled. After you have pulled, you can switch to
+the latest kernel by executing the following:
+
+! 9fat:   # The colon is a part of the filename
+! cp /n/9fat/9pcf 9pcf_backup  # Optional backup, or edit /n/9fat/plan9.ini
+! cp /386/9pcf /n/9fat
+! fshalt
+! ^t^tr

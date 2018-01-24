@@ -1,0 +1,31 @@
+OAuth
+D1364585550
+Aa
+#[OAuth | http://oauth.net] 2.0 is a very common method for users to
+#provide authorization to web services. To facilitate writing Plan 9
+#and Inferno clients for many of these services, it would be nice to
+#teach factotum(4) how to speak OAuth. There are some design
+#considerations that need to be thought through; the models don't map
+#directly.
+#
+#In particular, the most common mode of using OAuth depends on some
+#browser infrastructure. Is one of the browser options native (or
+#roughly so) to Plan 9 up to the task? How reliably? Is the structure
+#of the OAuth landing page standardized?
+#
+#The first step would be to teach factotum to speak the part of the
+#protocol that happens after the final hash is acquired. It would be
+#inconvienent, but users could get that hash through the browser
+#manually themselve, then hand it to factotum.
+#
+#The next step would probably be an extension/replacement for
+#auth/fgui which would look for OAuth requests from factotum and
+#handle launching a browser (or redirecting an existing one via the
+#plumber) and handing the results back to factotum.
+#
+#While it isn't OAuth, [flickrfs |
+#https://bitbucket.org/bedo/flickrfs] has support for Flickr's
+#pre-OAuth authentication method, which has some similarities.
+#Interested students might look to it for reference or inspiration,
+#particularly for the first half of the problem (as described above).
+#

@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>Setting up a sources mirror (Editing Sat Nov 17 16:11:51 EST 2007 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Setting up a sources mirror</b></font> (Editing Sat Nov 17 16:11:51 EST 2007 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Setting up a sources mirror">
+<input type="hidden" name="version" value="1195333911">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+To setup a mirror of the [sources repository].
+
+WHAT YOU NEED
+
+ *	http://swtch.com/lsr.c
+
+PREPARATION
+
+! # lsr
+! # This is for the cputype "386". Fill in your appropriate value.
+! ramfs;
+! hget http://swtch.com/lsr.c > /tmp/lsr.c;
+! cd /tmp;
+! 8c lsr.c;
+! 8l -o lsr lsr.8;
+! cp lsr /386/bin/lsr;
+! chmod 775 /386/bin/lsr;
+! rm lsr.8;
+! 
+! # lsrupd
+! hget http://www.r-36.net/lsrupd > /rc/bin/lsrupd;
+! chmod 775 /rc/bin/lsrupd;
+
+MIRRORING SOURCES
+
+! # The example mirrors sources to /dist/sources.
+! 9fs sources;
+! lsrupd /dist/sources /n/sources;
+
+THE CRONJOB
+
+! # This example assumes "bootes" being able to access /dist/sources.
+! # The cronjob will be done every night at 0:00 on the computer.
+! # In the factotum of "cron" needs to be a key for accessing sources.
+! echo '0 0 * * * local {9fs sources; lsrupd /dist/sources /n/sources; \
+! unmount /n/sources}' >> /cron/bootes/cron;
+
+Have fun.
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

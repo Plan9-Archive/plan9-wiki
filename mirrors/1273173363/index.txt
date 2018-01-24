@@ -1,0 +1,25 @@
+Mirrors
+
+
+MIRROR LIST
+
+ *	[9grid.es | http://9grid.es/]: [Plan 9 ISO list |
+	http://9grid.es/store/], [Sources | http://9grid.es/sources/]
+
+ *	[kix.in | http://www.kix.in/plan9/]: [Plan 9 ISO |
+	http://www.kix.in/plan9/plan9.iso.bz2]
+
+ *	[Papers and other documentation mirror |
+	http://doc.cat-v.org/plan_9/].
+ *	[Manual pages mirror | http://man.cat-v.org].
+
+OLD/DEAD LIST
+
+ *	[tip9ug.jp | http://www.tip9ug.jp/]: [Plan 9 ISO |
+	http://www.tip9ug.jp/mirror/plan9.iso.bz2]
+
+SEE ALSO
+
+ *	[Setting up a sources mirror]
+ *	[Sources repository]
+

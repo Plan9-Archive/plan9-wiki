@@ -1,0 +1,112 @@
+Mouse vs. Keyboard
+D1322318589
+Astevie
+#Perhaps the most common frustration experienced by Unix users when
+#trying Plan 9 is that they have to use the mouse more.
+#
+#The most common complaint is that using the mouse is slow compared
+#with cursoring around, whether via arrow keys or via hjkl (in vi,
+#etc.). This simply isn't true. The mouse seems slow but is actually
+#faster:
+#
+# *	[http://www.asktog.com/TOI/toi06KeyboardVMouse1.html]
+# *	[http://www.asktog.com/TOI/toi22KeyboardVMouse2.html]
+# *	[http://www.asktog.com/SunWorldColumns/S02KeyboardVMouse3.html]
+#
+#The basic summary is cursoring around required a higher level of
+#mental planning to organize the interaction, which apparently
+#obscures the perception of the passage of time--think of being
+#deeply engaged in something and being surprised when you look at a
+#clock-- whereas the use of the mouse was done at a lower, mechanical
+#level that left the mind free for higher things, such as complaining
+#about the mouse.
+#
+#One common complaint is that moving your hand from keyboard to mouse
+#and back takes time and interrupts typing. This is true, but it
+#doesn't take as much time as you think. Especially if you're using a
+#keyboard without a numeric keypad, the mouse can be close by. With
+#or without a keypad, eventually you get to the point where you don't
+#need to look for the mouse. Your hand always leaves it in the same
+#general place and automatically goes there, often in preparation for
+#a mouse operation while the other hand is still typing.
+#
+#It is true that it is slower to use the mouse for, say, deleting a
+#tab from the beginning of every line than it is to use the keyboard
+#and type "^xjxjxjxjxjxjxjxjxjxjxjxjxj" in vi. But at that point
+#you're basically programming the editor (with a manually unrolled
+#for loop) more than actually editing.
+#
+#When the mouse is properly accelerated, many of us find that it's
+#faster and easier to highlight the lines in question and then type
+#and execute Edit s/^<tab>//g in acme or just type s/^<tab>//g in
+#sam's command window. This is such a common operation that acme
+#provides two shell scripts so you can leave |unind and |ind in the
+#tag of your window and click on them whenever you want.
+#
+#Notice the difference between acme or sam and (say) vi in running
+#editor commands like search and replace. In acme you can just
+#highlight the section you want, type the command, and you're done.
+#In vi, you have to cursor to one end, mark it, cursor to the other
+#end, and finally type the command. The cursoring takes much longer
+#than the mouse. Time yourself.
+#
+#In the experience of many Plan 9 users, using the mouse in Plan 9
+#for an extended period of time and then going back to using vi in
+#Unix highlights the amount of time you spend watching the screen as
+#you cursor around with hjkl. Having broken out of the hypnosis that
+#Tog describes, I just get frustrated beyond belief. Yes, I am
+#watching the cursor move so I should be occupied, but all I can
+#think is ``damnit, if I could just click where I want to go I'd be
+#there by now.''
+#
+#Another point in favor of the mouse is that it is more expressive.
+#Notice how the scroll bars work in the Plan 9 text buffers: left or
+#right clicking to scroll moves the window proportionally to where
+#you are in the scroll bar. It would be much harder to do this in a
+#cursor-based system. Cutting and pasting in acme and rio via mouse
+#chording is much faster than the equivalent in cursor-based systems,
+#especially if you are moving blocks that aren't line-aligned. Time
+#yourself.
+#
+#It's important to have a good mouse, of course. It needs three real
+#buttons, not two button with an intelliwheel in the middle. Plan 9
+#makes too much use of the middle button for the wheel to suffice.
+#You'll just get RSI in whatever finger you use to click the wheel.
+#Logitech makes good three-button mice. Most people seem to prefer
+#the triangle-shaped ones over the oval ones. They used to sell for
+#$50 apiece. Now you can usually find them for $5-$10 on Ebay.
+#
+#The most important point is that you need to try using the mouse for
+#a week or two before you complain about it. You'll probably end up
+#agreeing with us.
+#
+#You feel more efficient using emacs et al. because you're always
+#doing higher level cognition, while acme and sam might feel slower
+#since you're acting instinctually but you're actually moving faster.
+#
+#When one makes a mistake in a search string, in emacs one uses ctl-S
+#and ctl-R, it's a pain to correct the mistake; the "Look" command in
+#acme allows you to just edit the tag and rerun the search.
+#
+#SUGGESTED MICE
+#
+#The following is a list of mice that users have reported to work
+#well with Plan 9:
+#
+# *	[IBM/Lenovo Scrollpoint Mouse (31P7405) |
+#	http://support.lenovo.com/en_US/product-and-parts/detail.page?&LegacyDocID=MIGR-43954]
+# *	[HP USB Optical 3-button Mouse |
+#	http://h30094.www3.hp.com/product.asp?sku=2545791]
+# *	[Logitech Scrollpoint 3-button Mouse (M-S35) |
+#	http://www.tcocd.de/Pictures/Peripheral/Logitech/ms35_de.shtml]
+#
+#(updates to this list are welcome!)
+#
+#------------------------------------------------------ 
+#Note: This is an informative page for new users, not a place for
+#religious flamewars, if someone wants to discus the issue please
+#create a discusion page about it instead of mangling the text in
+#this page. Thanks.
+#
+#This page needs much clean up, feel free to help with it.
+#

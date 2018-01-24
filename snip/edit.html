@@ -1,0 +1,121 @@
+<html>
+<head>
+<title>Snip (Editing Mon Feb 18 01:50:04 EST 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Snip</b></font> (Editing Mon Feb 18 01:50:04 EST 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Snip">
+<input type="hidden" name="version" value="1361170204">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+Snip is a public snippet publishing service using 9p. You can publish
+arbitrary files and get a list of what's available for viewing. A
+common usage is to publish your snarf buffer, but this is no longer
+the default; use 'snip /dev/snarf' instead.
+
+The snipserv is any unauthenticated 9p connection. At the time of
+writing, the default server is simply using ramfs(4), exposing it via
+listen(8). At startup, the cpu server runs
+! auth/none ramfs -S snipserv
+from cfg/hostname/cpustart and has a /rc/bin/service/tcp17037 like
+! #!/bin/rc
+! echo `{date -n}  $* `{cat $3^/remote} > /sys/log/pubsrv
+! exec exportfs -S /srv/pubsrv
+The logging line is optional and particularly redundant if your local
+listen(8) instance is logging affirmative connections.
+
+This is only an example; the snipserv at 9srv.net will shortly be
+replaced with something which, at a minimum, has a persistent backing
+store so snippets survive server reboots.
+
+As an alternative way of getting at snippets (especially on
+hypothetical other servers), I've added the following to my local 9fs:
+! # snippet services
+! case *!snip
+! 	srv -cnmq tcp!^`{echo $1 | sed 's/snip$/17037/'} $1 /n/$1
+See /n/sources/contrib/anothy/bin/rc/9fs for my complete 9fs.
+
+The snip program has, to date, had less than one hour cumulative
+development time put into it. Partly, that's a testament to the ease
+of doing things with 9p and rc, but mostly it's a warning about
+reliability.
+
+The draft man page for snip follows.
+
+NAME
+
+snip - publish snippets
+
+SYNOPSIS
+
+snip [file...]
+
+DESCRIPTION
+
+Snip is a public snippet publishing service using 9p. It can be used
+to quickly publish arbitrary files to a unique and publicly
+accessible location, or to obtain a list of already-published
+snippets availabe for reading.
+
+Invoked with one or more arguments, snip will connect to an
+unauthenticated 9p service on the server named by the environment
+variable $snipserv (or 9srv.net if unset) on port 17037 and copy each
+file to a uniqe name on the server, reporting the name.
+
+Invoked without arguments, snip will connect to a server as above and
+will list the snippets available on that server.
+
+To ease retrieval, in either case snip leaves snipserv mounted in the
+current namespace.
+
+SOURCE
+
+/n/sources/contrib/anothy/bin/rc/snip
+
+SEE ALSO
+
+cat(1), cp(1)
+
+AUTHOR
+
+Anthony Sorace (anthony@strand1.com)
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

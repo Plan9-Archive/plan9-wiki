@@ -1,0 +1,22 @@
+Avoiding Screen Pollution from Kernel Messges
+
+Don't you just hate it when kernel messages pollute your display in
+the form of those annoying black rectangles overlaid above whatever
+you're working on? This is a known bug in rio(1); for further detail,
+see Rob Pike's [message | http://9fans.net/archive/2000/10/203] to
+this effect.
+
+To work around this problem, open a new terminal window and do:
+
+! cat /dev/kprint
+
+This works because, according to the kprint discussion in cons(3),
+"if (the) console is a graphics screen, the data is sent either to
+the display or to kprint, but not both."
+
+Another more permanent solution to the problem is to put
+
+! cat /dev/kprint >/dev/null >[2=1]
+
+somewhere in termrc (see cpurc(8)).
+

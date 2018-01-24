@@ -1,0 +1,16 @@
+#9.svi Presents: A Bell Labs Plan 9 Wiki Mirror
+All files/folders/pages within this tree excluding this page are copied directly from [the Bell Labs Wiki](http://www.plan9.bell-labs.com/wiki/plan9/plan_9_wiki/ "Courtesy of Uriel") with all credit given where due for the effort, time, and pain that might have gone into the creation of the content contained. The reasoning for the mirror or copy was to create a backup in the event that the Bell Labs Wiki should go down unexpectedly and never come back online.
+~S
+
+## [WIKI INDEX](./wiki_index)
+
+##Broken Things:
+
+- <s>The "About this Wiki" link is currently broken and needs fixed.</s> _Fixed_
+
+
+##Changelog:
+
+* _Appended_: 12/16/2014 (Fixed `about.html`)
+* _Appended_: 12/16/2014 (Added `index.md`)
+* _Born_: 12/16/2014

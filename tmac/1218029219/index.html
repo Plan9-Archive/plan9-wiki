@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>tmac (as of Wed Aug  6 09:26:59 EDT 2008)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>tmac</h1>
+<h2><i>-as of Wed Aug  6 09:26:59 EDT 2008-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+Files
+in
+/sys/lib/tmac:
+<ul>
+
+<li>
+complet.1127:
+address
+of
+the
+director
+of
+AT&amp;T…
+undocumented
+</li>
+
+<li>
+cover.1127:
+address
+of
+the
+director
+of
+AT&amp;T…
+undocumented
+</li>
+
+<li>
+mmn
+mm
+macros
+for
+nroff,
+undocumented
+</li>
+
+<li>
+mmt:
+mm
+macros
+for
+<a href="http://plan9.bell-labs.com/magic/man2html/1/troff"><i>troff</i>(1)</a>,
+undocumented
+</li>
+
+<li>
+name.sed:
+<a href="http://plan9.bell-labs.com/magic/man2html/1/sed"><i>sed</i>(1)</a>
+script
+used
+by
+tmac.cs
+</li>
+
+<li>
+sendcover:
+<a href="http://plan9.bell-labs.com/magic/man2html/1/rc"><i>rc</i>(1)</a>
+script
+used
+by
+tmac.mcs
+</li>
+
+<li>
+strings.mm:
+mm
+macro
+strings,
+undocumented
+</li>
+
+<li>
+tmac.an:
+<a href="http://plan9.bell-labs.com/magic/man2html/6/man"><i>man</i>(6)</a>
+macros
+</li>
+
+<li>
+tmac.anhtml:
+Use
+<a href="http://plan9.bell-labs.com/magic/man2html/6/man"><i>man</i>(6)</a>
+with
+HTML
+</li>
+
+<li>
+tmac.antimes:
+<a href="http://plan9.bell-labs.com/magic/man2html/6/man"><i>man</i>(6)</a>
+for
+Times
+New
+Roman?
+</li>
+
+<li>
+tmac.bits:
+‘macros
+to
+typset
+bitmaps,’
+see
+10th
+Edition
+UNIX
+manual:
+<a href="http://plan9.bell-labs.com/magic/man2html/6/mbits"><i>mbits</i>(6)</a>,
+does
+not
+seem
+to
+be
+needed
+</li>
+
+<li>
+tmac.cs:
+coversheet
+macros,
+documented
+in
+10th
+Edition
+UNIX
+manual;
+<a href="http://www.cs.bell-labs.com/10thEdMan/index.html">pdf
+or
+PostScript
+of
+section
+on
+ms/mcs
+available
+from
+Dennis
+Ritchie</a>
+</li>
+
+<li>
+tmac.e:
+me
+macros,
+made
+by
+Eric
+Allman
+for
+BSD.
+<a href="http://docs.freebsd.org/44doc/usd/19.memacros/paper.pdf">His
+tutorial
+paper</a>
+and
+<a href="http://docs.freebsd.org/44doc/usd/20.meref/paper.pdf">the
+reference
+manual</a>.
+</li>
+
+<li>
+tmac.html:
+<a href="http://plan9.bell-labs.com/magic/man2html/6/mhtml"><i>mhtml</i>(6)</a>
+macros
+</li>
+
+<li>
+tmac.jsdisp:
+displays
+macros,
+e.g.
+keeps,
+documented?
+</li>
+
+<li>
+tmac.m:
+mm
+macros,
+documented
+in
+System
+V
+and
+WWB
+manuals
+</li>
+
+<li>
+tmac.mcs:
+mcs
+macros,
+apparently
+a
+special
+version
+of
+<a href="http://plan9.bell-labs.com/magic/man2html/6/ms"><i>ms</i>(6)</a>,
+undocumented
+</li>
+
+<li>
+tmac.nihongo:
+<a href="http://plan9.bell-labs.com/magic/man2html/6/mnihongo"><i>mnihongo</i>(6)</a>
+macros
+</li>
+
+<li>
+tmac.org:
+‘.so
+/usr/lib/macros/org’,
+undocumented
+</li>
+
+<li>
+tmac.pictures:
+<a href="http://plan9.bell-labs.com/magic/man2html/6/mpictures"><i>mpictures</i>(6)</a>
+macros
+</li>
+
+<li>
+tmac.psychrefs:
+format
+references
+à
+la
+<a href="http://plan9.bell-labs.com/magic/man2html/1/refer"><i>refer</i>(1)</a>,
+undocumented
+</li>
+
+<li>
+tmac.ptx:
+macros
+for
+indexes,
+undocumented
+</li>
+
+<li>
+tmac.rscover:
+macros
+for
+cover
+pages?
+undocumented
+</li>
+
+<li>
+tmac.s,
+<a href="http://plan9.bell-labs.com/magic/man2html/6/ms"><i>ms</i>(6)</a>
+macros
+</li>
+
+<li>
+tmac.scover:
+more
+macros
+for
+<a href="http://plan9.bell-labs.com/magic/man2html/6/ms"><i>ms</i>(6)</a>,
+not
+directly
+documented
+</li>
+
+<li>
+tmac.sdisp:
+more
+macros
+for
+<a href="http://plan9.bell-labs.com/magic/man2html/6/ms"><i>ms</i>(6)</a>,
+not
+directly
+documented
+</li>
+
+<li>
+tmac.skeep:
+more
+macros
+for
+<a href="http://plan9.bell-labs.com/magic/man2html/6/ms"><i>ms</i>(6)</a>,
+not
+directly
+documented
+</li>
+
+<li>
+tmac.soft:
+macros
+from
+mel…,
+not
+documented
+-
+perhaps
+for
+"SOFTWARE
+-
+Practice
+and
+Experience"
+</li>
+
+<li>
+tmac.spe:
+extension
+of
+-mpm
+(see
+/n/sources/extra)
+for
+"SOFTWARE
+-
+Practice
+and
+Experience";
+requires
+-mpm
+and
+includes
+it
+(so
+you
+don't
+have
+to).
+Contains
+a
+sample
+document
+(in
+an
+.ig
+block
+at
+the
+top)
+</li>
+
+<li>
+tmac.srefs:
+format
+references
+à
+la
+<a href="http://plan9.bell-labs.com/magic/man2html/1/refer"><i>refer</i>(1)</a>
+</li>
+
+<li>
+tmac.twb:
+slide
+macros
+for
+a
+tool
+called
+"Toastmaster's
+Workbench";
+documented
+in
+First
+Edition
+manual
+(<a href="http://doc.cat-v.org/plan_9/1st_edition/manual.pdf">http://doc.cat-v.org/plan_9/1st_edition/manual.pdf</a>,
+see
+twb(9.1)
+on
+page
+515)
+and
+the
+fb/twb
+program
+to
+handle
+this
+is
+no
+longer
+available
+</li>
+
+<li>
+tmac.uni:
+converts
+Unicode
+characters
+to
+their
+roff
+equivalent,
+is
+it
+needed?
+</li>
+
+<li>
+tmac.v:
+mv
+macros,
+for
+view
+graphs
+and
+slides.
+Original
+Bell
+Labs
+paper
+at
+/n/sources/contrib/pietro/mv.pdf
+(~10MB).
+</li>
+</ul>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Wed Aug  6 09:26:59 EDT 2008</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

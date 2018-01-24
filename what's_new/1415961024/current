@@ -1,0 +1,327 @@
+What's New
+D1415961024
+Cnew wiki update script
+Auriel
+#Recently changed wiki pages:
+#
+# *	Fri Oct 24 06:04:01 EDT 2014 [Plan 9 Wiki Wish List] -- By
+#	[fgergo]
+# *	Fri Oct 24 05:56:21 EDT 2014 [Happy users' thanks] -- By [glenda]
+# *	Wed Aug 13 18:28:43 EDT 2014 [Supported PC Hardware] -- By
+#	[stevie]
+# *	Tue Jul 22 21:05:22 EDT 2014 [Mailing Lists] -- By [mischief]
+# *	Sun Jul 20 19:43:51 EDT 2014 [Use latest kernel after a pull] --
+#	By [glenda]
+# *	Sun Jul 20 16:05:49 EDT 2014 [Staying up to Date] -- By [glenda]
+# *	Sun Jul 20 13:25:44 EDT 2014 [sandbox three] -- By [glenda]
+# *	Sun Jul 20 13:22:55 EDT 2014 [sandbox two] -- By [glenda]
+# *	Sun Jul 20 03:28:52 EDT 2014 [9grid] -- By [glenda]
+# *	Sun Jul 20 03:26:21 EDT 2014 [Plan 9 Wiki] -- By [glenda]
+# *	Sun Jul 20 03:26:17 EDT 2014 [Software for Plan 9] -- By [glenda]
+# *	Fri Jun 13 15:44:37 EDT 2014 [GSoC] -- By [drh]
+# *	Sun Apr 27 09:03:59 EDT 2014 [Mail Configuration] -- By [stevie]
+# *	Tue Mar 25 12:55:38 EDT 2014 [Dns configuration notes] -- By
+#	[marksmith]
+# *	Wed Feb 19 02:39:27 EST 2014 [GSoC-2014-ideas] -- By [fst]
+# *	Wed Feb 12 17:48:14 EST 2014 [Alternative window system] -- By [a]
+# *	Wed Feb 12 16:56:49 EST 2014 [pq] -- By [a]
+# *	Wed Feb 12 10:43:52 EST 2014 [GSoC Admin Expectations] -- By [a]
+# *	Wed Feb 12 10:05:39 EST 2014 [GSoC Student Application] -- By [a]
+# *	Wed Feb 12 09:55:35 EST 2014 [GSoC Student Expectations] -- By [a]
+# *	Tue Feb 11 16:27:56 EST 2014 [News] -- By [geoff]
+# *	Thu Jan 2 15:23:22 EST 2014 [Configuring a Standalone CPU Server]
+#	-- By [stevie]
+# *	Tue Dec 3 10:45:36 EST 2013 [FAQ] -- By [a]
+# *	Tue Dec 3 10:43:32 EST 2013 [lfaq] -- By [a]
+# *	Wed Jul 24 17:36:19 EDT 2013 [TODO] -- By [geoff]
+# *	Sun Jul 7 10:29:26 EDT 2013 [UNIX to Plan 9 command translation]
+#	-- By [stevie]
+# *	Sat May 11 10:07:39 EDT 2013 [Ideas] -- By [a]
+# *	Fri May 10 06:38:46 EDT 2013 [Test] -- By [aap]
+# *	Fri Mar 29 15:52:28 EDT 2013 [Replace language for wikifs] -- By
+#	[a]
+# *	Fri Mar 29 15:33:46 EDT 2013 [GSoC-2013-ideas] -- By [a]
+# *	Fri Mar 29 15:32:30 EDT 2013 [OAuth] -- By [a]
+# *	Fri Mar 29 15:17:06 EDT 2013 [Raspberry Pi] -- By [a]
+# *	Fri Mar 29 13:28:06 EDT 2013 [GSoC-2012-ideas] -- By [a]
+# *	Mon Mar 11 14:32:25 EDT 2013 [Installing Plan 9 in a VirtualBox]
+#	-- By [a]
+# *	Sat Mar 2 23:10:45 EST 2013 [Hubfs] -- By [mycroftiv]
+# *	Sat Mar 2 22:30:47 EST 2013 [Connecting from other OSes] -- By
+#	[mycroftiv]
+# *	Sat Mar 2 22:26:52 EST 2013 [Connecting to other OSes] -- By
+#	[mycroftiv]
+# *	Sat Mar 2 22:08:38 EST 2013 [Expanding your Grid] -- By
+#	[mycroftiv]
+# *	Sat Mar 2 11:57:10 EST 2013 [Updating an ARM System] -- By
+#	[glenda]
+# *	Sat Mar 2 10:07:53 EST 2013 [9p services using srv, listen,
+#	exportfs, import] -- By [miller]
+# *	Sun Feb 24 00:56:44 EST 2013 [uriel] -- By [mycroftiv]
+# *	Sat Feb 23 21:34:08 EST 2013 [Documentation] -- By [mycroftiv]
+# *	Sat Feb 23 01:55:15 EST 2013 [Using acme] -- By [mycroftiv]
+# *	Sat Feb 23 01:39:39 EST 2013 [Adding A New User] -- By [mycroftiv]
+# *	Mon Feb 18 04:36:11 EST 2013 [Installing Plan 9 on Qemu] -- By
+#	[mycroftiv]
+# *	Mon Feb 18 02:57:33 EST 2013 [Drawterm to your terminal] -- By
+#	[mycroftiv]
+# *	Mon Feb 18 01:50:04 EST 2013 [Snip] -- By [a]
+# *	Fri Feb 15 15:34:42 EST 2013 [GSoC Mentor Expectations] -- By [a]
+# *	Tue Feb 12 16:52:52 EST 2013 [9srv.net] -- By [a]
+# *	Wed Feb 6 12:35:59 EST 2013 [Adding your face] -- By [a]
+# *	Fri Jan 25 14:54:20 EST 2013 [Other hardware] -- By [geoff]
+# *	Tue Jan 15 12:34:23 EST 2013 [People] -- By [john]
+# *	Thu Dec 27 12:21:34 EST 2012 [Download] -- By [miller]
+# *	Fri Dec 14 20:56:10 EST 2012 [Installation instructions] -- By
+#	[lyndon]
+# *	Wed Sep 26 20:02:34 EDT 2012 [Errata] -- By [geoff]
+# *	Thu Jun 21 16:41:37 EDT 2012 [arpunk] -- By [arpunk]
+# *	Sun May 13 07:54:35 EDT 2012 [9Blogs] -- By [glenda]
+# *	Sun May 13 02:39:20 EDT 2012 [Setting the right monitor size] --
+#	By [glenda]
+# *	Sat Apr 21 18:32:50 EDT 2012 [Linux emulation] -- By [sl]
+# *	Fri Mar 30 18:22:34 EDT 2012 [Future directions] -- By [geoff]
+# *	Fri Mar 9 14:38:47 EST 2012 [IRC] -- By [a]
+# *	Sun Mar 4 14:18:30 EST 2012 [Public Plan 9 Servers] -- By [glenda]
+# *	Thu Jan 26 02:32:38 EST 2012 [Recommended readings] -- By [abc]
+# *	Mon Dec 19 10:59:11 EST 2011 [TIP9UG] -- By [a]
+# *	Sat Nov 26 09:43:09 EST 2011 [Mouse vs. Keyboard] -- By [stevie]
+# *	Mon Oct 17 13:56:13 EDT 2011 [GUIDE] -- By [glenda]
+# *	Wed Jul 20 13:16:07 EDT 2011 [Installation on Ipaq] -- By [stevie]
+# *	Mon Jun 13 18:04:41 EDT 2011 [SSH Configuration] -- By [glenda]
+# *	Thu Jun 2 12:28:04 EDT 2011 [9P2010 Operations] -- By [ericvh]
+# *	Tue Apr 12 10:24:54 EDT 2011 [Guruplug] -- By [djc]
+# *	Mon Apr 4 18:19:13 EDT 2011 [GSoC-2011-ideas] -- By [fst]
+# *	Fri Mar 11 10:30:57 EST 2011 [gsoc-student-app-template] -- By [a]
+# *	Wed Feb 16 13:52:07 EST 2011 [9VX] -- By [chrissi]
+# *	Mon Feb 14 08:26:51 EST 2011 [9CON] -- By [chrissi]
+# *	Mon Feb 14 08:25:28 EST 2011 [Development] -- By [chrissi]
+# *	Fri Feb 4 22:09:35 EST 2011 [Avoiding Screen Pollution From
+#	Kernel Messages] -- By [sl]
+# *	Wed Feb 2 00:43:18 EST 2011 [Sources repository] -- By [sl]
+# *	Wed Feb 2 00:38:35 EST 2011 [Drawterm] -- By [sl]
+# *	Sat Oct 2 03:20:12 EDT 2010 [Contrib Index test] -- By [anothy]
+# *	Tue Aug 31 19:56:13 EDT 2010 [Installing in parallels desktop on
+#	Mac OS X] -- By [bootes]
+# *	Tue Aug 31 19:56:13 EDT 2010 [Installing in parallels desktop on
+#	Mac OS X] -- By [bootes]
+# *	Wed Aug 25 15:02:12 EDT 2010 [Outer Space] -- By [glenda]
+# *	Wed Jun 9 23:36:42 EDT 2010 [Test060910] -- By [stanleylieber]
+# *	Sun May 30 01:26:41 EDT 2010 [Books] -- By [uriel]
+# *	Sat May 29 20:40:54 EDT 2010 [Papers] -- By [uriel]
+# *	Mon May 24 21:11:08 EDT 2010 [Configuring file-backed Venti
+#	stores] -- By [leimy]
+# *	Thu May 6 15:16:03 EDT 2010 [Mirrors] -- By [uriel]
+# *	Thu May 6 15:13:56 EDT 2010 [FOSDEM 2006 9con] -- By [uriel]
+# *	Thu May 6 15:13:43 EDT 2010 [FOSDEM 2005 9con] -- By [uriel]
+# *	Thu May 6 15:12:53 EDT 2010 [THM 2005-05-19 Summary] -- By [uriel]
+# *	Thu May 6 15:11:46 EDT 2010 [THM 2005-06-23 Summary] -- By [uriel]
+# *	Thu May 6 15:11:04 EDT 2010 [thm 2005-08-15 Summary] -- By [uriel]
+# *	Thu May 6 15:10:22 EDT 2010 [Plan 9 Resources In Other Languages]
+#	-- By [uriel]
+# *	Thu May 6 15:09:36 EDT 2010 [Boyd] -- By [uriel]
+# *	Thu May 6 15:08:35 EDT 2010 [9P2000.u] -- By [uriel]
+# *	Thu May 6 15:07:49 EDT 2010 [22C3] -- By [uriel]
+# *	Thu May 6 15:05:24 EDT 2010 [thm 2005-09-24 Summary] -- By [uriel]
+# *	Thu May 6 14:58:07 EDT 2010 [Tip o' the day] -- By [uriel]
+# *	Wed Apr 28 09:32:53 EDT 2010 [How to contribute] -- By [uriel]
+# *	Tue Apr 27 15:42:02 EDT 2010 [GSoC-2010] -- By [jake]
+# *	Fri Apr 23 06:14:15 EDT 2010 [Organizations using Plan 9 and
+#	Inferno] -- By [uriel]
+# *	Fri Apr 23 05:37:26 EDT 2010 [IWP9 2006] -- By [uriel]
+# *	Fri Apr 23 05:30:01 EDT 2010 [Plan 9 Documentation Task Force] --
+#	By [uriel]
+# *	Fri Apr 23 05:27:55 EDT 2010 [Porting alien software to Plan 9]
+#	-- By [uriel]
+# *	Tue Feb 2 02:14:23 EST 2010 [testtest] -- By [matt]
+# *	Sun Jan 31 03:57:01 EST 2010 [Screenshots] -- By [matt]
+# *	Wed Jan 20 11:01:10 EST 2010 [Radeon Drivers] -- By [vsrinivas]
+# *	Tue Jan 19 13:47:14 EST 2010 [Broken Hardware] -- By [geoff]
+# *	Wed Dec 30 14:24:58 EST 2009 [aediks] -- By [aediks]
+# *	Mon Dec 21 18:04:22 EST 2009 [Setting the right keyboard map] --
+#	By [aediks]
+# *	Fri Dec 4 11:19:29 EST 2009 [Integration with other OSs] -- By [a]
+# *	Wed Nov 18 17:06:49 EST 2009 [HARE] -- By [davide]
+# *	Mon Oct 12 09:04:08 EDT 2009 [Installing in Xen 3.0] -- By
+#	[miller]
+# *	Wed Jul 29 15:50:51 EDT 2009 [Fonts] -- By [quanstro]
+# *	Mon May 18 17:51:54 EDT 2009 [Setting up Fossil] -- By [a]
+# *	Sat Apr 25 16:18:58 EDT 2009 [Plan9 on Qemu on Windows] -- By
+#	[bdheeman]
+# *	Wed Apr 22 12:21:40 EDT 2009 [Contrib] -- By [a]
+# *	Fri Apr 17 13:39:23 EDT 2009 [Plumbing examples] -- By [a]
+# *	Sat Mar 14 15:22:44 EDT 2009 [Overview] -- By [stevie]
+# *	Tue Feb 10 11:30:24 EST 2009 [Mirror sites] -- By [a]
+# *	Mon Dec 15 17:12:46 EST 2008 [Gmail on Plan9] -- By [a]
+# *	Thu Oct 23 12:35:51 EDT 2008 [Plan 9 University] -- By [ericvh]
+# *	Mon Oct 13 13:45:39 EDT 2008 [web_server] -- By [stevie]
+# *	Tue Sep 30 08:45:49 EDT 2008 [Mirroring with Fossil and Venti] --
+#	By [gp]
+# *	Thu Sep 18 12:05:30 EDT 2008 [9P2010] -- By [ericvh]
+# *	Wed Aug 6 09:26:59 EDT 2008 [tmac] -- By [pietro]
+# *	Thu Jun 26 03:44:46 EDT 2008 [fhs] -- By [fhs]
+# *	Sat May 24 14:48:14 EDT 2008 [Setting up Venti] -- By [jeg]
+# *	Wed Apr 9 15:24:28 EDT 2008 [Testing] -- By [quanstro]
+# *	Mon Mar 17 01:58:07 EDT 2008 [GSoC2008] -- By [mtg]
+# *	Wed Mar 12 16:26:50 EDT 2008 [usb-wifi] -- By [davide]
+# *	Wed Mar 12 16:12:43 EDT 2008 [usb-vga] -- By [davide]
+# *	Wed Mar 12 15:07:12 EDT 2008 [usb-debug-port] -- By [davide]
+# *	Wed Mar 12 13:05:06 EDT 2008 [GSoC 2008 Application Template] --
+#	By [davide]
+# *	Wed Mar 12 13:05:02 EDT 2008 [GSoC 2008 Student Guidelines] -- By
+#	[davide]
+# *	Mon Mar 10 13:37:42 EDT 2008 [Inferno hosted video] -- By [ericvh]
+# *	Mon Mar 10 13:31:54 EDT 2008 [iPhone drawterm] -- By [ericvh]
+# *	Mon Mar 10 13:27:38 EDT 2008 [svg support] -- By [ericvh]
+# *	Sun Mar 2 11:36:20 EST 2008 [Compiling kernels] -- By [stella]
+# *	Fri Feb 29 09:11:51 EST 2008 [inferno-ds] -- By [npe]
+# *	Wed Feb 27 11:08:00 EST 2008 [gsocfs] -- By [ericvh]
+# *	Wed Feb 27 09:53:54 EST 2008 [p9-scm] -- By [ericvh]
+# *	Wed Feb 27 09:52:48 EST 2008 [olpc-inferno] -- By [ericvh]
+# *	Wed Feb 6 15:44:02 EST 2008 [Games] -- By [ckeen]
+# *	Mon Jan 14 16:21:29 EST 2008 [Avoiding Screen Pollution from
+#	Kernel Messges] -- By [glenda]
+# *	Fri Jan 11 17:27:09 EST 2008 [Adding a monitor to vgadb] -- By
+#	[john]
+# *	Sat Dec 29 12:55:28 EST 2007 [9pfs.plist] -- By [steve]
+# *	Tue Dec 18 15:21:59 EST 2007 [9fans] -- By [ckeen]
+# *	Wed Dec 12 15:41:13 EST 2007 [Mouse Scrolling] -- By [glenda]
+# *	Tue Dec 11 12:07:39 EST 2007 [IWP9 2007] -- By [a]
+# *	Wed Dec 5 08:16:08 EST 2007 [IWP9 2007 travel plans] -- By
+#	[anthony]
+# *	Sat Nov 17 16:11:51 EST 2007 [Setting up a sources mirror] -- By
+#	[fhs]
+# *	Sat Nov 10 14:11:02 EST 2007 [Acme Wiki instructions] -- By [josh]
+# *	Fri Sep 21 08:21:01 EDT 2007 [Community] -- By [vthacker]
+# *	Fri Sep 21 08:17:21 EDT 2007 [Old wiki pages] -- By [vthacker]
+# *	Sun Sep 9 21:21:06 EDT 2007 [DON'T BELIEVE EVERYTHING YOU READ]
+#	-- By [glenda]
+# *	Sat Aug 18 11:14:01 EDT 2007 [Plan9 with Parallels] -- By [rob]
+# *	Thu Aug 9 07:49:09 EDT 2007 [Network Configuration] -- By [glenda]
+# *	Thu Aug 9 07:46:03 EDT 2007 [DNSMASQ] -- By [glenda]
+# *	Thu Aug 2 21:55:13 EDT 2007 [Installing Plan B on Qemu] -- By
+#	[john]
+# *	Wed May 30 08:33:36 EDT 2007 [GSoC2007] -- By [uriel]
+# *	Mon Apr 16 23:37:32 EDT 2007 [Oy!] -- By [anthony]
+# *	Mon Apr 16 23:26:56 EDT 2007
+#	[installing_in_parallels_desktop_on_mac_os_x] -- By [leimy]
+# *	Mon Apr 16 23:25:33 EDT 2007 [bleepbybloop] -- By [anthony]
+# *	Sat Mar 24 19:25:19 EDT 2007 [GSoC07] -- By [uriel]
+# *	Thu Mar 15 10:32:04 EDT 2007 [GSoC07] -- By [forsyth]
+# *	Sun Feb 25 15:44:39 EST 2007 [ericvh] -- By [ericvh]
+# *	Sun Feb 25 15:43:41 EST 2007 [Blue Gene Port] -- By [ericvh]
+# *	Sun Jan 14 21:31:53 EST 2007 [btdn] -- By [btdn]
+# *	Thu Nov 23 16:00:21 EST 2006 [ajft] -- By [ajft]
+# *	Thu Oct 19 09:02:37 EDT 2006 [Madrid9con 2006] -- By [speiro]
+# *	Thu Jul 27 10:44:17 EDT 2006 [Installing in Xen] -- By [miller]
+#	(213.208.117.150)
+# *	Tue Mar 28 07:32:10 EST 2006 [Town Hall Meetings] -- By [Chrissi]
+#	(84.180.93.152)
+# *	Tue Mar 14 15:00:05 EST 2006 [Test Page] -- By [noselasd]
+#	(80.239.96.162)
+# *	Mon Mar 6 03:30:11 EST 2006 [Console messages] -- By [steve]
+#	(86.7.66.235)
+# *	Fri Feb 17 14:04:27 EST 2006 [Installing a Plan 9 File Server] --
+#	By [uriel] (82.182.149.46)
+# *	Thu Feb 16 09:27:46 EST 2006 [TeX Configuration] -- By [uriel]
+#	(82.182.149.46)
+# *	Sat Feb 4 04:01:42 EST 2006 [CFP] -- By [uriel] (82.182.149.46)
+# *	Wed Jan 25 19:34:49 EST 2006 [NLUUG 2005 SPRING DAY] -- By [rsc]
+#	(135.104.9.92)
+# *	Sun Jan 15 16:26:33 EST 2006 [kuroneko] -- By [ccollins]
+#	(203.28.49.69)
+# *	Sat Jan 14 12:02:51 EST 2006 [Instalation on the Alpha] -- By
+#	[steve] (81.96.207.141)
+# *	Wed Dec 28 14:58:09 EST 2005 [bootdir] -- By [ziphos]
+#	(207.183.171.11)
+# *	Sun Dec 25 22:46:52 EST 2005 [Twente9con 2004 report] -- By
+#	[gkscott] (24.1.148.190)
+# *	Sun Dec 25 15:39:56 EST 2005 [Installer Errata] -- By [uriel]
+#	(82.182.149.46)
+# *	Sun Dec 25 11:47:14 EST 2005 [System Requirements] -- By
+#	[gkscott] (24.1.148.190)
+# *	Tue Dec 20 05:52:41 EST 2005 [Replacing 9load] -- By [uriel]
+#	(82.182.149.46)
+# *	Sun Dec 18 23:48:37 EST 2005 [test2] -- By [glenda] (24.1.148.190)
+# *	Mon Nov 21 12:54:56 EST 2005 [CLT2006] -- By [Chrissi]
+#	(84.180.116.172)
+# *	Fri Nov 11 13:03:40 EST 2005 [Installation troubleshooting] -- By
+#	[uriel] (82.182.149.46)
+# *	Wed Nov 2 04:47:12 EST 2005 [Setting up a Inferno mirror] -- By
+#	[Chrissi] (84.19.223.135)
+# *	Wed Oct 12 12:37:16 EDT 2005 [rsc] -- By [rsc] (135.104.9.92)
+# *	Tue Sep 27 21:40:01 EDT 2005 [OzInferno] -- By [crd]
+#	(24.3.135.141)
+# *	Mon Sep 26 23:04:13 EDT 2005 [Kfs file system configuration] --
+#	By [crd] (24.3.135.141)
+# *	Mon Sep 26 02:23:01 EDT 2005 [Plan 9 Documentation] -- By [uriel]
+#	(82.182.149.46)
+# *	Sat Sep 24 21:37:53 EDT 2005 [thm 2005-09-25 Log] -- By [uriel]
+#	(82.182.149.46)
+# *	Thu Aug 25 00:18:15 EDT 2005 [divergefs] -- By [chaokul]
+#	(128.2.186.37)
+# *	Mon Aug 15 21:18:00 EDT 2005 [thm 2005-08-15 Log] -- By [suibne]
+#	(131.112.14.44)
+# *	Wed Aug 10 20:22:02 EDT 2005 [Printer Configuration] -- By
+#	[uriel] (82.182.149.46)
+# *	Mon Aug 8 11:00:52 EDT 2005 [Summary of the Plan 9 Development
+#	Environment] -- By [uriel] (82.182.149.46)
+# *	Sun Aug 7 22:19:44 EDT 2005 [Background] -- By [uriel]
+#	(82.182.149.46)
+# *	Sun Aug 7 22:09:44 EDT 2005 [Plan 9 Related Publications] -- By
+#	[uriel] (82.182.149.46)
+# *	Tue Aug 2 21:22:17 EDT 2005 [divergefs manpage] -- By [chaokul]
+#	(128.2.186.33)
+# *	Tue Jul 5 18:59:44 EDT 2005 [Cross domain authentication] -- By
+#	[steve] (81.96.207.141)
+# *	Thu Jun 23 17:47:24 EDT 2005 [thm 2005-06-23 Log] -- By [ericvh]
+#	(192.35.232.241)
+# *	Mon Jun 20 10:41:38 EDT 2005 [Collaborative Environments] -- By
+#	[ericvh] (192.35.232.241)
+# *	Thu May 26 04:04:57 EDT 2005 [Dialup modem config] -- By
+#	[noselasd] (80.239.96.162)
+# *	Thu May 19 16:28:59 EDT 2005 [THM 2005-04-12 Summary] -- By
+#	[uriel] (82.182.149.46)
+# *	Thu May 19 16:27:38 EDT 2005 [THM 2005-04-12 Log] -- By [uriel]
+#	(82.182.149.46)
+# *	Thu May 19 15:35:52 EDT 2005 [THM 2005-05-19 Log] -- By [uriel]
+#	(82.182.149.46)
+# *	Sun May 15 04:17:05 EDT 2005 [User Groups] -- By [uriel]
+#	(82.182.149.46)
+# *	Thu Apr 28 00:26:45 EDT 2005 [Integrating 9load into the
+#	LinuxBIOS] -- By [uriel] (82.182.149.46)
+# *	Fri Apr 22 21:22:30 EDT 2005 [Intro to tools philosophy for *nix
+#	users] -- By [rsc] (135.104.9.92)
+# *	Thu Apr 21 16:45:36 EDT 2005 [Future development directions] --
+#	By [uriel] (82.182.149.46)
+# *	Fri Apr 15 15:26:40 EDT 2005 [Libre Software Meeting 2005] -- By
+#	[uriel] (82.182.149.46)
+# *	Thu Apr 7 10:17:10 EDT 2005 [Informal Wiki Setup] -- By [uriel]
+#	(82.182.149.46)
+# *	Fri Apr 1 22:04:58 EST 2005 [Man pages review] -- By [uriel]
+#	(82.182.149.46)
+# *	Tue Mar 8 14:44:12 EST 2005 [Upgrading to fourth edition] -- By
+#	[uriel] (82.182.149.46)
+# *	Tue Feb 1 08:51:29 EST 2005 [Supported PDAs] -- By [axel]
+#	(130.89.145.32)
+# *	Sun Dec 19 14:01:39 EST 2004 [Twente9con 2004] -- By [axel]
+#	(130.89.145.32)
+# *	Fri Nov 12 12:37:13 EST 2004 [RFC] -- By [bootes] (192.35.232.241)
+# *	Fri Nov 12 12:36:06 EST 2004 [RFC9P1] -- By [bootes]
+#	(192.35.232.241)
+# *	Fri Nov 12 12:29:12 EST 2004 [RFC9P2000.u] -- By [bootes]
+#	(192.35.232.241)
+# *	Fri Nov 12 12:28:55 EST 2004 [RFC9P2000] -- By [bootes]
+#	(192.35.232.241)
+# *	Mon Nov 1 22:53:53 EST 2004 [Dual booting bare machine and
+#	vmware] -- By [glenda] (66.183.189.46)
+# *	Wed Oct 6 12:36:24 EDT 2004 [High Performance Computing Using
+#	Plan 9] -- By [ericvh] (192.35.232.241)
+# *	Thu Mar 18 13:35:42 EST 2004 [Softwaretools] -- By [andrey]
+#	(136.159.220.110)
+# *	Wed Mar 17 20:44:29 EST 2004 [Intro to tools philosophy for
+#	windows users] -- By [npe] (66.26.59.232)
+# *	Fri Jul 12 14:10:57 EDT 2002 [Troubleshooting Plan9 & lilo] -- By
+#	[] (209.179.94.84)
+# *	Tue Apr 9 01:38:59 EDT 2002 [Sandbox] -- By [gre] (204.178.31.2)
+#

@@ -1,0 +1,58 @@
+Plan 9 Documentation Task Force
+
+The Plan 9 Documentation Task Force intends to fix, update and extend
+the various sets of Plan 9 documentation.
+
+This is a great way to help improve the system while learning about
+its darkest corners, join us and have fun ;)
+
+Note: The Task Force is inactive, see [the /sys/doc/ archive |
+http://doc.cat-v.org] and the [manual page archive |
+http://man.cat-v.org] for further efforts.
+
+CURRENT TASKS
+
+ *	Merge man pages updates from [p9p | http://man.cat-v.org/p9p/]
+ *	[Man pages review]
+ *	[Wiki pages review]
+ *	Fix the HTML and PS versions of the papers (mostly done, except
+	'$' seriously mangled in most papers (mk, rc, ..))
+ *	Have 9fans and inferno-list archived in: marc.theaimsgroup.com
+	(9fans done) www.gmane.org (9fans done but old archives missing,
+	Inferno done) [http://www.mail-archive.com] (9fans submitted, old
+	archives missing)
+ *	Polish and update the [FAQ]
+ *	[Write missing man pages]
+
+FUTURE TASKS
+
+ *	Fix man page indexes, and write scripts to check/update them in
+	the future.
+
+COMPLETED TASKS
+
+ *	Build a [wiki index]
+ *	Build/maintain a sources [contrib index]
+ *	Have Plan 9 added to http://fxr.watson.org/
+
+TODO WIKI PAGES
+
+ *	Security tips and pitfalls
+ *	[9P | http://9p.cat-v.org]
+ *	Projects (Complement to TODO and Future directions)
+ *	[Papers] (replacing the current static papers page, DONE but needs
+	more work)
+ *	Ports (dito)
+ *	[Recommended readings] (Users/Developers)
+ *	[News] (done) - [Superceeded by NineTimes |
+	http://ninetimes.cat-v.org].
+ *	[Drawterm] (done)
+
+MEMBERS
+
+ *	nym
+ *	[uriel]
+ *	Oksel
+ *	Vester
+ *	jt_
+

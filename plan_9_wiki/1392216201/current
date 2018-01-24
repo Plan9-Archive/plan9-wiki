@@ -1,0 +1,90 @@
+Plan 9 Wiki
+D1392216201
+Aa
+#
+#PLAN 9 FROM BELL LABS
+#
+#Initially developed by the people who devised Unix at Bell Labs,
+#Plan 9 took OS development back into the realm of research. Plan 9
+#development continues to challenge the concept of the operating
+#system, reworking the whole idea using modern concepts and
+#technology.
+#
+#Plan 9 is not Unix. If you think of it as Unix, you may become
+#frustrated when something doesn't exist or when it works differently
+#than you expected. If you think of it as Plan 9, however, you'll
+#find that most of it works very smoothly, and that there are some
+#truly neat ideas that make things much cleaner than you have seen
+#before.
+#
+#Plan 9 is applying to [GSoC]!
+#
+#[Overview] of what makes Plan 9 From Bell Labs special, and [what do
+#people like about plan 9].
+#
+#[Wiki index] - Alphabetical index of wiki pages
+#
+#Get Plan 9.
+# *	[Download] Plan 9.
+# *	[Staying up to date]
+#
+#Learn Plan 9.
+# *	[FAQ]
+# *	[Documentation]
+# *	[Supported PC hardware], [other hardware], [virtual machines]
+# *	[Release notes | http://plan9.bell-labs.com/sys/doc/release4.html]
+# *	[Installation instructions]
+# *	[Online Manual pages | http://plan9.bell-labs.com/sys/man/] [man
+#	pages mirror | http://man.cat-v.org/plan_9/]
+# *	For Unix users: [Unix to Plan 9 command translation]
+# *	For students with homework assignments, see
+#	[http://lsub.org/who/nemo/papers.html]
+#
+#Use Plan 9.
+# *	[News]
+# *	[Software for Plan 9]
+# *	[Tip o' the day]
+# *	[Contrib index]
+# *	[Sources repository]
+# *	[Integration with other OSs]
+# *	[errata]
+#
+#Learn the differences. Become a member of the Plan 9 [community].
+# *	Join one or more of our [mailing lists], and meet the [people]
+#	behind Plan 9 now.
+# *	See what happened at the Fifth International Workshop on Plan 9
+#	([http://www.iwp9.org]). More information concerning Plan 9
+#	conferences can be found on the [9con] page.
+# *	Join us on [IRC].
+#
+#Make a difference. Join Plan 9 Open Source development.
+# *	[Development]
+# *	[Recommended readings]
+# *	[9grid]
+#
+#Related works.
+# *	[9vx], a port of the Plan 9 kernel to vx32 user mode emulation
+# *	[Plan 9 from User Space | http://swtch.com/plan9port], also known
+#	as plan9port, is a port of most of the notable Plan 9 libraries and
+#	applications to Unix-like operating systems.
+# *	[Inferno | http://code.google.com/p/inferno-os/] - A compact
+#	operating system for building cross-platform distributed systems,
+#	based in the same principles as Plan 9.
+# *	[9P/9P2000 | http://9p.cat-v.org] - The distributed file system
+#	protocol used by Plan 9 and Inferno.
+# *	[v9fs] provides a Plan9 9P2000 resource sharing protocol client
+#	for the Linux 2.6 kernel.
+#
+#Meta.
+# *	Anyone with a Plan 9 installation can edit the wiki pages. People
+#	new to a wiki should play around in the [sandbox] to gain
+#	familiarity with the concept. [Acme wiki instructions] [Wiki syntax]
+# *	See the [what's new] page for a list of recent wiki updates.
+# *	[Plan 9 Wiki Wish List]. Request documentation to be added to the
+#	wiki.
+# *	The [Plan 9 Documentation Task Force] works to fix, update and
+#	extend the Plan 9 documentation. Volunteers are welcome to join.
+#
+# *	[Wiki index] - Alphabetical index of wiki pages
+# *	[Old wiki pages] - Deprecated information
+#

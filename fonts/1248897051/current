@@ -1,0 +1,141 @@
+Fonts
+D1248897051
+Aquanstro
+#
+#BITMAP FONTS
+#
+#The screen font can be changed at startup by changing the font
+#variable in $home/lib/profile.
+#
+#[/lib/font/bit/ |
+#http://plan9.bell-labs.com/sources/plan9/lib/font/bit/]:
+#
+# *	big5/ – from the students at the University of Hong Kong
+# *	courier/ – the well-known monospace font
+# *	fixed/ – from XFree86, public domain and ugly
+# *	gb/ – script fonts?
+# *	jis/ – Japaneese fonts from MIT's X distribution
+# *	lucida/ – from our friends Bigelow & Holmes Inc
+# *	lucidasans/ – more from our friends Bigelow & Holmes Inc
+# *	lucm/ – more from our friends Bigelow & Holmes Inc
+# *	misc/ – more from our friends at MIT
+# *	naga10/ – Japaneese and Latin fonts
+# *	palatino/ – the well-known font
+# *	pelm/ – the default font for rio(1), from our friends Bigelow &
+#	Holmes Inc
+# *	shinonome/ – Japaneese and Latin fonts
+# *	smiley/ –
+# *	special/ –
+# *	times/ – the well-known Times Roman
+#
+#TROFF FONTS
+#
+#troff(1) actually only cares about how wide each character is. This
+#is a list of fonts for which it knows that.
+#
+#These files can be generated with [buildtables |
+#http://plan9.bell-labs.com/sources/plan9/sys/src/cmd/postscript/buildtables/].
+#
+#[/sys/lib/troff/font/devutf/ |
+#http://plan9.bell-labs.com/sources/plan9/sys/lib/troff/font/devutf/]:
+#
+#(This list was list was generated with [invfo.rc |
+#http://plan9.bell-labs.com/sources/contrib/btdn/src/invfo.rc].)
+#
+# *	AB – AvantGarde-Demi
+# *	AI – AvantGarde-BookOblique
+# *	AR – AvantGarde-Book
+# *	AX – AvantGarde-DemiOblique
+# *	B – Times-Bold
+# *	BI – Times-BoldItalic
+# *	C – Courier
+# *	CB – Courier-Bold
+# *	CI – Courier-Oblique
+# *	CO – Courier
+# *	CW – Courier
+# *	CX – Courier-BoldOblique
+# *	GR – Symbol
+# *	H – Helvetica
+# *	HB – Helvetica-Bold
+# *	HI – Helvetica-Oblique
+# *	HK – Helvetica-LightOblique
+# *	HL – Helvetica-Light
+# *	HM – Helvetica
+# *	HX – Helvetica-BoldOblique
+# *	Hb – Helvetica-Narrow-Bold
+# *	Hi – Helvetica-Narrow-Oblique
+# *	Hr – Helvetica-Narrow
+# *	Hx – Helvetica-Narrow-BoldOblique
+# *	I – Times-Italic
+# *	KB – Bookman-Demi
+# *	KI – Bookman-LightItalic
+# *	KR – Bookman-Light
+# *	KX – Bookman-DemiItalic
+# *	LucidaCW – LucidaTypewriter
+# *	LucidaSans – LucidaSans
+# *	LucidaSansB – LucidaSans-Demi
+# *	LucidaSansCW83 – LucidaSans-Typewriter83
+# *	LucidaSansI – LucidaSans-Italic
+# *	NB – NewCenturySchlbk-Bold
+# *	NI – NewCenturySchlbk-Italic
+# *	NR – NewCenturySchlbk-Roman
+# *	NX – NewCenturySchlbk-BoldItalic
+# *	PA – Palatino-Roman
+# *	PB – Palatino-Bold
+# *	PI – Palatino-Italic
+# *	PX – Palatino-BoldItalic
+# *	R – Times-Roman
+# *	R.nomath – Times-Roman
+# *	S – Symbol
+# *	S1 – Times-Roman
+# *	Syntax – Syntax-Roman
+# *	SyntaxB – Syntax-Bold
+# *	SyntaxI – Syntax-Italic
+# *	UnivMath1 – Universal-MathOne
+# *	UnivMath2 – Universal-MathTwo
+# *	UnivMath3 – Universal-MathThree
+# *	UnivMath4 – Universal-MathFour
+# *	UnivMath5 – Universal-MathFive
+# *	UnivMath6 – Universal-MathSix
+# *	ZD – ZapfDingbats
+# *	ZI – ZapfChancery-MediumItalic
+#
+#GHOSTSCRIPT FONTS
+#
+#[/sys/lib/ghostscript/font/ |
+#http://plan9.bell-labs.com/sources/plan9/sys/lib/ghostscript/font/]:
+#
+# *	See [/sys/lib/ghostscript/font/Fontmap |
+#	http://plan9.bell-labs.com/sources/plan9/sys/lib/ghostscript/font/Fontmap].
+#
+#POSTSCRIPT FONTS
+#
+#PostScript fonts may be embeded in a document by piping it through
+#aux/download.
+#! aux/download -f -H/sys/lib/postscript/font -mfontmap
+#
+#[/sys/lib/postscript/font/ |
+#http://plan9.bell-labs.com/sources/plan9/sys/lib/postscript/font/]:
+#
+# *	See [/sys/lib/postscript/font/fontmap |
+#	http://plan9.bell-labs.com/sources/plan9/sys/lib/postscript/font/fontmap].
+#
+#ANTIALIASED FONTS
+#
+#You can use the Code2000, Cyberbit and Vera, TrueType fonts to get a
+#nicer look on Rio and Acme. Erik has provided the following
+#instructions on the [9fans] mailing list (updated):
+#
+#! 	9fs sources
+#! 	contrib/install quanstro/vera
+#! 	font=/lib/font/bit/vera/unicode.12.font rio
+#
+#SEE ALSO
+#
+# *	font(6)
+# *	R. Pike and K. Thompson, “[Hello World, or καλημέρα κόσμε, or
+#	こんにちは 世界 | /sys/doc/utf.html]”, Plan 9 Programmer's Manual, Fourth
+#	Edition, Volume 2.
+# *	[bdf2subf | /sources/contrib/fst/bdfsubf.tgz]
+# *	[ttf2subf | http://9grid.net/andrey/p9/freetype/]
+#

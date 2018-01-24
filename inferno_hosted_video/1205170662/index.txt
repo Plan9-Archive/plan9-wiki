@@ -1,0 +1,22 @@
+Inferno hosted video
+
+Inferno hosted video drivers for Linux. I started looking at this in
+the context of OLPC, but it seems like you might be able to do a
+hosted gstreamer driver for Inferno and suppot anything gstreamer
+does. Although perhaps a lower level of support (direct Video4Linux)
+should be considered.
+
+I'm thinking mainly here of supporting web cams but I suppose
+extensions could support playback/etc.
+
+MILESTONES
+
+ *	Device interface allowing capture of "snapshot" single frames,
+	conversion to Inferno bitmap, and display
+ *	Proper embedding of "preview" graphcs inside an Inferno display
+ *	(stretch) video streaming over 9p connection
+ *	(stretch) video playback from a 9p connection
+ *	(stretch) photo-booth style capture of multiple frames
+ *	(stretch) a version of faces showing live snapshots of whoever is
+	logged into the server
+

@@ -1,0 +1,1936 @@
+Contrib Index
+D1416730848
+Aanothy
+#This is an automatically generated index of the packages part of the
+#[Contrib] directory in the [Sources repository]. Items marked as
+#"From fgb's contrib" can be downloaded with the command
+#! contrib/install user/package
+#contrib itself can be installed with
+#! /n/sources/contrib/fgb/root/rc/bin/contrib/install fgb/contrib
+#
+#Closer [Mirrors] may be available.
+#
+#This page is regenerated daily, a bit after 3am US-Eastern. If the
+#page looks broken, please notify Anthony Sorace (a at 9srv dot net).
+#
+#../EXTRA
+#
+#! Everything here is unsupported.  Much of it is code from older
+#! versions of the system, some of it is ports of foreign software.
+#! 
+#! Anything put on sources.cs.bell-labs.com by (Alcatel-)Lucent should be
+#! considered to be under the Lucent Public Licence unless there are
+#! explicit notices to the contrary.
+#
+# *	extra/68000.tgz - the Motorola 68000 port (Sep 28 2012)
+# *	extra/68020.tgz - the Motorola 68020 port (Oct 2 2012)
+# *	extra/9.tgz - (Nov 23 01:59)
+# *	extra/9hist.tgz - Plan 9 kernel history
+# *	extra/9hist/ - Plan 9 kernel history (Nov 10 2005)
+# *	extra/9pm051031.zip - 9PM - old port of Plan 9 to Windows,
+#	relicensed under LPL 1.02 (Oct 31 2005)
+# *	extra/X11.iso.bz2 - X11 replica CD (huge and 8-bit graphics only)
+#	(Feb 6 2003)
+# *	extra/acme-edit-2e.tgz - /acme/edit from second edition (Dec 17
+#	2006)
+# *	extra/alef.tgz - 2nd edition Alef compilers (May 25 2004)
+# *	extra/alpha.tgz - the DEC Alpha port (Sep 26 2012)
+# *	extra/art/ - port of 2nd edition "art" program (Nov 10 2005)
+# *	extra/bitsy.tgz - the bitsy (ipaq) port (Jan 30 2013)
+# *	extra/bootmgr.tgz - (Oct 18 2010)
+# *	extra/c++.2e.tgz - source for 2nd ed. C++ (Sep 17 2007)
+# *	extra/changes/ - daily change logs (Apr 9 2007)
+# *	extra/cvs.iso.bz2 - cvs replica CD (May 6 2002)
+# *	extra/fs/ - ken's file server (Sep 10 2007)
+# *	extra/gcc/ - port of gcc to Plan 9 (Nov 10 2005)
+# *	extra/i/ - rough web browser, based on charon (Nov 10 2005)
+# *	extra/il.c - (Jul 19 2007)
+# *	extra/ip.il.h - (Apr 19 2007)
+# *	extra/kenfs.tgz - the original standalone file server kernel,
+#	updated to 64-bit addresses. see cwfs(4) instead. (Aug 30 2007)
+# *	extra/ktrans-2e.tgz - 2e ktrans sources, with truncated
+#	dictionary (Dec 17 2006)
+# *	extra/mosml.iso.bz2 - Moscow ML replica CD (May 6 2002)
+# *	extra/mothra/ - port of 2nd edition web browser (Aug 3 2007)
+# *	extra/mpm/ - mpm macros and supporting program (Aug 30 2007)
+# *	extra/noweb.iso.bz2 - Noweb 2 replica CD (Oct 27 2002)
+# *	extra/old-doc/ - outdated 2nd edition papers (Aug 30 2007)
+# *	extra/paranoia.tgz - the standard floating-point diagnostic (Apr
+#	11 2013)
+# *	extra/perl.iso.bz2 - Perl replica CD (Nov 25 2002)
+# *	extra/pgw.tar.bz2 - Project Gutenberg - Webster's first
+#	dictionary, for dict(1) (Sep 15 2003)
+# *	extra/pi.uboot.sd.img.gz - compressed bootable sd card image for
+#	raspberry pi, uses pxe booting (Mar 22 2013)
+# *	extra/plan9.tar.bz2 - (Nov 23 03:02)
+# *	extra/postmark.c - simple file system benchmark (Sep 14 2005)
+# *	extra/pq.tgz - pq(1) relational database (May 1 2002)
+# *	extra/ps2txt - heuristic gs-based postscript-to-text (Nov 3 2004)
+# *	extra/python.iso.bz2 - Python replica CD (Nov 16 2002)
+# *	extra/python2.5.tgz - Python 2.5 port (Mar 11 2011)
+# *	extra/rc.unix.tgz - current rc ported to Unix (Feb 28 2013)
+# *	extra/refer.tgz - Charles Forsyth's port/rewrite of refer with
+#	minor changes (Oct 18 2010)
+# *	extra/roget/ - Project Gutenberg - Roget's original thesaurus,
+#	for dict(1) (Nov 19 2004)
+# *	extra/sparc64.tgz - the (degenerate) 64-bit Sparc port (Sep 26
+#	2012)
+# *	extra/sun.tgz - 2nd edition Plan 9 Sun kernel sources (May 7 2001)
+# *	extra/tex.iso.bz2 - Tex/Latex/MF replica CD (May 6 2002)
+# *	extra/virtex4+5.tgz - the Xilinx Virtex 4 & 5 ports (Jun 6 2013)
+#
+#ADK9
+#
+#! author: Abhishek Kulkarni
+#! email: adkulkar@umail.iu.edu
+#
+# *	finger - (Dec 10 2009)
+# *	twitter - (Dec 10 2009)
+#
+#AGANTI
+#
+# *	capDevice/ - (May 11 2008)
+# *	osrlk08/ - (Jun 3 2008)
+# *	pam_devcap/ - (May 21 2008)
+#
+#AIJU
+#
+#! author: Julius Schmidt <aiju (at) phicode (dot) de>
+#! Some of this is out of date, the 9front repository usually contains more up to date versions.
+#
+# *	5e.tar - (Jun 8 2011)
+# *	cell.c - (Dec 15 2010)
+# *	etherbcm.c - (Apr 23 2011)
+# *	geode/ - AMD Geode driver (Dec 19 2010)
+# *	io.c - inb/outb tool (Dec 15 2010)
+# *	jumpingcat - (May 24 2011)
+# *	log - (Apr 19 2011)
+# *	mathfs.c - (May 23 2011)
+# *	miller.c - fast prime number calculation program (Dec 15 2010)
+# *	mole.c - simulation of molecular dynamics (Dec 15 2010)
+# *	mole1.c - (Dec 15 2010)
+# *	mouse.c - (Apr 23 2011)
+# *	ncserv.c - (Dec 15 2010)
+# *	nes/ - start of a NES emulator (Dec 15 2010)
+# *	netconsole.c - (Dec 15 2010)
+# *	paint.c - (Apr 26 2011)
+# *	seg.c - (Dec 15 2010)
+# *	tput.c - (May 16 2011)
+# *	wacom.c - (Apr 23 2011)
+#
+#AKUMAR
+#
+#! author: Akshat Kumar <akumar@mail.nanosouffle.net>
+#
+# *	cmd/ - Tools from scratch or ported – see respective NOTES (Sep 6
+#	2009)
+# *	cmd/l/ - Local ns and fs management utils (Feb 25 2010)
+# *	cmd/l/9usbfs - view and attach usb devices
+# *	cmd/l/fs - (Safely) start cwfs(4) as a service; connect with
+#	con(1)
+# *	cmd/math/ - Tools for mathematics (Aug 22 2009)
+# *	cmd/math/comp - Compute coordinates with hoc(1) – see file
+# *	cmd/r/ - Utils to manage remotely acquired ns and fs (Sep 6 2009)
+# *	cmd/sherlock/ - Compare files; numerical output (Aug 3 2009)
+# *	dict/ - rc scripts, modified adict and dict(1) to get and use
+#	EDICT2 (Aug 3 2009)
+# *	gs/ - gs(1) with IJS support (Aug 17 2009)
+# *	igo/ - Tools for playing the game of Go (Sep 18 2009)
+# *	igo/goban - Go game interface to gofs (graphical)
+# *	igo/gofs - Filesystem as game server for 2-player turn-based games
+# *	lout.tgz - (Sep 12 2010)
+# *	relic/ - Tools ported from ancient UNIX sources to Plan 9 (Aug 3
+#	2009)
+# *	� - : Test/work in progress sources
+# *	α/ - (Sep 5 2010)
+#
+#ALLTOM
+#
+#! author: Tom Lieber
+#! irc: tar_
+#! full of hope
+#
+# *	f - word-wrap at 72 characters (stolen from Kernighan's lecture
+#	slides) (Feb 12 2008)
+# *	para - add <p> tags to text (Mar 16 2008)
+# *	sitefs/ - with luck, a cgifs-alike; nothing at the moment (Jan 21
+#	2008)
+#
+#ANDREY
+#
+# *	Irc.tgz - russ' irc client for acme, probably broken (Jul 11 2006)
+# *	aread.c - (Apr 5 2011)
+# *	art.tgz - a line drawing program (Nov 21 2005)
+# *	clock.tgz - p9's clock rewritten for p9p (Nov 21 2005)
+# *	cmd/ - (Jun 19 2007)
+# *	dict.tgz - bulgarian ↔ english files for dict (Nov 21 2005)
+# *	dis.tgz - the dis virtual machine, native. (Nov 21 2005)
+# *	epic.tgz - a native port of the epic irc client (Nov 21 2005)
+# *	find.tgz - simple "find" command. (Nov 21 2005)
+# *	glenda.c - glendas (Nov 21 2005)
+# *	gnugo-3.6.tgz - GnuGo compiled with gcc (Oct 16 2007)
+# *	hugs.tgz - haskell interpreter (Nov 21 2005)
+# *	irc7.tgz - a persistent irc client (Jul 17 2006)
+# *	libssh-0.2.tgz - unfinished libssh port. see 9fans for
+#	documentation ☺ (Mar 15 2007)
+# *	libtiff.tgz - tiff-v3.6.1 (Nov 21 2005)
+# *	links.tgz - the links browser (Aug 14 2006)
+# *	make-3.81.tgz - gnu make. has a couple of things ape/make doesn't
+#	and makefiles now require. installs as gmake in $objtype/bin (Jun
+#	26 2007)
+# *	maze.tgz - a simple game based on the "theseus and the minotaur"
+#	puzzle (Nov 21 2005)
+# *	mem - present /dev/swap in [silly]human-readable form (Dec 19
+#	2005)
+# *	nasat.tgz - satellite images of north america delivered to your
+#	desktop (Nov 21 2005)
+# *	netkey.tgz - (Nov 21 2005)
+# *	ocaml-3.10.0.tgz - ocaml 3.10.0 interpreter. use gmake (make-3.81
+#	below) to compile (Oct 15 2007)
+# *	ocaml.tgz - ocaml 3.06 interpreter (Nov 21 2005)
+# *	pacman.tgz - pacman (Nov 21 2005)
+# *	rio-ffm.tgz - rio with a 'focus-follows-mouse' behaviour (Nov 21
+#	2005)
+# *	sadict.tgz - translate bulgarian ↔ english via an online
+#	dictionary. an exercise in rc (Nov 21 2005)
+# *	xscr.tgz - xscreensaver hacks for p9's draw (Nov 13 2007)
+#
+#ANOTHY
+#
+#! Anthony Sorace, a@9srv.net
+#! All original work distributed under the
+#! Creative Commons Attribution 2.0 License,
+#! unless otherwise noted.
+#
+# *	bin/ - (Dec 10 2012)
+# *	bin/rc/9fs - Local mods with interesting examples.
+# *	bin/rc/Mg - Open messages matching a pattern; intended for Acme
+#	Mail.
+# *	bin/rc/amail - How I run acme for mail only, hiding plumb's edit
+#	port.
+# *	bin/rc/cadet - Edit files directly in a rio window.
+# *	bin/rc/contrindx - Script for generating contrib index on the
+#	Plan 9 wiki.
+# *	bin/rc/cx - Wrapper around ssh.
+# *	bin/rc/eow - Calculate days until the end of the world.
+# *	bin/rc/flight - Track flights, in the spirit of fedex/usps/ups.
+# *	bin/rc/grabwin - Generate a png from the current window (or
+#	screen) every few seconds.
+# *	bin/rc/host - Simple hostname lookup modeled after OS X's "host".
+# *	bin/rc/journal - Keep daily working set with notes.
+# *	bin/rc/looktag - Look up tags and plumb results; see src/ctags.
+# *	bin/rc/lynx2txt - Have lynx (see
+#	/n/sources/contrib/fgb/tar/lynx2-8-7.tgz) dump to acme.
+# *	bin/rc/ncp - Trivial ncp implementation; see lib/man/ncp.1.
+# *	bin/rc/notspam - Unspam every message in a mailbox; run from cron
+#	for IMAP clients.
+# *	bin/rc/riostart - Fairly complex example rio startup script; uses
+#	lib/wins.
+# *	bin/rc/snip - Pastebin-like service using rc and 9p.
+# *	bin/rc/sparkline - Generate pseudo-sparklines in unicode from a
+#	series of numbers.
+# *	bin/rc/stripmail - Given a upas/fs message, print the simplest
+#	representation we can.
+# *	bin/rc/tagclock - Put a clock in the tag of any acme window.
+# *	bin/rc/tcp17038 - Vac score submission service.
+# *	bin/rc/timeavg - Print a report averaging multiple 'time' runs,
+#	possibly of multiple programs.
+# *	bin/rc/tjd - Print the Truncated Julian Day, a useful linear
+#	count of days.
+# *	bin/rc/tweet - Simple tweeter; see also
+#	http://labs.utopian.net/who/josh/plan9/microbe/
+# *	bin/rc/vacbak - Backup a set of files to venti; stick it in cron
+#	on Unix.
+# *	bin/rc/waitloop - Retry a command with a minimum delay.
+# *	bin/rc/web - Handle the web. See bin/unix/webfifo,
+#	bin/rc/(lynx2txt sendurl).
+# *	bin/unix - Scripts intended for running on Unix with Plan 9 from
+#	User Space.
+# *	lib/ - (Jan 23 2010)
+# *	lib/man - Man pages.
+# *	lib/profile - My default lib/profile; works on both Unix and Plan
+#	9.
+# *	lib/tet.* - Example files for use with vacbak.
+# *	lib/u9fs.plist - Example to run u9fs from launchd on OS X.
+# *	lib/uname - Example for cx and modified 9fs commands.
+# *	lib/wins - Example startup scripts for rio and acme.
+# *	mail/ - (Jun 3 2009)
+# *	mail/lib/altalias - Multi-domain alias lookup for upas.
+# *	opt/ - Optional packages; format still in development.
+# *	opt/ - (Mar 18 2010)
+# *	src/ - (May 12 2009)
+# *	src/9/pc/devarch.c - Replacement which adds archconf for printing
+#	conf structure; testing.
+# *	src/cmd/checkp9auth.c - Replacement for qmail's checkpassword.
+#	Very lightly tested; gave up on qmail.
+# *	src/cmd/curslife.c - Play Conway's Game of Life in your mouse
+#	cursor.
+# *	src/cmd/datefmt.[bc] - Limbo and C datestamp printers, similar to
+#	unix date(1).
+# *	src/cmd/mayan.c - Like datefmt, but for the Mayan calendar.
+#	Mostly foolishness.
+# *	src/cmd/nile - rio(1) derivative consolidating various mods,
+#	offering menuless operation.
+# *	src/cmd/prowl.c - Send messages to Prowl (prowl.weks.net) to push
+#	to iOS.
+# *	src/cmd/timestamp.c - Put timestamps on output. Optionally uses
+#	datefmt. Modified from sqweek.
+# *	src/cmd/winwatch.c - Puts a menu on button 3 similar to rio's.
+# *	src/cmd/writecursor.c - Trivial example of setting your cursor
+#	directly. Defaults to glenda.
+# *	src/ctags - Exuberant Ctags 5.7 on Plan 9 with Acme-style tag
+#	generation.
+# *	src/lib/djb-ape - libdjb from fefe.de/djb ported to APE; lightly
+#	tested.
+# *	src/vcf2pq - Convert vCards to pq(1) data files.
+# *	tmp/ - Junk.
+# *	tmp/ - (Feb 14 2013)
+# *	ufo/ - Things hosted for other people; empty.
+# *	ufo/ - (Jul 30 2009)
+#
+#APM
+#
+#! author: Anthony Martin
+#! e-mail: ality@pbrane.org
+#
+# *	yacc-go/ - a patch that allows yacc to build the go parser (Feb
+#	20 2014)
+#
+#ARISAWA
+#
+#! you will find latest and more stuffs by accessing
+#! http://plan9.aichi-u.ac.jp/netlib/
+#! 
+#! Kenji Arisawa
+#! arisawa@ar.aichi-u.ac.jp
+#
+#ARPUNK
+#
+#! author: Ricardo Lanziano
+#
+# *	abaco2 - Binary version, for 386 (Dec 19 2009)
+# *	abaco2.tgz - My version of abaco (broken ATM) (Dec 19 2009)
+# *	crap.c - (Sep 3 2012)
+# *	fnord/ - (Aug 10 2010)
+# *	pp.c - (Sep 21 2012)
+# *	zombies.c - (Dec 27 2012)
+#
+#AXEL
+#
+# *	8021x/ - 802.1x ttls/pap supplicant. needs wlanfastkey. (Mar 16
+#	2007)
+# *	ftpfs/ - (Mar 27 2007)
+# *	globe/ - (Aug 22 2006)
+# *	leak/ - leak(1) extended to print list of alloc locations + nrof
+#	bytes allocated there (Sep 20 2006)
+# *	music/ - (perl) scripts to generate/change map file for juke(1)
+#	(Jan 14 2008)
+# *	plumb/ - (Nov 19 2006)
+# *	readme - (Sep 12 2006)
+# *	rushhour/ - the thinkfun rush hour game, with support for
+#	ttraffic.levels of pytraffic (Aug 21 2006)
+# *	substfs/ - fileserver that substitutes characters in file names
+#	(Nov 29 2005)
+# *	tcl/ - tcl stuff (Sep 12 2006)
+# *	tcl/9pvfs/ - 'transparent' 9p support for tcl 8.5 (Mar 22 2006)
+# *	wlanfastkey/ - wavelan driver with 'fast' wep re-keying needed by
+#	8021x (Oct 3 2005)
+#
+#BAKUL
+#
+# *	9/ - (Apr 1 2014)
+# *	9/bcm/random.c - use hardware random number generator for
+#	/dev/random
+# *	9pi - (Mar 4 2014)
+# *	9pi+temp.tgz - (Mar 3 2013)
+# *	cmd/ - (Nov 22 2012)
+# *	cmd/ratrace.c - -o file option to capture trace output to a file
+# *	rngtest.tar.gz - port of Linux rngtest (uses FIPS 140-2
+#	randomness tests) (Mar 29 2014)
+# *	ttcp.tar - (Feb 9 2013)
+# *	ttcp.tgz - modelled after Unix ttcp
+# *	uboot.tar.gz - (Dec 6 2012)
+#
+#BEDO
+#
+#! author: Justin Bedo <cu@cua0.org>
+#
+# *	enfr - Looks up translations from english to french via
+#	wordreference API. (May 10 2012)
+# *	flickrfs.c - A flickr file server. (Apr 17 2012)
+# *	solar.c - Local solar time calculator (Jun 7 2012)
+#
+#BEN
+#
+#! author: Ben Huntsman <BHuntsman@mail2.cu-portland.edu>
+#
+# *	9pdll.zip - COM/WSH scriptable 9p DLL for Windows/.NET 3.5 (Aug
+#	31 2008)
+#
+#BICHUED
+#
+#! author: Felipe Bichued
+#
+# *	replica/ - (Aug 16 2009)
+# *	root/ - (Aug 16 2009)
+# *	wtf.tgz - rc version of the netbsd acronym translator (May 12
+#	2007)
+#
+#From fgb's contrib:
+# *	hg: Mercurial 1.0.2
+# *	klondike: a solitaire game
+# *	python: python 2.5.1
+#
+#BLSTUART
+#
+# *	snap/ - Kernel device for taking snapshots of a storage space
+#	(Mar 9 2014)
+# *	ssh/ - Native Plan 9 SSHv2 implementation (Mar 30 2012)
+# *	θf - : Experimental file server with both NFSv3 and 9P
+# *	θfs/ - (Mar 9 2014)
+#
+#BOYD
+#
+# *	sys/ - (Apr 12 2005)
+#
+#BTDN
+#
+#! author: Benjamin T. D. Newman
+#! e-mail: benn.newman@snc.edu
+#
+#BWC
+#
+#CATENATE
+#
+# *	acme/ - (Oct 1 2009)
+# *	guide - (Oct 1 2009)
+# *	latin1.7a.font - (Oct 2 2009)
+# *	times/ - (Oct 1 2009)
+#
+#CCOLLINS
+#
+# *	bindiff.tgz - (Oct 10 2005)
+# *	fs/ - (May 19 2005)
+# *	inform-6.30.tar - (Oct 9 2005)
+#
+#CINAP_LENREK
+#
+# *	9boot.tgz - plan9 bootloader (Nov 24 2011)
+# *	apc.rc - talk with APC Smart UPS and sync fossil/venti on power
+#	outage (Apr 11 2008)
+# *	bp.tgz - (Dec 10 2010)
+# *	cifsd.capso.tgz - (Sep 26 2010)
+# *	cifsd.tgz - cifs/smb server in under 4k lines of code (Oct 11
+#	2012)
+# *	cwfs.tgz - (Jul 24 2012)
+# *	cwfs64x - (Jul 23 2012)
+# *	delorean/ - hack that lets you change the time for a group of
+#	processes sharing namespace (May 5 2009)
+# *	derp.tgz - (Nov 2 2012)
+# *	devfs-win32.c - drawterm fs for win32 that supports multiple
+#	drive letters and unicode (Nov 11 2007)
+# *	dial.c - (Mar 20 2011)
+# *	dialtest.c - (Jan 10 2012)
+# *	draw.c - (Nov 1 2010)
+# *	esd.tgz - (Dec 16 2012)
+# *	esdaudio.tgz - enlightenment sound daemon (esd) client (Aug 16
+#	2007)
+# *	execfs.tgz - (Mar 27 2012)
+# *	gophe.rc - gopher server in rc (Aug 16 2008)
+# *	hgfs.tgz - (Jan 12 2012)
+# *	hgfs/ - (Oct 27 2011)
+# *	ktags.c - (Sep 10 2011)
+# *	linuxemu3.tgz - linux binary emulator (Nov 20 13:44)
+# *	linuxemu3/ - (May 28 2010)
+# *	mothra.tgz - mothra improved: https, foreign charsets using tcs,
+#	ignoring script and style tags, ui improvements (Sep 13 2011)
+# *	mroot-linuxemu.tbz - (Mar 31 2009)
+# *	nbdserver.tgz - network block device server (Aug 16 2007)
+# *	nntpfs.c - (Feb 3 2008)
+# *	old/ - (Feb 27 2010)
+# *	page - (Jul 23 2012)
+# *	page.c - (Jul 23 2012)
+# *	paint - (Jul 23 2012)
+# *	paint.c - (Jul 23 2012)
+# *	photos/ - (Feb 7 2009)
+# *	pierio/ - (Feb 9 2010)
+# *	pub/ - (May 1 2012)
+# *	push/ - (Feb 3 2011)
+# *	realemu.tgz - software emulation of /dev/realmode (Oct 25 2012)
+# *	rio.c - (Feb 9 2008)
+# *	sdvirtio.c - qemu/kvm virtio block driver (Apr 26 2012)
+# *	segdescpatch.tar - plan9 kernel changes to add per process x86
+#	segment descriptors (Mar 2 2010)
+# *	segdescpatch/ - (Feb 27 2010)
+# *	sshnet.c - sshnet that works with short living tcp-connections
+#	(like http) (Aug 16 2007)
+# *	synergy.tgz - synergy client (use many computers at once using
+#	one keyboard/mouse/clipboard) (Feb 29 2008)
+# *	synergy/ - (Feb 29 2008)
+# *	tcp80.tgz - (Nov 30 2012)
+# *	tftpd.c - tftpd that works with syslinux/pxelinux bootloader (Oct
+#	14 2007)
+# *	tftpfs.tgz - (Sep 4 2010)
+# *	torrent.c - bittorrent client (Jul 23 2012)
+# *	usbether.tgz - driver for usb CDC ECM (usb ethernet devices) (Dec
+#	22 2008)
+# *	usbether/ - (Dec 20 2008)
+# *	usbptp.tgz - usb camera filesystem for PTP cameras like Nikon
+#	coolpix (Jul 21 2009)
+# *	usbptp/ - (Jul 21 2009)
+# *	vmpatch/ - plan9 kernel changes to fix string validation and
+#	invalid pointer error handling (Jan 4 2010)
+# *	wcpu.zip - (Oct 6 2010)
+# *	webfs.tgz - (Jan 9 2013)
+# *	wol.tgz - wake on lan packet generator (Aug 16 2007)
+#
+#CNIELSEN
+#
+# *	bladeenc/ - (Apr 12 2005)
+# *	cuetools/ - (Apr 12 2005)
+# *	faac/ - (Apr 12 2005)
+# *	flac/ - (Apr 12 2005)
+# *	libFLAC/ - (Apr 12 2005)
+# *	libOggFLAC/ - (Apr 12 2005)
+# *	libfaac/ - (Apr 12 2005)
+# *	libogg/ - (Apr 12 2005)
+# *	libvorbis/ - (Apr 12 2005)
+# *	libvorbisenc/ - (Apr 12 2005)
+# *	libvorbisfile/ - (Apr 12 2005)
+# *	metaflac/ - (Apr 12 2005)
+# *	oggenc/ - (Apr 12 2005)
+# *	vorbiscomment/ - (Apr 12 2005)
+#
+#CROSS
+#
+# *	sor - (Feb 19 2006)
+# *	walk.c - (Feb 19 2006)
+#
+#DE0U
+#
+# *	0.t2 - (Oct 9 2009)
+# *	blame - (Apr 12 2009)
+# *	divergefs.tar.gz - Chao-Kuo Lin's overlay/union/layer/stitch file
+#	system (Oct 24 2008)
+# *	old.divergefs.tar.gz - (Aug 24 2005)
+# *	older.divergefs.tar.gz - (Aug 7 2005)
+# *	replica/ - (Sep 11 2010)
+# *	root/ - (Sep 11 2010)
+# *	srec/ - Turn a Plan 9 executable into SREC / S-record / S19
+#	format (Oct 14 2009)
+#
+#From fgb's contrib:
+# *	divergefs: Chao-Kuo Lin's overlay/union/layer/stitch file system
+#
+#DHO
+#
+# *	kimp/ - (Apr 13 2005)
+# *	mixerfs.c - (Apr 18 2007)
+# *	nfil/ - (Apr 13 2005)
+# *	vcs.old/ - (Apr 13 2005)
+# *	vcs/ - (Apr 7 2007)
+# *	zt550x/ - (Apr 13 2005)
+#
+#DJC
+#
+# *	fossil/ - (Jul 11 2012)
+# *	il/ - (Mar 21 2012)
+# *	nat/ - (Mar 21 2012)
+#
+#DPESCHEL
+#
+#EBO
+#
+#ERICVH
+#
+#! author: Eric Van Hensbergen
+#
+# *	go-plan9/ - (Apr 28 2010)
+# *	ppctools/ - (Apr 24 2007)
+# *	test - (May 11 2008)
+# *	warren/ - (Mar 3 2007)
+#
+#FCFONTES
+#
+#! author: Fabio C. Fontes
+#
+#FERNAN
+#
+#FGB
+#
+#! author: Federico G. Benavento
+#
+#From fgb's contrib:
+# *	4th: 4tH 3.5d - Forth-like interpreter.
+# *	X11: Equis - Xserver for Plan 9 + Xlibs.
+# *	breakout: Breakout - breakout/arkanoid clone.
+# *	bz2: BZ2 library for APE
+# *	contrib: Contrib - Trivial Package Management
+# *	curses: PDCurses 3.3 library for APE.
+# *	freefont: These are Free UCS Outline Fonts converted to the
+#	subfont format.
+# *	freetype: FreeType 2.3.5 for APE.
+# *	jbig: JBIG-KIT 1.6 for APE.
+# *	jpeg: JPEG library for APE.
+# *	lcms: Little cms library for APE.
+# *	magick: ImageMagick 6.3.6-10
+# *	mines: Minesweeper game written for Plan 9.
+# *	mpage: Mpage postcript utility port.
+# *	nd: nd -- Tiny little command line WebDAV interface. Version:
+#	0.8.2
+# *	openssh: OpenSSH_4.7p1, OpenSSL 0.9.8g 19 Oct 2007
+# *	openssl: OPENSSL 0.9.8g for APE.
+# *	png: PNG library for APE.
+# *	poll: Free poll(3) for APE.
+# *	posix-man: POSIX 1003.1-2003 man pages and man(1) for APE.
+# *	regex: Henry Spencer's regex lib for APE.
+# *	scheme: Philip K. Dick's TinySCHEME Version 1.34
+# *	snake: Snake - snake/nibbles clone.
+# *	sqlite3: SQLite version 3.5.4 for APE.
+# *	tcl: TCL 8.5.9 APE port for Plan 9
+# *	tiff: Libtiff 3.8.2 for APE.
+# *	ttf2subf: Ttf2subf, converts TrueType Fonts to the Subfont format.
+# *	wchar: Gunnar Ritter's libwchar for APE.
+# *	xml2: libxml2-2.6.30 for APE.
+# *	z: ZLIB for APE.
+#
+#FHS
+#
+#! Author: Fazlul Shahriar
+#! Email: fshahriar@gmail.com
+#
+#FORSYTH
+#
+# *	6c.tgz - (Aug 19 2009)
+# *	9c.tgz - (Dec 5 2007)
+# *	Plan9ServeronEC2.pdf - (Jul 1 17:35)
+# *	avr.9gz - (Sep 4 2011)
+# *	libdbm.tgz - (Oct 20 2008)
+# *	libsexp.tgz - (Mar 24 2009)
+# *	lx.tgz - (Aug 6 2007)
+# *	refer.tgz - (Aug 2 2012)
+# *	rsynth.tgz - (Apr 29 2013)
+# *	sim.tgz - (Oct 20 2008)
+#
+#FST
+#
+#! author: Skip Tavakkolian
+#
+# *	bdf2subf.tgz - BDF to Plan9 font format converter. (Dec 5 2005)
+# *	dcfs.tgz - Simple Digital Camera Filesystem. (Dec 5 2005)
+# *	disp.c - A display program for popi images in Plan9. (Dec 5 2005)
+# *	dmdtet.shar - Tetris game for the DMD/630 terminals. (Dec 5 2005)
+# *	histogram.c - display a histogram of data from stdin.
+# *	jabwock.c - jabberwocky - a password suggester (Sep 25 2007)
+# *	piggy.rc - A script for generating html picture galleries. (Dec 5
+#	2005)
+# *	popen.c - (Nov 11 2007)
+# *	replica/ - (Mar 17 2010)
+# *	root/ - (Mar 17 2010)
+# *	target - shell script driver for tippi (Feb 28 2008)
+# *	tippi.c - tippi spies on the mouse buttons (Feb 28 2008)
+#
+#From fgb's contrib:
+# *	histogram: display a histogram from the input values.
+# *	target: target,tippi - spy on mouse and display the state of
+#	mouse buttons
+#
+#GABIDIAZ
+#
+#! Gabriel Díaz
+#! 
+#! gdiazlo@gmail.com
+#! gdiaz@me.com
+#! 
+#! 
+#
+# *	drawvars - a program to plot positive functions on image files
+#	(png, jpg or whatever)
+# *	gsvn - rc script to download inferno sources from googlecode, it
+#	should work with other googlecode projects (not tested) (Oct 12
+#	2007)
+# *	nop - (Nov 22 2007)
+# *	replica/ - (Nov 9 2008)
+# *	root/ - (Nov 9 2008)
+# *	snmpfs - SNMP v1 & v2 filesystem implementation, stable and
+#	working since Oct 2006
+# *	spf - SPF implementation stable and working since Nov 2006
+# *	tar/ - (Nov 21 2007)
+# *	wintop - a mix between top.c from noselasd and winwatch to kill
+#	procs who eat too much cpu
+# *	wip/ - (Jun 12 2008)
+#
+#From fgb's contrib:
+# *	drawvars: Drawvars create images files (png, jpg, ...) of
+#	functions (y=2x)
+# *	gsvn: SVN download over http. Tested with inferno and googlecode.
+# *	perl: This is the same perl version as is in the iso image on the
+#	extra directory
+# *	snmpfs: SNMP v2 filesystem interface implementation
+# *	spf: "SPF v1 implementation for upas, used to fight spam"
+# *	wintop: Displays a list of processes eating too much resources,
+#	you can kill the offenders from it too
+#
+#GEOFF
+#
+# *	3cmdfs.c - 3e command file server, possibly obsoleted in 4th
+#	edition by execnet. (Apr 20 2002)
+# *	armdoc/ - (Apr 12 2010)
+# *	exch/ - (Apr 14 2009)
+# *	ifup - script for configuring additional network interfaces. (May
+#	10 2002)
+# *	index.html - (Feb 2 2007)
+# *	libdbm.tar - V7 Unix's libdbm for Plan 9. (Dec 10 2003)
+# *	libmdbm.tar - libmdbm for Plan 9 and (l)unix. (Dec 10 2003)
+# *	mandel.bun - a faster Mandelbrot-set generator. (Jan 21 2003)
+# *	maze.bun - a faster maze generator and solver with a few bugs
+#	fixed. (Aug 15 2008)
+# *	ovfs.broken.tgz - broken 3e or 4e file server to provide overlaid
+#	view of file servers. (Feb 2 2006)
+# *	palmld.tar.gz - palmld for 4th edition; backs up and restores
+#	Palm PDAs. (Jan 25 2003)
+# *	rmsame.bun - my old Unix rmsame ported to native Plan 9. (Apr 17
+#	2005)
+# *	rotzoomer.bun - a faster screen distorter. (Jan 21 2003)
+#
+#IAINWS
+#
+# *	helloworld.c - (May 20 2012)
+# *	patchStatistics.py - (May 20 2012)
+# *	search.py - (May 18 2012)
+#
+#IRU
+#
+#! author: Iruatã M. S. Souza
+#
+# *	ext2srv.tgz - ext2srv with symlink support (May 12 2008)
+# *	g - p9p g written in rc(1) (Feb 27 2010)
+# *	last9hist - prints last version of a 9hist file (Apr 21 2008)
+# *	lua-5.1-plan9.tgz - port of the lua language (Jan 21 2008)
+# *	sgi_081025.tgz - (Oct 25 2008)
+#
+#IWP9-2006
+#
+# *	album/ - (Jan 19 2007)
+# *	papers/ - (Jan 19 2007)
+#
+#JAMES
+#
+#! author: james francis toy iv
+#
+# *	hg-1.3-p9.tgz - (Aug 18 2009)
+# *	hg-git-p9.tgz - (Aug 18 2009)
+# *	james_profile - (Aug 18 2009)
+# *	python-2.5.1-ape.tgz - (Aug 18 2009)
+# *	python-2.5.1-sys.tgz - (Aug 18 2009)
+#
+#JAS
+#
+#! author: Jeff Sickel
+#
+# *	cpython-386.arch.bz2 - (Jan 2 2014)
+# *	cpython-amd64.arch.bz2 - (Jan 2 2014)
+# *	cpython-src.arch.bz2 - (Jan 2 2014)
+# *	dis.sh - (Jan 28 2009)
+# *	hg-src.arch.bz2 - (Jan 2 2014)
+# *	inferno_notes.txt - (Jan 28 2009)
+# *	man/ - (Mar 10 2009)
+# *	replica/ - (Jun 28 2013)
+# *	root/ - (Jun 24 2013)
+# *	src/ - (Jun 24 2013)
+# *	src/cmd/lsproto. - list contents based on proto
+# *	src/dsPIC33F - 16bit changes to lib9 so a dsPIC33F can use 9p
+#
+#From fgb's contrib:
+# *	cpython-386: Python 2.7.5 for 386
+# *	cpython-amd64: Python 2.7.5 for amd64
+# *	cpython-src: Python Plan 9 source branch
+# *	hg-src: Mercurial source for modern Plan 9 CPython port
+#
+#JOHN
+#
+# *	9bench.tgz - A port of several useful lmbench benchmarks to Plan
+#	9. (Mar 21 2008)
+# *	9pm - (Aug 1 2011)
+# *	USING_JUKE - Instructions for using the jukebox on a modern
+#	system. (Oct 18 2007)
+# *	acid-fmtindex - (Jul 3 2008)
+# *	acid-fmtisect - (Jul 3 2008)
+# *	cdprep - Encodes raw audio tracks in /tmp/cdtracks to mp3 format
+#	and sticks them in /lib/music/<artist>/<album>/. Expects the output
+#	of aux/cddb as an argument. Designed to be used with cdripper. (Feb
+#	6 2008)
+# *	cdripper - Watches the CD drive and rips the audio tracks to
+#	/tmp/cdtracks whenever you insert a disc. Depends on cdprep. (Feb 6
+#	2008)
+# *	decontrib - grab all the files from a contrib package and put it
+#	in a tarball instead. Also downloads files more quickly than
+#	contrib. (Dec 20 2011)
+# *	devtrace-backport.tgz - The devtrace device for the currently
+#	distributed kernel (Dec 17 2008)
+# *	devtrace-scripts.tgz - Utility scripts that should make dealing
+#	with devtrace output easier (Jan 4 2009)
+# *	devtrace.tgz - Backup of the 9k-compatible devtrace. You don't
+#	want this, you want devtrace-backport.tgz (Jul 1 2009)
+# *	divergefs-fix.tgz - (Aug 31 2010)
+# *	finger - Provides a similar function to the UNIX command. (Jan 17
+#	2008)
+# *	fmtindex-output - (Jul 3 2008)
+# *	ftq.tar - The Fixed Time Quantum microbenchmark, ported to Plan 9
+#	(includes Python analysis tool) (Jul 8 2009)
+# *	getpass.py - For doing https transfers with Mercurial. Copy to
+#	/sys/python/lib/python2.5/. Only works with Plan 9! (Aug 11 2009)
+# *	grub-bootable-usb-cga.img - (Jan 7 2013)
+# *	hg-howto.txt - (Aug 11 2009)
+# *	juke - A really simple rc script to start the jukebox. (Oct 18
+#	2007)
+# *	lc - Sometimes you need to be careful.
+# *	libssh2.tgz - Working (but primitive) port of ssh2 to Plan 9 (Jan
+#	3 2008)
+# *	lsr - (Feb 3 2010)
+# *	miau9.tgz - The Miau IRC bouncer for Plan 9. Very, very roughly
+#	ported. (Jan 11 2012)
+# *	mkmusiclist - take a bunch of mp3 files and make an html page to
+#	present them. (Oct 22 2007)
+# *	package/ - (Aug 2 2011)
+# *	plan.c - lame tool for day-planner. Work in progress.
+# *	planb.txt - (Nov 28 2008)
+# *	rio-virtual.tgz - rio with virtual desktops for Plan 9. (Aug 17
+#	2009)
+# *	snake.c - A really simple "snake" game for Plan 9. (Oct 23 2008)
+# *	ssh2 - binary for ssh2 client (Jan 3 2008)
+# *	syscall.ps - A short document on adding a new system call to Plan
+#	9 (Apr 14 2008)
+# *	uwn.tgz - the Unix Weenie News clients (USENET) (Aug 5 2009)
+#
+#JOSH
+#
+# *	markdown - See instead http://is.gd/2KMCB. `Discount' Markdown
+#	compiler
+# *	rc/ - Scripts (Apr 23 2011)
+# *	rc/mb - Microblog (Twitter & alike) r/w clients
+# *	sys/ - (Apr 19 2011)
+#
+#JRW972
+#
+#KIDA
+#
+# *	cryptfs.tgz - (Feb 26 2006)
+# *	libcryptfs.tgz - crypt filesystem using libolfs
+# *	libolfs.tgz - overlay filesystem support library (Feb 26 2006)
+# *	obsoluted/ - (Feb 26 2006)
+# *	ping6.tgz - IPv6 version ping. (Dec 23 2005)
+#
+#KIX
+#
+# *	snmpfs-2006061902.tgz - (Jun 18 2006)
+# *	snmpfs-20070904.tgz - (Sep 5 2007)
+#
+#LEE
+#
+# *	9intro.tgz - examples of "Introduction to Operating System
+#	Abstractions using Plan 9 from Bell Labs", (Mar 24 2007)
+# *	cweb.tgz - CWEB(3.64) for Plan 9. You need touch common.c
+#	ctangle.c before compile use mk. (Feb 17 2007)
+# *	figlet222.tgz - FIGlet (Frank, Ian & Glenn's Letters) release
+#	2.2.2 for Plan 9. (Feb 19 2007)
+# *	misc/ - (Mar 5 2009)
+# *	mmix-20060918.tgz - MMIXware(20060918) for Plan 9. You need
+#	(install) CWEB(3.64). (Feb 10 2007)
+#
+#LEITEC
+#
+#! author: Claudio Leite <leitec at leitec point org>
+#
+# *	bsfirc/ - IRC client with similar interface. (Dec 20 2006)
+# *	bsflite/ - AOL Instant Messenger client. (Dec 12 2007)
+#
+#LEJATORN
+#
+# *	btfs.pdf - (Oct 7 2009)
+# *	btfs.tgz - (Sep 23 2009)
+# *	btfs/ - (May 18 2010)
+# *	libogg.tar.gz - (Jul 29 2009)
+# *	libvorbis.tar.gz - (Jul 29 2009)
+# *	page/ - (Jan 23 2010)
+# *	rio/ - (Feb 15 2010)
+# *	url.c - (Sep 23 2009)
+#
+#LUCHO
+#
+# *	iwl.tgz - (Feb 24 2011)
+# *	plan9-mac.iso.bz2 - (May 5 2008)
+# *	usbinst9.img.gz - (Mar 3 2009)
+#
+#LUCIO
+#
+# *	386/ - (Jul 31 2011)
+# *	alef.tgz - (Mar 25 2007)
+# *	asn1/ - (Jul 31 2011)
+# *	go - Go Language developments for Plan 9.
+# *	go.ext.bz2 - (Nov 12 2011)
+# *	go.tar.bz2 - (Dec 15 2011)
+# *	pub/ - APE-based ports of Open Source projects (Jul 31 2011)
+# *	pub/8.npng - (Apr 27 2006)
+# *	pub/libpng/ - Open Source PNG library (Jul 31 2011)
+# *	pub/mkfile - to build trim and npng (Apr 28 2006)
+# *	pub/mkpublib - to build APE-based libraries (Apr 22 2006)
+# *	pub/npng.1 - (Apr 27 2006)
+# *	pub/npng.c - PNG renderer uses Open Source libpng (Apr 28 2006)
+# *	pub/openldap/ - (Jul 31 2011)
+# *	pub/trim.c - TAB replacement in text files (Apr 28 2006)
+# *	pub/zlib/ - Open Source (de)compression library (Jul 31 2011)
+# *	sys/ - (Jul 31 2011)
+#
+#LYNDON
+#
+#! Lyndon Nerenberg <lyndon@orthanc.ca>
+#
+# *	Label - Set acme's rio window label. (Dec 31 2010)
+# *	MIRROR - (Aug 25 2011)
+# *	contribindex - pretty-print /n/sources/contrib/*/INDEX (slow! run
+#	from cron) [updated 2011-01-19]. (Jan 19 2011)
+# *	dbm.c - convert dbm to watts. (Mar 6 2011)
+# *	dbw.c - convert dbW to watts. (Mar 6 2011)
+# *	echo.c - (May 13 2011)
+# *	echo.man - (May 13 2011)
+# *	echon.c - 'echo -n ...' as a standalone command. (May 13 2011)
+# *	finger - finger client, inspired by rsc's rlogin in rc. (Jun 23
+#	2008)
+# *	idmirror - mirror IETF internet drafts [updated 2011-03-06]. (Mar
+#	6 2011)
+# *	lc - (Jun 30 2011)
+# *	ls - (Jun 30 2011)
+# *	lsof - print open file descriptors [updated 2009-11-08]. (Nov 8
+#	2009)
+# *	prompt.rc - rc prompt that tracks your user+host names and
+#	current directory. (Aug 9 2011)
+# *	rfc - print RFCs and Internet Drafts [updated 2011-01-19]. (Jan
+#	19 2011)
+# *	rfcmirror - mirror IETF RFCs [updated 2011-03-06]. (Mar 6 2011)
+# *	ruler.c - print a column-count ruler. (Jan 2 2010)
+# *	sdiff - diff files against sources. (Aug 9 2011)
+# *	srevert - revert files to the current sources version. (Aug 9
+#	2011)
+#
+#MAHT
+#
+#! Author: maht
+#! License: to kill your box
+#! echo maht DASH contrib AT maht0x0r DOT net | sed -e 's/ DASH /-/' -e 's/ AT /@/' -e 's/ DOT /./'
+#! Bah, I just realised I've been using createfile wrong - time to handle 9p myself
+#
+# *	acme/ - (Nov 30 2009)
+# *	actionfs.c - (Jan 7 2009)
+# *	blogger/ - (Aug 16 2009)
+# *	dechunk.c - (May 25 2008)
+# *	dhttp - Distributed httpd with per domain access controls. httpfs
+#	is a request broker, some shell scripts for serving content
+#	included (w.i.p.) - BROKEN atm. I'm doing a re-write
+# *	dhttp.iso - (Sep 17 2007)
+# *	fft.c - (Jan 7 2009)
+# *	fonts.tr - (May 14 2007)
+# *	getuserpasswd.c - (Dec 2 2009)
+# *	goofs.iso - google queries as a file system. echo
+#	$urlencoded_request > /n/goofs/ctl; cat
+#	/n/goofs/$urlencoded_request/1/ ^(title description url) (Sep 17
+#	2007)
+# *	hmac.c - (Jun 26 2008)
+# *	httpd/ - (Jan 20 2010)
+# *	httpd/httpd.c - (Jan 20 2010)
+# *	httpd/httpd.man - (Jan 20 2010)
+# *	httpd/magic/ - (Sep 18 2007)
+# *	imgfs-old.iso - (Sep 17 2007)
+# *	imgfs/ - (Feb 22 2009)
+# *	inferno/ - (Aug 30 2009)
+# *	limbo/ - (Jul 13 2009)
+# *	mandlebrot.vb.txt - (Jan 31 2008)
+# *	newns.c - (Sep 16 2007)
+# *	nutz.iso - (Sep 17 2007)
+# *	ppm2eps/ - converts ppm files to eps files (useful for adding
+#	images to troff files) (Sep 20 2007)
+# *	rc/ - (Dec 8 2009)
+# *	rc/bindfonts - binds my ttf folder into the namespace (Apr 4 2007)
+# *	rc/cd - (Dec 8 2009)
+# *	rc/chugly - crude irc client in rc; good demo for networking in
+#	the shell (Apr 4 2007)
+# *	rc/contrindx - rewrite of uriel/contrindx with a couple of cmd
+#	line options
+# *	rc/df - I don't know where I got this, I'm sure I didn't write
+#	it. It doesn't work for me now, I think it's for kenfs only. It's
+#	dated 2003 (Apr 4 2007)
+# *	rc/dfm - (Nov 11 2009)
+# *	rc/exe - (Nov 11 2009)
+# *	rc/gauss.rc - (Feb 22 2009)
+# *	rc/get_file.rc - (Feb 22 2009)
+# *	rc/grow_tree - copies a directory tree but not the files therein
+#	(Apr 4 2007)
+# *	rc/httplib.rc - (Feb 22 2009)
+# *	rc/install - (Sep 10 2009)
+# *	rc/iso2cd - (Jan 12 2010)
+# *	rc/lorem - (Jul 13 2009)
+# *	rc/mailcollector - opens a pop3 box, grabs the mail and delivers
+#	it using the local smtp process (Apr 4 2007)
+# *	rc/make_cpuauth - run this as glenda on a new install answer a
+#	few questions and voila, a cpu/auth server you can drawterm into
+#	(Jan 6 2010)
+# *	rc/maths.rc - (Feb 22 2009)
+# *	rc/mk_aoe_installer_iso - (Oct 29 2007)
+# *	rc/mkiso - make an installer iso - with aoe support
+# *	rc/mountcd - (Nov 11 2009)
+# *	rc/pipefrom - (Aug 20 2009)
+# *	rc/srcs - (Nov 11 2009)
+# *	rc/tcpcat - dial a tcp!ip!port ; cat > $netdir/data && cat
+#	$netdir/data; i.e. { echo 'HEAD http://192.168.1.1/ HTTP/1.0; echo
+#	} | tcpcat 192.168.1.1!80 (Apr 4 2007)
+# *	rc/til - (Feb 25 2009)
+# *	rc/til-example - (Feb 25 2009)
+# *	rc/til-example-output - (Feb 25 2009)
+# *	rc/vbackup - (Jan 12 2010)
+# *	rc/warlock_mail - run this on a terminal (fossil with -AWP
+#	required) and it will enable outgoing mail after answering a few
+#	questions (Jun 25 2008)
+# *	sasPY9P.iso - (Sep 17 2007)
+# *	snapscan.iso - (Sep 17 2007)
+# *	tlspipeclient.c - (May 25 2008)
+# *	troff_fonts.ps - (May 14 2007)
+# *	url_encode.c - (Apr 4 2007)
+# *	walk.c - (Aug 28 2009)
+#
+#MASON
+#
+# *	ac97.tgz - Aki's ac97 driver with SiS7012 support (Jan 22 2008)
+# *	mp3dec.tgz - half-attempt at native mp3dec (May 6 2008)
+# *	mp3info.c - (May 6 2008)
+# *	ports/ - (Dec 13 2007)
+# *	ports/mad.tgz - tamed madplay port
+# *	rc/ - (May 6 2008)
+#
+#MENNIS
+#
+#MILLER
+#
+# *	9/ - (Nov 12 2012)
+# *	9pi - (Jun 29 18:02)
+# *	9pi.img-old.gz - (Nov 18 2013)
+# *	9pi.img.gz - (Jun 29 17:54)
+# *	bkpt.tar - (Jan 7 2013)
+# *	ext2srv.tar - (Jan 13 2013)
+# *	factotum/ - (Apr 17 2012)
+# *	inferno/ - (Jan 16 2011)
+# *	j/ - (Jul 10 2009)
+# *	jetway-nc92-330/ - (Aug 5 2009)
+# *	rc/ - (Jul 23 2009)
+# *	resize.c - (Sep 9 2009)
+# *	rpi/ - (Mar 4 2013)
+# *	uboot.img - (Mar 21 2013)
+# *	usb/ - (Nov 26 2012)
+# *	usbohci.c - (Aug 31 2011)
+#
+#MJL
+#
+#! author: Mechiel Lukkien
+#! email: mechiel@ueber.net
+#! irc: mjl-
+#! 
+#! code repositories are now at:
+#! https://bitbucket.org/mjl/
+#
+# *	attrfs-*.tgz - experimental & unfinished file server to navigate
+#	through attributes, in limbo
+# *	attrfs-5.tgz - (Mar 23 2011)
+# *	authsrv9-*.tgz - authsrv with only ticket request & password
+#	change support, in plain unix c
+# *	authsrv9-5.tgz - (Mar 23 2011)
+# *	cryptfile-*.tgz - encrypted block file (with xts & cbc with
+#	sector-encrypted iv's), in limbo
+# *	cryptfile-14.tgz - (Mar 23 2011)
+# *	dhcpd-1.tgz - (Jan 22 2010)
+# *	expand-0.tgz - (Mar 3 2011)
+# *	ext2fs-1.tgz - (Jan 22 2010)
+# *	ffs-1.tgz - (Jan 22 2010)
+# *	find-5.tgz - (Apr 5 2011)
+# *	fontsrv-1.tgz - (Mar 15 2011)
+# *	ftpsrv-4.tgz - (Jan 22 2010)
+# *	games-*.tgz - just one game for now: blobslay, in limbo
+# *	games-7.tgz - (Jan 22 2010)
+# *	hdict-*.tgz - dict client, in limbo
+# *	hdict-7.tgz - (Mar 23 2011)
+# *	hgfs-*.tgz - hg (mercurial) file format parser & file server, in
+#	limbo
+# *	hgfs-76.tgz - (Nov 5 2009)
+# *	hgweb-*.tgz - hg web frontend, in limbo
+# *	hgweb-15.tgz - (Dec 20 2010)
+# *	http-*.tgz - http library (for both client & server), in limbo
+# *	http-20.tgz - (Mar 3 2011)
+# *	httpd-*.tgz - httpd, in limbo
+# *	httpd-161.tgz - (Mar 29 2011)
+# *	httpd0.tar - (Feb 1 2008)
+# *	httptun-*.tgz - tcp connection tunneling over http (does not work
+#	in practice), in limbo
+# *	httptun-3.tgz - (Jan 22 2010)
+# *	ircfs-*.tgz - irc file server, includes a tk frontend (wm/irc),
+#	in limbo
+# *	ircfs-96.tgz - (Apr 17 2011)
+# *	life.tgz - game of life (Jan 4 2006)
+# *	lsynergy-*.tgz - synergy client in limbo
+# *	lsynergy-10.tgz - (Mar 23 2011)
+# *	lyricd-*.tgz - daemon that fetches lyrics from the web, including
+#	web frontend, in limbo
+# *	lyricd-23.tgz - (Mar 23 2011)
+# *	memventi-*.tz - a venti with in-memory index, in unix c
+# *	memventi-6.tgz - (Nov 1 2009)
+# *	nfmt.c - (Mar 10 2009)
+# *	nopoint-*.tgz - magicpoint-like tool for slides, in limbo
+# *	nopoint-1.tgz - (Jan 22 2010)
+# *	novt-6.tgz - (Apr 24 2011)
+# *	pcap2snoopy.tgz - convert from pcap (packet capture, tcpdump) to
+#	snoopy) (Jan 28 2006)
+# *	pcidevs.tgz - display pci vendor, device, class and subclass
+#	strings (Apr 22 2005)
+# *	pdfread-*.tgz - (unfinished/stalled) pdf-reading library & to
+#	text conversion tool
+# *	pdfread-5.tgz - (Jan 22 2010)
+# *	pdict - dict (rfc2229) in python (Apr 18 2005)
+# *	pdictsearch - find misspelled word (Apr 18 2005)
+# *	playfs-*.tgz - experimental & unfinished file server for playing
+#	music
+# *	playfs-11.tgz - (Jan 22 2010)
+# *	plumbing - (Apr 18 2005)
+# *	q-0.tgz - (Mar 29 2011)
+# *	qwm-30.tgz - (Apr 24 2011)
+# *	readme - details such as usage of the scripts (Mar 12 2009)
+# *	rotate.tgz - rotate and flip images (Jan 5 2006)
+# *	scgid-*.tgz - scgi daemon, for use with web servers, in limbo
+# *	scgid-7.tgz - (Jan 22 2010)
+# *	snmp-*.tgz - snmp tools and client library, in limbo
+# *	snmp-3.tgz - (Mar 23 2011)
+# *	ssh-*.tgz - (unfinished/stalled) ssh & sftpfs client, in limbo
+# *	ssh-72.tgz - (Apr 24 2011)
+# *	ssh9fs - mount filesystems from unix machines
+# *	textmangle-*.tgz - plain text document parser (not unlike
+#	markdown), and converter, in limbo
+# *	textmangle-4.tgz - (Jan 22 2010)
+# *	torrent-*.tgz - (work in progress) bittorrent client, in limbo
+# *	torrent-123.tgz - (Oct 10 2009)
+# *	ttffs-1.tgz - (Mar 15 2011)
+# *	u9fs-setup - install u9fs on a unix machine (Apr 22 2005)
+# *	util-*.tgz - library with common function, in limbo
+# *	util-3.tgz - (Dec 8 2009)
+# *	vacinit-19.tgz - (Apr 8 2011)
+# *	vacsrv-9.tgz - (Apr 2 2011)
+# *	ventisrv-*.tgz - a venti with in-memory index, in limbo
+# *	ventisrv-12.tgz - (Apr 1 2011)
+# *	vixen-10.tgz - (Mar 23 2011)
+# *	vnc-1.tgz - (Mar 27 2011)
+# *	web-*.tgz - libraries for dealing with the web (html etc), in
+#	limbo
+# *	web-15.tgz - (Jan 22 2010)
+# *	webdavfs-*.tgz - webdav client file server, in limbo
+# *	webdavfs-9.tgz - (Jan 22 2010)
+# *	wip/ - old, not even work in progress anymore (Feb 2 2006)
+# *	wmrun-32.tgz - (Apr 24 2011)
+# *	zipfs-*.tgz - zip file system and tools for reading & writing zip
+#	files, in limbo
+# *	zipfs-6.tgz - (Mar 15 2011)
+#
+#MM
+#
+# *	tmp/ - (Aug 3 2010)
+#
+#MYCROFTIV
+#
+#! Author: Mycroftiv
+#! Contact: mycroftiv in #plan9 on irc.freenode.net
+#! Licenses: Lucent for Plan 9 modifications; MIT, WTFPL for purely original works; derivative works
+#! under same license as original.
+#! More info, tools, and resources: occasionally found on 9gridchan.org
+#
+# *	NOTES - (Feb 16 2013)
+# *	gridscripts.tgz - set of rc scripts and support utilities for
+#	indexing grid resources (Dec 9 2009)
+# *	grio.tgz - modified rio with hubfs integration, user-chosen menu
+#	command, and styling options (Mar 3 2013)
+# *	grio/ - (Mar 3 2013)
+# *	hubfs.tgz - a screen-like utility implemented as a 9p fs (Mar 5
+#	2013)
+# *	hubfs1.1/ - (Mar 5 2013)
+# *	importz.tgz - import with -z option to work with exportfs -a -r
+#	or exportfs -a -S (Feb 25 2013)
+# *	importz/ - (Feb 25 2013)
+# *	iosrv.tgz - a 'screen' like utility for Plan 9 - also general
+#	purpose network piping. obsoleted by hubfs. (Jul 10 2009)
+# *	old/ - (Jan 8 2013)
+# *	replica/ - (Jan 25 2013)
+# *	root/ - (Jul 9 2009)
+# *	rootlessnext.tgz - (Mar 9 2013)
+# *	rootlessnext/ - Advanced Namespace Tools for Plan 9. Based around
+#	a new kernel version (9pcram) the ANTS software helps build
+#	multiple independent namespaces on the same machine and freely
+#	share resources between namespaces on different machines. (Mar 9
+#	2013)
+# *	unreleased/ - in progress, incomplete, undocumented, or otherwise
+#	unsupported stuff (Mar 3 2013)
+# *	writeprocns/ - Kernel mod - Echo namespace ops to /proc/pid/ns to
+#	rewrite ns of other processes (Mar 3 2013)
+#
+#From fgb's contrib:
+# *	hubfs: hubfs is used via the hub script and creates persistent rc
+#	sessions similar to gnu screen
+# *	iosrv: functionality similar to GNU screen and general purpose io
+#	piping and Hubs
+#
+#NEMO
+#
+# *	NOTICE.PlanB - (May 23 2006)
+# *	a.tar - (Feb 8 2010)
+# *	acmetags.tar - (Sep 22 2009)
+# *	amails.tar - (Sep 22 2009)
+# *	c.tar - (Jul 22 2009)
+# *	e.c - (Apr 21 2010)
+# *	lib/ - (May 23 2006)
+# *	libsys.c - (Apr 18 2013)
+# *	m.tar - (Feb 12 2010)
+# *	mail2fs/ - (Jan 21 2008)
+# *	mails.1 - (Sep 22 2009)
+# *	octopus/ - (Apr 29 2008)
+# *	rc/ - (May 23 2006)
+# *	replica/ - (Sep 23 2009)
+# *	root/ - (Sep 23 2009)
+# *	serial.tar - (Jun 19 2009)
+# *	sys/ - (May 23 2006)
+# *	tags/ - (Jan 21 2008)
+# *	trfs.c - (Feb 13 2009)
+# *	trfs.man - (Feb 13 2009)
+# *	u.h - (Dec 2 2008)
+# *	u.tar - (Sep 21 2009)
+# *	upc.tar - (Sep 21 2009)
+# *	what/ - (May 23 2006)
+# *	where/ - (May 23 2006)
+# *	who/ - (May 23 2006)
+# *	x10.tar - (Jul 30 2011)
+#
+#From fgb's contrib:
+# *	mail2fs: mail processing using the real file system to keep mails
+#	stored
+# *	mails: Similar to Acme's Mail but for use with mail2fs mail boxes.
+# *	tags: file indexing and searching by content
+#
+#NEWSHAM
+#
+# *	NOTES.sparc64 - (Apr 26 2005)
+# *	sparc64src-apr21.tgz - (Apr 22 2005)
+# *	sparc64src-apr26.tgz - (Apr 26 2005)
+# *	sparc64src-feb10.tgz - (Apr 14 2005)
+# *	sparc64src-feb18.tgz - (Apr 14 2005)
+# *	sparc64src-jan12.tgz - (Apr 14 2005)
+# *	sparc64src-jan25.tgz - (Apr 14 2005)
+# *	sparc64src-jan28.tgz - (Apr 14 2005)
+#
+#NOSELASD
+#
+#! author: nos@utel.no
+#
+# *	define.tgz - dict(RFC 2229) client for Plan 9 (Aug 3 2005)
+# *	fibfs.c - (May 15 2006)
+# *	lua-5.0.2-plan9.tgz - The LUA embeddable interpreter(www.lua.org)
+#	for Plan9/ape (Aug 3 2005)
+# *	scheme-3.2-plan9.tgz - UMB scheme for Plan 9/APE (Aug 3 2005)
+# *	sexpr_1.0.0.tgz - the S-expression library(sexpr.sf.net) for Plan
+#	9/native (Aug 3 2005)
+# *	sketchy-20060305.tgz - Sketchy Scheme - www.t3x.org/sketchy for
+#	Plan 9/native (Mar 8 2006)
+# *	sxm-1.1-plan9.tgz - the sxm Scheme language. (minor updates so it
+#	compiles on Plan 9/APE 4e) (Nov 11 2005)
+# *	top.tar - Simple 'top' for Plan 9 for use to identify cpu hogging
+#	processes. (Nov 9 2005)
+# *	uuid.tgz - uuid generator (Aug 3 2005)
+#
+#NPE
+#
+# *	noahsig.asc - (Feb 11 2007)
+#
+#NU-EVE
+#
+# *	docs.es/ - (Mar 12 2006)
+#
+#ORACCHA
+#
+#! This is oraccha's contrib directory.
+#! 
+#! My Plan 9 related blog written in Japanese is here:
+#! 	http://d.hatena.ne.jp/oraccha
+#
+# *	iperf3/ - (Apr 25 2010)
+#
+#PAC
+#
+# *	9go.tbz - (Jan 3 2012)
+# *	dat/ - (Mar 10 2009)
+# *	lib/ - (Mar 10 2009)
+# *	rc/ - (Mar 10 2009)
+# *	sys/ - (Mar 10 2009)
+#
+#PAUREA
+#
+# *	flushtest/ - (Mar 19 2013)
+# *	goban/ - (Oct 12 2012)
+# *	jtag.tgz - (Mar 5 2012)
+# *	p.tgz - (Mar 11 2011)
+# *	recover4e.tgz - (Dec 4 2008)
+#
+#PHDYE
+#
+#PHIL
+#
+#PIETRO
+#
+#! well let's see what this will contain in the future
+#! until then, mv is the original mv macro set paper and programming was my Plan 9 programming guide
+#! - Pietro Gagliardi
+#
+# *	mv.pdf - (Nov 10 2007)
+# *	old_contrib.tar - (Nov 21 2011)
+# *	programming.ms - (Mar 7 2009)
+# *	programming.pdf - (Mar 7 2009)
+#
+#QUANSTRO
+#
+#! author: erik quanstrom <quanstro@quanstro.net>
+#
+#From fgb's contrib:
+# *	8169: 8169 kernel driver with support for jumbo/new mac versions
+# *	82563: intel 82563-family ethernet controlers
+# *	9load-e820: 9load with e820 scan and sd updates
+# *	abaco: my version of abaco
+# *	aoe: coraid-supported aoe driver
+# *	aoetools: aoe debugging tools
+# *	atazz: scuzz analogue for ata devices
+# *	awk: for submission. refreshed from bwk's current sources. fpes
+#	avoided.
+# *	cec: cec (coraid ethernet console) client
+# *	cidr: match ip addresses to networks
+# *	code2000: code2000 font. very good unicode coverage but average
+#	at best quality.
+# *	cpuid: cpuid tool
+# *	cyberbit: cyberbit subpixel fonts with good unicode coverage
+# *	dmi: smbios dmi dumper
+# *	etherm10g: myricom 10gbe
+# *	faces: acme-like selection for faces
+# *	find: simple find command
+# *	fis: sata fis/sas frame library
+# *	flashpart: automatic flash prep, special script for kw
+# *	fs: diskless kenfs
+# *	g: find source
+# *	icons: subpixel fixed-width console font.
+# *	iops: toy language for iops testing
+# *	iwhois: database-driven iwhois
+# *	kernelman: forsyth's kernel man pages
+# *	ldtrace: mp safe tracing, as in rons paper
+# *	ndb: all of ndb, and dns executables
+# *	ndbrequery: search ndb tuple values by regular expression
+# *	ndbtozone: convert an ndb database to bind zones.
+# *	nfactotum: a dsa capabable factotum
+# *	nupas: scalable upas
+# *	nvram: search all sd devices for nvram partition or plan9.nvr in
+#	9fat.
+# *	oui: These commands convert common strings containing an embedded
+# *	palatino: subpixel palatino
+# *	pci: enhanced pci
+# *	radar: us radar
+# *	rchistclnt: rc history client
+# *	rchistory: rc history helper program
+# *	replica: replica changes from fs history paper
+#	http://www.quanstro.net/plan9/history.pdf
+# *	requery: regular expression matching for ndb databases
+# *	sd: devsd updates to support raw ata devices
+# *	smart: smart monitoring for scsi & ata disks
+# *	ssh2: ssh2
+# *	syslogdsr: syslogd with a taylored for coraid storage
+# *	vblade: virtual (software) aoe target
+# *	vera: vera subpixel fonts
+# *	yuk: yukon ii driver
+#
+#R.RASCHKE
+#
+#! author: Robert Raschke
+#! email: r.raschke@tombob.com
+#
+# *	news.tgz - A version of acme News that does trivial threading and
+#	kill-filing. (Feb 15 2006)
+# *	utf8nntpfs.tgz - A version of nntpfs that converts the articles
+#	to UTF-8. (Feb 15 2006)
+#
+#RCBILSON
+#
+# *	s3venti/ - venti server using Amazon S3 for storage (Feb 10 2008)
+#
+#RMINNICH
+#
+# *	9.fastpath/ - (Oct 21 2009)
+# *	9pcnick - (Nov 3 2010)
+# *	9vx.tce - (Apr 3 2010)
+# *	SalishanGreenFlash_Shalf.pdf - (Nov 12 2009)
+# *	armbin.tar - (Dec 16 2010)
+# *	bgp/ - (Feb 1 2009)
+# *	boot.nick - (Nov 3 2010)
+# *	gps.tar - (Jul 7 2006)
+# *	grep/ - (Jan 22 2010)
+# *	lguest/ - (Jul 10 2008)
+# *	package/ - (Jun 10 2010)
+# *	pcnick - (Nov 3 2010)
+# *	pkgs.ls - (Jan 17 2010)
+# *	smacme.tar - (Jul 7 2006)
+# *	smacme/ - (Jul 7 2006)
+# *	trace/ - (Oct 9 2009)
+# *	ts7200.tar - (Jul 6 2009)
+# *	usbtjag.tar - (Oct 14 2010)
+#
+#ROG
+#
+# *	acme-patch/ - (Nov 8 2007)
+# *	cs.b - (Oct 30 2007)
+# *	csp.tgz - (Jun 29 2006)
+# *	ftrans/ - (Oct 26 2007)
+# *	infauth/ - (Jul 11 2007)
+# *	keepalive.b - (Oct 30 2007)
+# *	lib-sh-profile - (Oct 24 2007)
+# *	sh-examples/ - (Aug 21 2006)
+# *	socksnet.b - (Oct 30 2007)
+#
+#RSC
+#
+# *	8.isvmware - (Jan 3 2009)
+# *	8.out - (Apr 4 2008)
+# *	8.vmwarefs - (Jan 3 2009)
+# *	86a/ - simple 8086 assembler (Mar 10 2006)
+# *	86b/ - simpler 8086 assembler (Mar 10 2006)
+# *	8dis.c - simple 8086 disassembler (Mar 10 2006)
+# *	8i/ - simple x86 interpreter (Jul 11 2006)
+# *	9load/ - (Nov 8 2005)
+# *	9pfilt.c - acme client to fiddle with 9P traffic (Nov 3 2005)
+# *	a - (Feb 7 2007)
+# *	cgi.c - (May 14 2007)
+# *	cmd/ - (Dec 7 2005)
+# *	cpp/ - (Apr 10 2006)
+# *	cpu.tar.gz - beginnings of cpu for p9p (Mar 21 2006)
+# *	cryptfs/ - AES-encrypted kfs file system (Feb 6 2006)
+# *	dejavu.1.bit - (Jul 9 2008)
+# *	dejavusans.1.bit - (Jul 9 2008)
+# *	draw.c - (Mar 6 2009)
+# *	dyndns.c - dyndns (see www.dyndns.org) client (Feb 28 2006)
+# *	ipw2200/ - unfinished Intel PRO/Wireless (centrino) driver (Nov
+#	28 2005)
+# *	libframe.a - (Nov 28 2007)
+# *	linuxemu/ - half-attempt at Linux binary emulator (Mar 10 2006)
+# *	load/ - kernel -> 9load converter (Dec 5 2005)
+# *	luxisans.1.bit - (Jul 9 2008)
+# *	mailyesterday - (Apr 23 2007)
+# *	makemail - (Apr 9 2007)
+# *	man.ps - how to write plan 9 man pages (Dec 30 2005)
+# *	man/ - source for man.ps (Dec 30 2005)
+# *	mbr.bootmgr - use with disk/mbr - Smart Boot Manager (Jun 1 2005)
+# *	mmu.c - (Nov 11 2005)
+# *	mp.c - (Nov 7 2005)
+# *	mp3dec/ - (Jun 23 2008)
+# *	mug.c - interactive program to convert images to faces (Nov 12
+#	2005)
+# *	nvac/ - (Jun 15 2008)
+# *	nventi.tgz - (Apr 24 2007)
+# *	pico/ - (Jan 28 2008)
+# *	pm - binary /bin/aux/pm for -mpm macros
+# *	profile - (Jan 10 2006)
+# *	rdtsc.s - (Apr 4 2008)
+# *	recover/ - (Nov 14 2006)
+# *	regcomp.h - (Dec 7 2007)
+# *	rio - (Nov 28 2007)
+# *	rlogin - rlogin in shell script (Feb 22 2006)
+# *	rot13fs.c - rot13 9P filter (for old 9P) (Oct 16 1999)
+# *	scripts.tar.gz - (Nov 3 2005)
+# *	scripts/ - various scripts for /usr/$you/bin/rc (Nov 3 2005)
+# *	smptsc.c - (Apr 4 2008)
+# *	snmp/ - (Jan 27 2006)
+# *	squint.tar.gz - (May 31 2008)
+# *	ssh2.tar.gz - stalled ssh2 implementation (Feb 10 2006)
+# *	stats.js - (Nov 28 2007)
+# *	talk/ - scripts to generate talk slides (Feb 22 2006)
+# *	termrc - (Jun 24 2008)
+# *	txt.c - (Jan 17 2006)
+# *	vac/ - (Jan 8 2009)
+# *	venti/ - (Nov 29 2007)
+# *	vga.tgz - half-written vga(8) rewrite (May 10 2002)
+# *	x - (Sep 30 2007)
+# *	z - (Nov 19 2007)
+#
+#SASCHARETZKI
+#
+# *	9vorbis.tgz - an acme/win-friendly ogg-vorbis-player for Plan 9
+#	from Bell-labs with playlist,shuffle, etc using
+#	libogg/libvorbis/APE (Nov 1 2006)
+# *	audiofs.txt - Brainstorming about an 'Audio-suite', how things
+#	could be done, what features should be there and how they may be
+#	implemented. (Jan 7 2007)
+# *	devevilfs.c - A simple meta-device driver written by Eduardo
+#	Orive - I found it to be very informational (Jan 7 2007)
+# *	irc7.2.tgz - a changed (improved?) version of irc7. Support for
+#	PASS, 353, a different look, support for cross-client nick-change
+#	notification, spawning new windows. Uses the -t cmdline switch
+#	exclusivly. Feels pretty mirc/irssi-like, sometimes. (Dec 12 2006)
+# *	libaudioconv.notfinished.tar.gz - A not-yet-finished-still-buggy
+#	audio-format conversion library. It parses RIFF/RIFX (aka.
+#	'wave-files') and offers service functions for converting
+#	sample-rate, number of channels etc so that it's
+#	/dev/audio-friendly. It crashes with mono/48Khz/8,16 bits per
+#	sample, for unknown reasons. (Jan 7 2007)
+#
+#SL
+#
+#! Author: Stanley Lieber
+#
+# *	lib/ - (Apr 11 2014)
+# *	library - (Jan 1 2014)
+# *	pkg/ - (Sep 18 2013)
+# *	rc/ - (Sep 30 22:52)
+# *	src/ - (Apr 2 2013)
+# *	u9fs/ - (Jan 19 2011)
+#
+#SMILEY
+#
+#SMJ
+#
+#STAAL1978
+#
+#! Jens Staal (staal1978@gmail.com)
+#! 
+#! Porting packages to Plan9 as a hobby in the hope that when certain critical pieces are available,
+#! more people will be able to use Plan9 in real-world situations.
+#! 
+#! License notice:
+#! Packages respect upstream licencing
+#
+#STALLION
+#
+#! Steven Stallion <sstallion@gmail.com>
+#
+# *	glenda.xbm - A big-endian friendly glenda (Mar 18 2011)
+# *	patch/ - (Dec 5 2013)
+# *	profile - (Dec 12 2013)
+# *	rc/ - (Dec 5 2013)
+# *	rc/P - send command to remote power (APC AOS 3.7.x) (Jul 7 2013)
+# *	rc/R - reboot system via console (Dec 7 2013)
+# *	rc/dirs - print the directory stack (Jul 7 2013)
+# *	rc/f - find function definition (Dec 7 2013)
+# *	rc/fetch - a better down (cf. rsc) (Jul 7 2013)
+# *	rc/gr - recursive grep(1) (Jul 7 2013)
+# *	rc/mkboot - prepare disk for booting(8) (Jul 7 2013)
+# *	rc/popd - pop from the directory stack (Jul 7 2013)
+# *	rc/pushd - push onto the directory stack (Jul 7 2013)
+# *	rc/pxeof - print pxe file for system (Jul 7 2013)
+# *	rc/rdb - remote kernel debugging (Jul 7 2013)
+# *	rc/riostart - rio(1) startup script (Dec 23 2013)
+# *	rc/saferemove - remove copies created by safeinstall (Jul 27 2013)
+# *	rc/sdiff - compare files against sources (Aug 7 2013)
+# *	replica/ - (Apr 27 2012)
+# *	root/ - (Apr 27 2012)
+# *	src/ - (Dec 18 2013)
+# *	src/gdbfs/ - remote GDB file system (Dec 18 2013)
+# *	src/mercurial/ - Mercurial Distributed SCM (Jul 8 2012)
+# *	src/sdmpt2.c - LSI Fusion-MPT SAS 2.0 SCSI Host Adapter (Aug 16
+#	2013)
+# *	src/tt/ - print control and escape characters (Mar 5 2013)
+# *	src/uartox.c - Oxford Semiconductor OXPCIe95x UART driver (Mar 8
+#	2013)
+# *	venti/ - (Jul 16 21:12)
+#
+#From fgb's contrib:
+# *	mercurial: Mercurial Distributed SCM (version 2.2.3)
+#
+#STASSATS
+#
+# *	jacc.c - (Feb 2 2007)
+# *	jacc.tbz - jacc jabber client with partial support of groupchat
+#	(Jul 3 2007)
+#
+#STEFANHA
+#
+# *	replica/ - (Apr 17 2008)
+# *	root/ - (Apr 17 2008)
+# *	vim - enhanced vi editor (install using contrib(1)).
+#
+#From fgb's contrib:
+# *	vim: Vim: enhanced vi editor
+#
+#STEVE
+#
+#! Steve Simon - steve@quintile.net
+#
+# *	file - (Dec 14 2010)
+# *	9dos/ - (Sep 10 2012)
+# *	Blog - Occasional blog (Feb 15 2008)
+# *	activity.c.bz2 - log when you start and finish work in
+#	$home/lib/activity for timesheets (Apr 2 2009)
+# *	broken-animated-image.gif - (Nov 21 2007)
+# *	bsd-mdoc-macros.tgz - (Feb 1 2012)
+# *	chatfs.tgz - (Nov 19 2010)
+# *	cifs.tgz - (Jan 11 2013)
+# *	cookieconv.c.bz2 - convert microsoft IE cookies to plan9 format
+#	(Apr 2 2009)
+# *	cvsfs.tbz - (Sep 24 03:00)
+# *	diff3.tbz - (Sep 24 02:57)
+# *	doc/ - various bits of documentation, see doc/Index for details
+#	(Aug 5 2009)
+# *	doc/Venti-rescue.pdf - (Apr 23 2008)
+# *	doc/Venti-rescue.tbl - How to rebuild your fossil and venti from
+#	only venti arenas (Nov 27 2007)
+# *	doc/atom-motherboards.pdf - (Aug 5 2009)
+# *	doc/foils.tbz - Usenix foils macro package (Nov 12 2007)
+# *	doc/kernel-june2k-a4.ps - formatted kernel source for use with
+#	nemo's commentry (Oct 3 2005)
+# *	doc/p9-rel2-indy.bod - Steve Kotsopoulos's boodle of patches for
+#	p9r2 on an SGI indy
+# *	doc/sam-chord-patch.txt - patches for sam mouse chording from the
+#	sam-fans list passim (Apr 20 2004)
+# *	doc/sam-refcard.pdf - (Apr 28 2005)
+# *	doc/sam-refcard.tbl - sam(1) reference and idioms list (Aug 9
+#	2008)
+# *	doc/windows-interoperation.foils - presentation about windows &
+#	plan9 interoperation (Aug 31 2007)
+# *	doc/windows-interoperation.pdf - formatted version of above (Nov
+#	12 2007)
+# *	docx2troff+xlsx2troff.tgz - (Sep 24 03:07)
+# *	exetype.c.bz2 - classify a windows executables by its header (Jun
+#	6 19:08)
+# *	exifsrv+webphoto.tbz - (Sep 18 16:13)
+# *	exifsrv.tbz - (Jun 6 18:50)
+# *	foils.tgz - (Aug 17 2009)
+# *	fold.tar.bz2 - fold long lines
+# *	fold.tbz - (Jun 6 19:11)
+# *	glean.tbz - (Sep 24 02:54)
+# *	gs-9.02-failed-port/ - (Jun 6 2011)
+# *	historic/ - (Jun 1 2010)
+# *	historic/1st-edition/ - manuals, docs and misc from the 1st
+#	edition of plan9 (1993) (Jun 8 2009)
+# *	historic/2nd-edition/ - (Jan 9 2010)
+# *	historic/designing-plan9/ - (Apr 2 2009)
+# *	historic/early-papers/ - (Jun 8 2009)
+# *	historic/patent.pdf - (Feb 24 2009)
+# *	historic/sam-fans.maillist - (Jun 1 2010)
+# *	historic/team-photo/ - (Apr 2 2009)
+# *	historic/the-movie.jpg - (Feb 24 2009)
+# *	httpfs.tgz - (Jan 28 2013)
+# *	indent.tbz - (Sep 18 16:19)
+# *	inform.c.bz2 - RFC2136 DNS update client, for use in an
+#	ActiveDirectory enviroment (Apr 2 2009)
+# *	internet-radio.tbz - (Sep 24 03:03)
+# *	jirafs.tgz - (Aug 23 2013)
+# *	lib/ - some useful (and less useful) databases and corpra (Apr 2
+#	2009)
+# *	lib/bible.bz2 - The bible (Jan 11 2008)
+# *	lib/countries.bz2 - (Jan 11 2008)
+# *	lib/icao.bz2 - (Jan 11 2008)
+# *	lib/languages.bz2 - (Jan 11 2008)
+# *	lib/shakespeare.bz2 - (Jan 11 2008)
+# *	lib/uk-areacodes.bz2 - (Jan 11 2008)
+# *	lib/uk-postcodes.bz2 - (Jan 11 2008)
+# *	libjson.tgz - (May 9 2014)
+# *	libxml.tgz - (May 9 2014)
+# *	linuxemu.tbz - (Sep 17 2012)
+# *	m4.tbz - (Sep 18 15:59)
+# *	maskquery.c - (Dec 14 2009)
+# *	mkmk.tbz - (Sep 18 16:19)
+# *	mkptypes.tbz - (Sep 18 16:21)
+# *	mkxls.c.gz - (Sep 21 2012)
+# *	mysqlfs.tbz - (Jun 6 18:56)
+# *	nstats.tbz - (Jun 6 11:24)
+# *	opc.tgz - (Sep 24 03:08)
+# *	other-docs/ - (Apr 2 2009)
+# *	other-docs/9kernel.pdf - (Dec 18 2002)
+# *	other-docs/awk.pdf - awk(1) manual from 7th edition (Mar 25 2003)
+# *	other-docs/bc.pdf - bc(1) manual from 7th edition (Mar 25 2003)
+# *	other-docs/bitmap-layers.pdf - Graphics in Overlapping Bitmap
+#	Layers - Rob Pike (Dec 18 2002)
+# *	other-docs/connect-tools.pdf - How Shall We Connect Our Software
+#	Tools? - Eric Grosse (Dec 18 2002)
+# *	other-docs/dc.pdf - ds(1) manual from 7th edition (Mar 25 2003)
+# *	other-docs/f2c.pdf - A Fortran-to-C Converter - S.I.Feldman et al
+#	(Dec 18 2002)
+# *	other-docs/face-the-nation.pdf - Face the Nation - Rob Pike &
+#	David Presotto (Dec 18 2002)
+# *	other-docs/grap.pdf - grap(1) manual from the 7th edition (Dec 18
+#	2002)
+# *	other-docs/msdoc.pdf - the ms macro package (troff) from the 10th
+#	edition (Dec 18 2002)
+# *	other-docs/pic.pdf - pic(1) manual from the 7th edition (Jan 9
+#	2003)
+# *	other-docs/pico.pdf - Pico - A Language For Composing Digital
+#	Images - Gerard Holzmann (Dec 18 2002)
+# *	other-docs/pikestyle.pdf - Notes on Programming in C - Rob Pike
+#	(Dec 18 2002)
+# *	other-docs/struct-regex.pdf - Structural Regular Expressions -
+#	Rob Pike (Dec 18 2002)
+# *	other-docs/tbl.pdf - tbl(1) manual from the 10th edition (Dec 18
+#	2002)
+# *	other-docs/wormfs.pdf - A Cached WORM File System - Sean Quinlan
+#	(Dec 18 2002)
+# *	page-patched.tbz - (Mar 10 2010)
+# *	pedump.tgz - (Sep 21 2012)
+# *	ping-dont-fragment.tbz - (Sep 18 16:45)
+# *	pppdec.tar.bz2 - decode PPP packets from a session log - should
+#	migrate into snoopy(1)
+# *	pppdec.tbz - (Apr 2 2009)
+# *	printenv.c.bz2 - (Apr 2 2009)
+# *	radio.tbz - (May 8 2014)
+# *	rc/ - various rc(1) scripts, see rc/Index for details (Apr 6 2010)
+# *	refer.tbz - (Sep 18 16:16)
+# *	replica/ - (Apr 25 2011)
+# *	root/ - (Feb 3 2009)
+# *	rot13.c.bz2 - (Apr 2 2009)
+# *	rtf2txt.tbz - (Sep 18 16:02)
+# *	rtfreader.tbz - (Jun 6 18:59)
+# *	scan.c.bz2 - (Apr 2 2009)
+# *	secureid.c.bz2 - (Jun 6 19:08)
+# *	sftpfs.tbz - (Sep 17 2012)
+# *	snmpfs.tbz - (Sep 18 16:16)
+# *	spline.tbz - (Sep 24 02:59)
+# *	ssh-agent.tgz - (Dec 20 2011)
+# *	suggest.c.bz2 - Make suggestions for spelling corrections.
+# *	suggest.tbz - (Sep 24 02:59)
+# *	syslogd.c.bz2 - modified version of Nigel Roll's syslog daemon
+#	(Apr 2 2009)
+# *	tidy.tbz - (Sep 18 16:03)
+# *	tod.c.bz2 - print the time in English (Apr 2 2009)
+# *	uncomment.c.bz2 - strip comments from excessively chatty C source
+#	(Jun 6 19:08)
+# *	wdfs.tar.bz - (Nov 19 2013)
+# *	wdfs.tbz - (Oct 18 2011)
+# *	webfs.tbz - (Jan 11 2013)
+# *	webproxy.rc - (Jan 11 2011)
+# *	xb.tgz - (Nov 27 2012)
+# *	xml2.tgz - (Sep 21 2012)
+# *	ydec.c.bz2 - USENET yenc file decoder (Apr 2 2009)
+# *	zonefresh.tar.bz2 - axfr zone refresh from a remote DNS server,
+#	outputs an ndb(6) file
+# *	zonefresh.tbz - (Sep 24 02:55)
+# *	zoneplate.c.bz2 - generate a zoneplate image analysis pattern
+#
+#From fgb's contrib:
+# *	cfront: AT&T™ cfront C++ pre-compiler, update to v3.03 of old
+#	plan9 port
+# *	cvs: CVS 1.11.1p1 - rsc's port almost unchanged, uses mk and ape.
+# *	cvsfs: present a remote CVS repository as a dump filesystem
+# *	diff3: three way file differences - native plan9 port of Unix V7
+#	source
+# *	expat: The expat 2.0.1 xml parser library ported to APE
+# *	glean: glean - network reconnaissance
+# *	graphviz: Graphviz V1.7.7 (dot, neato and twopi) based on David
+#	Toplin's release.
+# *	health: print SCSI disk temperature and error counts
+# *	indent: BSD indent - C beautifier, more aggressive with messy
+#	source than cb(1)
+# *	m4: m4 macro preprocessor - native plan9 port of Unix V7 source
+# *	mkmk: mkmk - auto generate mkfiles for foreign APE software
+# *	mkpass: generate ramdom passowrds based on ethernet traffic
+# *	mkptypes: extract function prototypes from C old source code
+# *	mothra: Tom Duff's early web browser ported from the 2nd edition.
+#	(not up to modern html)
+# *	mysqlfs: A client for MySQL databases.
+# *	ncpfs: NetWare™ NCP file sharing protocol client
+# *	pppdec: decode PPP protocol negotiation from a simple hexdump
+# *	pptfs: present a powerpoint file as a directory of text and image
+#	files
+# *	refer:
+# *	rtf2txt: MicroSoft™ RTF to text conversion
+# *	seft: seft - search engine for text, APE build with mkfile.
+# *	snmpfs: very simple snmp manager (client) filesystem - DER encode
+#	and decode lifted from Russ's snmp code.
+# *	spline: cubic spline interpolator - native plan9 port of Unix V7
+#	source
+# *	srch: build and search a database of comments/variables/functions
+#	in C source
+# *	suggest: suggest - spelling corrector 'spell doc | suggest'
+# *	tex: TeX, metafont, metapost fonts etc, circa 1998
+# *	tidy: W3C HTMP/XML beautifier and checker
+# *	tmac.pm: the pm troff preprocessor and macros
+# *	unifdef: unifdef - remove ifdef'ed lines from C code, APE port of
+#	BSD 4.3 code
+# *	webphoto: Webphoto: auto-generated HTTP photo album from
+#	directories of images.
+# *	zonefresh: DNS AXFR zone transfer, output as an ndb(8) file
+#
+#TIM
+#
+# *	4acl.tgz - Unfinished 64-bit mips toolchain. Based on earlier
+#	work done at the Labs. (Apr 28 2008)
+#
+#TRISTAN
+#
+#! 9@trstn.net — public domain
+#
+# *	dict/ - some more dictionaries (Jun 24 2010)
+# *	kw/ - (Oct 22 2010)
+# *	libertas.tgz - (Mar 21 2012)
+# *	oed/ - tools for the 1992 version (at least) of the OED2. (Feb 3
+#	2010)
+# *	olpc.fth - olpc boot script (Jan 20 2012)
+# *	olpc.tgz - olpc kernel (mostly from ../pc and an extension of tim
+#	newsham's work) (Mar 13 2012)
+# *	replica/ - (Mar 11 2010)
+# *	replica/geo - geological tools: shp reads shpfiles, proj projects.
+# *	rio_clear.diff - (Jun 29 2010)
+# *	root/ - (Mar 11 2010)
+# *	wacom.tgz - driver for Wacom Intous2 digitizers (Feb 29 2012)
+#
+#From fgb's contrib:
+# *	geo: "Geographical projections, utilities, etc."
+#
+#URIEL
+#
+#! All my contributions are in the public domain.
+#! author: lost.goblin@gmail.com
+#
+# *	abaco-bugs.txt - (Jun 21 2006)
+# *	abaco-liburlified.tgz - (Aug 2 2006)
+# *	acme-mail/ - (Jun 24 2006)
+# *	broken-images/ - (Apr 1 2006)
+# *	changes/ - Broken up version of /n/sources/extra/changes/*; one
+#	file per changeset (Apr 9 2007)
+# *	contrindx - Generates a wiki page with the index of
+#	/n/sources/contrib/* (Nov 20 2005)
+# *	cut.c - (Sep 18 2007)
+# *	doc/ - Old docs from 1st ed and others sources. (Aug 12 2009)
+# *	git9.tgz - (Jun 20 2008)
+# *	liburl/ - (Jun 19 2006)
+# *	ls - (Oct 15 2007)
+# *	man_contrib.tgz - (Jul 9 2009)
+# *	mirror/ - Mirror of various things that are not in sources (Aug
+#	12 2009)
+# *	mirror/9book.pdf - Why Plan 9 matters by Geoff Collyer (Mar 16
+#	2007)
+# *	mirror/Python-2.4.3-Plan9.tgz - Native python port (originally
+#	taken from http://www.tip9ug.jp/who/moroo/Python-2.4.3-Plan9.tgz)
+#	(Apr 17 2006)
+# *	mirror/bc.tgz - (Mar 21 2007)
+# *	mirror/nemo_madplay.tgz - a port of the madplay mp3 player by
+#	nemo (Jul 8 2006)
+# *	mirror/philippe.anel/ - Radeon drivers (Aug 10 2005)
+# *	mirror/qemu-0.8.1-p9.tgz - (Mar 19 2007)
+# *	mirror/rminnich/ - (Mar 21 2007)
+# *	mirror/sam.tut.pdf - A tutorial for the sam command language, pdf
+#	version of /sys/doc/sam/sam.tut - Moved to http://sam.cat-v.org/
+# *	mirror/se.pdf - Structural Regular Expressions - Moved to
+#	http://doc.cat-v.org/bell_labs/
+# *	papers - The /sys/doc papers with hand-fixed HTML versions.
+# *	plog - Generates emails with sources and patch(1) changes (Aug 16
+#	2006)
+# *	ports/ - (Jan 28 2006)
+# *	rc-bin-ape/ - (Jun 20 2008)
+# *	scripts/ - (Jun 21 2008)
+# *	scripts/atop - Top like script to monitor running processes,
+#	calculates load (Feb 15 2006)
+# *	scripts/config - (Jul 31 2006)
+# *	scripts/contrindx - Generates a wiki page with the index of
+#	/n/sources/contrib/*
+# *	scripts/gen-mk - (Jul 29 2006)
+# *	scripts/plist - (Jun 21 2008)
+# *	scripts/plog - Generates emails with sources and patch(1) changes
+# *	scripts/sdiff - Diffs local files against the latest version in
+#	sources (Dec 27 2005)
+# *	scripts/whatsnewwiki - Updates the "what's new" wiki page
+# *	scripts/wikindex - Generate an alphabetical index of all wiki
+#	pages
+# *	sdl-1.2.11-test.tgz - (Jul 28 2006)
+# *	sdl_mixer-1.2.7-test.tgz - (Jul 31 2006)
+# *	sdl_net-1.2.6-test.tgz - (Jul 31 2006)
+# *	shifs/ - (Dec 4 2006)
+# *	slides/ - Troff macros to generate slide presentations (Apr 17
+#	2006)
+# *	snaps/ - (Feb 12 2006)
+# *	webfs-cache-experimental.tgz - (Jun 21 2006)
+# *	whatsnewwiki - Updates the "what's new" wiki page (Dec 11 2005)
+# *	wikifs/ - Experimental versions of wikifs hacking (Oct 23 2005)
+# *	wikindex - Generate an alphabetical index of all wiki pages (Jan
+#	23 2006)
+# *	wip/ - (Jun 21 2008)
+#
+#VDHARANI
+#
+#VISOF
+#
+#VRTRA
+#
+#! author: vrtra
+#
+# *	rc/ - (May 15 2012)
+# *	rc/ptree.rc - Solaris ptree like script
+# *	rc/tile.rc - window tiling script for rio
+#
+#VSRINIVAS
+#
+#! Venkatesh Srinivas <me@endeavour.zapto.org>
+#
+# *	9s-20100802-0700.tgz - Version of 9, with dynamically allocated
+#	proc->seg[] table, sorted segment array. (Aug 2 2010)
+# *	9s-20100803-0400.tar.gz - (Oct 30 2010)
+# *	9s-20100803-0400.tgz - Versivn of 9, with dynamically allocated
+#	proc->seg[] table; sorted seg array; counted segments.
+# *	9s-20100806-0700.tgz - (Aug 6 2010)
+# *	9s-20100810-0600.tgz - (Aug 10 2010)
+# *	9s-20100816-0600.tgz - Final GSoC kernel (Aug 16 2010)
+# *	gsoc-kernel-06182010.tar.gz - (Jun 18 2010)
+# *	gsoc-kernel-06212010.tar.gz - (Jun 21 2010)
+# *	gsoc.txt - Note on GSoC project (Aug 16 2010)
+# *	nsegs.png - (Aug 9 2010)
+# *	stackalloc.c - Simple thread-stack allocator (GSoC) (Aug 16 2010)
+# *	thread-ring.b - Great Compiler Shootout thread-ring in Limbo (Oct
+#	30 2010)
+# *	vtrc.c - Reconnecting Venti proxy (Sep 24 2009)
+# *	xcip-modern.jpg - (Jan 13 2011)
+# *	xcip.tar - Lightly patched xcip for X11 (Jan 13 2011)
+#
+#WW
+#
+# *	abaco-duckduckgo.patch - Make abaco use DDG instead of Google.
+#	(Mar 25 2012)
+#
+#X_SPAGER
+#
+# *	clock.tar.gz - (Sep 7 2006)
+# *	pt-BR - (Sep 7 2006)
+# *	snd_ctrl.tgz - (Sep 7 2006)
+#
+#YIYUS
+#
+#! By: Jesus Galan Lopez (yiyus)
+#! <mailto: yiyu.jgl at gmaiil>
+#
+# *	SoftFloat-2b.tar.gz - (Apr 8 2011)
+# *	cmd/ - (Sep 2 2009)
+# *	cmd/acme/ - patched acme (see README)
+# *	cmd/rio/ - patched rio (see README)
+# *	pforth_v24.tgz - (Oct 2 2009)
+# *	rc/ - (Sep 2 2009)
+# *	rc/fns - collection of rc functions
+#
+#YK
+#
+# *	5.python - (Apr 17 2013)
+# *	dist/ - (Apr 17 2013)
+# *	lab/ - experimental or work-in-progress stuff (Apr 26 2013)
+# *	lab/9P.pm - 9P client in pure Perl, wip, stalled
+# *	lab/9rdp - original native RDP client, wip, stalled
+# *	replica/ - (Apr 17 2013)
+# *	replica/rd - native RDP client, based on rdesktop 1.6
+# *	root/ - (Apr 17 2013)
+#
+#From fgb's contrib:
+# *	rd: A Remote Desktop Protocol client
+#
+#ZWANSCH
+#
+#! /*
+#! * Copy me if you can.
+#! * by 20h
+#! *
+#! * Christoph Lohmann <20h@r-36.net>
+#! */
+#

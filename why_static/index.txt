@@ -1,0 +1,110 @@
+Why Static
+
+Why has Plan 9 chosen statically linked binaries instead of dynamic
+ones? Read below:
+
+[http://groups.google.com/group/comp.os.plan9/msg/42c4232fac260f29]
+! 	From: rminn...@lanl.gov (ron minnich)
+! 	Subject: Re: [9fans] acme, rio workalike available in plan 9 ports
+! 	Message-ID: <Pine.LNX.4.44.0404200840490.13657-100000@maxroach.lanl.gov>
+! 	Date: Tue, 20 Apr 2004 14:57:50 GMT
+! 	
+! 	On Tue, 20 Apr 2004, boyd, rounin wrote:
+! 	
+! 	> debian managed to shoot themselves in the foot with some libc,
+! 	> some time back.  you couldn't go forward 'cos other stuff would
+! 	> break and you couldn't go back 'cos more stuff would break.
+! 	
+! 	gets better. Symbols are now versioned (well, this really happened a few
+! 	years back). So you are very tightly screwed (good word) to the library
+! 	you use, and it covers a definite range forward/backward. I assume but am
+! 	not sure that glibc nowadays encompaesses lots of versions of lots of
+! 	functions going back for years. Which also means the version naming of the
+! 	file (libc-2.3.2.so) has a lot less meaning than it used to. At some
+! 	point, given the tight wiring of an executable to the particular library
+! 	version, one starts to lose track of just why .so's are still thought to
+! 	be a good idea (I mean, on a 1960s-era Burroughs machine with not much
+! 	memory, I get it, but ... /bin/cat on my Redhat box at 20K, is not much
+! 	smaller than /bin/cat on Plan 9 (22K stripped), and the Plan 9 one doesn't
+! 	do symbol fixup every time it runs ...).
+! 	
+! 	And, as Linus mentioned, TLBs matter. Hmm. Judging by 'ps', cat on linux
+! 	needs 256 of them, and cat on Plan 9 needs 6. xclock has got 900 or so, 
+! 	and Plan 9 clock appears to have 3*30 or so (3 clock procs when you run 
+! 	clock). 
+! 	
+! 	So you do pay a bit for .so's. You don't gain an
+! 	implementation-independent interface for your programs, since the .so is
+! 	versioned and the symbols in it are versioned; I wonder what you DO gain?  
+! 	The theory always was you could swap out a shared library and swap in a
+! 	bug-fixed version, which sounds nice until you try it and it fails
+! 	miserably (there was a time when this worked ...)
+! 	
+! 	ron
+
+! 	From: Ron Minnich
+! 	To: 9fans
+! 	
+! 	On Fri, 23 Apr 2004, Christoph Hellwig wrote:
+! 	
+! 	> That beeing said I'm the last one to defend glibc's bloat, but in a
+! 	> system where you can't easily rebuild all binaries for whatever
+! 	> reason shared libraries and symbol versioning makes a lot of sense.
+! 	
+! 	No, it doesn't help much at all. 
+! 	
+! 	Let's take program 'a', which depends on stat. In the new order of gcc,
+! 	when built, 'a' will depend on stat from glib 2.0. A new stat comes along
+! 	with fixes. It gets built into glibc 2.1. You install glibc 2.1. Program
+! 	'a', unless I rebuild or replace it, will be using the old stat. Of
+! 	course, I might think that the shared library has fixed all binaries using
+! 	stat, and I'm wrong -- or am I right? Is the V1 stat just a wrapper? who
+! 	knows? And do you cover all the cases? And maybe it isn't calling stat and
+! 	I don't know it. Maybe it's calling one of these:
+! 	
+! 	000c888c t __GI___fxstat 
+! 	000c90cc t __GI___fxstat64 
+! 	000c90cc t ___fxstat64
+! 	000c888c T __fxstat 
+! 	000c90cc T __fxstat64@@GLIBC_2.2 
+! 	000c90cc T__fxstat64@GLIBC_2.1 
+! 	000c90cc t __old__fxstat64 
+! 	000c888c t _fxstat 
+! 	
+! 	I've found programs that call all these variants, because the functions
+! 	they call call different library functions. It's quite interesting to see.  
+! 	Which one is 'a' calling? Oh yeah, you can max out the ld.so debug
+! 	options, because of course weak symbols come into this game too, and
+! 	you're not really sure unless you watch this:
+! 	
+! 	     19595:     binding file /lib/libpthread.so.0 to /lib/libc.so.6: 
+! 	normal symbol `getrlimit' [GLIBC_2.2]
+! 	     19595:     symbol=__getpagesize;  lookup in file=date
+! 	     19595:     symbol=__getpagesize;  lookup in file=/lib/libpthread.so.0
+! 	     19595:     symbol=__getpagesize;  lookup in file=/lib/librt.so.1
+! 	     19595:     symbol=__getpagesize;  lookup in file=/lib/libc.so.6
+! 	
+! 	yup, several hundred lines of this stuff, for 'date'. Of course it's kind
+! 	of interesting: Posix threads are used by 'date'. I had no idea that 
+! 	printing a date could be so complex. Maybe that's why it's 40k -- bigger 
+! 	than some OSes. 
+! 	
+! 	The symbol versioning breaks assumptions users have about how shared 
+! 	libaries work -- that they provide a link to one version of a function and 
+! 	if you replace the library all the programs get fixed. I've seen this 
+! 	problem in practice, for both naive users and very non-naive sysadmins. 
+! 	
+! 	The symbol versioning wires programs to something beyond a library 
+! 	version, in a way that is not obvious to most people. To fix a binary that 
+! 	uses a library, you have to replace the binary, not just the library, or 
+! 	you can not be sure anything gets fixed. 
+! 	
+! 	That said, if you can't rebuild all the binaries, well then you're stuck, 
+! 	and have no idea if your new shared library is going to fix anything at 
+! 	all for some of those binaries. Some will stay broken, since replacing the 
+! 	library did not necessarily replace broken functions -- the new library 
+! 	has them too, for backwards compatibility. So the upgrade is not an 
+! 	upgrade.  This is a feature? 
+! 	
+! 	ron
+

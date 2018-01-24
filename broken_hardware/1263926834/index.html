@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Broken Hardware (as of Tue Jan 19 13:47:14 EST 2010)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Broken Hardware</h1>
+<h2><i>-as of Tue Jan 19 13:47:14 EST 2010-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+This
+page
+lists
+hardware
+known
+to
+NOT
+work
+with
+Plan
+9.
+<p class='para'>
+Entries
+here
+should
+note
+the
+reason
+for
+the
+incompatibility
+and
+include
+a
+datestamp.
+Please
+be
+as
+specific
+as
+possible
+about
+part,
+model,
+and
+revision
+numbers,
+including
+firmware
+and
+BIOS
+versions
+when
+relevant.
+</p>
+
+<p class='para'>
+Don't
+mention
+hardware
+for
+which
+there
+is
+obviously
+no
+driver
+support;
+this
+list
+is
+intended
+to
+enumerate
+broken
+hardware
+that
+you
+would
+have
+expected
+to
+work
+...
+</p>
+
+<a name="MOTHERBOARDS" /><h3>MOTHERBOARDS</h3>
+
+<ul>
+
+<li>
+Intel
+D945GCLF2:
+Very
+broken
+ACPI
+implementation.
+Fails
+to
+boot
+the
+Plan
+9
+loader;
+seriously
+hosed
+under
+FreeBSD
+as
+well.
+(2009-12-30
+lyndon@orthanc.ca)
+</li>
+
+<li>
+Intel
+DG45ID:
+ACPI-only,
+no
+MP
+tables,
+so
+only
+one
+core
+will
+be
+seen.
+(15
+Jan
+2010
+geoff@plan9.bell-labs.com)
+</li>
+
+<li>
+Intel
+DG45MJ:
+built-in
+Ethernet
+is
+Realtek
+and
+doesn't
+PXE
+boot
+correctly.
+(19
+Jan
+2010
+geoff@plan9.bell-labs.com)
+</li>
+</ul>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Tue Jan 19 13:47:14 EST 2010</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

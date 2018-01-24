@@ -1,0 +1,13 @@
+vbackup-plus
+D1204124277
+Aericvh
+#Apple's time machine pisses me off, and people are duplicating its
+#implementation on Linux. Let's show them how to really approach
+#temporal file systems using plan 9 ports.
+#
+# *	wrapper which tracks venti scores based on volume being backed up
+# *	GUI which sets up venti in partition(s) or with files
+# *	GUI which assists in configuring backup intervals and volumes
+# *	(stretch) time-traveler like GUI for navigating/searching backups
+# *	(stretch) support for pruning and/or merging snapshots
+#

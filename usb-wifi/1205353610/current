@@ -1,0 +1,14 @@
+usb-wifi
+D1205353610
+Adavide
+#
+#PROJECT STATEMENT
+#
+#While many laptops these days come with embedded wireless hardware,
+#compatibility is a crapshoot. Meanwhile, affordable USB WiFi
+#adaptors exist. For example, there is an OpenBSD driver for the
+#TEW-429UB, so it should be possible to get that working.
+#
+#Note that on Plan 9 a USB device driver is typically a user-space
+#program (i.e., this project will not require kernel development).
+#

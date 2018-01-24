@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Gmail on Plan9 (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Gmail on Plan9 <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Mon Dec 15 17:12:46 EST 2008</a>, a
+</div><hr />It
+is
+currently
+not
+possible
+to
+access
+Gmail
+POP
+via
+<a href="http://plan9.bell-labs.com/magic/man2html/4/upasfs"><i>upasfs</i>(4)</a>
+by
+doing
+something
+like:
+<pre>
+upas/fs -f /pops/pop.gmail.com
+</pre>
+
+<p class='para'>
+See
+<a href="http://9fans.net/archive/2005/12/164">this
+message</a>
+for
+details.
+That
+message
+provides
+a
+pointer
+to
+a
+"pop3get"
+program
+which
+can
+be
+used
+to
+fetch
+messages
+and
+subsequently
+deliver
+them
+to
+a
+Plan
+9
+mailbox.
+</p>
+
+<p class='para'>
+Gmail
+offers
+an
+IMAP
+interface,
+however,
+that
+works
+nicely
+for
+<a href="http://plan9.bell-labs.com/magic/man2html/4/upasfs"><i>upasfs</i>(4)</a>.
+Something
+like:
+</p>
+
+<pre>
+upas/fs -f /imaps/imap.gmail.com/user@gmail.com
+</pre>
+
+<p class='para'>
+will
+enable
+reading
+Gmail
+with
+Plan
+9
+mail
+tools.
+</p>
+
+<p class='para'>
+In
+some
+circumstances,
+it
+may
+also
+be
+possible
+to
+use
+the
+Plan
+9
+mail
+tools
+to
+send
+via
+Gmail.
+If
+you
+change
+the
+last
+line
+of
+/mail/lib/remotemail
+to:
+</p>
+
+<pre>
+exec /bin/upas/smtp -sa -u user@gmail.com -h $fd tcp!smtp.gmail.com!smtp $sender $*
+</pre>
+
+<p class='para'>
+This
+will,
+however,
+send
+all
+mail
+on
+the
+system
+as
+that
+Gmail
+user.
+Also,
+if
+mail
+is
+ever
+queued
+for
+later
+delivery,
+the
+factotum
+visible
+to
+cron
+will
+need
+the
+keys
+to
+authenticate
+to
+Gmail.
+</p>
+
+<p class='para'>
+If
+you
+replace
+/sys/src/cmd/webfs/cookies.c
+with
+/n/sources/contrib/fgb/cookies.c
+and
+rebuild
+<a href="http://plan9.bell-labs.com/magic/man2html/4/webfs"><i>webfs</i>(4)</a>,
+it
+is
+possible
+to
+use
+Gmail's
+"basic
+HTML"
+view
+in
+the
+abaco
+web
+browser
+(see
+<a href="../Web_browsers">Web
+browsers</a>).
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Mon Dec 15 17:12:46 EST 2008</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

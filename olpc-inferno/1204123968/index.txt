@@ -1,0 +1,10 @@
+olpc-inferno
+
+ *	fontfs - on-demand ttf solution
+ *	metafs - abstract metadata from underlying file system
+ *	(stretch) Integrate OLPC translation solution for Inferno
+ *	(stretch) OLPC oriented GUI toolkit, window manager, and toolbar
+ *	(stretch) Inferno approach to collaboration using file systems
+ *	(stretch) Inferno approach to their Journal (using Venti)
+ *	(stretch) OLPC oriented applications (edutainment)
+

@@ -1,0 +1,172 @@
+<html>
+<head>
+<title>Other hardware (Editing Fri Jan 25 14:54:20 EST 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Other hardware</b></font> (Editing Fri Jan 25 14:54:20 EST 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Other hardware">
+<input type="hidden" name="version" value="1359143660">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+Plan 9 runs or has run on a variety of non-x86 hardware.
+
+AMD64
+
+The AMD64 compiler suite is now included in the distribution, but
+note that AMD64-specific library code and the like are not yet
+distributed. A minimal AMD64 CPU server kernel exists at the labs.
+
+ARM
+
+A CPU server kernel runs on Marvell's Sheevaplug, Guruplug (but not
+Guruplug Display yet) and Openrd-client, based on the Kirkwood SoC,
+and another runs on the IGEPv2 and Gumstix Overo, based on the TI
+OMAP3530 SoC. USB and flash memory don't yet work on the OMAP kernel
+due to lack of documentation. Plan 9 now also runs on the dual-core
+Compulab Trimslice.
+
+[Ronald Minnich |
+http://groups.google.com/group/comp.os.plan9/msg/e92a0c5f93f6d4a7]
+produced a port to the [TS/7200 |
+http://www.embeddedarm.com/epc/ts7200-spec-h.html] SBC. This card was
+then used as part of a Lunchbox cluster detailed in this [Linux
+Journal | http://www.linuxjournal.com/article/8177] article.
+
+[Richard Miller |
+https://groups.google.com/forum/#!topic/comp.os.plan9/JYkDNAP-zvM]
+has ported Plan 9 to the [Raspberry Pi | http://www.raspberrypi.org].
+Kernel source code is available in
+/n/sources/contrib/miller/rpi/sys/src/9/bcm, an SD card image of a
+stand-alone fossil file system is in
+/n/sources/contrib/miller/9pi.img.gz, and a kernel image, which can
+be used to boot a Pi as a terminal in a Plan 9 network, is in
+/n/sources/contrib/miller/9pi.
+
+HISTORIC PORTS
+
+PowerPC 405EP, 405GP, 440GX based on Inferno CerfCube 405 port. CPU
+server runs on Virtex 4 and 5 FPGAs; available upon request.
+
+One of the Blue Gene ports is available.
+
+Alcatel-Lucent use some [PowerPC cards internally |
+http://groups.google.com/group/comp.os.plan9/msg/bbaa850c4fdb43c1],
+the code for these has been left in the distribution to help others
+doing their own ports. Again, these are now quite old.
+
+IPengine - [Richard Miller |
+http://groups.google.com/group/comp.os.plan9/msg/1c69e204443a7b60]
+has done a port to the [IPengine |
+http://www.brightstareng.com/ine1.htm] from Brightstar.
+
+Alpha - Plan 9 ran on the DEC Alpha [PC164 |
+http://groups.google.com/group/comp.os.plan9/msg/a2d44306b0e52c83],
+it is also believed to have run on the LX164 and with some small
+modifications on the [500au |
+http://groups.google.com/group/comp.os.plan9/msg/af19766a4019be59].
+More recently a port was done to the Dec Personal Workstation, [sd550
+http://groups.google.com/group/comp.os.plan9/msg/e690ed5040ae91af]
+though with no graphics support. Only network boot is supported.
+These are old machines and ports.
+
+MIPS - The second edition supported various MIPS-based platforms,
+including several then-popular SGI machines. SGI has declined to
+allow the kernel source to be distributed (unlike the 2e Sun sources,
+which are available). Tim Wiess has discussed doing a modern port.
+
+iPaq (ARM) - A version for some iPaq models is also distributed; see
+[Installation on Ipaq], but iPaqs are now quite old.
+
+BeBox - Dr C H Forsyth did a port of the Second Edition to the BeBox;
+detailed info and an image of the system can be found in:
+[http://verso.terzarima.net/plan9/soft/bebox.html]
+
+PowerPC iMac - Some students at CMU worked on a port to the iMac with
+Professor David Eckhardt. Work on the port has (more or less)
+stopped. In its current state, the port uses OpenFirmware-based
+device drivers; significantly, it lacks one for ethernet. For more
+information, see [http://www.cs.cmu.edu/~412/projects/9mac/] or
+contact Prof. Eckhardt.
+
+64-bit SPARC - Tim Newsham has ported the both the plan9 compiler and
+kernel to the [sparc64 |
+http://groups.google.com/group/comp.os.plan9/msg/0edf88f2d51eff12].
+The code for this port is available in /n/sources/contrib/newsham:
+! Supported Platforms
+!  - Sun Ultra2
+! 
+! Supported Hardware
+!  - HME 10/100 ethernet
+!  - HME/FAS366 SCSI
+!     - no booting from disk yet
+!     - no support for sunlabel disk labels
+!  - Z8530 uart serial port
+The code was last updated in April of 2005; some work is needed to
+bring it back in sync with the current kernel tree.
+
+32-bit SPARC - Chris Collins was updating the 2nd edition [sparc32 |
+http://groups.google.com/group/comp.os.plan9/msg/6fb5b04c4869836b]
+port to the 4th edition. These machines are now quite old and the
+sparc64 port seems a better bet.
+
+Next Cube - The second edition supported 68k-based Nextstations as
+terminals; this code has not been updated to the 4th edition.
+
+Vax 750 - The earliest file server port. The compiler binary was
+recently found but the source appears to have been lost in the mists
+of time.
+
+Hobbit - A CRISP CPU developed by AT&T, see the entry in the
+[Wikipedia | http://en.wikipedia.org/wiki/AT&T_Hobbit]
+
+Compilers also existed for several other architectures which are no
+longer distributed. Some, like those for the Intel i960 and AT&T 3210
+CPUs, where only ever used to program peripherals and thus where not
+extensively tested. Others, like the AMD 29000, were used for other
+projects, like ports of Inferno. See 8c(1) for the list of currently
+distributed compilers.
+
+SEE ALSO
+
+[http://plan9.bell-labs.com/sys/doc/port.html], [Supported PC
+hardware], [TODO]
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

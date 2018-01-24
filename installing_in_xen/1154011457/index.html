@@ -1,0 +1,455 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Installing in Xen (as of Thu Jul 27 10:44:17 EDT 2006)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Installing in Xen</h1>
+<h2><i>-as of Thu Jul 27 10:44:17 EDT 2006-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+These
+instructions
+are
+for
+Xen
+2.0.
+See
+<a href="../../installing_in_xen_3.0">installing
+in
+xen
+3.0</a>
+for
+Xen
+3.0
+instructions.
+<a name="INSTALL_XEN" /><h3>INSTALL XEN</h3>
+
+<ul>
+
+<li>
+Grab
+xen
+and
+install
+it.
+The
+2.0.5
+release
+is
+known
+to
+work.
+</li>
+
+<li>
+Start
+xend
+</li>
+</ul>
+
+<pre>
+	xend start
+</pre>
+
+<ul>
+
+<li>
+Configure
+xen's
+networking
+</li>
+</ul>
+
+<pre>
+	antispoof=no /etc/xen/scripts/network start
+</pre>
+Note:
+I've
+had
+trouble
+with
+the
+antispoofing
+additions
+to
+the
+iptables
+rules
+so
+I
+leave
+them
+out.
+<ul>
+
+<li>
+Enable
+forwarding
+</li>
+</ul>
+
+<pre>
+	linux$ echo 1 &gt;/proc/sys/net/ipv4/ip_forward
+</pre>
+
+<a name="CREATE_A_PLAN9_DOMAIN" /><h3>CREATE A PLAN9 DOMAIN</h3>
+
+<ul>
+
+<li>
+setup
+your
+directory
+with
+your
+kernels
+and
+the
+plan9
+install
+cd.
+You
+can
+get
+the
+9xenf
+and
+9xeninst
+kernels
+from
+/n/sources/xen.
+The
+install
+CD
+is
+available
+at
+the
+Plan9
+website.
+</li>
+</ul>
+
+<pre>
+	 linux$ mkdir /usr/xen9
+	 linux$ cd /usr/xen9
+	 linux$ mv /somepath/9xeninst .
+	 linux$ mv /somepath/9xenf .
+	 linux$ mv /somepath/plan9.iso .
+</pre>
+
+<ul>
+
+<li>
+create
+a
+disk
+image.
+Here
+we
+make
+a
+1GB
+drive,
+but
+you
+can
+use
+any
+size
+you
+like:
+</li>
+</ul>
+
+<pre>
+	 linux$ dd if=/dev/zero of=plan9.img seek=$((1024 * 1024 * 1024 - 1)) bs=1 count=1
+</pre>
+
+<ul>
+
+<li>
+create
+a
+xen
+config
+file
+for
+the
+plan9
+installer.
+Here
+we
+use
+96MB
+of
+RAM,
+but
+you
+can
+use
+any
+amount
+you
+like:
+</li>
+</ul>
+
+<pre>
+	 linux$ cat &gt; /etc/xen/plan9inst
+	 kernel = "/usr/xen9/9xeninst"
+	 builder = "plan9"
+	 memory = 96
+	 name = "plan9"
+	 cpu = -1
+	 nics = 1
+	 vif = [ 'mac=aa:00:10:00:00:10, bridge=xen-br0' ]
+	 disk = [ 'file:/usr/xen9/plan9.img,loop0,w',
+	          'file:/usr/xen9/plan9.iso,loop1,r' ]
+	 ip = "1.2.3.4/24"		# &lt;- IP you will give to xen9
+	 restart = 'never'
+	 console = 999
+	 
+	 # This is the equivalent of plan9.ini:
+	 extra="""
+	 nobootprompt=local!/boot/bzroot
+	 bootfile=sd01!cdboot!bootdisk.img
+	 """
+	 ^D
+</pre>
+
+<ul>
+
+<li>
+boot
+the
+installer
+and
+run
+through
+the
+install
+process.
+You
+will
+be
+using
+the
+console
+which
+is
+a
+little
+clunky.
+(You
+could
+also
+quit
+the
+console
+(^])
+and
+telnet
+or
+netcat
+to
+port
+999
+to
+reach
+the
+console,
+which
+works
+a
+little
+better).
+The
+cdrom
+is
+on
+sd01
+and
+your
+disk
+is
+on
+sd00.
+When
+asked
+for
+the
+location
+of
+the
+archive
+simply
+enter
+"/"
+for
+the
+root
+of
+the
+cdrom.
+At
+the
+end
+of
+the
+install
+when
+it
+asks
+for
+a
+blank
+floppy
+simply
+reboot
+the
+machine:
+</li>
+</ul>
+
+<pre>
+	 linux$ xm create plan9inst -c
+	 ...
+	 % inst/textonly
+	 ...
+	 ^T^Tr      &lt;- to reboot when you're done
+</pre>
+
+<ul>
+
+<li>
+create
+a
+xen
+config
+file
+for
+plan9
+and
+boot
+it.
+The
+new
+config
+should
+use
+the
+9xenf
+kernel
+instead
+of
+the
+9xeninst
+kernel.
+For
+the
+extra
+arguments
+specify
+either
+no
+arguments
+or
+a
+nobootprompt=local
+argument:
+</li>
+</ul>
+
+<pre>
+	 linux$ cat &gt; /etc/xen/plan9
+	 kernel = "/usr/xen9/9xenf"
+	 builder = "plan9"
+	 memory = 96
+	 name = "plan9"
+	 cpu = -1
+	 nics = 1
+	 vif = [ 'mac=aa:00:10:00:00:10, bridge=xen-br0' ]
+	 disk = [ 'file:/usr/xen9/plan9.img,loop0,w' ]
+	 ip = "1.2.3.4/24"		# &lt;- IP you will give to xen9
+	 restart = 'never'
+	 console = 999
+	 
+	 # This is the equivalent of plan9.ini:
+	 extra="""
+	 nobootprompt=local
+	 """
+	 ^D
+	 linux$ xm create plan9 -c
+</pre>
+
+<ul>
+
+<li>
+you'll
+want
+to
+grab
+the
+xen
+bits
+from
+/n/sources/xen/9
+and
+put
+them
+in
+/sys/src/9.
+To
+rebuild
+your
+kernel:
+</li>
+</ul>
+
+<pre>
+	 % cd /sys/src/9/xenpc &amp;&amp; mk 'CONF=xenf'
+</pre>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Thu Jul 27 10:44:17 EDT 2006</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

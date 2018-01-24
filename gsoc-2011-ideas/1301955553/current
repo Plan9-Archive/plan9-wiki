@@ -1,0 +1,231 @@
+GSoC-2011-ideas
+D1301955553
+Afst
+#Plan 9 and related technologies cover a huge range of topics. Below
+#we've put together a list of some ideas which we think would be good
+#candidates for stundents looking for summer-sized projects with us.
+#Each idea includes at least a brief description and a list of
+#"sponsors" for the idea (people who've suggested it or volunteered
+#to work with folks on it). Ideas are rated for estimated difficulty
+#from 1 to 3 stars (1=easy) and may contain links to further
+#information or discussion.
+#
+#Note! Every year Plan 9 has participated in GSoC we've accepted
+#student-submitted projects not from our list, and that's awesome.
+#You are highly encourage to think about how the ideas and
+#capabilities of Plan 9 (or its cousins) could be used to solve some
+#problem you care about and submit a project for that. We are
+#especially fond of things that present their solution in the form of
+#a 9p/styx file server.
+#
+# *	Replace html generation in wikifs(4) ✪ (Anthony Sorace)
+#
+#The wikifs(4) in both Plan 9 and Inferno understand a very small set
+#of cues when generating HTML. That set can be limiting. Replace it
+#with something better, like Markdown. Markdown engines in C already
+#exist, so the Plan 9 part of this shouldn't be too hard. I'd suggest
+#doing the Inferno version as well, to make it a good summer sized
+#project. Use any remaining time to convert any existing wiki docs
+#that need it.
+#
+# *	Make wikifs(4) authenticate against an auth server ✪ (Anthony
+#	Sorace)
+#
+#Our wikifs(4) doesn't currently do any authentication. Our web
+#server and supporting libraries have support for http
+#authentication, but using data stored in the file system directly.
+#It would be nice if web applications could authenticate against a
+#real Plan 9 authentication server. A student submitting a proposal
+#for this should also investigate what's involved in getting wikifs
+#working over https (it shouldn't be much) to ensure passwords are
+#submitted securely.
+#
+# *	Port BSD NDISulator ✪✪ (Dave Eckhardt)
+#
+#The NDISulator is a FreeBSD utility which facilitates using device
+#drivers for Windows network cards in FreeBSD. Plan 9 faces the same
+#problems that led the FreeBSD folks to this, most especially vendors
+#who don't release decent information on their parts. Port the
+#NDISulator so that we can use drivers written for Windows within
+#Plan 9.
+#http://people.freebsd.org/~murray/presentations/20050429-msu-freebsd/img36.html http://www.freebsd.org/doc/en_US.ISO8859-1/books/handbook/config-network-setup.html
+#
+# *	Get kencc to generate Windows object files ✪✪✪ (Steve Simon)
+#
+#Plan 9's C compiler has generated other types of object files in the
+#past; it would be useful if it could generate things Windows
+#understands. This is a major undertaking as windows has a variety of
+#calling conventions and very different register use. However mingw
+#has tools to generate gcc compatible .a libraries which are very
+#similar to 8l ones. linking could initially be done with gld as.
+#It's noteworthy that the Go toolchain, which is derived from kencc
+#(by Ken!), can already do this.
+#
+# *	Native asn.1 DER encode/decode library ✪ (Steve Simon)
+#
+#Write a native (non-APE) library for encoding and decoding ASN.1 DER
+#data. This is a useful step towards future LDAP work. This shouldn't
+#be too hard (and there's lots of reference code), but it will
+#involve reading lots of RFCs and testing.
+#
+# *	NAT ✪✪ (Erik Quanstrom)
+#
+#In Plan 9 (and Inferno) networks, you don't need NAT: just import
+#the gateway's network. Sadly, we don't live in a Plan 9-only world.
+#Write what's needed to allow Plan 9 to act as a NAT gateway for
+#other systems. This should be at least mostly (and perhaps entirely)
+#doable in user space.
+#
+# *	teach libdraw/libframe to deal with variable height fonts ✪✪✪
+#	(Erik Quanstrom)
+#
+#The cannonical example is accented caps, such as u+0000c2, Â.
+#
+# *	x2apic ✪✪ (Erik Quanstrom)
+#
+#Erik has working xapic code that does cluster, flat and physical
+#mode and can handle 1 < n < 255 apics. It's not clear that x2apic is
+#worth it, but most of the fun would be in working out that problem
+#on 24-core machines driving 10gbe. It's also not a very hard
+#problem, since it's mostly a matter of organization.
+#
+# *	msi interrupts ✪✪✪ (Erik Quanstrom)
+#
+#Similar. Evaluating msi requires doing some careful timing and
+#working out how msi relates to the rest of the system. Can you ditch
+#apic if you go straight for msi interrupts? Is the performance and
+#configuration pain worth it? This is more difficult than x2apic, but
+#promises better payoff.
+#
+#three projects aimed toward a 64-bit kernel that seem right-sized
+#for a summer. unfortunately, these may be a bit unsatisfying, as
+#they're a small part of a whole.
+#
+# *	work out the assembly for /sys/src/libc/amd64 ✪✪ (Erik Quanstrom)
+#
+#This work has been done before, but is unavailable. Erik has a
+#draft. This project would be in service of longer-term goals for
+#amd64 support.
+#
+# *	teach 9load-e820 to jump to the loaded image in 64-bit mode, if
+#	requested. ✪✪ (Erik Quanstrom)
+#
+# *	A simple draw server for HTML5 browsers. ✪✪ (Skip Tavakkolian)
+#
+#Adapt an existing Javascript implementation of Styx/9P to use HTML5
+#WebSockets -- or implement one from scratch -- and create a 9P file
+#server that provides a simple draw device using keyboard, mouse
+#event handling and either an SVG or a Canvas element for display.
+#Develop a Plan 9 or Inferno client to interact with it.
+#
+# *	Make a keyboard file server ✪ (Erik Quanstrom)
+#
+#There are several cases where it would be useful to have a
+#stand-alone software console. The in-kernel console (rightly)
+#doesn't handle interrupts and does only the most basic keyboard
+#processing. Other software, like telnet, implements its own console
+#handling, as does rio. It would be nice to refactor this into a
+#stand-alone file server that handles these functions and could be
+#used by all these functions, or directly on the cga console.
+#
+# *	Create an alternative window manager ✪ (John Floren)
+#
+#For some, rio represents a barrier to entry--complaints that it is
+#hard to use or ugly have frequently appeared. It would be nice to
+#have an alternative window manager for those people who don't like
+#rio, perhaps something with more traditional title bars,
+#minimize/maximize/close buttons, etc. Rio could serve as a base for
+#this effort if desired, since it already handles the necessary
+#multiplexing and drawing operations.
+#
+# *	Make a widget library ✪✪ (John Floren)
+#
+#Libpanel is old and unmaintained, libcontrol doesn't include e.g. a
+#multi-line text entry area, and both look rather outdated. It would
+#be nice to have a widget library including buttons, drop-down menus,
+#multiple-line text entry, radio buttons, scrollbars, etc. The tk
+#library in Inferno does pretty much everything desired.
+#
+# *	Kernel.org for Plan 9 ✪✪✪ (Ron Minnich)
+#
+#The Linux kernel.org provides a very rich environment for
+#prototyping linux enhancements. It also uses a well-known SCM (git)
+#which removes one barrier to entry for new users. This project would
+#set up a kernel.org-like entity that uses mercurial, supports forks,
+#and has a well-defined path for inclusion into the base "kernel.org"
+#repo. It would also support a process for regular updates from
+#sources. Finally, all contrib packages would be included, but not
+#integrated into /sys/src (to make pulls from sources viable);
+#rather, they would live in a seperate tree called /contrib (both
+#source and binary). Learning the lessons from kernel.org is strongly
+#encouraged, but implementing this system in a Plan 9-friendly manner
+#is essential.
+#
+# *	Finishing up ratrace ✪✪ (Ron Minnich)
+#
+#Ratrace (Plan 9 version of strace) needs a few fixes: allowing users
+#to get both binary and pretty output from programs; allowing users
+#to set the amount of data dumped for read and write; fixing a
+#remaining few races when children fork; and allowing ratrace to
+#trace itself. This is a pretty straightforward project that would
+#allow students to make minimal changes to the kernel and still learn
+#a lot.
+#
+# *	KVM/Virtio Drivers ✪✪ (Eric Van Hensbergen)
+#
+#One of the environments many people run Plan 9 under is Qemu/KVM --
+#but the virtio drivers (which are required for high-performance disk
+#or network access) aren't currently supported in mainline Plan 9.
+#The student(s) would get virtio drivers for first the network and
+#then the block device (or perhaps one student for each) working and
+#in a form suitable for acceptance in the mainline Plan 9 kernel
+#against either the tip Qemu or a recent Qemu/KVM distribution (say
+#Ubuntu 10.10). I believe this task is relatively straightforward and
+#requires no special hardware outside of a PC capable of running
+#Qemu. If there was sufficient time the student could work on other
+#virtio drivers (native 9P, console, etc) The student will also be
+#responsible for doing a base-level performance evaluation of virtio
+#drivers versus emulated drivers for some standard operations (disk
+#access, fossil access, venti access, network stream, etc.) The cool
+#thing is, it'd be honest kernel work, and have tangible results we
+#could all use within a month or so of effort.
+#
+#Look in /n/sources/contrib/rminnich/lguest for some starting points
+#
+#It is important that the student have Plan 9 experience for this
+#project and know how to compile and run their own kernels.
+#
+#See also http://bender.eugenics-research.org/doc/plan_9/GSoC/
+#
+# *	Clean up eqn(1) output ✪ (Jeff Sickel)
+#
+#Eqn has problems generating clean output for brackets and sqrt. This
+#is prevalent especially when using ps2pdf. Track down and fix the
+#errors so eqn | troff output is clean for publishing pdf papers.
+#
+# *	9P servers (Jeff Sickel (after reading an email from Charles))
+#
+#Write a 9P server and supporting clients for relevant systems.
+#Suggested areas are:
+#
+# *	Atmel, Arduino
+# *	dsPIC projects
+# *	motor control systems
+# *	Jtag
+# *	Modbus
+#
+# *	A ProtoFS. ✪ or ✪✪ (Skip Tavakkolian)
+#
+#Write a 9P file server that can be instructed to create a file tree
+#and associate each node with external directories, files or
+#processes. Very roughly, the prototype file tree instructions might
+#look something like:
+#
+#! 	/
+#! 		fst/			= /usr/fst/www/
+#! 		edit/
+#! 			snarf		> /dev/snarf
+#! 			paste	< /dev/snarf
+#! 		mouse		| fd0rw /dev/mouse
+#! 
+#

@@ -1,0 +1,226 @@
+THM 2005-06-23 Summary
+
+Original agenda:
+
+ *	Documentation: status, people working on it, goals, resources.
+ *	Plan 9/Inferno/Limbo integration(native dis, auth, shared code,
+	etc.)
+ *	Ports to new arches and coordination of kernel work (x86-64,
+	Sparc, Xen, ...)
+ *	Tech transfer: p9p, dtLinux.
+ *	v9fs status report - [ericvh]
+ *	An update on the 9grid and cross-domain auth? - 20h
+
+Notes taken by newsham@lava.net. If there are inaccuracies please
+email the fix to me and I'll update the wiki or fix them in the wiki
+directly. All names are given as the IRC Nickname used during the
+meeting with punctuation omitted.
+
+Ericvh was the moderator. The meeting went for slightly longer than
+one hour. The moderator allotted ten minutes for each topic.
+
+DOCUMENTATION
+
+[Uriel] asked for feedback about the curent documentation.
+ *	Newsh requested compiler and kernel documentation. Uriel noted
+	that he is trying to get [Boyd] to document the compiler.
+
+20h suggested that there should be an introduction to creating
+documentation to help recruit new documenters.
+
+Uriel started a discussion about what belonged in the wiki and what
+belonged in more formal documentation.
+ *	Ericvh said that over time some wiki documentation should be
+	formalized into /sys/doc and /sys/man. He offered that information
+	should be annotated in the wiki for future migration to formal
+	documentation.
+ *	Musasabi said that there should be a good Plan9 introduction
+	document showing how to use Plan9 system components together.
+ *	Ericvh noted that v9fs exposure might offer the opportunity for
+	people to publish such documents.
+ *	Ericvh pointed out that the wiki is a good place for tutorials,
+	and while there is a lot of configuration tutorial material there is
+	not good coverage of other topics.
+ *	Uriel said that the ports document from /sys/doc should be moved
+	to the wiki.
+ *	Uriel said he has updated html documentation and asked how to
+	submit it. Ericvh suggested putting them on sources and notifying
+	Jmk and Russ.
+ *	Uriel noted that the updates were hand edits due to deficiencies
+	in troff2html that would likely be hard to fix.
+
+PLAN9/INFERNO INTEGRATION
+
+Uriel asked if anyone is still working on native Dis.
+ *	Lucho responded that he has not done any new work for lack of
+	time. He is not aware of anyone else doing any work but thinks the
+	work would be useful especially for writing GUI applications.
+ *	CaptainWillard said dis is native on froggie (f2f notes that
+	froggie is brucee's OzInferno box).
+
+Uriel offered up the idea of merging Inferno into the Plan9
+distribution.
+ *	20h said dtLinux 2.6 will have p9p and Inferno.
+ *	Uriel asked about code sharing "(specially kencc)" and auth
+	compatibility. This started off a discussion on supporting Inferno's
+	auth mechanisms.
+ *	Ericvh said it was a good idea to integreat Inferno's auth
+	mechanisms int Plan9, p9p and v9fs.
+ *	F2f mentioned that the auth mechanisms are PKI based and Uriel
+	offered that they may provide a solution to cross domain
+	authentication in Grid computing. (This topic is discussed more
+	later).
+ *	Cross stated a desire for a Kerberos KDC which Ericvh seconded.
+ *	The lack of manpower to do the actual work was discussed and Uriel
+	decided to add the item to the wiki [TODO] list. Ericvh said that
+	this would be a great community project and said we should resume
+	discussions on the mailing list (9fans).
+
+PORTS TO NEW ARCHITECTURES AND KERNEL WORK
+
+Newsh said that he has not done any work on sparc recently and has
+started working on Xen 3.0 with Ron.
+
+Uriel asked if Kuro has worked out issues of overlapping work with
+Jmk, but Kuroneko was not around and nobody could offer an answer.
+
+Ericvh said that ppc64 work looks to be moving ahead but didn't have
+further details since he is not directly involved.
+ *	Ericvh also pointed out that he put a G5 ppc64 linux machine on
+	the network for people to use. He also mentioned that IBM will be
+	releasing its full system simulator for ppc64 (ppc970 GP/UL and
+	rhype) any day now.
+ *	Cross asked which machines other than the fated Apple ppc machines
+	might benefit from such a port and Ericvh mentioned the Ps/3 and
+	Xbox 360.
+
+Newsh asked about how the cell would be used and Ericvh said the PPC
+core would run Plan9 and provided some examples of how the SIMD cores
+might be used.
+
+TECH TRANSFER PROJECTS (P9P, DTLINUX, V9FS)
+
+Ericvh passed on a p9p update on behalf of Russ (who was not
+present). Work continues but nothing big is planned. Venti is working
+and available from the p9p CVS (although under a different module
+name). Russ and Jmk are going to put venti through its paces at the
+Labs and then roll it into p9p and Plan9.
+
+20h is working on dtLinux 2.6 with some free time he has gotten
+recently. It will have p9p, Inferno and v9fs.
+
+Ericvh also mentioned progress on a drawterm replacement under p9p
+which started off a discussion about drawterm and splitting up p9p
+into packages. The drawterm discussion:
+ *	p9p drawterm is progressing but Russ hasn't had time for it
+	lately. It still needs work on the synthetic console and graphics
+	devices.
+ *	Ericvh stated that dt2k has windows support and that there is talk
+	of dropping the old drawterm completely. He also stated he has it
+	working in ppc-linux.
+ *	Uriel asked who maintains dt2k, Ericvh pointed out that it is
+	available at ucalgary (f2f's repository) and f2f eventually replied
+	that it is unknown who current maintainer is.
+ *	20h stated an objection to p9p as a drawterm replacement due to
+	its size and lack of modularity.
+ *	Uriel stated that a Limbo-based drawterm would be a good solution
+	and be easy to do (once Plan9 authentication issues are addressed in
+	Inferno).
+ *	Hyperion hinted that VNC is a viable alternative and Ericvh
+	pointed out that VNC doesn't do everything that drawterm does.
+ *	Ericvh asked for promiment drawterm documentation on the wiki and
+	Uriel agreed that a drawterm page should be made.
+
+The discussion on finer grained packaging of p9p:
+ *	Newsh stated that taking a specific component, such as drawterm,
+	out of p9p and providing binaries or sources seperately shouldnt be
+	too hard. 20h offered skepticism that this would actually occur due
+	to traditional lack of manpower.
+ *	Ericvh said he had talked to Russ about breaking up p9p and that
+	Russ wasn't opposed to it but did not want the packaging to be too
+	granular due to interdependencies.
+ *	Uriel stated that there should be a package of libraries and
+	opined that developers want libraries seperate from the applications.
+ *	Cross argued that breaking up p9p will only increase complexity.
+ *	Some stated that p9p is too monolithic and others pointed out that
+	Plan9 has traditionally been monolithic. The topic drifted towards
+	the philosophical.
+ *	Ericvh pointed out that if the sources are removed p9p is quite
+	small.
+
+Ericvh said he packaged p9p for gentoo and submitted them, although
+the packages are "lost in their bugtracker."
+
+9GRID AND CROSS-DOMAIN AUTH
+
+20h stated that there are two proposed solutions that have been
+developed and are in use. One is his own in use for 9grid.de and the
+other is tip9ug's implementation in use at tip9ug.jp.
+
+The potential for using Inferno's PKI-based authentication was
+suggested by Newsh and Uriel. 20h pointed out that the main obstacle
+is getting someone to write the code.
+
+Ericvh expressed an interest in hosting some cross domain
+authentication server but may not be able to due to his network setup
+and a desire to maintain his current ability to authenticate against
+sources.
+ *	Nashi pointed out that you can log in to isengard.tip9ug.jp with
+	either a sources account or a tip9ug account.
+ *	Nashi said his factotum patches are available at
+	[http://www.tip9ug.jp/who/nashi/9grid/p9sk1.c]
+
+Ericvh said that there should be a wiki to collect information about
+the cross-domain authentication systems and Newsh seconded this idea.
+ *	Uriel noted that there should be some coordination between the
+	people working on cross-domain authentication. Ericvh pointed out
+	that the wiki would aid in this.
+ *	Nashi said he would translate his page and place it on the wiki.
+ *	Quintile suggested a seperate mailing list and several people
+	replied that 9fans would be suitable.
+
+TEXT BASED INSTALL
+
+The topic sponsor was idle and this topic was skipped at first and
+returned to when the sponsor returned.
+
+Bakul expressed a desire to have a pre-canned automated installer
+that required no interaction.
+
+Ericvh suggested that there should be an option to install a CPU
+server from the installer.
+ *	Newsh offered that this could be a shell script that is run
+	post-install to upgrade a terminal to a CPU server.
+ *	Ericvh offered instead that it be a final step after the installer
+	has finished the installation. He also asked for a volunteer but no
+	one responded publically. Uriel said he would add the item to the
+	wiki [TODO] page.
+
+VESA SUPPORT
+
+Uriel asked when VESA support would be in the install ISO. Nobody
+present was able to answer.
+
+Uriel started off a discussion of wether the ISO should support both
+native and VESA drivers or only the VESA driver.
+ *	Hyperion pointed out that VESA did not work on his geforce2.
+ *	Ericvh stated that VESA was an important option during installs
+	and suggested that it could be a boot argument or part of a
+	companion boot floppy.
+ *	Uriel noted that 20h would like to remove native drivers to save
+	space.
+ *	Uriel pointed out that VESA does not universally work and where it
+	does may not work as well as native drivers in terms of selection of
+	screen resolutions and refresh rates.
+ *	Ericvh pointed out that it would work more reliably than native
+	drivers for LiveCDs and installers and that users could use native
+	drivers after install if they so choose.
+
+CHAOS
+
+Ericvh called for a volunteer to moderate the next meeting.
+
+Hyperion asked if the future direction of Xen 3.0 will adversely
+affect Plan9. Newsh and Ericvh answered that it will not since there
+are no plans for a Plan9 Domain 0.
+

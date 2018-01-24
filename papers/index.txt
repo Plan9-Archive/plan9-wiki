@@ -1,0 +1,228 @@
+Papers
+
+
+VOLUME TWO
+
+The official collection of papers distributed with Plan 9 forms
+[Volume 2 | http://plan9.bell-labs.com/sys/doc] of the manual. In
+Plan 9 installations, see in /sys/doc/.
+
+INFERNO
+
+The Inferno papers similarly form [Volume 2 |
+http://doc.cat-v.org/inferno/4th_edition/] of the Inferno manual.
+
+RECENT PAPERS
+
+ *	[Adding a System Call to Plan 9 |
+	http://doc.cat-v.org/plan_9/misc/adding_a_syscall_to_plan_9/] - John
+	Floren
+
+ *	[Papers from the First International Workshop on Plan 9 and
+	Inferno | http://doc.cat-v.org/plan_9/IWP9/2006/]
+
+ *	[Introduction to Operating System Abstractions using Plan 9 from
+	Bell Labs | http://plan9.escet.urjc.es/who/nemo/9.intro.pdf]
+
+ *	[Fossil, an Archival File Server |
+	http://doc.cat-v.org/plan_9/4th_edition/papers/fossil/]
+
+ *	[The Ubiquitous File Server in Plan 9 (2005) |
+	http://plan9.bell-labs.com/sources/contrib/uriel/doc/charles/servers.pdf] by C. H. Forsyth
+
+ *	[Distributed Computing With Plan 9 |
+	http://www.cs.unibo.it/ersads/tutorials/mullender.ps] by Sape
+	Mullender and Dave Presotto.
+
+ *	[Distributed Systems (2004) |
+	http://plan9.bell-labs.com/who/sape/gos/] - Sape Mullender
+
+ *	[Plan 9 - An Integrated Approach to Grid Computing |
+	http://plan9.aichi-u.ac.jp/9grid/plan9-grid.pdf] by Andrey
+	Mirtchovski, Rob Simmonds, and Ron Minnich
+
+ *	[Why Plan 9 matters |
+	http://plan9.bell-labs.com/sources/contrib/uriel/mirror/9book.pdf] -
+	Geoff Collyer.
+
+ *	[How to Write a Plan 9 Manual Page |
+	http://doc.cat-v.org/plan_9/misc/man_page_writing_howto] - Geoff
+	Collyer and Russ Cox
+
+ *	Notes on the Plan 9 kernel source: [PS A4 |
+	http://plan9.escet.urjc.es/usr/nemo/9.ps.gz], [PS letter |
+	http://plan9.escet.urjc.es/usr/nemo/9.us.ps.gz]¸ [ASCII plain text |
+	http://plan9.escet.urjc.es/usr/nemo/9.txt.gz]; and the corresponding
+	[kernel source snapshot | http://plan9.escet.urjc.es/plan9jun.tgz].
+	An rc script can be found in
+	/n/sources/contrib/steve/rc/kernel.print which formats the kernel
+	snapshot file into postscript - in the style of the Lyons Unix
+	commentry. The script is designed for European A4 paper and produces
+	an impressive (inch thick) listing.
+
+TALKS AND SLIDES
+
+ *	[Why Plan 9 is not dead yet And What we can learn from it |
+	http://www.cs.unm.edu/~fastos/05meeting/PLAN9NOTDEADYET.pdf] by Ron
+	Minnich from the Advanced Computing Lab, Los Alamos National Lab
+
+ *	[The Good, the Bad, and the Ugly: The Unix Legacy |
+	http://herpolhode.com/rob/ugly.pdf] by [Rob Pike |
+	http://herpolhode.com/rob/]
+
+ *	[Systems Software Research is Irrelevant (AKA utah2000) |
+	http://doc.cat-v.org/bell_labs/utah2000/] by [Rob Pike |
+	http://herpolhode.com/rob/]
+
+ *	[Fossil, an archival file server (January 2003) |
+	http://swtch.com/~rsc/talks/group03-fossil.pdf] talk slides by [Russ
+	Cox | http://swtch.com]
+
+ *	[Security in Plan 9 (August 2002) |
+	http://swtch.com/~rsc/talks/nauth.pdf] talk slides by [Russ Cox |
+	http://swtch.com]
+
+ *	[Plan 9 in Technicolor (August 1999) |
+	http://swtch.com/~rsc/talks/drawtalk.pdf] talk slides by [Russ Cox |
+	http://swtch.com]
+
+RESEARCH
+
+ *	[Providing Asynchronous File I/O for the Plan 9 Operating System |
+	http://www.pdos.lcs.mit.edu/papers/plan9:jmhickey-meng.pdf] - Jason
+	Hickey
+
+Real-Time in Plan 9 by Pierre G. Jansen and Sape Mullender (2003):
+ *	[Real-Time in Plan 9: a short Overview |
+	http://doc.cat-v.org/plan_9/real_time/real_time_overview/]
+ *	[Lightweight EDF Scheduling with Deadline Inheritance |
+	http://doc.cat-v.org/plan_9/real_time/edfi/]
+
+OTHER SYSTEMS
+
+ *	[v9fs: 9P under Linux | http://v9fs.sourceforge.net/v9fs.pdf] -
+	Eric Van Hensbergen (IBM Austin Research Lab), Ron Minnich (Los
+	Alamos National Labs)
+ *	[R2P2: Raw Resource-Allocation for PCA Processing |
+	http://cag.csail.mit.edu/~strumpen/r2p2.ps] - Volker Strumpen
+
+PLAN B
+
+ *	[Plan B: Boxes for network resources |
+	http://plan9.escet.urjc.es/ls/export/box.html] - Francisco J.
+	Ballesteros
+ *	[The Plan B papers page | http://lsub.org/ls/papers.html]
+ *	[Plan B Manual Pages | http://man.cat-v.org/plan_b/]
+
+PLAN 9 RELEASE 2 (1995)
+
+ *	["README - by Brian Kernighan" |
+	http://doc.cat-v.org/plan_9/2nd_edition/README]
+ *	["Plan 9 Volume 1 - The Manuals" |
+	http://man.cat-v.org/plan_9_2nd_ed/]
+ *	["Plan 9 Volume 2 - The Documents" |
+	http://doc.cat-v.org/plan_9/2nd_edition/papers/]
+ *	["ALEF users guide" |
+	http://doc.cat-v.org/plan_9/2nd_edition/papers/alef/ug] [ug.pdf |
+	http://swtch.com/~rsc/thread/ug.pdf]
+ *	["A Quick Introduction to the Panel Library" |
+	http://doc.cat-v.org/plan_9/2nd_edition/papers/panel/]
+ *	["Raster Graphics in plan9" - Tom Duff |
+	http://doc.cat-v.org/plan_9/2nd_edition/papers/gfx/]
+ *	["Plan 9 Second Edition License" |
+	http://doc.cat-v.org/plan_9/2nd_edition/plan9.att.com/shrink] (Old
+	license, only of historical interest)
+
+PLAN 9 RELEASE 1 (1992)
+
+ *	"Plan 9 from Bell Labs - Programmer's Manual (first edition)"
+	[manual.ps.gz | http://www.fywss.com/plan9/plan9man/manual.ps.gz]
+ *	["ALEF Language Reference Manual" |
+	http://doc.cat-v.org/plan_9/2nd_edition/papers/alef/ref] [alef.pdf |
+	http://swtch.com/~rsc/thread/alef.pdf]
+ *	[Help: A Minimalist Global User Interface |
+	http://doc.cat-v.org/plan_9/1st_edition/help/z]
+ *	[Circuit Design Aids (CDA) on Plan 9 |
+	http://doc.cat-v.org/plan_9/1st_edition/cda/]
+ *	"Configuring a PC" [08pcconf.ps.gz |
+	http://www.fywss.com/plan9/plan9man/08pcconf.ps.gz]
+ *	"The Use of Name Spaces in Plan 9" [1-07.ps.gz |
+	http://plan9.bell-labs.com/cm/cs/doc/92/1-07.ps.gz]
+ *	"Acme: A User Interface for Programmers" [1-03.ps.gz |
+	http://plan9.bell-labs.com/cm/cs/doc/93/1-03.ps.gz]
+ *	"The Organization of Networks in Plan 9" [net.ps |
+	http://cm.bell-labs.com/who/presotto/net.ps]
+
+PLAN 9 EARLY PAPERS
+
+ *	"Index" [158a.ps.gz |
+	http://plan9.bell-labs.com/cm/cs/cstr/158a.ps.gz]
+ *	"Plan 9 from Bell Labs" [158b.ps.gz |
+	http://plan9.bell-labs.com/cm/cs/cstr/158b.ps.gz]
+ *	"Plan 9, A Distributed System" [158c.ps.gz |
+	http://plan9.bell-labs.com/cm/cs/cstr/158c.ps.gz]
+ *	"8 1/2, the Plan 9 Window System" [158d.ps.gz |
+	http://plan9.bell-labs.com/cm/cs/cstr/158d.ps.gz]
+ *	"Multiprocessor Streams for Plan 9" [158e.ps.gz |
+	http://plan9.bell-labs.com/cm/cs/cstr/158e.ps.gz]
+ *	"Process Sleep and Wakeup on a Shared-memory Multiprocessor"
+	[158f.ps.gz | http://plan9.bell-labs.com/cm/cs/cstr/158f.ps.gz]
+ *	"Rc — A Shell for Plan 9 and UNIX Systems" [158g.ps.gz |
+	http://plan9.bell-labs.com/cm/cs/cstr/158g.ps.gz]
+ *	[A New C Compiler by Ken Thompson |
+	http://doc.cat-v.org/bell_labs/new_c_compilers/]
+ *	"The text editor sam" [1-05.ps.gz |
+	http://plan9.bell-labs.com/cm/cs/doc/87/1-05.ps.gz]
+
+BACKGROUND INFORMATION AND UNIX PAPERS
+
+ *	[Program Design in the UNIX Environment |
+	http://harmful.cat-v.org/cat-v/] by Rob Pike and Brian Kernighan
+	(AKA "cat -v considered harmful")
+ *	["Notes on Programming in C" by Rob Pike |
+	http://doc.cat-v.org/bell_labs/pikestyle] [pdf |
+	http://www.literateprogramming.com/pikestyle.pdf])
+ *	[The hideous name by Rob Pike and Peter Weinberger |
+	http://doc.cat-v.org/bell_labs/the_hideous_name/]
+ *	The [Unix 8th Edition Manual Pages |
+	http://man.cat-v.org/unix_8th/].
+ *	The [Writers Work Bench (WWB) Manual Pages |
+	http://man.cat-v.org/unix_WWB/1/].
+ *	Parts of the Tenth edition Unix manual - mainly typesetting [ed10
+	| http://plan9.bell-labs.com/10thEdMan/]
+ *	The Seventh Edition manual - awk(1), dc(1), bc(1), eqn(1), etc.
+	[ed7 | http://plan9.bell-labs.com/7thEdMan/]
+ *	"GRAP -- A Language for Typesetting Graphs (Tutorial and User
+	Manual)" [114.ps.gz |
+	http://plan9.bell-labs.com/cm/cs/cstr/114.ps.gz]
+ *	["Upas, A Simpler Approach to Mail" |
+	http://doc.cat-v.org/bell_labs/upas_mail_system/]
+ *	["Face the Nation" by Rob Pike and David L. Presotto |
+	http://doc.cat-v.org/bell_labs/face_the_nation/].
+ *	"A Cached WORM File System" [cw.pdf |
+	http://plan9.bell-labs.com/who/seanq/cw.pdf]
+ *	"Robust Data Compression of Network Packets" [networkcomp.pdf |
+	http://plan9.bell-labs.com/who/seanq/networkcomp.pdf]. Thwack PPP
+	compression, implemented in recent releases.
+ *	"An algorithm for differential file comparison" [diff.ps |
+	http://www.cs.dartmouth.edu/~doug/diff.ps]
+ *	"T. Porter & T. Duff - Compositing Digital Images" [p253porter.pdf
+	| http://www.keithp.com/~keithp/porterduff/p253-porter.pdf]
+ *	`Portability of C Programs and the UNIX System' - By S. C. Johnson
+	D. M. Ritchie - [PDF |
+	http://cm.bell-labs.com/cm/cs/who/dmr/portpap.pdf], [PS |
+	http://cm.bell-labs.com/cm/cs/who/dmr/portpap.ps], [HTML |
+	http://cm.bell-labs.com/cm/cs/who/dmr/portpap.html] - ([More info on
+	DMRs site | http://cm.bell-labs.com/cm/cs/who/dmr/portpapers.html])
+ *	How to Write a Manual Page - By Henry Spencer [manpage.pdf |
+	http://www.dgp.toronto.edu/~ajr/209/manpage.pdf]
+
+SEE ALSO
+
+ *	The [Plan 9 | http://doc.cat-v.org/plan_9/], [Inferno |
+	http://doc.cat-v.org/inferno/] and [Bell Labs |
+	http://doc.cat-v.org/bell_labs/] sections of the [documentation
+	archive | http://doc.cat-v.org] at [cat-v.org | http://cat-v.org].
+ *	[The Man Page Archive | http://man.cat-v.org/].
+ *	[Fortunes | http://fortunes.cat-v.org/plan_9/] file!
+

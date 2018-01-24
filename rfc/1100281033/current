@@ -1,0 +1,10 @@
+RFC
+D1100281033
+Abootes (192.35.232.241)
+#The idea is to get 9P2000 and related crypto support recognized as
+#standards.
+#
+# *	RFC9P1 - RFC covering "Classic" 9P for historical reasons
+# *	RFC9P2000 - RFC covering 9P2000
+# *	RFC9P2000.u - RFC covering 9P2000 extension
+#

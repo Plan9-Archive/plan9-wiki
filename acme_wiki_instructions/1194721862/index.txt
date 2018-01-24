@@ -1,0 +1,40 @@
+Acme Wiki instructions
+
+If you want to access this site using Acme, have a look at
+/acme/wiki/guide.
+
+You can execute the first line to import the wiki,
+
+! Local srv net!plan9.bell-labs.com!wiki wiki /mnt/wiki
+
+and the third line to bring up the browser - though if you don't use
+the latest version of acme you'll need to run a new instance of Acme
+because Local doesn't import into the current namespace
+
+! Wiki /mnt/wiki/
+
+The browser should be fairly intuitive given familiarity with acme.
+
+To follow wiki links, right-click page names inside square brackets:
+[sandbox].
+
+You can edit any wiki page, then click Put in the acme tag to save
+your changes to the server.
+
+To add a new wiki page, click New in the acme tag, then type the
+title in the first line of the resulting window, followed by a
+newline, then your content for the new page. Use [Wiki syntax] for
+formatting.
+
+You may need to add the following line to /lib/ndb/common to define
+the default wiki file service TCP port:
+
+! tcp=wiki port=17035
+
+though this is defined in the distributed /lib/ndb/common as of Sept.
+07.
+
+SEE ALSO
+
+acme(1), wikifs(4)
+

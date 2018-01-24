@@ -1,0 +1,9 @@
+High Performance Computing Using Plan 9
+D1097080584
+Aericvh (192.35.232.241)
+#There are a couple of different efforts looking at using Plan 9 (and
+#Plan 9 technolgoies) for HPC Applications.
+#
+# *	PowerPC 64-bit port - [ericvh]
+# *	AMD64 port
+#

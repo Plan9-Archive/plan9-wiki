@@ -1,0 +1,20 @@
+Development
+D1297689928
+Achrissi
+#Guides
+# *	[How to contribute].
+# *	[Porting alien software to Plan 9].
+# *	[Video Drivers Development].
+#
+#Projects and ideas
+# *	[TODO] - List for Plan 9 developers (includes ongoing projects).
+# *	[Future directions] - Ideas about future development by the
+#	original Plan 9 authors.
+#
+#Resources
+# *	Browseable full [source tree |
+#	http://plan9.bell-labs.com/sources/plan9/sys/src] from Bell Labs.
+# *	[Web interface to nightly snapshots of the Plan 9 kernel |
+#	http://swtch.com/plan9history] from1990 to 2003, with annotations
+#	of the changes.
+#

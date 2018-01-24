@@ -1,0 +1,62 @@
+Web browsers
+
+Plan9 has several options for web browsers, though none supports
+perfectly the most complex(or broken) websites some of them are quite
+useable.
+
+ABACO
+
+As of July 2009 the lightweight web browser abaco is now distributed
+as part of the stock Plan 9 distribution. It is a web browser that
+started as a rewrite of webpage, with many new improvements including
+tables support. A testing snapshot can be found at:
+/n/sources/contrib/fgb
+
+CHARON
+
+Charon is the web browser supplied with the Inferno OS. It supports
+Javascript and https. It has very few features (a good thing) but
+requires the inferno runtime environment. Charon is packaged as part
+of [Inferno | http://www.vitanuova.com/inferno/downloads.html]
+
+WEBPAGE
+
+webfs(4) and html(2) were written at Bell labs as the backend for a
+new web browser; unfortunately the project stalled. Aki Nyrhinen has
+since written a simple frontend called webpage for these which does
+an amazingly good job of rendering basic web pages; it also makes
+interesting use of the plumber to support hyperlinks. This work also
+stalled and has been superseded by abaco.
+
+LINKS
+
+Links is a graphical web browser which renders pages fairly well. It
+is not quite stable, crashing on some pages but usable for google
+searches and the like. It supports CSS and javascript but not java or
+https (though this would not take a great deal to fix). The current
+implementation is fairly graphics hungry and should be run on a local
+terminal for best peformance. The greatest annoyance with links is
+the lack of support for cut and paste between links windows and the
+plan9 snarf buffer. The source is availabe in Andrey Mirtchov's
+[contrib] dir: /n/sources/contrib/andrey/links.tgz
+
+MOTHRA
+
+Mothra was written by Tom Duff for the second edition of plan9. It is
+very basic and does not support ftp, java, javascript, https or CSS.
+On the other hand it is very fast and compiles natively for plan9.
+The sources relies on the second edition panel library which has also
+been released, see /n/sources/extra/mothra.
+
+HGET | HTMLFMT
+
+The plan9 tools hget(1) and htmlfmt(1) can be used to fetch and
+render simple web pages but are most useful for scripted fetches
+(e.g. ap(1))
+
+VNC TO WINDOWS OR *NIX
+
+The best way to get a fully supported web browser under plan9 is to
+use the vnc client to connect to a linux or Windows box. This
+performs very well if used over a fast network connection.
+

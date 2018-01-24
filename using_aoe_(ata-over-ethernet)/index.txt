@@ -1,0 +1,77 @@
+Using AoE (ATA-over-Ethernet)
+
+This is primarily aimed at users of Coraid devices.
+
+CONSOLE ACCESS
+
+On Coraid devices, access is possible via the usual PC keyboard,
+mouse and video, or the serial port, or cec(8). Typically, invoking
+
+! cec /net/ether0
+
+or
+
+! cec '#l1/ether1'
+
+will produce a menu of Coraid devices by MAC address, and you choose
+one.
+
+You may have to (once only) first type this on your Coraid console:
+
+! cecon /net/ether0
+! cecon /net/ether1
+! cecon /net/ether2
+
+PROVISIONING LUNS
+
+Once connected to the console, you can partition the available disks
+into Logical Units (LUNs). We'll assume a shelf number of 1 in these
+examples. If yours is different, use it in place of `1'.
+
+First declare some drives to be used as hot spares:
+
+! spare 1.13-14
+
+To create a big RAID 5 LUN, you would type something like this:
+
+! make 0 raid5 1.0-1.10
+! online 0
+
+which will create LUN 1.0 from drives 0 through 10 of shelf 1. This
+may take hours to finish, but you can use the LUN immediately.
+
+For single-drive LUNs, you would type something like this:
+
+! make 1 raidl 1.11
+! online 1
+
+which creates an un-RAIDed LUN of drive 11 of shelf 1.
+
+CLIENT CONFIGURATION
+
+The stock kernels all include devaoe and sdaoe, so you shouldn't need
+to build a new kernel.
+
+Adding these lines to your plan9.ini or /cfg/pxe file should cause
+AoE to be enabled automagically at boot time, per sdaoe(3):
+
+! aoeif=ether0
+! aoedev=e!#æ/aoe/1.0
+
+This assumes that your Plan 9 system has a single Ethernet interface.
+If you have several, choose the one that your AoE device is on. `1'
+is the shelf number of the AoE device. `1.0' is the logical unit
+you're interested in. `æ' is Unicode 00e6. `e' is the controller
+letter you'd like to use for logical unit 1.0.
+
+After your next boot, you should see a lightly populated /dev/sde0.
+Running `diskparts' should make any partitions visible.
+
+An AoE LUN appears to be a single large disk, often too large for the
+usual Microsoft partition table to address because it would require
+sector numbers greater than 2^32, so we skip the Microsoft partition
+table (the one maintained with disk/fdisk) and just lay down a Plan 9
+partition table with
+
+! disk/prep /dev/sde0/data
+

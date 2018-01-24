@@ -1,0 +1,236 @@
+Wiki pages review
+
+The plan is to review all the current pages in the wiki, removing
+'junk' pages, and trying to fix and update the valid ones.
+
+Because we can't delete files from the wiki, for now we can just list
+them under the TO DELETE list.
+
+Here is the full list of pages in the wiki as of now, generated with
+the following command:
+! Local cd /mnt/wiki/; ls -Q | awk '{ print " *	[" $1 "]"}'
+
+Take one by one, review if it has any errors or it's obviously
+outdated, if you are fairly sure that a page is correct, add it to
+the list REVIEWED and include the date and your name after it; if the
+updates required are too big to take care of right now, add it to the
+FIXME list, with a short comment about what you think needs updating,
+your name and date.
+
+If the page is obviously garbage add it to the GARBAGE list with date
+and name; and if while it's not obvious garbage, you still think that
+the page should probably be deleted(eg., has been obsoleted by
+another page), add it to the TO DELETE list with a comment, name and
+date.
+
+REVIEWED
+
+ *	[9grid] -gks-2005-12-22
+ *	[acme wiki instructions] -gks-2005-12-21
+ *	[adding a new user] -gks-2005-12-21
+ *	[contrib] -gks-2005-12-22
+ *	[documentation] -gks-2005-12-21
+ *	[irc] -gks-2005-12-21
+ *	[kuroneko] -gks-2005-12-21
+ *	[mail_configuration] -gks-2005-12-21
+ *	[overview] -gks-2005-12-22
+ *	[plan_9_documentation_task_force] -gks-2005-12-21
+ *	[plan_9_wiki] -gks-2005-12-21
+ *	[rsc] -gks-2005-12-21
+ *	[sandbox] -gks-2005-12-21
+ *	[screenshots] -gks-2005-12-21
+ *	[setting_the_right_monitor_size] -gks-2005-12-21
+ *	[software_for_plan_9] -gks-2005-12-25
+ *	[sources_repository] -gks-2005-12-22
+ *	[staying_up_to_date] -gks-2005-12-24
+ *	[system_requirements] -gks-2005-12-25
+ *	[tip9ug] -gks-2005-12-25
+ *	[twente9con_2004_report] -gks-2005-12-25
+ *	[unix_to_plan_9_command_translation] -gks-2005-12-22
+ *	[using_acme] -gks-2005-12-22
+ *	[using_rio] -gks-2005-12-22
+ *	[using_vncv] -gks-2005-12-22
+ *	[web_browsers] -gks-2005-12-22
+ *	[wiki_index] -gks-2005-12-22
+ *	[wiki_pages_review] -gks-2005-12-22
+ *	[wiki_syntax] -gks-2005-12-22
+ *	[why_static] -gks-2005-12-22
+
+TODO
+
+These pages contain something useful, or at least are not garbage
+pages.
+
+ *	[22c3]
+ *	[9blogs]
+ *	[9con]
+ *	[9p2000.u]
+ *	[adding_your_face]
+ *	[books]
+ *	[bootdir]
+ *	[boyd]
+ *	[cfp]
+ *	[clt2006]
+ *	[collaborative_environments]
+ *	[community]
+ *	[compiling_kernels]
+ *	[configuring_a_standalone_cpu_server]
+ *	[connecting_from_other_oses]
+ *	[connecting_to_other_oses]
+ *	[contrib_index]
+ *	[cross_domain_authentication]
+ *	[development]
+ *	[dialup_modem_config]
+ *	[divergefs]
+ *	[divergefs_manpage]
+ *	[dns_configuration_notes]
+ *	[download]
+ *	[drawterm]
+ *	[drawterm_to_your_terminal]
+ *	[dual_booting_bare_machine_and_vmware]
+ *	[ericvh]
+ *	[errata]
+ *	[faq]
+ *	[fosdem_2005_9con]
+ *	[fosdem_2006_9con]
+ *	[future_development_directions]
+ *	[future_directions]
+ *	[happy_users'_thanks]
+ *	[high_performance_computing_using_plan_9]
+ *	[how_to_contribute]
+ *	[informal_wiki_setup]
+ *	[installation_instructions]
+ *	[installation_on_ipaq]
+ *	[installation_troubleshooting]
+ *	[installer_errata]
+ *	[installing_a_plan_9_file_server]
+ *	[installing_in_xen]
+ *	[integrating_9load_into_the_linuxbios]
+ *	[intro_to_tools_philosophy_for_windows_users]
+ *	[iwp9_2006]
+ *	[kfs_file_system_configuration]
+ *	[libre_software_meeting_2005]
+ *	[madrid9con_2006]
+ *	[mailing_lists]
+ *	[man_pages_review]
+ *	[map]
+ *	[mirrors]
+ *	[mouse_vs._keyboard]
+ *	[network_configuration]
+ *	[news]
+ *	[nluug_2005_spring_day]
+ *	[old_wiki_pages]
+ *	[organizations_using_plan_9_and_inferno]
+ *	[ozinferno]
+ *	[papers]
+ *	[people]
+ *	[plan_9_resources_in_other_languages]
+ *	[plan_9_wiki_wish_list]
+ *	[porting_alien_software_to_plan_9]
+ *	[printer_configuration]
+ *	[radeon_drivers]
+ *	[recommended_readings]
+ *	[replacing_9load]
+ *	[setting_up_a_inferno_mirror]
+ *	[setting_up_a_sources_mirror]
+ *	[setting_up_fossil]
+ *	[setting_up_venti]
+ *	[ssh_configuration]
+ *	[supported_pc_hardware]
+ *	[supported_pdas]
+ *	[tex_configuration]
+ *	[thm_2005-04-12_log]
+ *	[thm_2005-04-12_summary]
+ *	[thm_2005-05-19_log]
+ *	[thm_2005-05-19_summary]
+ *	[thm_2005-06-23_log]
+ *	[thm_2005-06-23_summary]
+ *	[thm_2005-08-15_log]
+ *	[thm_2005-08-15_summary]
+ *	[thm_2005-09-24_summary]
+ *	[thm_2005-09-25_log]
+ *	[tip_o'_the_day]
+ *	[todo]
+ *	[town_hall_meetings]
+ *	[troubleshooting_plan9_&_lilo]
+ *	[upgrading_to_fourth_edition]
+ *	[uriel]
+ *	[user_groups]
+ *	[using_plumbing]
+ *	[using_pq]
+ *	[using_troff]
+ *	[v9fs]
+ *	[v9fs-2.1]
+ *	[v9fs-roadmap]
+ *	[v9srv]
+ *	[video_drivers_development]
+ *	[what's_new]
+ *	[what_do_people_like_about_plan_9]
+ *	[what_the_hack]
+ *	[wince_ftp]
+ *	[write_missing_man_pages]
+
+FIXME
+
+this is more a question than a review. isn't it true that plan9 under
+vmware no longer works, and people are encouraged to use xen or qemu?
+if so, these two pages should be buried under [old_wiki_pages] rather
+than encouraging futile attempts by newcomers. if you don't agree,
+please delete this text and move the pages back to the TODO section.
+ *	[vmware4]
+ *	[vmware_playground_for_plan9]
+
+No, I use a current version of Plan 9 regularly under VMware server.
+There are slight problems, but it is workable. Lucio De Re - March
+1st, 2008.
+
+TO DELETE
+
+Pages that either can't be opened in acme or the web interface, that
+have been replaced, are failed tests, and other junk (should be
+self-evident by trying to visit them):
+
+ *	[idiots] - We all already know this... - uriel - 20-03-2005
+ *	[index.html] - same as [idiots] but this is confusing as some
+	people thinks it's the main wiki page - uriel - 20-03-2005
+ *	[rfc9p1] never took off? -mjl - 26-03-2005
+ *	[rfc9p2000] never took off? -mjl - 26-03-2005
+ *	[rfc9p2000.u] never took off? -mjl - 26-03-2005
+ *	[rfc] never took off? -uriel- 21-12-2005
+ *	[the plan 9 web server] - doesn't work - soul9 - 03-03-2008
+ *	[the plan 9 web server httpd(8) has some interesting features. it]
+	- what the heck is this anyways? - soul9 - 03-03-2008
+ *	[test2] - weird stuff - soul9 - 03-03-2008
+ *	[test page] - some test - soul9 - 03-03-2008
+
+uriel explained the need for the following pages, so my objections
+are removed. i leave it to his judgement what to do with them.
+ *	[plan_9_documentation]
+ *	[intro_to_tools_philosophy_for_*nix_users]
+ *	[background]
+ *	[summary_of_the_plan_9_development_environment]
+ *	[softwaretools]
+ *	[plan_9_related_publications]
+ *	[twente9con_2004] maybe move to [old_wiki_pages] rather than
+	delete, but it doesn't look to be of any interest to the general
+	public. [twente9con_2004_report] is much more interesting.
+
+TO RENAME
+
+(random newbie being picky)
+
+ *	[recomended_readings] -> recommended_reading
+ *	[video_drivers_development] -> video_driver_development
+
+GARBAGE
+
+ *	[sandbox_two]
+ *	[test2]
+ *	[new] blank page. at least needs some text describing intended
+	use. probably better to trash.
+ *	[bleepbybloop]
+ *	[test page]
+ *	[testtest]
+ *	[avoiding_screen_pollution_from_kernel_messges] typo in title,
+	proper article is at [avoiding_screen_pollution_from_kernel_messages]
+

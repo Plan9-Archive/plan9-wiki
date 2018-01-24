@@ -1,0 +1,1230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>News (as of Tue Feb 11 16:27:56 EST 2014)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>News</h1>
+<h2><i>-as of Tue Feb 11 16:27:56 EST 2014-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+(This
+page
+is
+not
+updated
+with
+trivia,
+for
+other
+news
+about
+Plan
+9,
+Inferno
+and
+related
+technologies
+see
+<a href="http://ninetimes.cat-v.org">NineTimes</a>)<hr />
+<a name="SSH_REVERSION" /><h3>SSH REVERSION</h3>
+
+<p class='para'>
+Bare
+`ssh'
+is
+now
+ssh1.
+ssh2
+is
+still
+available
+as
+`ssh2'.
+</p>
+
+<p class='para'>
+-
+11
+February
+2014
+</p>
+<hr />
+<a name="RENUMBERING_OUTSIDE_MACHINES" /><h3>RENUMBERING OUTSIDE MACHINES</h3>
+
+<p class='para'>
+We're
+about
+to
+change
+the
+IPv4
+addresses
+of
+our
+outside
+machines
+(from
+204.178.31.x
+to
+135.104.24.y).
+There
+may
+be
+outages,
+we'll
+try
+to
+keep
+them
+brief.
+</p>
+
+<p class='para'>
+IPv6
+addresses
+will
+follow.
+</p>
+
+<p class='para'>
+-
+19
+November
+2013
+</p>
+<hr />
+<a name="NEW_PORT:_ROUTERBOARD_RB450G_(MIPS32)" /><h3>NEW PORT: ROUTERBOARD RB450G (MIPS32)</h3>
+
+<p class='para'>
+/sys/src/9/rb
+contains
+a
+port
+to
+the
+Mikrotik
+Routerboard
+RB450G.
+</p>
+
+<p class='para'>
+-
+24
+July
+2013
+</p>
+<hr />
+<a name="NEW_PORT:_RASPBERRY_PI" /><h3>NEW PORT: RASPBERRY PI</h3>
+
+<p class='para'>
+/sys/src/9/bcm
+contains
+Richard
+Miller's
+port
+to
+the
+Raspberry
+Pi
+model
+B.
+See
+words
+in
+that
+directory.
+</p>
+
+<p class='para'>
+-
+25
+Jan
+2013
+</p>
+<hr />
+<a name="NEW_PC_BOOTSTRAPS" /><h3>NEW PC BOOTSTRAPS</h3>
+
+<p class='para'>
+9pxeload
+and
+9load
+have
+replacements
+built
+from
+kernel
+source.
+They
+should
+appear
+over
+the
+next
+few
+days.
+</p>
+
+<p class='para'>
+-
+10
+May
+2012
+</p>
+<hr />
+<a name="NEW_ARM_PORT:_TRIMSLICE" /><h3>NEW ARM PORT: TRIMSLICE</h3>
+
+<p class='para'>
+/sys/src/9/teg2
+contains
+a
+port
+to
+the
+multi-core
+v7-architecture
+Compulab
+Trimslice.
+See
+_announce
+in
+that
+directory.
+</p>
+
+<p class='para'>
+-
+1
+May
+2012
+</p>
+<hr />
+<a name="PC_ACPI_SUPPORT" /><h3>PC ACPI SUPPORT</h3>
+
+<p class='para'>
+The
+kernel
+source
+on
+sources
+now
+contains
+minimal
+ACPI
+support
+in
+the
+pc
+port.
+It's
+just
+enough
+to
+enable
+cores
+not
+described
+in
+the
+MP
+table,
+but
+assumes
+the
+basic
+sanity
+of
+the
+MP
+table's
+interrupt
+routing
+entries.
+Only
+the
+pccpu
+configuration
+includes
+it
+by
+default.
+</p>
+
+<p class='para'>
+This
+is
+no
+help
+to
+systems
+that
+have
+no
+MP
+table
+at
+all,
+such
+as
+those
+built
+from
+Intel's
+``legacy-free''
+motherboards,
+alas.
+</p>
+
+<p class='para'>
+-
+11
+October
+2011
+</p>
+<hr />
+<a name="PLAN_9_APPLYING_TO_GOOGLE_SUMMER_OF_CODE" /><h3>PLAN 9 APPLYING TO GOOGLE SUMMER OF CODE</h3>
+
+<p class='para'>
+Plan
+9
+is
+again
+applying
+to
+participate
+in
+<a href="../../GSoC">GSoC</a>.
+Our
+application
+is
+in
+and
+we're
+now
+awaiting
+the
+decision
+of
+the
+fine
+folks
+at
+Google,
+on
+March
+18th.
+</p>
+
+<p class='para'>
+-
+March
+11,
+2011
+</p>
+<hr />
+<a name="SIXTH_INTERNATIONAL_WORKSHOP_ON_PLAN_9" /><h3>SIXTH INTERNATIONAL WORKSHOP ON PLAN 9</h3>
+
+<p class='para'>
+<a href="http://iwp9.org">IWP9
+2011</a>
+will
+be
+held
+October
+20—21
+in
+Madrid,
+Spain,
+hosted
+by
+<a href="http://lsub.org/who/nemo">Francisco
+Ballesteros</a>
+of
+Rey
+Juan
+Carlos
+University.
+</p>
+<hr />
+<a name="FIFTH_INTERNATIONAL_WORKSHOP_ON_PLAN_9" /><h3>FIFTH INTERNATIONAL WORKSHOP ON PLAN 9</h3>
+
+<p class='para'>
+<a href="http://iwp9.quanstro.net">IWP9
+2010</a>
+will
+be
+held
+October
+11—13
+in
+Seattle,
+WA,
+USA,
+sponsored
+by
+the
+US
+Dept.
+of
+Energy.
+</p>
+<hr />
+<a name="ARM_PORTS" /><h3>ARM PORTS</h3>
+
+<p class='para'>
+A
+CPU
+server
+port
+for
+the
+Sheevaplug
+and
+Openrd-client
+has
+been
+available
+in
+/sys/src/9/kw
+for
+a
+few
+months.
+USB
+support
+is
+now
+working,
+as
+of
+today,
+in
+part
+due
+to
+the
+efforts
+of
+<a href="http://lsub.org/who/nemo">Professor
+Francisco
+Ballesteros</a>.
+</p>
+
+<p class='para'>
+A
+new
+port
+for
+the
+IGEPv2
+board
+is
+available,
+starting
+today,
+and
+Rae
+McLellan
+of
+Bell
+Labs
+deserves
+thanks
+for
+helping
+to
+decrypt
+what
+passes
+for
+hardware
+documentation
+these
+days.
+This
+port
+is
+being
+made
+available
+now
+primarily
+as
+a
+basis
+for
+GSoC
+students;
+we
+hope
+it
+will
+improve.
+USB
+is
+not
+yet
+working.
+</p>
+
+<p class='para'>
+-
+23
+April
+2010
+</p>
+<hr />
+<a name="ABACO" /><h3>ABACO</h3>
+
+<p class='para'>
+The
+lightweight
+web
+browser
+abaco
+is
+now
+distributed
+as
+part
+of
+the
+stock
+Plan
+9
+distribution.
+</p>
+
+<p class='para'>
+-
+July
+30,
+2009
+</p>
+<hr />
+<a name="NEW_USB_STACK" /><h3>NEW USB STACK</h3>
+
+<p class='para'>
+Thanks
+to
+a
+mountain
+of
+hard
+work
+done
+by
+<a href="http://lsub.org/who/nemo">Professor
+Francisco
+Ballesteros</a>
+of
+Rey
+Juan
+Carlos
+University,
+we
+now
+have
+a
+<a href="http://9fans.net/archive/2009/05/186">greatly-modernized
+USB
+stack</a>,
+including
+support
+for
+EHCI
+(USB
+2.0)
+and
+improved
+support
+for
+USB
+mice,
+keyboards,
+and
+storage
+devices
+during
+booting.
+Thanks
+are
+due
+to
+Nemo
+for
+doing
+the
+work
+and
+to
+Geoff
+for
+integrating
+it
+into
+the
+distribution.
+</p>
+
+<p class='para'>
+-
+May
+26,
+2009
+</p>
+<hr />
+<a name="FOURTH_INTERNATIONAL_WORKSHOP_ON_PLAN_9" /><h3>FOURTH INTERNATIONAL WORKSHOP ON PLAN 9</h3>
+
+<p class='para'>
+IWP9
+2009
+will
+be
+held
+October
+21—23
+in
+Athens,
+Georgia,
+USA,
+hosted
+by
+Coraid.
+</p>
+
+<p class='para'>
+The
+home
+page
+is
+<a href="http://iwp9.quanstro.net">here</a>.
+</p>
+<hr />
+<a name="SOURCES_BROWSING_REINSTATED" /><h3>SOURCES BROWSING REINSTATED</h3>
+
+<p class='para'>
+After
+a
+hiatus
+of
+about
+two
+months,
+sources
+browsing
+via
+HTTP
+has
+been
+provisionally
+re-enabled.
+If
+it
+is
+overused
+and
+bogs
+down
+our
+web
+server,
+it
+will
+go
+away
+again.<hr />
+</p>
+
+<a name="THIRD_INTERNATIONAL_WORKSHOP_ON_PLAN_9" /><h3>THIRD INTERNATIONAL WORKSHOP ON PLAN 9</h3>
+
+<pre>
+From: spyros lalis &lt;lalis@inf...&gt;;
+Subject: [9fans] next iwp9
+Date: Thu, 06 Mar 2008 22:07:28 +0200
+
+Dear 9fans,
+
+With the initiative of Francisco Ballesteros and
+Sape Mullender, a time and a place have been set
+for the next International Workshop on Plan 9.
+
+IWP9 will be held on October 30 and 31 in Volos, Greece.
+(located by the sea, between Athens and Thessaloniki)
+</pre>
+
+<p class='para'>
+The
+home
+page
+is
+<a href="http://iwp9.inf.uth.gr">here</a>.
+</p>
+<hr />
+<a name="VENTI_UPGRADE" /><h3>VENTI UPGRADE</h3>
+
+<p class='para'>
+The
+newer
+version
+of
+venti
+(our
+block
+store)
+previously
+known
+as
+nventi
+has
+been
+promoted
+to
+be
+the
+standard
+venti.
+The
+distribution
+and
+sources
+are
+now
+up
+to
+date.
+</p>
+<hr />
+<a name="SECOND_INTERNATIONAL_WORKSHOP_ON_PLAN_9" /><h3>SECOND INTERNATIONAL WORKSHOP ON PLAN 9</h3>
+
+<p class='para'>
+On
+the
+20th
+anniversary
+of
+Plan
+9's
+creation:
+</p>
+
+<pre>
+Date: Thu, 9 Aug 2007 10:15:28 -0400
+From: Sape Mullender &lt;sape@huygens.org&gt;
+To: 9fans@cse.psu.edu
+Subject: [9fans] 2nd International Workshop on Plan 9
+</pre>
+
+<pre>
+We have started preparations to host the Second very International
+Workshop on Plan 9 at Bell Labs MH in December of this year, almost
+certainly Monday December 3 and Tuesday December 4.
+</pre>
+
+<p class='para'>
+The
+call
+for
+papers
+is
+<a href="http://plan9.bell-labs.com/iwp9">here</a>.
+</p>
+
+<p class='para'>
+For
+directions
+to
+Bell
+Labs
+MH,
+see
+<a href="http://netlib.bell-labs.com/where/">here</a>.
+</p>
+<hr />
+<a name="PLAN_9_AT_THE_GOOGLE_SUMMER_OF_CODE_2007" /><h3>PLAN 9 AT THE GOOGLE SUMMER OF CODE 2007</h3>
+
+<p class='para'>
+Plan
+9
+from
+Bell
+Labs
+is
+participating
+in
+the
+<a href="http://code.google.com/soc/">Google
+Summer
+of
+Code</a>,
+see
+<a href="http://gsoc.cat-v.org">gsoc.cat-v.org</a>
+for
+more
+information.
+</p>
+<hr />
+<a name="KERNEL_CHANGES_AND_VESA_SUPPORT" /><h3>KERNEL CHANGES AND VESA SUPPORT</h3>
+
+<p class='para'>
+VESA
+video
+support
+has
+been
+added
+to
+the
+default
+distribution
+and
+the
+kernel
+has
+new
+PC
+MMU
+code
+that
+has
+a
+cleaner
+separation
+of
+virtual
+and
+physical
+addresses,
+which
+should
+address
+the
+various
+mmukmap2
+panics
+that
+people
+have
+reported
+over
+the
+years.
+</p>
+
+<p class='para'>
+To
+boot
+one
+of
+these
+new
+kernels
+you
+will
+need
+to
+copy
+the
+new
+/386/9load
+to
+your
+9fat
+or
+floppy
+disk
+so
+that
+it
+can
+cope
+with
+the
+new
+kernel
+load
+address.
+(It
+will
+still
+handle
+the
+old
+ones
+too.)
+</p>
+
+<p class='para'>
+The
+pc
+kernels
+use
+the
+BIOS
+E820
+memory
+map
+when
+available
+rather
+than
+poking
+at
+each
+megabyte
+until
+they
+decide
+there's
+no
+more.
+If
+you
+have
+a
+system
+where
+this
+causes
+problems,
+you
+can
+put
+"*noe820scan="
+in
+plan9.ini,
+and
+then
+please
+LET
+US
+KNOW
+so
+we
+can
+try
+to
+fix
+them.
+</p>
+
+<p class='para'>
+There
+is
+also
+a
+new
+driver
+sdmv50xx
+for
+the
+Marvell
+88SX5040
+family
+of
+SATA
+cards.
+Thank
+you
+to
+<a href="http://www.coraid.com/">Coraid</a>.
+</p>
+
+<p class='para'>
+If
+you
+see
+any
+problems
+mail
+9fans
+(<a href="../../mailing_lists">mailing
+lists</a>)
+or
+submit
+patches
+(<a href="../../how_to_contribute">how
+to
+contribute</a>).
+</p>
+
+<p class='para'>
+<a href="../../uriel">uriel</a>
+-
+Thu
+Dec
+15
+2005
+-
+from
+posts
+by
+<a href="../../rsc">rsc</a>'s
+to
+9fans:
+<a href="http://groups.google.com/group/comp.os.plan9/msg/1c487d634fee2e57">original
+announcement</a>,
+<a href="http://groups.google.com/group/comp.os.plan9/msg/5894c18258c5e3a2?dmode=source">update</a>.
+</p>
+<hr />
+<a name="PLAN_9_LIVES_ON" /><h3>PLAN 9 LIVES ON</h3>
+
+<p class='para'>
+<a href="http://www.unixreview.com/documents/s=9846/ur0508l/ur0508l.html">Peter
+Salus</a>,
+and
+later
+Slashdot,
+broke
+the
+news
+that
+Dept.
+1127,
+the
+Computing
+Science
+Research
+Center
+at
+Bell
+Labs
+and
+the
+birthplace
+of
+Unix
+and
+Plan
+9,
+has
+been
+broken
+up
+by
+Bell
+Labs
+management.
+The
+various
+members
+will
+be
+reabsorbed
+into
+two
+or
+three
+other
+departments
+in
+the
+latest
+internal
+reorganization.
+</p>
+
+<p class='para'>
+Sape
+Mullender
+wrote
+to
+9fans
+to
+reassure
+that
+Plan
+9
+work
+continues:
+</p>
+
+<pre>
+1127 ceased to exist some time ago.  The department was renamed and got a
+much longer number which, of course, I can no longer remember.  The current
+split of what's left of 1127 is not considered to be a big deal by most
+members of the department.  There have always been many interdepartmental
+collaborations, so 1127 has always been more of a management entity than a
+group/club/fraternity.
+
+[...]
+
+Plan 9 is alive and reasonably well as our current vehicle for wireless 
+systems research. Plan 9 has gone embedded (but rest assured, all our
+wireless software runs in user space, using Plan 9's real-time scheduler to
+make sure it runs when it needs to.
+
+Using Plan 9, wireless code becomes useful in a fraction of the time that 
+code can be made to run on all those commercial embedded operating systems
+(which I do not care to mention) and also much quicker than on Linux which I
+am sorry to say is just too large and illegible.
+</pre>
+
+<p class='para'>
+Releases
+will
+continue
+with
+their
+usual
+regularity.
+</p>
+
+<p class='para'>
+<a href="../../uriel">uriel</a>
+-
+August
+19,
+2005
+(updated
+by
+<a href="../../rsc">rsc</a>
+-
+October
+12,
+2005)<hr />
+</p>
+
+<a name="LIBRE_SOFTWARE_MEETING_SLIDES" /><h3>LIBRE SOFTWARE MEETING SLIDES</h3>
+
+<p class='para'>
+The
+slides
+form
+Charles
+Forsyth
+talk
+at
+<a href="../../Libre_Software_Meeting_2005">Libre
+Software
+Meeting
+2005</a>
+are
+online:
+</p>
+
+<ul>
+
+<li>
+Plan
+9
+slides:
+<a href="http://www.9con.org/rml/slides/title.html">http://www.9con.org/rml/slides/title.html</a>
+</li>
+
+<li>
+9P
+slides:
+<a href="http://www.9con.org/rml/slides/title.html">http://www.9con.org/rml/slides/title.html</a>
+</li>
+</ul>
+
+<p class='para'>
+And
+as
+an
+extra,
+the
+paper
+<a href="http://www.9con.org/rml/servers.pdf">The
+Ubiquitous
+File
+Server
+in
+Plan
+9</a>
+</p>
+
+<p class='para'>
+<a href="../../uriel">uriel</a>
+-
+August
+2,
+2005<hr />
+</p>
+
+<a name="NEWS_NEWS" /><h3>NEWS NEWS</h3>
+
+<p class='para'>
+As
+agreed
+during
+WTH,
+a
+wiki
+page
+to
+collect
+the
+news
+from
+the
+Plan
+9
+community
+has
+been
+created,
+feel
+free
+to
+post
+news
+items
+at
+the
+top
+of
+this
+page.
+</p>
+
+<p class='para'>
+<a href="../../uriel">uriel</a>
+-
+August
+1,
+2005<hr />
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Tue Feb 11 16:27:56 EST 2014</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

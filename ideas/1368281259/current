@@ -1,0 +1,49 @@
+Ideas
+D1368281259
+Aa
+#This page is a collection of project ideas, things which might be
+#useful or otherwise nice to have. It is inspired by the "Ideas page"
+#required by Google Summer of Code, but includes things which might
+#not be suitable for [GSoC] for one reason or another, either because
+#they aren't sufficently explored yet, or are not summer-sized, or
+#whatever other reason. That said, there's no fundamental reason
+#ideas from this page couldn't be turned into suitable GSoC projects.
+#
+#In editing this page, avoid having one idea swamp the others. If the
+#description or references for any given idea grows to more than one
+#or two short paragraphs, it likely deserves its own page. Create
+#one, and link to it from here, providing a very brief summary.
+#
+#Our GSoC ideas pages from years past may also be interesting
+#reading: [GSoC-2013-ideas] [GSoC-2012-ideas] [GSoC-2011-ideas].
+#
+# *	draw(3) proxy (Anthony Sorace)
+#
+#It would be nice to have a user-mode proxy for the draw device,
+#which would present the same interface to applications and pass the
+#messages to a real draw device. A reasonable implementation would
+#not be a straight pass-through, but the bookkeeping for valid
+#connections shouldn't be too difficult. The proxy function itself
+#likely wouldn't be terribly interesting, but would be a great
+#foundation for doing all sorts of interesting transformations,
+#including mirroring or concatenating multiple draw devices,
+#providing a replay of messages, or providing re-attachable sessions.
+#
+#See also Inferno's drawmux(2) and dmview(1) and [devdrawserver |
+#https://github.com/mariusaeriksen/devdrawserver], a version of this
+#idea for plan9port.
+#
+# *	Synergy-workalike (Anthony Sorace)
+#
+#[Synergy | http://synergy-foss.org] is a bit of software for Windows
+#and Unix-like systems which allows a keyboard and mouse physically
+#connected to one system to control them all. With the Plan 9
+#keyboard and mouse input model, this should be a relatively simple
+#proxy which creates virtualized keyboard and mouse files on
+#controlled systems (including, presumably, the host), mounted before
+#rio (or acme or whatnot) is started.
+#
+#Plan B's kbdfs and mousefs are implementations of this idea. kbdfs
+#claims it needs a rewrite; both are written around the Plan B
+#discovery and sharing model of "boxes".
+#

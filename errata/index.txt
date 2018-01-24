@@ -1,0 +1,30 @@
+Errata
+
+Various known bugs and problems:
+
+ *	ms2html(1) produces seriously broken output for various inputs.
+	Use htmlroff(1) instead.
+ *	acme: Copy chord doesn't work in tag bar
+ *	fossil: Allowing your fossil partition to fill completely can be
+	dangerous. [Discussion of issue and possible solutions. |
+	http://9fans.net/archive/2005/12/124]
+ *	gif: animated gifs are drawn on a black background rather than on
+	the previous animated frame. [Example (appologies for the quality of
+	the joke) |
+	http://plan9.bell-labs.com/sources/contrib/steve/broken-animated-image.gif]
+ *	replica(1) doesn't log the difference between a file and a dir so
+	if a replica'ed object changes from one to the other madness ensues.
+ *	The auto-completion feature (INS or CTRL-F in 9term) doesn't work
+	inside subtrees mounted after the plumber was started; see
+	plumber(4).
+
+APE BUGS
+
+ *	sed: if no trailing new line there is no output. Newlines are
+	terminators, not separators; a text file without a final newline is
+	malformed and you get undefined results. eg.,:
+! # echo foo |sed 's/o/x/'
+! fxo
+! # echo -n foo |sed 's/o/x/'
+! #
+

@@ -1,0 +1,15 @@
+Games
+D1202330642
+Ackeen
+#Plan9 comes with some games in /bin/games like sokoban and sudoku,
+#but the interesting stuff is mostly in the [Contrib] directory.
+#
+#A non exhaustive list includes:
+#
+#GO
+#
+#There are quite a few go games out there:
+# *	paurea has a little goban at /n/sources/contrib/paurea/goban/
+# *	gnugo-3.6 has been ported by andrey
+#	/n/sources/contrib/paurea/goban/gnugo-3.6.tgz (needs gcc)
+#

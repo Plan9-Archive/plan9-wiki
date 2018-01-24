@@ -1,0 +1,225 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Errata (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Errata <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Wed Sep 26 20:02:34 EDT 2012</a>, geoff
+</div><hr />Various
+known
+bugs
+and
+problems:
+<ul>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ms2html"><i>ms2html</i>(1)</a>
+produces
+seriously
+broken
+output
+for
+various
+inputs.
+Use
+<a href="http://plan9.bell-labs.com/magic/man2html/1/htmlroff"><i>htmlroff</i>(1)</a>
+instead.
+</li>
+
+<li>
+acme:
+Copy
+chord
+doesn't
+work
+in
+tag
+bar
+</li>
+
+<li>
+fossil:
+Allowing
+your
+fossil
+partition
+to
+fill
+completely
+can
+be
+dangerous.
+<a href="http://9fans.net/archive/2005/12/124">Discussion
+of
+issue
+and
+possible
+solutions.</a>
+</li>
+
+<li>
+gif:
+animated
+gifs
+are
+drawn
+on
+a
+black
+background
+rather
+than
+on
+the
+previous
+animated
+frame.
+<a href="http://plan9.bell-labs.com/sources/contrib/steve/broken-animated-image.gif">Example
+(appologies
+for
+the
+quality
+of
+the
+joke)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/replica"><i>replica</i>(1)</a>
+doesn't
+log
+the
+difference
+between
+a
+file
+and
+a
+dir
+so
+if
+a
+replica'ed
+object
+changes
+from
+one
+to
+the
+other
+madness
+ensues.
+</li>
+
+<li>
+The
+auto-completion
+feature
+(INS
+or
+CTRL-F
+in
+9term)
+doesn't
+work
+inside
+subtrees
+mounted
+after
+the
+plumber
+was
+started;
+see
+<a href="http://plan9.bell-labs.com/magic/man2html/4/plumber"><i>plumber</i>(4)</a>.
+</li>
+</ul>
+
+<a name="APE_BUGS" /><h3>APE BUGS</h3>
+
+<ul>
+
+<li>
+sed:
+if
+no
+trailing
+new
+line
+there
+is
+no
+output.
+Newlines
+are
+terminators,
+not
+separators;
+a
+text
+file
+without
+a
+final
+newline
+is
+malformed
+and
+you
+get
+undefined
+results.
+eg.,:
+</li>
+</ul>
+
+<pre>
+# echo foo |sed 's/o/x/'
+fxo
+# echo -n foo |sed 's/o/x/'
+#
+</pre>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Wed Sep 26 20:02:34 EDT 2012</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

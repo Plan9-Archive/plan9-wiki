@@ -1,0 +1,165 @@
+THM 2005-05-19 Summary
+D1273173173
+Auriel
+#Notes taken by [kuroneko]
+#
+#Status reports:
+#
+#20H
+#
+#Multiauthdom:
+# *	It "takes the keys of the users on the other nodes and uses them
+#	for the tickets."
+# *	All done except for factotum
+# *	waiting on ddr.9grid.de to come back online
+# *	Authsrv + backend are working.
+# *	Code available in ddr.9grid.de
+# *	Still Private Key based
+# *	rsc9 suggests that this should be replaced to use public keys
+#
+#Modularised Installer.
+#
+#dtLinux v2.6 with v9fs.
+#
+#BRUCEE
+#
+#(via [boyd]) OzInferno is done but release on hold until docs are
+#writen, "doesn't need much doc 'cause the vita stuff will largely
+#do".
+#
+#Will IRC first week of june when in paris.
+#
+#ERICVH
+#
+#(See [ericvh] for details)
+#
+#9grid.us:
+# *	slowly coming to life.
+# *	main function to be a drawterm host
+# *	for checking out 9 vs real grid apps
+# *	should be available after the weekend
+#
+#v9fs:
+# *	up to release canidate 5
+# *	complaints from pre-LKML community diminishing
+# *	likely to go to LKML on Monday
+#
+#Summer projects:
+# *	reliability stuff
+# *	linux kernel server support (more than u9fs)
+# *	"want to be able to attach gateway devices, etc. directly to it."
+#
+#Interested in:
+# *	authsrv for Linux
+# *	plan9ports being split up more linux-like
+# *	"split up the (p9p) components a bit so I can have people just
+#	grab the libraries and build environment to build synthetic file
+#	servers under Linux"
+#
+#KURONEKO
+#
+#(See [kuroneko] for details)
+#
+#Sparc32:
+# *	up to MMU mapping
+# *	xalloc needs fixing
+# *	needs multiple arbitary zone allocation
+#
+#Fs64:
+# *	need to retest
+#
+#Fs:
+# *	jukebox behaviour workarounds
+# *	/n/sources/contrib/ccollins/fs
+# *	document build procedures
+#
+#GDIAZ
+#
+#9grid.org.es stalled due to workload.
+#
+#Will talk to 20h about cross-domain auth.
+#
+#MAJOR-WILLARD (BOYD)
+#
+#Bad hand slowing work.
+#
+#Compilers fix for to handle large macro expansions:
+# *	"99.9% done. the 0.1% is subtle"
+# *	cmd/8c and cmd/cc are on contrib/boyd
+#
+#NASHI
+#
+#Running tip9ug servers, "everyone behaves good on mordor."
+#
+#Talking about multi authdom in tip9ug.
+#
+#vt3 adds: "working on japanese fonts, finding security issues with
+#venti, just being modest"
+#
+#OKSEL
+#
+#Interested in USB work, modified usbd to automatically load usbmouse
+#when a mouse gets plugged in.
+#
+#QUINTILE
+#
+#Cifs, adding ntlmv2 auth, message signing, dfs support.
+#
+#Seperating libasn1 from libsec, leading up to ldapfs, snmpfs and krb
+#in factotum.
+#
+#Chatfs as a /net service providing msim, yahoo, jabber, etc.
+#
+#All incomplete - published when ready.
+#
+#RMILLER
+#
+#Working on usb storage improvements soon.
+# *	usb itself needs work as its too slow to be really usable for
+#	storage
+# *	many devices don't boey the spec either
+# *	poor performance attributed to "only being able to send one
+#	packet per usb frame"
+# *	forsyth may be looking at usb as well
+# *	usb booting should work if supported by bios(not sure about 9load)
+#
+#RMINNICH
+#
+#Port to Xen3.0
+# *	goes really slowly
+#
+#Working with vic zandy'x xcpu:
+# *	"xcpu is really really nice"
+# *	server for remote execution
+# *	not released yet
+# *	for lightweight cluster nodes.
+# *	similar to linux bproc stuff
+#
+#Strongarm
+# *	enet driver has issue
+#
+#Try to work with k8 once jmk releases initial kernel code.
+#
+#RSC9
+#
+#Wkj has almost working sshv2.
+#
+#Working on venti rewrite:
+# *	almost in a releaseable state
+# *	jmk + rsc9 will be deploying a new venti to test it
+# *	considerably faster than old venti
+# *	p9p release first, then plan9 native
+# *	available in the CVS as p9p
+#
+#TMCM
+#
+#Pointed out buffer overflow vulnerability report:
+#http://schtarb.free.fr/plan9.txt rsc9 said he would look into it if
+#he had some time, but asked for volunteers to do it.
+#
+#URIEL
+#
+#(See [uriel] for details)
+#
+#Hacking on wiki and docs.
+#

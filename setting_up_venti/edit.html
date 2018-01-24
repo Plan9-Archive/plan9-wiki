@@ -1,0 +1,193 @@
+<html>
+<head>
+<title>Setting up Venti (Editing Sat May 24 14:48:14 EDT 2008 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Setting up Venti</b></font> (Editing Sat May 24 14:48:14 EDT 2008 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Setting up Venti">
+<input type="hidden" name="version" value="1211654894">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+You'll want to run Venti from raw disk partitions rather than files
+on a file system.
+
+If you want to mirror your partitions using several disks, read the
+last section of [setting up fossil] to see an example of how to use
+fs(3) to do that.
+
+Venti storage is divided into a log holding the data and an index
+mapping SHA1 hash to position in the log. The log is split into
+fixed-size (say, 500MB) chunks called arenas. There may be more than
+one file holding arenas for the Venti server. Their concatenation
+forms the actual log. The index is made up of individual index
+section files. You want about 5% as much index space as you have
+arena space. So if you have 100GB of arenas, plan on 5GB of index.
+
+Use disk/fdisk to create a Plan 9 partition on the disks you wish to
+use for Venti. Then use disk/prep to subdivide the Plan 9 partition
+into the arena files or index sections that Venti will use. The rest
+of this document assumes that you named the arena files
+/dev/sdC0/arenas{0,1} and that you named the index sections
+/dev/sdC0/isect{0,1}.
+
+Format the arenas with:
+
+! venti/fmtarenas arenas0 /dev/sdC0/arenas0
+! venti/fmtarenas arenas1 /dev/sdC0/arenas1
+
+Format the index sections with:
+
+! venti/fmtisect isect0 /dev/sdC0/isect0
+! venti/fmtisect isect1 /dev/sdC0/isect1
+
+Note that formatting the arenas and the index sections zeros the disk
+partitions, so it takes a long time.
+
+Create a venti.conf file containing:
+
+! # the name of the index
+! index main
+! 
+! # the index sections
+! isect /dev/sdC0/isect0
+! isect /dev/sdC0/isect1
+! 
+! # the arenas
+! arenas /dev/sdC0/arenas0
+! arenas /dev/sdC0/arenas1
+
+Format the index itself with:
+
+! venti/fmtindex venti.conf
+
+Note that once you format the index you should not change the order
+of the index sections nor should you change the order of the arenas.
+It is safe to add new arenas.
+
+If you plan on booting the machine with venti/fossil as your root you
+should write the venti config into the arenas0 file:
+
+! venti/conf -w /dev/sdC0/arenas0 < venti.conf
+
+Now the disks are ready. You can start the Venti server with
+
+! venti/venti -w
+
+The file venti.conf must be in the current directory.
+
+Set the environment variable: venti=your-ip-address
+
+if required, you can put this in the startup scripts like
+/rc/bin/termrc. You can also add this line in plan9.ini
+
+Test the server with:
+
+! vac -f /tmp/x.vac /adm
+! vacfs /tmp/x.vac
+! ls -l /n/vac
+
+Congratulations! You have a Venti.
+
+If you plan on booting with venti/fossil as your root you should add
+venti=/dev/sdC0/arenas0 in your plan9.ini. During boot the
+configuration file previously written to the start of this partition
+with the venti/conf program will be read back and used.
+
+See venti.conf(6), venti(8), and ventiaux(8) for more information.
+
+PERFORMANCE
+
+If you're worried about performance, start the subpartitions at
+sector offsets that are multiples of 16 so that 8k reads will be
+8k-aligned on the disk. Or use type other in disk/fdisk for the
+partitions, but then you don't get such good partition names.
+
+Venti's performance is tied to the number of index sections. If
+you're going for high performance, get a handful of small disks to
+use for the index, so that many reads can happen in parallel.
+
+SECURITY
+
+By default Venti accepts connections from anyone, anywhere.
+
+If you are running in a hostile environment and don't want just
+anyone connecting to your Venti server, you can run it on the
+loopback device. Add loopbackmedium to your kernel (it's already in
+the pccpu and pcauth kernels) and then run
+
+! ip/ipconfig loopback /dev/null 127.1
+
+to set up a loopback IP address. (Note that the loopback medium is
+not compiled into the PC kernel by default). Then you can start Venti
+with
+
+! venti/venti -a tcp!127.1!venti -h tcp!127.1!http -w
+
+and it will only take connections from 127.1.
+
+TEMPORARY FILES AND DIRECTORIES
+
+For some purposes it is desirable to exclude files or directories
+from being archived to venti. For example, if you want your $home/tmp
+excluded, set the 't' flag (temporary) for it (see chmod(1) for
+details):
+
+! chmod +t $home/tmp
+
+After that, no files in tmp will be archived to venti. You can set
+the 't' flag for files, too
+
+LIVING WITH VENTI: VAC SCORES AND FLFMT
+
+The vac score given on the fossil console after an archival snapshot
+differs from the scores given by the vac command (on the console).
+Only the former contains /active, /snapshot and /archive. And only
+the former can therefore be used to do a flfmt -v <score>
+
+The vac command won't show up these root scores. But Russ Cox posted
+scripts to the 9fans mailinglist. One of them gets the most recent
+root score of a particular fossil and the other one prints the scores
+subsequent to it.
+
+You can find the scripts (and his explanation) on
+[http://lists.cse.psu.edu/archives/9fans/2003-March/023470.html]
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

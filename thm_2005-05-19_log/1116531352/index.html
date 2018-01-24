@@ -1,0 +1,766 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>THM 2005-05-19 Log (as of Thu May 19 15:35:52 EDT 2005)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>THM 2005-05-19 Log</h1>
+<h2><i>-as of Thu May 19 15:35:52 EDT 2005-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+
+<pre>
+14:40 &lt;kuroneko&gt; should we take attendance?
+14:40 &lt;rsc9&gt; howdy everyone.  
+14:40 &lt;uriel&gt; could be worse ;)
+14:40 &lt;rmiller&gt; hi
+14:40 &lt;uriel&gt; ron is not here yet, but he didn't confirm if he would come, so I think we probably should start...
+14:40 &lt;ericvh&gt; how much longer do we want to give Ron to show up?
+14:40 &lt;Major-Willard&gt; yo russ
+14:41 &lt;ericvh&gt; okay.
+14:41 &lt;kuroneko&gt; we should make sure the logs and notes are available
+14:41 &lt;Major-Willard&gt; i have pinged brz
+14:41 &lt;kuroneko&gt; that way latecomers can catch up
+14:41 &lt;uriel&gt; ericvh: lets start with the presentations and the status reports, if he comes he can read backlog...
+14:41 &lt;uriel&gt; kuroneko: yes, I'm logging
+14:41 &lt;uriel&gt; (if someone does too for backup, even better)
+14:41 &lt;ericvh&gt; Okay, how do we want to handle order?
+14:41  * kuroneko starts taking notes in acme.
+14:41 &lt;uriel&gt; alphabetically?
+14:42 &lt;uriel&gt; 20h, you start :)
+14:42 &lt;__20h__&gt; No, have to edit jacc.
+14:42 &lt;uriel&gt; __20h__: come on, what are you working on, and so on..
+14:43 &lt;__20h__&gt; Ok: 1.) Multiauthdom 2.) Modularisation of the Installer 3.) dtLinux v2.6 with v9fs
+14:43 &lt;ericvh&gt; Where are you with (1)?
+14:43 -!- rawhump [~tiitl@math.ut.ee] has quit ["Leaving"]
+14:43 &lt;__20h__&gt; If ddr.9grid.de gets online again, then only factotum is the part missing.
+14:43 -!- haraoka [~yoshiyuki@59.187.204.155] has joined #plan9
+14:44 -!- noselasd [~noselasd@80.239.96.162] has quit ["leaving"]
+14:44 &lt;__20h__&gt; Authsrv and the backend are working.
+14:44 &lt;uriel&gt; __20h__: what is your plan? how does it compare to pressotto proporsal?
+14:44 &lt;ericvh&gt; When you get a chance can you put something up on the wiki about how this works and where to get authsrv and the backend?
+14:44 -!- noselasd [~noselasd@80.239.96.162] has joined #plan9
+14:44 &lt;__20h__&gt; The code is on my home CPUsrv and I won't release an alpha.
+14:45 &lt;uriel&gt; __20h__: can you at least give some coments on it's design?
+14:45 &lt;__20h__&gt; uriel, I take the keys of the users on the other nodes and use them for the tickets.
+14:45 &lt;rsc9&gt; so this is private key still?
+14:45 &lt;__20h__&gt; Yes, it will be.
+14:46 &lt;rsc9&gt; I think that's a mistake.  If you're going to put in a new authsrv etc. and then be passing keys around, they should be public keys.
+14:46 &lt;__20h__&gt; I want keyfs to be able to understand groups, so the node owner can create users for it.
+14:46 &lt;__20h__&gt; So these can import the keyfs which does only export the keys.
+14:46 &lt;rsc9&gt; That doesn't preclude public keys.
+14:46 &lt;__20h__&gt; I mean /mnt/keys/$user/key;
+14:47 &lt;rsc9&gt; Exporting keyfs means that now lots of auth servers have my key, instead of just one machine.  This doesn't make me feel safer.
+14:48 &lt;rsc9&gt; I just hate to see more work go into private key auth when it's just not the right solution -- we built factotum to have a convenient way to store public keys.
+14:48 &lt;uriel&gt; __20h__: any comments, any chance you an russ and maybe pressoto(and others interested in the matter) can discus this and come up to some greement?
+14:49 &lt;__20h__&gt; No, uriel.
+14:49 &lt;uriel&gt; __20h__: any reasons? 
+14:50 &lt;__20h__&gt; No.
+14:50 &lt;uriel&gt; ok, lets move on then
+14:50 &lt;rsc9&gt; Well, I'm glad this discussion is going so well.  We should do this every day!
+14:50 &lt;ericvh&gt; ;)
+14:50 &lt;uriel&gt; rsc9: heh
+14:50 &lt;kuroneko&gt; heh
+14:50 &lt;uriel&gt; axelB: ?
+14:50 &lt;Major-Willard&gt; brz: "ozinferno is living on Vashon Island off Seattle where it is very tranquil. it will be in NJ in two weeks and then paris."
+14:50 &lt;kuroneko&gt; who's stepping up next? :)
+14:51 &lt;ericvh&gt; better to keep things moving rather than getting into any in depth discussions anyways.
+14:51 &lt;ericvh&gt; in-depth discussions are for the mailing list, not for this sort of meeting.
+14:51 &lt;vt3&gt; agreed
+14:51 &lt;uriel&gt; yes
+14:51 &lt;uriel&gt; axelB seems to be away
+14:51 &lt;uriel&gt; moving on, dho?
+14:51 &lt;uriel&gt; away too
+14:51 &lt;ericvh&gt; uriel: check the idle times first.
+14:51 &lt;uriel&gt; if I skip someone let me know
+14:51 &lt;uriel&gt; ericvh: yes, I'm an idiot
+14:52 &lt;Major-Willard&gt; he's in CA
+14:52 &lt;kuroneko&gt; ericvh next? :)
+14:52 &lt;uriel&gt; ericvh: I think it's your turn then :)
+14:52 &lt;ericvh&gt; okay - 9grid.us is slowing coming to life, it's main purpose is going to be a host for people to drawterm to in order to check out plan9 versus any sort of real grid apps.
+14:53 &lt;ericvh&gt; With luck, it'll be available after the weekend.
+14:53 &lt;nashi&gt; nice!
+14:53 -!- dgil [~dgil@213.0.106.125] has quit ["Abandonando"]
+14:53 &lt;ericvh&gt; the v9fs project is up to RC5 and the complaints from the pre-LKML communities seem to be diminishing, so RC5 will likely go to LKML on Monday.
+14:53 &lt;uriel&gt; cool, one question about the grids, falling short of multihost auth, any chance to have an standarized way to get accounts?
+14:53 &lt;ericvh&gt; uriel: that's an in depth discussion for a mailing list.
+14:54 &lt;uriel&gt; ericvh: true, sorry..
+14:54 &lt;ericvh&gt; but its a good point, and something which should be discussed.  I have no problem with authing off of sources though.
+14:54 &lt;uriel&gt; i was wondering how the sources account creation works
+14:54 &lt;uriel&gt; rsc9: ?
+14:54 &lt;ericvh&gt; I have one of nemo's students (Gorka) showing up in mid-June to start working on 9P reliability stuff.
+14:54 &lt;ericvh&gt; (wait for it uriel)
+14:55 &lt;ericvh&gt; rsc9: is your app-space reliability stuff on sources somewhere?
+14:55  * uriel tries to calm down, sorry, I'm really stressed
+14:55 &lt;Major-Willard&gt; brz: you can also say that i'll IRC first week of june when in paris
+14:55 &lt;rsc9&gt; Sources account creation works by interacting with a web server.  You could just use sources accounts as your auth domain if you wanted.
+14:56 &lt;uriel&gt; rsc9: yes, I was wondering how httpd that runs as none can create accounts...
+14:56 &lt;ericvh&gt; This summer there are two main projects for me: the reliability stuff and Linux kernel server support (which will likely be more than just u9fs as I want to be able to attach gateway devices, etc. directly to it).
+14:57 &lt;rsc9&gt; There is a connection to a program in /srv that talks to a fossil fscons to create new accounts.
+14:57 &lt;ericvh&gt; The other things that I'm interested in pursuing on the side is authsrv for Linux (already available?) and perhaps packaging plan9ports in a more Linux fashion (split up the components a bit so I can have people just grab the libraries and build environment to build synthetic file servers under Linux).
+14:57 -!- mtgx [~mtgx@pD9553868.dip.t-dialin.net] has quit [Remote closed the connection]
+14:58  * ericvh is finished now.
+14:58 &lt;uriel&gt; ok, should should we move on?
+14:58 &lt;kuroneko&gt; [let me catch up with my notes]
+14:58 &lt;uriel&gt; :)
+14:59 &lt;ericvh&gt; rsc9: do you have any problem with me repackaging p9p?  
+14:59 &lt;reezer&gt; I cant add a new user: if I use "disk/kfscmd 'newuser reezer'" It says "kfscmd: can't open commands file"
+14:59 &lt;ericvh&gt; I was thinking direct ease of use: rpms and what not.
+14:59 &lt;rsc9&gt; ericvh: short answer: no, long answer: let's talk elsewhere.
+14:59 &lt;ericvh&gt; rsc9: sure..
+14:59 &lt;uriel&gt; reezer: we are in a meeting now, please ask in #acme or wait until we are done
+14:59 &lt;kuroneko&gt; I'm interested in having a full fossil/venti like fileserver (or even ken-fs) hosted on LInux at some point.
+15:00 &lt;reezer&gt; ok
+15:00 &lt;uriel&gt; haraoka: ?
+15:00 &lt;kuroneko&gt; [it would have saved me some major headaches recently]
+15:00 &lt;rsc9&gt; porting fossil should not be too hard.  
+15:00 &lt;rsc9&gt; seems a bit weird, but not hard.
+15:01 -!- dgil [~dgil@213.0.106.125] has joined #plan9
+15:02 &lt;Major-Willard&gt; brz: ozinferno doesn't need much doc 'cause the vita stuff will largely do but i just ain't got the time
+15:02 &lt;uriel&gt; haraoka seems to be away(?)
+15:02 &lt;uriel&gt; Jim7J1AJH: your turn :)
+15:03 &lt;Jim7J1AJH&gt; no news.
+15:03 &lt;uriel&gt; Jim7J1AJH: ok :)
+15:03 &lt;uriel&gt; joe_c: now you! and you better be around! :)
+15:04 &lt;ericvh&gt; future point of order: everyone that has something to say put themselves in the wiki, that way we don't go through this nonsense.
+15:04 &lt;uriel&gt; well, kuroneko, maybe you can start and see if they show up ;)
+15:04 &lt;kuroneko&gt; ok, my turn?
+15:04 &lt;uriel&gt; ericvh: no, it will create a ton of conflicts, just /msg me
+15:05 &lt;ericvh&gt; okay, everyone else msg uriel if they have something to say.
+15:05 &lt;uriel&gt; kuroneko: yes
+15:05 &lt;ericvh&gt; I'm just saying for the future, set agendas will control the chaos.
+15:05 &lt;kuroneko&gt; I've been working on sparc32
+15:05 &lt;kuroneko&gt; [in particular, sun4m hardware support]
+15:06 &lt;rsc9&gt; Is it working?
+15:06 &lt;kuroneko&gt; no progress in about 2-3 weeks, but its up to the point where promcalls vaugely work, the MMU can be mapped (but not reliably)
+15:06 &lt;kuroneko&gt; IOMMU code is still broken.
+15:06 &lt;kuroneko&gt; xalloc is broken
+15:06 -!- dgil [~dgil@213.0.106.125] has quit ["Download Gaim: http://gaim.sourceforge.net/"]
+15:06 &lt;kuroneko&gt; I've just gotten my home standalone plan9 systems working in the last 24 hours (literally)
+15:06 &lt;uriel&gt; any comments on the xalloc plans? (/me remembers someting about it)
+15:07 &lt;kuroneko&gt; so I'll be moving my development onto them soon so I don't have to worry about vmware eating my code
+15:07 &lt;kuroneko&gt; I'm planning to rewrite xalloc
+15:08 &lt;kuroneko&gt; mostly because the initialisation for it is a pain in the ass.
+15:08 &lt;kuroneko&gt; and fixing it now will make other hardware ports easier.
+15:08 &lt;rsc9&gt; keep jmk and me in the loop about your new xalloc design before you rewrite it.  we both have been running into limitations (him on amd64, me on  x86)
+15:08 &lt;kuroneko&gt; the main thing I plan to fix is removing the assumption that memory exists in two contiguous regions
+15:09  * uriel should fish rsc9's comments on xalloc in 9fans a while ago and put them on the "future directions" wiki page...
+15:09 &lt;kuroneko&gt; and replacing it with something that can handle arbitary number of zones
+15:09 &lt;rsc9&gt; kuroneko: if that's all your fixing i don't see why it needs a complete rewrite.  don't fall into the cadt trap.
+15:09 &lt;kuroneko&gt; I don't plan a full rewrite yet.
+15:10 &lt;kuroneko&gt; just the initialisation stuff
+15:10 &lt;kuroneko&gt; and if that suffices, then it'll stay at that
+15:10 &lt;uriel&gt; rsc9: can you give us an idea of what limitations you and jmk have hit, and what would you like to see done about it?
+15:10 &lt;rsc9&gt; that's an in-depth discussion
+15:10 &lt;kuroneko&gt; I'm on 9fans, so I'm happy to pick up comments there.
+15:11 &lt;uriel&gt; rsc9: ok :)
+15:11 &lt;uriel&gt; kuroneko: anything else?
+15:11 &lt;kuroneko&gt; longer term:  general kernel device code cleanup stuff
+15:11 &lt;uriel&gt; kuroneko: did you find any problems trying the fs?
+15:11 &lt;kuroneko&gt; I need to try fs64 again
+15:12 &lt;kuroneko&gt; and I have patches for fs which people probably won't like.
+15:12 &lt;uriel&gt; rsc9: what is the stuatus of fs64 WRT the main distribution where AFAIK the intention is to deprecate everything that is not fossil/venti? :)
+15:13 &lt;kuroneko&gt; my fs patch(es) work around quirks in the IDL PL7100s i'm using
+15:13 &lt;kuroneko&gt; err, s/IDL/IDE/
+15:13 &lt;rsc9&gt; geoff seems to be happy to maintain ken's file server, and we have no problem with that, but bell labs is moving on.
+15:13 &lt;kuroneko&gt; One of the patches should be non-fatal
+15:14 &lt;kuroneko&gt; and should make the jukebox enumeration code a bit more robust
+15:14 &lt;uriel&gt; rsc9: any chance that if geoff wants his newer ken fs would be maintained/integrated into the BL distro?
+15:14 &lt;kuroneko&gt; the other patch is specific to these jukeboxes and isn't worth touching.
+15:15 &lt;uriel&gt; kuroneko: can you at least put that stuff in sources? it might be useful to someone who knows when...
+15:15 &lt;kuroneko&gt; I *should* document the entire build procedure from scratch
+15:15 &lt;kuroneko&gt; can somebody give me a writable directory in sources?
+15:15 &lt;uriel&gt; kuroneko: rsc9 ;) (it's kind of documented in the wiki how to get a sources account)
+15:16 &lt;kuroneko&gt; I've got a sources read account, not a writable directory...
+15:16 &lt;rsc9&gt; if geoff sends us fs code we'll put it on sources.
+15:16 &lt;uriel&gt; rsc9: ok, I will talk with him then
+15:16 &lt;uriel&gt; kuroneko: that is what I was talking about
+15:16 &lt;kuroneko&gt; I personally think if Geoff is happy with fs64 being distributed, then fs should fall to fs64
+15:17 &lt;kuroneko&gt; fs64 should be able to replace it
+15:17 &lt;uriel&gt; kuroneko: I'd like to see his work use sources as main repository, so things are not scatered all over the place, but I will bring it up with him and see what happens
+15:18 &lt;kuroneko&gt; I'd also like to see that there is only one active ken-fs so we don't get reduplicated effort
+15:18 -!- deen [~deen@www.sevsky.net] has joined #plan9
+15:18 &lt;kuroneko&gt; although, geoff and myself are probably the only people fighting with it at the moment thanks to fossil/venti
+15:18 &lt;uriel&gt; kuroneko: yes, absolutely, which is one of the reasons of keeping all work in a centralized place
+15:19 &lt;gdiaz&gt; hi
+15:19 &lt;uriel&gt; kuroneko: done?
+15:19 &lt;kuroneko&gt; I think thats all the important stuff.
+15:19 &lt;uriel&gt; gdiaz: you can take your turn now :)
+15:20 &lt;uriel&gt; (what are you doing, and what is the status, and so on)
+15:21 &lt;gdiaz&gt; oh, i only have tools for my own usage, that are no for general use (log parsers and so on that are useless for general public)
+15:21 &lt;uriel&gt; gdiaz: what about 9grid.es?
+15:22 &lt;uriel&gt; (and maybe your take on the whole cross-dom auth thing)
+15:22 &lt;gdiaz&gt; i've got 9grid.org es (i can't buy .es domain, i need to be a company for that), have the machine and public ip, but is stalled due to work load :(
+15:23 &lt;gdiaz&gt; next month i will have time to speak with 20h and start something more serious attempt about all cross-domain auth, etc
+15:23 &lt;uriel&gt; ok, anything else? 
+15:23 &lt;gdiaz&gt; no :( (i am in need of support :) )
+15:24 &lt;uriel&gt; gdiaz: what kind of support?
+15:24 -!- haraoka [~yoshiyuki@59.187.204.155] has quit [Read error: 110 (Connection timed out)]
+15:24 &lt;uriel&gt; Major-Willard: your turn ;)
+15:24  * Major-Willard has a bad hand -- accident on R&amp;R
+15:24 &lt;Major-Willard&gt; however
+15:24 &lt;uriel&gt; :)
+15:25 &lt;Major-Willard&gt; i have been tweaking the compiler for large macro expansions
+15:25 &lt;Major-Willard&gt; it's 99.9% done
+15:25 &lt;Major-Willard&gt; the 0.1% is subtle
+15:26 &lt;tmcm&gt; oh, are we in the dev meeting?
+15:26 &lt;uriel&gt; Major-Willard: it's all on sources? how much will it take to have it finished up and ready for production?
+15:26 &lt;uriel&gt; tmcm: yes :)
+15:26 &lt;Major-Willard&gt; cmd/8c &amp; cmd/cc are on contrib/boyd
+15:26 &lt;rsc9&gt; Just what we need - large macro expansions.
+15:26 &lt;Major-Willard&gt; i learnt a lot about the compiler
+15:27 &lt;tmcm&gt; rsc9: did you (or anyone else for that matter) have plans to fix those minor buffer overflows from that french report a few weeks ago?
+15:27 &lt;uriel&gt; rsc9: please, lets try to be constructive(hell, even I'm trying to be constructive)
+15:27 &lt;Major-Willard&gt; i ALSO decided that only a fool creates huge macros
+15:27 &lt;tmcm&gt; afaict only like 1 or 2 were of any real consequence security-wise, but still...
+15:27 &lt;uriel&gt; tmcm: wait a sec, we are going by turns ;)
+15:27 &lt;Major-Willard&gt; ahh, fuck it
+15:27 &lt;rsc9&gt; tmcm: it's starred in my gmail.  some day i'll get to it if no one else does.
+15:28 &lt;tmcm&gt; ok
+15:28 &lt;uriel&gt; Major-Willard: ok, anything else?
+15:28 &lt;rsc9&gt; i was being a little constructive.  i'm glad boyd is fixing the limitations, i just agree that only a fool creates huge macros.
+15:28 &lt;Major-Willard&gt; yeah, i been talking to brz about ozinferno
+15:28 &lt;uriel&gt; rsc9: I think we all agree on that one ;)
+15:28 &lt;rsc9&gt; i'd be a lot happier if someone else took care of them though.  a lot just change to snprint and it's done. 
+15:29 &lt;Major-Willard&gt; nope
+15:29 &lt;uriel&gt; rsc9: fixing the macro expansion is useful for the people taht are planning to move kencc to unix..
+15:29 &lt;tmcm&gt; yeah, or add an (if len &lt;...) before the cpy
+15:29 &lt;rsc9&gt; just use snprint.
+15:29 &lt;uriel&gt; any volunteers?
+15:29 &lt;rsc9&gt; or strecpy.
+15:29 &lt;Major-Willard&gt; nah
+15:29 &lt;tmcm&gt; i'll see if i can knock a few out
+15:30 &lt;tmcm&gt; time is tight right now :)
+15:30 &lt;Major-Willard&gt; just change BUFSIZ and re-compile
+15:30 &lt;uriel&gt; tmcm: cool
+15:30 &lt;kuroneko&gt; was the report posted to 9fans?
+15:30 &lt;tmcm&gt; yeah.
+15:30 &lt;uriel&gt; kuroneko: yes
+15:30  * uriel has to look for it and put it on the wiki TODO
+15:30 &lt;kuroneko&gt; I might look at it when I get a chance then
+15:31  * kuroneko has misplaced his fs patches
+15:31 &lt;uriel&gt; ok, nashi?
+15:31 &lt;nashi&gt; okay.
+15:31 &lt;nashi&gt; running tip9ug servers.
+15:31 &lt;uriel&gt; nashi: any issues with it?
+15:31 &lt;nashi&gt; talking about multi authdom in tip9ug too.
+15:31 &lt;tmcm&gt; kuroneko: http://schtarb.free.fr/plan9.txt
+15:32 &lt;tmcm&gt; is the url from the original report
+15:32  * kuroneko adds to the notes
+15:32 &lt;nashi&gt; nothing particular so far.  everyone behaves good on mordor. :)
+15:32 &lt;uriel&gt; nashi: :))
+15:32 &lt;uriel&gt; nashi: aren't you working on some secret projects with vt3?
+15:33 &lt;rsc9&gt; shhh!  it's a secret.
+15:33 &lt;uriel&gt; :))
+15:33 &lt;nashi&gt; what? are we doing some secret prj?
+15:33 &lt;uriel&gt; nashi: dunno, =)
+15:34 &lt;nashi&gt; anyway, i might be able to get a chance to do some p9 research  as a part of my work.
+15:34 &lt;uriel&gt; cool
+15:34 &lt;nashi&gt; i would like to make some distributed venti system.  or rather, venti proxy which fan out a write to multiple venti.
+15:34 &lt;rsc9&gt; what would you use it for?
+15:34 &lt;uriel&gt; nashi: what about your security concerns BTW?
+15:35 &lt;__20h__&gt; devfs over network. ;)
+15:35 &lt;rsc9&gt; there's a bad idea.
+15:35 &lt;tmcm&gt; kuroneko: are the notes you're taking somewhere live now?
+15:35 &lt;nashi&gt; it will work as a kind of oceanstore but one can do it far more easily by venti.
+15:35 &lt;kuroneko&gt; nashi: tmcm: no.  they will be at the end.
+15:36 &lt;tmcm&gt; ok.
+15:36 &lt;nashi&gt; i'm done. thanks. :)
+15:36 &lt;vt3&gt; nashi has also been discovering security issues with venti, working on japaneses fonts, and other things. he's being modest.
+15:36 &lt;kuroneko&gt; teletha is not running a httpd just yet, and is unlikely to be.
+15:36 &lt;uriel&gt; vt3: we know :)
+15:36 &lt;rsc9&gt; how can there be security issues with a system that claims no security?
+15:37 &lt;nashi&gt; hehe. :)
+15:37 &lt;uriel&gt; rsc9: it would be nice to go from no-security into at-least-some-securty..
+15:37 &lt;vt3&gt; then why do we need factotum if that were the case.
+15:37 &lt;rsc9&gt; you don't need factotum for venti.
+15:37 &lt;vt3&gt; point taken
+15:38 &lt;kuroneko&gt; [I might have another converted developer to help the cause soon too - one of my friends will be likely looking into newsham's sparc64 port in more detail soon]
+15:38 &lt;nashi&gt; one might not notice that venti has no security.  and there's a workaround to make it more secure. :)
+15:38 &lt;rsc9&gt; in-depth discussion warning.
+15:38 &lt;uriel&gt; ok :)
+15:38 &lt;uriel&gt; noselasd: your turn
+15:39 &lt;ericvh&gt; yeah.  I think it something worth talking about though.   We can extrapolate all the in-depth talking points from the notes and start 9fans threads on them.
+15:39 &lt;noselasd&gt; uriel: eh ? I got nothing :-)
+15:39 &lt;uriel&gt; noselasd: ok then, bad, bad, have something ready for next time ;P
+15:39 &lt;uriel&gt; Oksel: you now!
+15:40 &lt;uriel&gt; argh, who knows where he is, I will hunt him down, ...
+15:40 &lt;uriel&gt; quintile: you then 
+15:41 &lt;uriel&gt; blah, rmiller you I guess  then :)
+15:41 &lt;rmiller&gt;  sorry i'm a irc newbie - is this working?
+15:42 &lt;uriel&gt; rmiller: :)
+15:42 &lt;uriel&gt; rmiller: yes :)
+15:42 &lt;rmiller&gt;  pretty busy with other stuff but I'll catch up with some usb storage improvements soon
+15:42 &lt;noselasd&gt; uriel: oh - only point I can mention, is I made lcc generate assembly 8a mostly understood, which was nice until I realized 8a wasn't very fully featured to put it mildly :-)
+15:43 &lt;quintile&gt; rmiller: how difficult is usb attached disks (ipod) to support?
+15:43 &lt;rmiller&gt;  usb itself still needs some work because it is too slow to be really useable for storage
+15:44 &lt;rmiller&gt;  also lots of devices dont really obey the spec - haven't tried ipod yet
+15:44 &lt;Oksel&gt; right
+15:44  * Oksel is present! :)
+15:44 &lt;uriel&gt; rmiller: what would be needed to boot from usb storage
+15:44 &lt;kuroneko&gt; has anybody diced with the idea of implementing ieee1394 support?
+15:44 &lt;uriel&gt; kuroneko: I seem to recal some coment about it in 9fans some time ago
+15:45 &lt;Oksel&gt; rmiller: do you know why usb is slow?  i couldn't get past ~50kbyte/s
+15:45 &lt;rmiller&gt;  uriel:
+15:45 -!- McLone [~mclone@ns.viso.tr.ukrtel.net] has quit [Remote closed the connection]
+15:45 &lt;rsc9&gt; do we have a usb 2.0 driver yet?
+15:46 &lt;rmiller&gt;  Oksel: I know the immediate cause of slowness but not what causes that
+15:46 &lt;kuroneko&gt; rsc9: I can see that being a problem
+15:46 &lt;uriel&gt; rsc9: that would be nice, but if USB1 is slow, I don't see much point in aiming for 2.0, as the only real advantage is extra speed, and its' backwards compat
+15:46 &lt;kuroneko&gt; I seem to recall that the EHCI docos was hard to get in an open manner
+15:47 &lt;rmiller&gt;  Oksel: it is only able to send one packet per usb frame which is very limiting
+15:47 &lt;uriel&gt; rmiller: any idea how to go about it?
+15:47 &lt;uriel&gt; (btw, your comment about how to boot from usb storage din't show up :))
+15:48 &lt;rmiller&gt;  uriel: forsyth may be looking at usb as well
+15:48 &lt;Oksel&gt; rmiller: is that because of the way usb allocation work?  smt like "reserve so many % for isochronous" and turn whatever is left over to bulk?  i somehow got that idea, perhaps from you at twente9con
+15:48 &lt;rmiller&gt;  uriel: booting from usb should work if your bios supports it
+15:48 &lt;uriel&gt; rmiller: ah, cool
+15:48 &lt;rsc9&gt; http://www.intel.com/technology/usb/download/ehci-r10.pdf
+15:48 &lt;musasabi&gt; USB1.1 support would be very nice as all cheap USB devices seem to support that.
+15:48 &lt;uriel&gt; rmiller: 9load and the kernel don't care about it? 
+15:49 &lt;rmiller&gt;  Oksel: no, that isnt it
+15:50 &lt;Oksel&gt; perhaps someone at a uni has need for usb2?  perhaps then i could implement it as thesis project or something, which should be coming up for me in a few months
+15:51 &lt;rmiller&gt;  uriel: not sure about 9load now, it's a while since I looked at it
+15:51 &lt;uriel&gt; rmiller: ok, thanks, I will investigate here when I have time, got some usb storage hardware recently..
+15:51 &lt;Oksel&gt; 9load probably uses the bios?  and the kernel can load usbfs for boot?
+15:51 &lt;uriel&gt; rmiller: anything else? any update on your smart card cool hacks? :)
+15:52 &lt;uriel&gt; Oksel: 9load is known for it's lack of intelligence and not being very good at speaking with bioses
+15:52 &lt;rmiller&gt;  sorry, with smart cards I'm still doing other stuff which I get paid for
+15:53 &lt;uriel&gt; rmiller: ok, your demo at 9con was very cool :)
+15:53 &lt;rmiller&gt;  uriel: thanks - maybe more one day
+15:53 &lt;kuroneko&gt; rsc9: ooh.  ok.  ehci is obviously no longer taboo
+15:53 &lt;kuroneko&gt; [if it ever was]
+15:54 &lt;uriel&gt; Oksel: ok, you can take your place now ;P
+15:54 &lt;Oksel&gt; wow, thank you uriel
+15:55 &lt;Oksel&gt; anyway, i am not doing much specific right now
+15:55 &lt;Oksel&gt; i'm interested in looking at usb stuff
+15:55 &lt;uriel&gt; Oksel: lyar ;P
+15:55 &lt;Oksel&gt; i modified usbd to automatically load usbmouse when a mouse gets plugged in
+15:56 &lt;Oksel&gt; anyone want a more generic something for it?  or thinks its bad?  or should be done some way?
+15:56 &lt;Oksel&gt; that way we could also get rid of the magic searching for unhandled devices in usb(audio mouse printer)
+15:57 &lt;Oksel&gt; not that it's that magic
+15:58 &lt;uriel&gt; no comments? well, anything else? ;P
+15:58 &lt;Oksel&gt; :D
+15:58 &lt;uriel&gt; Oksel: I guess that means you wont get stoned to dead if you send a patch for it ;P
+15:58  * __20h__ gets a stone
+15:59 &lt;quintile&gt; "but all I said was that that piece of halibut was good enough for..."
+15:59 &lt;uriel&gt; Oksel: come on, I know you have been working on other stuff
+15:59 &lt;uriel&gt; quintile: heheheh..
+16:00 &lt;Oksel&gt; hum, well, cannot remember it right now?
+16:00 &lt;uriel&gt; not me either, oh well
+16:00 &lt;uriel&gt; quintile: we skiped you before, so...
+16:00 &lt;Oksel&gt; oh, btw, don't know if it is well known already
+16:00 &lt;Oksel&gt; http://marc.theaimsgroup.com/?l=9fans
+16:01 &lt;Oksel&gt; which uriel made them put up
+16:01 &lt;uriel&gt; it's linked from the wiki
+16:01 &lt;uriel&gt; quintile: do you have anything to report then? (I hope so :))
+16:02 &lt;quintile&gt; well, cifs - adding ntlmv2 auth, message signing, and dfs support,
+16:02 &lt;quintile&gt; extracting libasn1 from libsec - leading to ldapfs, snmpfs and kerberos in factotum (one day).
+16:03 &lt;quintile&gt; and chatfs as a /net service prtoviding msim, yahoo, jabber etc (ducks stone).
+16:03 &lt;uriel&gt; quintile: oh, where is that code?
+16:03 &lt;uriel&gt; quintile: I think it's about the third chatfs I hear of..
+16:04 &lt;quintile&gt; all of the above are incomplete, if they where finished they would be published.
+16:05 &lt;uriel&gt; quintile: it would be nice to have even work-in-progress code in sources/contrib for people to poke at, but well, I know not everyone agrees with that
+16:05 &lt;quintile&gt; I would be happy to coperate with anyone who wants help but I am unhappy publishing half finished stuff.
+16:06 &lt;uriel&gt; quintile: puting things in sources/contrib is not publishing IMHO, but well..
+16:06 &lt;ericvh&gt; quintile: I may ping you on some of the auth stuff.
+16:06 &lt;quintile&gt; yes, ntlm, kerberos ?
+16:07 &lt;ericvh&gt; dunno.  Looking for more Linux solutions to v9fs auth.  Kerberos was my immediate thought, but it may not be the best path.
+16:08 &lt;uriel&gt; you guys looked at inferno auth?
+16:08 &lt;quintile&gt; I also had some ideas about xdomain auth but people seemed to dislike my ideas.
+16:08 &lt;kuroneko&gt; krb5 might not be a completely meritless idea.
+16:08 &lt;tmcm&gt; i agree
+16:08 &lt;quintile&gt; kerb5 - are we talking client or server here?
+16:09 &lt;kuroneko&gt; in the longer term, I'd say both.
+16:09  * uriel dosn't understand why everyone seems to have different xdomain ideas and any kind of consensum or even dialog is impossible..
+16:10 &lt;quintile&gt; uriel: Mmmm,
+16:11 -!- nigelroles [~nigel@212.44.43.80] has joined #plan9
+16:11 &lt;uriel&gt; hey nigelroles!
+16:11 &lt;uriel&gt; quintile: anything else?
+16:13 &lt;quintile&gt; a quastion: rsc9 sshv2 progress?
+16:13 &lt;quintile&gt; hi nigel.
+16:13 &lt;uriel&gt; sshv2 is a good question I guess, at least something very often asked by newbies
+16:13 &lt;rsc9&gt; will email off-list.
+16:14 &lt;rsc9&gt; wkj has an almost working sshv2 that i've done a little with.
+16:14 &lt;kuroneko&gt; I have an open field question actually:  mips hardware support...
+16:14 &lt;uriel&gt; rmiller: why off-list? if I may ask?
+16:14 &lt;kuroneko&gt; has the cpu/term kernel ever run on SGI IP22 (Indy/ChallengeS/Indigo2) or DECStation?
+16:14 &lt;uriel&gt; er, rsc9 
+16:15 &lt;rsc9&gt; because it's an in-depth discussion.
+16:15 &lt;kuroneko&gt; [as in MIPS DECStation]
+16:15 &lt;rsc9&gt; list == #plan9
+16:15 &lt;uriel&gt; rsc9: ok, could we get the code for that? maybe someone will fix it?
+16:15 &lt;rsc9&gt; the code is not in a presentable form.
+16:15  * uriel sighs
+16:16 &lt;uriel&gt; it's sshv2, who expects it to be presentable?
+16:16 &lt;rsc9&gt; steve simon and i will talk off-list.  i've been meaning to email him for a while.
+16:16 -!- rminnich [~rminnich@65.242.93.132] has joined #plan9
+16:16 &lt;uriel&gt; rsc9: ok
+16:16 &lt;uriel&gt; hey ron!
+16:16 &lt;rminnich&gt; good morning
+16:16 &lt;uriel&gt; you are lucky, seems things are going slowly today :)
+16:16 &lt;rminnich&gt; good, I am going slowly too. 
+16:16 &lt;ericvh&gt; okay rminnich: give us your status/on-going projects.
+16:17 &lt;uriel&gt; :)
+16:17 &lt;rsc9&gt; it's the rest of us who are unlucky.
+16:17 &lt;rminnich&gt; - making v9fs oops the kernel
+16:17  * ericvh wonders if we can wrap this up in under 2 hours
+16:17 &lt;rminnich&gt; - port to xen 3.0
+16:17 &lt;rminnich&gt; - working with vic zandy'x xcpu
+16:17 &lt;rminnich&gt; - strongarm (on hold for a bit)
+16:17 &lt;rminnich&gt; - try to work with k8 once jmk releases initial kernel code
+16:18 &lt;rminnich&gt; status:
+16:18 &lt;rminnich&gt; - v9fs oops on unmount :-)
+16:18 &lt;ericvh&gt; rminnich: I have your bug starred in gmail, will be getting to it shortly - RCx focus has been on linux normal support, now that we've got that worked out, I'll be trying to get regressions going for plan9ports.
+16:18 &lt;rminnich&gt; - xen 3.0 goes slowly
+16:18 &lt;rminnich&gt; - xcpu is really really nice
+16:18 &lt;rminnich&gt; - strongarm enet driver has issue (ha ha)
+16:18 &lt;ericvh&gt; side topic: what is xcpu? and what happened to vic zandy - he's no longer at the labs, right? 
+16:19 &lt;rminnich&gt; zandy got tired of the labs, I think that the labs is more like my old for-profit lab I used to work for, it does not sound fun. 
+16:19 &lt;rminnich&gt; So he went to work at CCS in bowie, md, my old haunt. 
+16:19 &lt;rminnich&gt; I'm still hoping he will work with plan 9. 
+16:19 &lt;rminnich&gt; he did some very neat stuff.
+16:19 &lt;kuroneko&gt; and what is xcpu?
+16:19 &lt;rminnich&gt; it's the thing everyone on the list hated so much :-)
+16:19 &lt;rsc9&gt; ericvh: all signs point to no.
+16:20 &lt;rminnich&gt; it's a server for remote execution
+16:20 &lt;rminnich&gt; not released yet.
+16:20 &lt;rminnich&gt; basically, it's for lightweight cluster nodes and is similar to the linux bproc stuff. 
+16:20 &lt;rminnich&gt; so the xcpu server presents 4 files and a dir to you
+16:20 &lt;rminnich&gt; the dir is /proc from the machine xcpu runs on
+16:20 &lt;rminnich&gt; to exec:
+16:20 &lt;rminnich&gt; files it presents are 
+16:21 &lt;rminnich&gt; mach -- machine type -- read this file to read machine type (e.g. 'arm')
+16:21 &lt;rminnich&gt; exe -- put executable files here
+16:21 &lt;rminnich&gt; argv -- put argv here
+16:21 &lt;rminnich&gt; ctl -- put commands here 
+16:21 &lt;rminnich&gt; so to run a proc on a node
+16:21 &lt;rminnich&gt; import the xcpu service from the node
+16:21 &lt;rsc9&gt; no in-depth discussions?
+16:21 &lt;rminnich&gt; Sorry!
+16:21 &lt;kuroneko&gt; yeah, thats probably enough detail. :)
+16:21 &lt;rminnich&gt; somebody asked :-)
+16:21 &lt;rminnich&gt; I will stop :-)
+16:22 &lt;kuroneko&gt; [it does sound nice though]
+16:22 &lt;uriel&gt; rminnich: bad, you were right I at least woudln't like it ;P
+16:22 &lt;ericvh&gt; what's the status on the 64-bit stuff rminnich? Or is that more of a jmk question?
+16:22 &lt;rminnich&gt; xcpu kernels boot in xen in 1 second.
+16:22 &lt;rminnich&gt; the compiler works
+16:22 &lt;rminnich&gt; I think kernels are kinda happening. 
+16:22 &lt;rminnich&gt; but jmk is taking the opportunity to clean up the kernel a bit
+16:22 &lt;kuroneko&gt; "a bit"?
+16:23 &lt;rminnich&gt; he had choice of 'something soon not as good'
+16:23 &lt;rminnich&gt; 'something better later'
+16:23 &lt;rminnich&gt; chose later
+16:23 &lt;ericvh&gt; I was supposed to setup a ppc64 machine for forsyth to play with and potentially get a ppc64 compiler going for - but that was two months ago and I'm a slacker.  Took forever to get a serial port attachment for the G5.
+16:23 &lt;rminnich&gt; well, stuff like the 2 memory regions etc. 
+16:23 &lt;uriel&gt; "release early, release often" anyone? 
+16:23 &lt;kuroneko&gt; ah
+16:23 &lt;rsc9&gt; we're not all esr-wannabes.
+16:23 &lt;kuroneko&gt; rminnich: thats going to reduplicate some of my stuff for sparc32 from the sounds of it
+16:23 &lt;ericvh&gt; Also, our (IBM's) ppc64 simulator is finally going to get out on alpha-works, so that'll be another potential target.
+16:23 &lt;rminnich&gt; I think jmk is doing right thing. It has to get done.
+16:24 &lt;uriel&gt; rsc9: heh... *sigh*
+16:24 &lt;Major-Willard&gt; nope, release when right
+16:24 &lt;rsc9&gt; there is no point in releasing early when the changes people are going to submit are going to be worthless to you because you're going to make significant changes of your own anyway.
+16:24 &lt;uriel&gt; kuroneko: oh, duplication of effort, joy! 
+16:24 &lt;rsc9&gt; i said to keep jmk and me in the loop &lt;/toldyouso&gt;
+16:24 &lt;uriel&gt; rsc9: yes, there is point, many points actually, avoiding duplication of effort to begin with
+16:25 &lt;uriel&gt; rsc9: leting other pick up half finished stuff that one has no time to finish is another point
+16:25 &lt;ericvh&gt; rminnich: any words on what you are going to present at FastOS next week?
+16:26 &lt;rsc9&gt; only if there is enough there that if it gets finished properly.
+16:26  * ericvh isn't going
+16:26 &lt;uriel&gt; rsc9: I think v9fs and Xen are two good examples of things that might not be perfect, but ron did the right thing and got them out as soon as possible so other people can pick them up
+16:26 &lt;rsc9&gt; those are much bigger things than xalloc.  xalloc is a few hundred lines of code.
+16:26 &lt;rsc9&gt; if that
+16:26 &lt;kuroneko&gt; I doubt xalloc is the *only* thing though
+16:27 &lt;uriel&gt; rsc9: xalloc is just one bit of the whole amd64 port, and that is just one example, I know rmiller also had problems with things he worked on and then had already been done by someone else, and there have been many such examples over the time
+16:27 &lt;uriel&gt; kuroneko: exactly
+16:27 &lt;uriel&gt; rsc9: also, there are not many examples of people finishing up stuff that someone else started and left half way, because no one releases anything
+16:28 &lt;rminnich&gt; hey guys, just getting a call from someone so will by multiplexing, dammit. 
+16:28 &lt;rminnich&gt; but I'm reading. 
+16:28 &lt;rsc9&gt; I've released a handful of things and no one has finished any of them.
+16:28 &lt;rsc9&gt; This is a silly argument.  People need to *talk* more, not write files more.
+16:28 &lt;uriel&gt; rsc9: ok, lets move on... sorry to bring this up
+16:29 &lt;uriel&gt; anyone left to talk about what he is doing?
+16:29 &lt;uriel&gt; (aside from russ)
+16:29 &lt;ericvh&gt; just you.
+16:29 &lt;uriel&gt; hah! :)
+16:29 -!- jz [~zoli@82.131.232.125.pool.invitel.hu] has joined #plan9
+16:29 &lt;uriel&gt; well, I hacked up the wiki a bit, and I'm suposed to get an autogenerated changelog up and running some time...
+16:30 &lt;uriel&gt; I have to change patch(1) to move submited patches into their own dir first, as it will simplify some bits a bit
+16:30 &lt;uriel&gt; and I think that is about it, been too busy with work(and irc flames? :))
+16:31 &lt;uriel&gt; rsc9: your turn now :))
+16:31 &lt;rsc9&gt; I've been working on Venti.  It's almost in a releaseable state.  I'm starting to use it again.
+16:32 &lt;rsc9&gt; Jmk has ordered parts for a new Venti server and we're going to run the new code on it.
+16:32 &lt;uriel&gt; rsc9: when released it will make it into p9p?
+16:32 &lt;rsc9&gt; The new Venti is a ton faster than the old one.  On my test system I can sustain about 10MB/s writing ad infinitum, with all the indexing and background jobs running.
+16:32 &lt;rsc9&gt; It will be in p9p first, then Plan 9 proper.
+16:32 &lt;rsc9&gt; I also have a dump file server for Unix file systems.
+16:32 &lt;kuroneko&gt; hurrah!
+16:33 &lt;rsc9&gt; The file system images get written to Venti each night, and then a user-level NFS server serves them
+16:33 &lt;tmcm&gt; does it address that issue that vt3 was having with 3 day-long dumps?
+16:33 &lt;tmcm&gt; (or however long it was)
+16:33 &lt;ericvh&gt; awesine
+16:33 &lt;uriel&gt; rsc9: very cool
+16:33 &lt;ericvh&gt; err...awesome
+16:33 &lt;rsc9&gt; It reduces the impact of the problem, but doesn't fix it.
+16:33 &lt;rsc9&gt; The real bug there is in fossil.
+16:33 &lt;tmcm&gt; good
+16:34 &lt;rsc9&gt; venti=; pwd
+16:34 &lt;rsc9&gt; /dump/am/2005/0519/usr/local/plan9/font
+16:34 &lt;rsc9&gt; venti=; cd /dump/am/2005
+16:34 &lt;rsc9&gt; venti=; ls -l
+16:34 &lt;rsc9&gt; total 0
+16:34 &lt;rsc9&gt; dr-xr-xr-x  3 root root 1024 2005-05-10 16:03 0510
+16:34 &lt;rsc9&gt; dr-xr-xr-x  3 root root 1024 2005-05-12 05:01 0512
+16:34 &lt;rsc9&gt; dr-xr-xr-x  3 root root 1024 2005-05-13 05:00 0513
+16:34 &lt;rsc9&gt; dr-xr-xr-x  3 root root 1024 2005-05-14 05:00 0514
+16:34 &lt;rsc9&gt; dr-xr-xr-x  3 root root 1024 2005-05-15 05:00 0515
+16:34 &lt;rsc9&gt; dr-xr-xr-x  3 root root 1024 2005-05-16 05:00 0516
+16:34 &lt;rsc9&gt; dr-xr-xr-x  3 root root 1024 2005-05-17 05:01 0517
+16:34 &lt;rsc9&gt; dr-xr-xr-x  3 root root 1024 2005-05-18 05:00 0518
+16:34 &lt;rsc9&gt; dr-xr-xr-x  3 root root 1024 2005-05-19 05:01 0519
+16:34 &lt;rsc9&gt; venti=;
+16:34 &lt;uriel&gt; cool
+16:35 &lt;uriel&gt; rsc9: any plans for fossil? (fixing?)
+16:35 &lt;rsc9&gt; Maybe.  It's not such a big deal once you get past the first snap.  Not a high priority.
+16:35 &lt;rsc9&gt; I'd like to see cpu for p9p happen first.  Jeff Sickel might be working on it.
+16:36 &lt;uriel&gt; ah, that would be great
+16:36 &lt;ericvh&gt; this is perhaps a stupid question (shows how much I use venti) -- is there a way to get venti to export a read-only interface as well as a read-write port.  I'd like to have a venti server which only I (and a select few) can write to, but everyone could read-from.
+16:36 &lt;kuroneko&gt; cpu for p9p ?...
+16:36 &lt;uriel&gt; rsc9: you think that will fix the various problems people has had with things hanging up after install? (during first snap)
+16:36 &lt;rsc9&gt; that what?
+16:37 &lt;uriel&gt; cpu for p9p
+16:37 &lt;rsc9&gt; no
+16:38 &lt;rsc9&gt; Just an example of something I'd rather do than fix fossil.
+16:38 &lt;uriel&gt; heh, great :/
+16:39 &lt;uriel&gt; rsc9: what about ericvh's question, and any plans to provide any kind of security for venti?
+16:39 &lt;rminnich&gt; cpu for p9p would be quite nice. We're going to do xcpu for p9p now, but I have to get v9fs to stop crashing on me :-)
+16:39 &lt;kuroneko&gt; [did anybody answer my mips question?]
+16:39 &lt;rminnich&gt; mips question?
+16:39 &lt;uriel&gt; (or, crazy idea, make it talk 9p!)
+16:40 &lt;kuroneko&gt; rminnich: I wanted to know if there had been prior ports to SGI IP22 (Indy series) or DECStation MIPS
+16:40 &lt;rsc9&gt; I have no real plans.  I like doing it at the network level.
+16:40 &lt;rsc9&gt; One could password-protect Venti but why bother.
+16:40 &lt;rsc9&gt; Using 9P for Venti does not make a lot of sense to me.
+16:40 &lt;rminnich&gt; [mips] don't know 'bout indy but any did get plan 9 running on the wrt54g (or whatever it is called) router
+16:41 &lt;quintile&gt; kuroneko: there is a mips port but it is protected by NDAs (I believe)
+16:41 &lt;uriel&gt; quintile: uhu? who did that? and how so?
+16:41 &lt;uriel&gt; rsc9: why not?
+16:41 &lt;kuroneko&gt; rminnich: that sounds decisively wrong. :)
+16:42 &lt;uriel&gt; rsc9: this is Plan 9, we speak 9p with everyone, and that gives you auth too...
+16:42 &lt;kuroneko&gt; er, decidedly even
+16:42 &lt;rminnich&gt; &lt;kuroneko&gt; rminnich: that sounds decisively wrong. :)
+16:42 &lt;rsc9&gt; There's only one resource, so it would be a single file, and it would require multiple transactions per current Venti transaction (a write and then a read).
+16:42 &lt;rminnich&gt; uh oh, which wrong thing did I say now :0_
+16:42 &lt;kuroneko&gt; mips on wrt54g
+16:42 &lt;kuroneko&gt; err
+16:42 &lt;kuroneko&gt; plan9 on wrt54g :)
+16:42 &lt;rminnich&gt; ah, yeah, but it's a port, :-)
+16:42 &lt;kuroneko&gt; :)
+16:43  * kuroneko adds DECStation and Indy to his port list for after sparc
+16:43 &lt;kuroneko&gt; [Indy will hopefully be easy.  hopefully.]
+16:43 -!- irc [jpc@guacamole-09.dynamic.rpi.edu] has joined #plan9
+16:44 &lt;uriel&gt; rsc9: I guess you are right... oh well, having auth would be nice still..
+16:44 &lt;rsc9&gt; What auth?  It's not even well-defined.  You could password protect the server, but beyond that I don't see any coherent authentication story.
+16:44 &lt;ericvh&gt; well, I wasn't really saying security for venti, just a read-only port...that's a bit different.
+16:44 &lt;uriel&gt; rsc9: well, you could use the same mechanism you use to auth against any other 9p server...
+16:45 -!- plalonde [~plalonde@d66-183-189-46.bchsia.telus.net] has joined #plan9
+16:45 &lt;uriel&gt; ericvh: yup
+16:45 &lt;rsc9&gt; But then all my apps have to deal with it, and I don't want to close it off from Unix.  I still don't see that it matters much.
+16:46 &lt;ericvh&gt; The idea behind a read-only port being I can firewall the read-write port from the world, but leave the read-only open.
+16:46 -!- lantis [~lantis@p548746A8.dip.t-dialin.net] has joined #plan9
+16:46  * ericvh appologizes for the delays between messages, multitasking at the moment.
+16:46 &lt;uriel&gt; rsc9: and I thought that one of the great things about Plan 9 is that we had control over the whole system so we did things right and integrated them well...
+16:47 &lt;kuroneko&gt; uriel: I'm not sure about this "do things right" bit... :P
+16:48 &lt;nashi&gt; do you assign ownership to every venti blocks and permission checking it?  no authentication is necessary wrt venti, i guess.
+16:48 &lt;ericvh&gt; rminnich: can you send me a more detailed oops report?
+16:48 &lt;rminnich&gt; yeah, I'm trying to narrow it all down. 
+16:48 &lt;rminnich&gt; question: for my purposes I use u9fs for export, and 9fs to mount. 
+16:48 &lt;uriel&gt; kuroneko: well, I'm quite sure about the "fix things in the whole system and do them consitently without having to worry about compat with junk", it's even mentioned in rsc9's overview
+16:48 &lt;ericvh&gt; rminnich: it's likely in the flush code.
+16:48 &lt;rminnich&gt; YOu guys only using amount nowadays? 
+16:48 &lt;rsc9&gt; I just don't have any idea about what "right" is.  Everyone clamors for authentication but no one can tell me how it should be done.
+16:48 &lt;ericvh&gt; rminnich: a slab leak in true interrupt cases.
+16:49 &lt;ericvh&gt; rminnich - no, I principally use mount, I only use amount to get to sources.
+16:49 &lt;ericvh&gt; v9fs discussion -&gt; #v9fs
+16:49 &lt;rminnich&gt; ok.
+16:49  * ericvh appologizes to the plan9 meeting.
+16:49  * rminnich too, ron still is not sure what the meeting is for.
+16:50 &lt;uriel&gt; rsc9: ok, I thought someone at the labs would have had some idea about it
+16:50 &lt;kuroneko&gt; rminnich: "I'm doing this" it seems.
+16:50  * kuroneko is tempted to wrap up the notes since we seem to be in random chatter now
+16:50 &lt;rminnich&gt; oh, so, who's doing acpi :-)
+16:50 &lt;rsc9&gt; There were ideas about Venti auth originally but it was little more than a public key p9sk1.
+16:50 &lt;ericvh&gt; Okay, I think we are done with the principal meeting anyways.  venti auth/whatever is obviously an extended discussion, although I may hack in read-only ports.  rsc9: is the venti CVS your up-to-date working copy?
+16:50 &lt;uriel&gt; kuroneko: random chater is usually more productive ;)
+16:50  * kuroneko cringes
+16:51 -!- rsc9 [rsc@tux.lcs.mit.edu] has left #plan9 []
+16:51 &lt;kuroneko&gt; rminnich: how bout we put in a hardware tree/bindery first ?
+16:51  * uriel blinks
+16:51 &lt;kuroneko&gt; and remove the hard ties from drivers that should be arch independant and their architectures?
+16:51 &lt;kuroneko&gt; and if we haven't scared/offended all the other kernel hackers by then...
+16:52 -!- jz [~zoli@82.131.232.125.pool.invitel.hu] has left #plan9 []
+16:52 -!- nigelroles [~nigel@212.44.43.80] has left #plan9 []
+16:52 &lt;kuroneko&gt; I suspect ACPI is non-trivial
+16:52 &lt;__20h__&gt; Having a fossil-venti-only-connection would satisfy my needs. This means that only the hostowner of the server running fossil should be able to access the venti.
+16:52 &lt;uriel&gt; kuroneko: I have heard nemo was working on it at some point
+16:52 &lt;vt3&gt; so what I learnt from this is that the participants should update their profiles on the wiki.
+16:53 &lt;uriel&gt; vt3: I think someone will have to write a list of profiles
+16:53 &lt;vt3&gt; have fun
+16:53 &lt;uriel&gt; vt3:  I will try to do that with help of kuroneko's notes :)
+16:53 &lt;nashi&gt; oh, you are still awake, vt3?
+16:53 &lt;vt3&gt; nashi, yeah. 
+16:53 &lt;kuroneko&gt; uriel: I swear, if I survive the sparc port, I will be gutting a lot of the device driver code
+16:54 &lt;nashi&gt; what's your report? it took some time to come to "v" :
+16:54 &lt;uriel&gt; kuroneko: :)
+16:54 &lt;nashi&gt; :)
+16:54 &lt;kuroneko&gt; the amount of duplicated code in the drivers would be plain stupid otherwise.
+16:54 &lt;vt3&gt; i'll tell you on #acme
+16:54 &lt;uriel&gt; kuroneko: cool
+16:54 &lt;uriel&gt; ok, for next time we use a dedicated channel...
+16:55  * kuroneko sticks the report up on http server.
+16:55 &lt;uriel&gt; kuroneko: please, put it on the wiki?
+16:55 &lt;nashi&gt; okay.  but i almost sleep.  please mail me. sorry.
+16:55 &lt;uriel&gt; nashi: I'm also almost asleep
+16:55 &lt;uriel&gt; :/
+16:55 &lt;uriel&gt; well, should we continue a bit?
+16:56 &lt;nashi&gt; 20h: for the last shot, what if venti post to /srv with the mode 0600 and fossil talk to it?
+16:56 &lt;uriel&gt; anyone wants to at least sugest how we set procedure/time for next time?
+16:56 &lt;__20h__&gt; Nashi, that's the Plan 9 way.
+16:56 &lt;ericvh&gt; -&gt; 9fans
+16:56 &lt;uriel&gt; #9fans? :)
+16:56 &lt;ericvh&gt; meaning, we should discuss how to manage the conferences on the mailing list.
+16:56 &lt;kuroneko&gt; http://nekohako.xware.cx/plan9devmeet/Notes-20050519.txt
+16:56 &lt;uriel&gt; ericvh: ok, you moderate next time
+16:57 &lt;uriel&gt; ericvh: well, my idea was to use this first meeting to discuse how to manage the next one..
+16:57 -!- nashi [none@mordor.tip9ug.jp] has left #Plan9 []
+16:58 &lt;ericvh&gt; ugh..meetings to talk about meetings.  Sounds like IBM
+16:58 &lt;uriel&gt; ericvh: for next time at least we got a list, and we can go over the topics fast
+16:58 &lt;ericvh&gt; thanks for taking notes kuroneko.
+16:58 &lt;uriel&gt; ericvh: no, just to bootstrap things
+16:58 -!- vt3 changed the topic of #plan9 to: Postmortem conversations=&gt; 9fans list | off topic talk -&gt; #acme | trolls -&gt; /ignore    Python for Plan 9 at http://www.tip9ug.jp/who/moroo/python2.4p9.tgz
+16:58 &lt;kuroneko&gt; anyway, I do feel the kernel needs overhauling and it'll be on my mind once I get sparc working
+16:58 &lt;rminnich&gt; well keep in sync with jmk then.
+16:58 &lt;kuroneko&gt; since I should have a better idea how to seperate drivers from hardware bindings by then
+16:59 &lt;uriel&gt; kuroneko: _please_ keep jmk in the loop
+16:59 &lt;uriel&gt; vt3: I wanted to talk about python too :(
+16:59 &lt;ericvh&gt; Its clear we all need to do a better job of keeping everybody in the loop about what everyone is working on ;)
+16:59 &lt;kuroneko&gt; if I knew who jmk was, and/or had contact details for him...
+16:59 &lt;ericvh&gt; jmk@plan9.bell-labs.com
+16:59 &lt;__20h__&gt; Communism!
+16:59 &lt;uriel&gt; ericvh: the question is what is the best way to acomplish it..
+17:00 &lt;gdiaz&gt; communismfs 20h :-D
+17:00 &lt;uriel&gt; kuroneko: jmk is the only person left at the Labs working on Plan 9, *sigh*
+17:00 &lt;ericvh&gt; well, IRC works for getting things out.  It would have been nice to hear from Vita about what they are working on.
+17:00 &lt;kuroneko&gt; uriel: ah
+17:00 &lt;uriel&gt; kuroneko: talk about transparency, eh?
+17:00 &lt;uriel&gt; ericvh: how do we set agenda then for next time?
+17:00 &lt;uriel&gt; ericvh: you mod, so I guess you can coordinate that, I got a long list of items on my own agenda..
+17:00 &lt;gdiaz&gt; see you all :-)
+17:01 &lt;uriel&gt; (which i was hoping to bring up today...)
+17:01 &lt;ericvh&gt; I think the best approach is monthly IRC to get things out that people don't want to post about, wiki to set agendas and post notes, and mailing list for extended discussions.
+17:01 &lt;__20h__&gt; cya gdiaz
+17:01 &lt;ericvh&gt; uriel: long discussions may be best handled in sub-meetings.
+17:01 &lt;uriel&gt; ericvh: I don't think that really works, but well..
+17:01 &lt;__20h__&gt; I must admit: I hate bureacracy.
+17:01 &lt;kuroneko&gt; the other thing is, the right media for the right discussion
+17:01 &lt;uriel&gt; __20h__: me too, that is why there was no agenda, and it was a disaster :(
+17:01 &lt;ericvh&gt; Another thing that wouldn't be a bad idea is some sort of monthly newsletter, but I doubt anyone will really take the time to put it together.
+17:02 &lt;__20h__&gt; uriel, it was no disaster.
+17:02  * kuroneko has been recently bombarded with media convergence theory and other related learning/teamwork stuff
+17:02 &lt;uriel&gt; ericvh: and a news page
+17:02 -!- heikoo [~heiko@82.139.199.253] has joined #plan9
+17:02 &lt;uriel&gt; ericvh: that is in my list of top priority to do, forgot to mention it
+17:02 &lt;uriel&gt; hey heikoo 
+17:02 &lt;heikoo&gt; hello there
+17:02 &lt;kuroneko&gt; for fledgling ideas, IRC is probably considerably better than having people take it to the list
+17:02 &lt;uriel&gt; I would like help/sugestions about how to keep a news wiki page
+17:02 &lt;__20h__&gt; tach Heiko
+17:03 &lt;heikoo&gt; hello there
+17:03 &lt;kuroneko&gt; whereas for ideas which are well formed and well on their way, the list is more conveniant/appropriate
+17:03 &lt;uriel&gt; (and probably an "anouncements" list where such posts would go too
+17:03 &lt;ericvh&gt; kuroneko: agreed.
+17:03 &lt;uriel&gt; kuroneko: 9fans seems rather dead lately
+17:03 &lt;kuroneko&gt; and we should probably encourage that sort of patterning
+17:03 &lt;quintile&gt; sorry, I was in another meeting whilst typing: re mips port.
+17:03 &lt;kuroneko&gt; ericvh: its all part of MCT
+17:03 &lt;__20h__&gt; glendaforge.net
+17:03 &lt;uriel&gt; __20h__: we got sources already
+17:03 -!- heikoo [~heiko@82.139.199.253] has quit [Client Quit]
+17:03 -!- plalonde [~plalonde@d66-183-189-46.bchsia.telus.net] has left #plan9 []
+17:03 &lt;kuroneko&gt; divergence and convergence phases in teamwork
+17:03  * kuroneko cringes
+17:04 &lt;Major-Willard&gt; well it made my mind up
+17:04 &lt;__20h__&gt; uriel, that's where it is redirecting to. ;)
+17:04 &lt;ericvh&gt; Major-Willard: kill them all?
+17:04 &lt;uriel&gt; hehe
+17:04 &lt;Major-Willard&gt; nope
+17:04  * kuroneko is currently being paid to do stuff related to team learning environments
+17:04 &lt;Major-Willard&gt; that's had work
+17:04 -!- heikoo [~heiko@82.139.199.253] has joined #plan9
+17:04 &lt;Major-Willard&gt; hard
+17:05 &lt;uriel&gt; kuroneko: just what we need :)
+17:05 &lt;quintile&gt; kuroneko: whats your email?
+17:05 &lt;kuroneko&gt; uriel: its not my area to be honest.
+17:05 &lt;heikoo&gt; hello, sorry, i'm new to 20h's client ;-/
+17:05 &lt;kuroneko&gt; quintile: chris@collins.id.au
+17:05 &lt;Major-Willard&gt; doing nothing is easier
+17:05 &lt;uriel&gt; kuroneko: can you add yourself to the comunity page in the wiki
+17:05 &lt;quintile&gt; kuroneko: you will have mail :-)
+17:05 &lt;kuroneko&gt; thanks
+17:06 &lt;uriel&gt; kuroneko: and lets take your notes and make a "Developers" page with contact info for everyone, so if someone starts to work on something they can get in touch with someone that is working already in that are
+17:06 &lt;uriel&gt; a
+17:06 -!- rminnich [~rminnich@65.242.93.132] has quit ["BitchX: stays crunchy in milk!"]
+17:07 &lt;ericvh&gt; be back in a bit.  Would folks who raised questions that got tabled because they were in-depth discussions please start threads on 9fans?
+17:07 -!- ericvh [~ericvh@pixpat.austin.ibm.com] has quit ["Download Gaim: http://gaim.sourceforge.net/"]
+17:08 &lt;uriel&gt; good idea, anyone was keeping track of things that were shot down because things were "in depth"?
+17:08 &lt;uriel&gt; anyone has anything else to say?
+17:09 &lt;vt3&gt; I don't have anything besides saying thanks for everyone for showing up.
+17:09 &lt;uriel&gt; any comments on trying again in one month  in a separated chanel with ericvh as moderator and with an agenda set somehow?
+17:10 &lt;uriel&gt; yes, I also want to thank everyone that showed up, and I'm sorry for not managing things better :(
+17:11 -!- vt3 [~vt3@m016020.ppp.asahi-net.or.jp] has quit ["Leaving"]
+</pre>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Thu May 19 15:35:52 EDT 2005</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

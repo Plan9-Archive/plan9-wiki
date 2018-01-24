@@ -1,0 +1,20 @@
+Console messages
+D1141633811
+Asteve (86.7.66.235)
+#The fossil fileserver currently (March 2006) prints some
+#informational messages on the system console from time to time:
+#
+#! could not write super block; waiting 10 seconds
+#! blistAlloc: called on clean block
+#
+#! flushthread found nothing to flush - 2 dirty
+#
+#These should not be cause for concern.
+#
+#A fossil based terminal may print these messages in VGA text mode
+#``behind'' the users rio session thus corrupting the users display.
+#This may be prevented by collecting the messages in a single window
+#by running:
+#
+#!  cat /dev/kprint
+#

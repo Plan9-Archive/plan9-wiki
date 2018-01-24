@@ -1,0 +1,516 @@
+Tip o' the day
+
+See also the [Tips and tricks | http://ninetimes.cat-v.org/tips/]
+section of [9times | http://ninetimes.cat-v.org].
+
+------------------------------------------------------ 
+[Shell tips | #SHELL_TIPS] | [Acme tips | #ACME_TIPS] | [Plumbing
+tips | #PLUMBING_TIPS] | [Dump and fossil tips |
+#DUMP_AND_FOSSIL_TIPS] | [Debugging tips | #DEBUGGING_TIPS]|
+[Networking tips | #NETWORKING_TIPS] | [Misc tips | #MISC_TIPS]
+------------------------------------------------------ 
+
+SHELL TIPS
+
+------------------------------------------------------ 
+(Based in a post by Mike Haertel: [http://tinyurl.com/arnnd])
+
+To run u9fs without inetd (from a Plan 9 host):
+
+! 	% ssh myname@remotehost u9fs -a none -u myname <[0=1] | echo 0 >/srv/remotehost 
+! 	% mount /srv/remotehost /n/kremvax
+
+You could also simply use srvssh or srv -e, see srv(4), but this
+example goes to explaining /srv. Newsham explains: You can establish
+a two way pipe to a command in /srv:
+
+! 	% cmd <[0=1] | echo 0 > /srv/name
+
+and then access /srv/name to communicate with the command, c.f.
+srv(3). As an example:
+
+! 	% mail <[0=1] | echo 0 > /srv/mailcons 
+! 	% con -l /srv/mailcons ...
+! 	connected to mail until ^\ quit ... 
+! 	% con -l /srv/mailcons ...
+! 	connected again ...
+
+will let you detach and re-attach to the pipe to a long-lived mail
+command.
+
+! 	{while () dc} <[0=1]|echo 0>/srv/calc
+
+will make /srv/calc a connection to dc, and restart dc if it is quit.
+
+------------------------------------------------------ 
+! 	fn f { du -a $* | sed 's/^.*    //g' }    <-- that whitespace is a tab 
+Tree enumerator (simple "find") useful for many purposes
+
+! 	fn s { lc *.[chsyl] } 
+List out the sources in the current directory.
+
+! 	fn gn { grep -n $* /dev/null } 
+Grep, but force listing of filename:lineno so you can click on an
+entry to jump to it in an editor.
+
+! 	fn g { grep -n $* *.[chsyl] /dev/null } 
+gn on all sources in the current directory
+
+------------------------------------------------------ 
+To set your prompt in rc to reflect your current directory add this
+to your profile.
+
+! fn cd { builtin cd $* && prompt=(`{pwd}^% '' ) }
+
+If you make frequent use of cpu's -h and -u arguments, this variant
+keeps track of the host you are connected to, and as which user:
+
+! prompt = (`{cat /dev/user}^@^`{cat /dev/sysname}^'% '  '	')
+! fn `{echo $prompt(1) | tr -d ' 	'} { $* }
+
+The second line ensures the prompt is a no-op for 9term's send
+operation. (The quoted string in the tr command contains a space and
+a tab.)
+
+------------------------------------------------------ 
+ACME TIPS
+
+------------------------------------------------------ 
+To search backwards for 'foobar' right-click on:
+!       :-/foobar
+
+------------------------------------------------------ 
+Selection tricks:
+
+ *	Press Esc to select the last typed text, press Esc again to delete
+	any selected text.
+
+ *	To select the whole file execute: Edit ,
+ *	If you are lazy, you can "look" for :,
+
+ *	To select the text delimited by {}, () or [] you can double click
+	to the right of the opening char or on the closing char.
+
+ *	Double click before the start or end of a line to select the whole
+	line.
+
+------------------------------------------------------ 
+To find out the current line number execute: Edit =
+
+------------------------------------------------------ 
+Rather than setting up acme each time you start it, running stuff
+like /acme/mail/Mail can be done automatically if you make a dump
+file. Just setup acme the way you like it, then click on the "Dump"
+tag, this makes the file acme.dump copy this file to another location
+like acmemail.dump. Now to load your configuration start acme like:
+! 	acme -l acmemail.dump
+
+------------------------------------------------------ 
+Here is the function to start acme mail in its own rio window, it
+contains my favorite fonts here, but you can make your own file by
+starting Mail and issuing a 'Dump' command, then cp-ing acme.dump to
+acmemail.dump:
+
+! 	% cat /env/'fn#amail' 
+! 	fn amail {acme -l $home^/acmemail.dump} 
+
+! 	% cat $home/acmemail.dump 
+! 	/usr/andrey 
+! 	/lib/font/bit/10646/7x13/7x13.font 
+! 	/lib/font/bit/10646/7x13/7x13.font 
+! 	 0 e 0 0 0 0 1 1 49 143 0 0 /mail/fs/mbox/ Del Snarf | Look Put Mail Delmesg 
+! 	/acme/mail 
+! 	Mail mbox 
+
+------------------------------------------------------ 
+/acme/mail/Mail has -s and -S options to reduce the size of the
+headers it adds.
+
+------------------------------------------------------ 
+Acme cd to keep the tag line up to date:
+! 	fn cd { builtin cd $* && awd $sysname }
+
+------------------------------------------------------ 
+! 	/rc/bin/wurl2txt http://www.website.com
+
+------------------------------------------------------ 
+A function to clear a "win" session in an acme window.
+
+! 	fn winclear {
+! 	echo -n Edit ,d > /dev/acme/body
+! 	echo -n /Edit ,d/ > /dev/acme/addr
+! 	echo -n 'dot=addr' > /dev/acme/ctl
+! 	cat /dev/acme/addr | awk '{printf("MX%s %s\n", $1, $2)}' > /dev/acme/event
+! 	}
+------------------------------------------------------ 
+To execute rc functions defined in your profile, prefix the function
+name with a semicolon. This will force acme to use rc to interpret
+the command.
+------------------------------------------------------ 
+To set the rio label of an acme window, execute the following text:
+
+! 	Local echo -n 'new label' > /dev/label
+------------------------------------------------------ 
+
+DUMP AND FOSSIL TIPS
+
+------------------------------------------------------ 
+To get the last valid venti archive score:
+! 	fossil/last /dev/sdC0/fossil
+
+------------------------------------------------------ 
+To discard old snapshots in fossil:
+! 	snapclean timeout_in_min 
+
+See fossilcons(8).
+
+------------------------------------------------------ 
+Loading old backups into fossil
+
+In this example we have cdrom of the user fred's home dir from
+01/04/2001
+
+! 	@{cd /n/cdrom/fred && tar cf /fd/1 .}|@{cd /n/boot/usr/fred/tmp/2001/0104/usr && tar xTf /fd/0}
+and then on the fossil console type prompt:
+! 	fsys main snap -a -s /active/usr/fred/tmp/2002 -d /archive/2002
+
+------------------------------------------------------ 
+Accessing the dump of another file system:
+
+! 	% 9fs sources 
+! 	% 9fs sourcesdump 
+! 	% history -d sourcesdump /n/sources/plan9/sys/src/cmd/ls.c 
+! 	Jul  1 20:32:24 MDT 2004 /n/sources/plan9/sys/src/cmd/ls.c 5400 [jmk] 
+! 	Jul  1 20:32:24 MDT 2004 /n/sourcesdump/2005/0215/plan9/sys/src/cmd/ls.c 5400 [jmk] 
+! 	...
+
+Note that for sources it's enough to do:
+! % 9fs sources
+! history /n/sources/plan9/sys/src/cmd/ls.c
+
+------------------------------------------------------ 
+PLUMBING TIPS
+
+------------------------------------------------------ 
+Local is in the plumbing rules as this :
+! 	type	is	text
+! 	data	matches	'Local (.*)'
+! 	plumb	to	none
+! 	plumb	start	rc -c $1
+
+So one can plumb a command and any adjustments to the namespace will
+be reflected across the same processes as covered by the instance of
+the plumber.
+
+Then you can plumb:
+!        Local bind -c /n/unix/some/awfully/long/path/name /n/anything 
+
+This is particularly useful if one wants to page something one has
+found in Acme.
+
+A little shell script, "local" completes the picture:
+!        #!/bin/rc 
+!        plumb 'Local ' ^ $"* 
+
+And /n/anything is immediately visible everywhere (including in cpu's
+shells under /mnt/term) and i can plumb files in it without any
+further hassle.
+
+This is great when constantly dealing with namespaces that come and
+go (and particularly since i can import namespaces directly from
+Inferno, which means it's easy to gateway across to Windows machines).
+
+------------------------------------------------------ 
+To plumb web links to a Windows web browser (in a vnc window) look
+at: [/sys/src/cmd/unix/winplumb.c |
+http://www.tip9ug.jp/magic/srcgw/sys/src/cmd/unix/winplumb.c].
+
+------------------------------------------------------ 
+DEBUGGING TIPS
+
+------------------------------------------------------ 
+When you see something like this on the console:
+! 	 lock 0x802fe414 loop key 0xdeaddead pc 0x801a25b5 held by pc 0x801a281c proc 3974
+! 	3979: cat pc 801b0ce3 dbgpc 2ae5 Fault (Running) ut 0st 370 bss 7000qpc 801a87f3 nl 0 nd 0 lpc 80125493 pri 3
+try:
+! 	acid /386/9pcf (or whatever)
+! 	src(0x801a25b5)
+! 	src(0x801a281c)
+and see what locks were used.
+
+------------------------------------------------------ 
+To make a core image from a Broken process using snap(4):
+! 	snap -o imgfile pid_of_Broken_process
+! 	snapfs imgfile
+! 	acid pid_of_the_image
+
+------------------------------------------------------ 
+Things to try if your machine is very sick or hung
+
+This text is lifted from the BUGS section of the cons(1) manpage
+
+For debugging, two control-T's followed by a letter generate console
+output and manage debugging: `^T^Td' toggles whether the console
+debugger will be run if the system fails. `^T^TD' starts the console
+debugger immediately. `^T^Tk' kills the largest process; use with
+care. `^T^Tp' prints data about processes. `^T^Tq' prints the run
+queue for pro- cessor 0. `^T^Ts' prints the kernel stack. `^T^Tx'
+prints data about kernel memory allocation.
+
+The system can be rebooted by typing `^T^Tr'.
+
+------------------------------------------------------ 
+Use getcallerpc(2) to record a function's caller for debugging.
+
+------------------------------------------------------ 
+NETWORKING TIPS
+
+------------------------------------------------------ 
+To turn on debug on ndb/dns:
+! echo -n debug > /net/dns
+then look into /sys/log/dns
+
+------------------------------------------------------ 
+To tunnel out through a restrictive firewall to another Plan 9 box.
+
+On the internal machine run:
+
+! 	inside%  cpu -c 'rm -f /srv/inside ; srvfs inside /mnt/term ; while() sleep 600'
+
+To see files on the machine you can see internal files with:
+
+! 	outside% mount /srv/inside /n/inside
+
+You can then do the following to cpu to the internal machine:
+
+! 	outside% bind /n/inside/net /net.alt
+! 	outside% cpu -h /net.alt/tcp!inside
+
+The network peformance from outside to inside is pretty miserable,
+but this can be partially mitigated by cpu'ing to inside and starting
+any file copies from there.
+
+------------------------------------------------------ 
+To refresh cs *NOW* after changing /lib/ndb/local:
+! 	echo -n refresh > /net/cs
+
+------------------------------------------------------ 
+Use httpfile(4) to view an ISO on a HTTP server without downloading
+it locally:
+! 	ip/httpfile -m /tmp http://www.9grid.de/plan9/plan9.iso
+! 	9660srv
+! 	mount -c /srv/9660 /n/cdrom /tmp/plan9.iso
+------------------------------------------------------ 
+Tips for connecting to a Unix machine:
+ *	Install fgb's openssh package
+ *	Use vt and switch to raw mode after connecting
+ *	It helps to have a good font;
+	/lib/font/bit/fixed/unicode.7x13.font works well.
+------------------------------------------------------ 
+
+MISC TIPS
+
+------------------------------------------------------ 
+Almost anywhere (sam(1), acme(1), window(1)) you can use the
+following shortcuts:
+! ^U Delete from cursor position to start of line
+! ^W Delete the word to the left of the cursor
+! ^H Delete the character to the left of cursor (same as backspace)
+
+(^U Means Ctrl-U and so on...)
+
+------------------------------------------------------ 
+In the installer prompt, you can use the special magic ! command to
+excute any external command. For example to get a shell enter:
+! 	!rc
+
+------------------------------------------------------ 
+If you want to watch how 9p works between client and server, use
+iostats(4).
+! 	iostats -df /fd/1 rc
+
+------------------------------------------------------ 
+To burn CD using cdfs(4):
+! 	cdfs
+! 	cp some.iso /mnt/cd/wd
+! 	rm /mnt/cd/wd
+
+------------------------------------------------------ 
+You can use stub(8) to provide single file mount points in a similar
+way to how mntgen(4) provides a directory of them.
+
+------------------------------------------------------ 
+! 	fn c {history -D /$1} 
+
+so you can paste the output of replica/pull somewhere.
+
+------------------------------------------------------ 
+To look for a function definition from the manual pages, use sig(1):
+! 	% sig memmove
+! 	void* memmove(void *s1, void *s2, long n)
+
+To open (plumb) the source file for an executable use src(1):
+! 	% src ls
+
+------------------------------------------------------ 
+To build a kernel without write permisions to the source tree:
+
+! 	mkdir -p $home/src/kernel/ ^ (pc boot ip port) 
+! 	for (i in pc boot ip port) { 
+! 	       bind -c $home/src/kernel/$i $home/src/kernel/$i 
+! 	       bind -a /sys/src/9/$i $home/src/kernel/$i 
+! 	} 
+
+! 	cd $home/src/kernel/pc
+! 	mk 'CONF=pccpuf' 
+
+In order to make actual changes to existing files in /sys/..., You
+need to copy them into your own directory before doing the binding.
+
+Or you can try the [divergefs |
+http://cm.bell-labs.com/sources/contrib/de0u/divergefs.tar.gz] file
+system, which will let you freely modify source files:
+! 	divergefs -p $home/src/kernel /sys/src/9
+! 	cd /sys/src/9/pc
+! 	mk 'CONF=pccpuf'
+
+------------------------------------------------------ 
+To allow drawterm to connect to a terminal, run this script:
+
+! 	#bin/rc
+! 	rfork ne
+! 	auth/keyfs -p
+! 	aux/listen1 -t tcp!*!ticket /bin/auth/authsrv &
+! 	service=cpu aux/listen1 tcp!*!cpu /bin/cpu -O &
+! 	service=cpu aux/listen1 tcp!*!ncpu /bin/cpu -R &
+
+This will prompt you for hostid, authdom, and password. If you get
+sick of typing these in, you can initialise an nvram partition with
+this info using auth/wrkey(8). If you don't have an nvram partition,
+you can create one using prep(1) to steal the last sector from your
+swap partition and name it nvram.
+
+------------------------------------------------------ 
+(from a post by Matthias Bauer:
+[http://shoestringfoundation.org/cgi-bin/blosxom.cgi/2007/06/27#learned])
+
+While typing from one machine I remembered I had already solved a
+problem in a one-liner, but on a different drawterm which ran on a
+Unix box miles away.
+
+! 	cpu% echo $wsys
+! 	/srv/rio.myname.1234
+! 	cpu% lc /srv/rio.*
+! 	rio.myname.1234		rio.myname.5678
+
+So the other drawterm runs the rio(1) mounted on
+/srv/rio.myname.5678. To get at the scrollback of a window displayed
+on a screen on a totally different machine:
+
+! 	cpu% mount /srv/rio.myname.5678 /n/wsys 1
+! 	cpu% cat /n/wsys/text 
+! 	[...lines of output...]
+! 	[...including the one-liner...]
+
+------------------------------------------------------ 
+Some extra clauses for /rc/bin/9fs
+
+Historic unix sources - chose a local mirror
+! 	case unix
+! 		dom=`{ndb/ipquery sys $sysname dnsdomain | sed 's/^dnsdomain=//'}
+! 		ftpfs -r/pub/mirror/unix-archive/UnixArchive -m /n/$1 -q -a $user@$dom ftp.win.tue.nl 
+
+usb memory stick - needs usb code in /n/sources/contrib/miller
+! 	case stick
+! 	 	if (! test -f /srv/$1){
+! 	 		if (! test -f /n/ums/data)
+! 	 			usb/usbsfs
+! 			i=`{disk/fdisk -p /n/ums/data | grep dos}
+! 	 		dossrv -f /n/ums/data:$i(3) $1 >[2] /dev/null
+! 		}
+! 		mount /srv/$1 /n/$1
+
+news
+! 	case usenet
+! 		nntpfs some.news.server
+
+ssh connection to unix systems user@system starts an ssh connection
+using u9fs - note the directory where u9fs is expected.
+! 	case *@*
+! 		sys=`{echo $mnt | sed 's/^[^@]*@//'}
+! 	 	srvssh -u '''bin/`uname -m`/u9fs''' $1 $sys $sys
+
+------------------------------------------------------ 
+Boot kernel /386/your.kernel directly without the intermediate 9load
+and bios delays, very useful for kernel hacking
+
+! 	echo reboot /386/your.kernel > /dev/reboot
+
+------------------------------------------------------ 
+To make scrolling with the mouse wheel faster, you can set the
+"mousescrollsize" environement var in your profile to the number of
+lines you want to scroll, the default is 1 but a value of 4 might be
+more convenient.
+
+------------------------------------------------------ 
+To run charon on its own rio window (from the inferno mailing list):
+
+! #!/bin/rc
+! 
+! rfork n
+! 
+! if(! test -f /dev/draw/new){
+! 	bind -a '#i' /dev
+! }
+! 
+! exec /usr/inferno/Plan9/$objtype/bin/emu -G -I -c1 /dis/sh.dis -c '
+! 	mount -bc {mntgen} /mnt
+! 	bind -c ''#U*'' /n/local
+! 	bind -c ''#₪'' /srv
+! 	rioimport {
+! 		charon -buttons plain -framework all,exit $* > /dev/null >[2=1]
+! 		echo halt > /dev/sysctl
+! 	} $*
+! ' $*
+
+------------------------------------------------------ 
+To have your keys automatically loaded in factotum, add this to your
+cpurc or termrc:
+
+! @{
+! 	auth/secstored
+! 	auth/secstore -G factotum | read -m > /mnt/factotum/ctl
+! }
+
+then you can edit your keys with ipso(1).
+------------------------------------------------------ 
+For changing your keyboard layout permanently, add the following line
+to your profile:
+
+! cat /sys/lib/kbmap/$lang > /dev/kbmap
+
+$lang is the name of a file in /sys/lib/kbmap, which are the ccTLDs
+of the different countries and languages.
+------------------------------------------------------ 
+To set up your timezone correctly, figure out in which timezone you
+are, and then, assuming e.g. you are in the CET zone:
+
+log in as user adm, and:
+
+! cp /adm/timezone/CET /adm/timezone/local
+
+and reboot. Note that the short timezone names are not standardized;
+check the first line of the file to ensure the offset is right for
+you. You can also play around with a new timezone with:
+
+! 	cp /adm/timezone/CET /env/timezone
+
+Subsequent command will pick up the new timezone, but nothing already
+running or not sharing the environment will be affected.
+
+------------------------------------------------------ 
+For more tips see the old [LANL tips |
+http://web.archive.org/web/20061012075020/http://pages.cpsc.ucalgary.ca/~mirtchov/lanlp9/tips.html].
+
+(TODO: The LANL tips page is being slowly merged into this one)
+

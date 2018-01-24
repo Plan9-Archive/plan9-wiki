@@ -1,0 +1,489 @@
+Upgrading to fourth edition
+
+(taken from [installation instructions]) If you have an extant third
+edition Plan 9 system, you are strongly encouraged to make a boot
+floppy for it before proceeding with this installation. To make a
+third edition boot floppy, boot your third edition system and run the
+commands:
+
+! 	9fat:
+! 	disk/format -b /386/pbs -df /dev/fd0disk \
+! 		/n/9fat/9load /n/9fat/plan9.ini /386/9pcdisk.gz
+! 	a:
+
+Then edit /n/a:/plan9.ini to change the bootfile= line to
+``bootfile=fd0!9pcdisk.gz''. Make sure the floppy boots.
+
+You should read Forsyth's guide below, but I'd suggest you also read
+the final Nemo's comments before starting.
+
+ROUGH GUIDE TO UPGRADING TO FOURTH EDITION
+
+forsyth@{caldo.demon.co.uk, vitanuova.com} 30 April 2002
+
+At several points in the following description I'll suggest one way
+but note that I did things differently. That's typically because I
+think I could have saved myself a little time and effort if I had
+done what I now suggest (had I known or thought of it). I tell you
+what I did differently just in case the alternative has its own
+pitfalls, since it is too late for me to test it. In any case, you do
+need to think carefully whether what I suggest makes sense, since I
+could easily have missed a step out. I really needed a reality
+recorder to double check but they were none left at the hire centre
+down the road.
+
+These instructions (`rough guide' or `hints' might be more accurate)
+are intended to aid those trying to upgrade from 3rd Edition to 4th
+Edition on a Plan 9 network with a file server, a cpu server and a
+terminal, especially where the cpu server takes its root from the
+file server, and acts as authentication server to the network. My
+file server is called `dispensa' and I'll use that in examples.
+
+For the upgrade it is probably essential to have a safe place to
+work: thus you'll need a machine running 4th Edition off a kfs file
+system independently from the existing 3rd Edition network. It must
+contain all the source. Make sure that machine seems in good shape
+before proceeding, and that it really does work standalone, although
+you should also ensure that it has copies of your network
+/lib/ndb/local file and others. For instance, check port assignments
+in /lib/ndb/common. I needed to add:
+
+! tcp=wiki port=17035 
+
+to the new distribution.
+
+Fetch the plan9.iso.bz2 distribution onto the bootstrap machine. I
+stored it and also unpacked it on my Windows partition, as
+/n/c/tmp/plan9.iso.
+
+The installation process below does not use the special Plan 9
+installation diskette; it uses a kfs-based Plan 9 system running rio
+and other things after you have logged in the usual way.
+
+Back up file server content you care about. (I didn't do that myself:
+I've got a replica of anything important.) Make sure you've got at
+least 350 Mbytes free on the target file server. If you've got a
+pseudo-worm or worm, check the `statw' result to ensure you've got
+enough space left before wmax both before and after installation, and
+make sure the cache is at least 600-800 Mbytes or more. (The
+installation is effectively into the cache so it needs to be big
+enough, and it's organised into hash buckets and you need enough slop
+to reduce the chances of any one of them overflowing.) If you've
+installed 3rd Edition into the same configuration you should be all
+right. Do a `dump' first if needed to flush anything important out of
+the cache.
+
+(I think I ended up installing only 280 to 300 Mbytes.)
+
+1. File server
+
+Build a 4th Edition file server kernel for your hardware
+configuration, on your 4th Edition kfs-based machine.
+
+It's fairly simple if you've got an existing 3rd Edition kernel, but
+be sure to read /sys/src/fs/words because important details have
+changed. For instance, plan9pc isn't there, but it isn't needed
+because the source file structure has changed (probably not perfect
+but much improved from last time). `emelie' is there but is used at
+most as a static prototype (you'll typically want to use a few files
+from your 3rd edition directory). In particular, the peculiar
+requirement has gone that mem.h and other files needed to be the same
+in two directories because the source files in each directory used
+their own mem.h. If that worries you be grateful it has gone.
+
+Set up and compile the thing taking into account the content of
+/sys/src/fs/words. Now boot it up, and see that it checks properly,
+serves the existing 3rd Edition network, and otherwise seems all
+right. It uses the existing stored file system config block and
+interacts correctly with both 3rd Edition clients. If you make a new
+diskette to hold it be sure to copy the existing plan.nvr. (I instead
+copied it in to the existing diskette as 9pcfs4.gz and changed
+plan9.ini accordingly). You can also check that you can 9fs to it
+from your 4th Edition machine. (I think you should see factotum's
+prompt at some point.)
+
+I did not do this next bit but I think it would have helped if I had.
+I'll get to try it when I update system at work, but that's not for a
+litle while yet.
+
+Change the file server code (whooo!) as follows. Save the original
+/sys/src/fs/con.c so you can restore it later (or it will complicate
+updates slightly). Find the line:
+
+! // authdisableflag =flag_install("authdisable", "-- disable authentication");
+
+and uncomment it. Rebuild your file server kernel. Reboot with it.
+
+The system as distributed (``correct me if I'm wrong'') has no way to
+suppress 4th Edition authentication. The undocumented `noauth'
+configuration console command does not affect the 9P2000 side of
+things. I was lucky because I had already attached to my file server
+from the 4th Edition bootstrap machine using the existing 3rd Edition
+cpu/auth server to authenticate the connection, but I had to be
+extremely careful thereafter not to lose that window--not to mention
+keeping the bootstrap machine on and the file server up--once the cpu
+server had been shut down and the file system update was underway.
+Had I realised in time, I'd have made the above change, and just in
+case that wasn't enough, I'd have opened a few more windows with the
+file server mounted.
+
+2. Shuffle the file server contents.
+
+You have several choices here. You can build a completely new file
+server, add a new file system to the existing file server and install
+to that temporarily (then make it `main' later), move things out of
+the way in the existing file server, or scrap the lot. I opted to
+move things out of the way. That way they'd be nearby when copying
+site-specific changes into the new structure.
+
+You'll need access to the file server console, nearby. (I set mine
+for serial console, plugged into the back of my bootstrap machine;
+that's convenient, but can be a bit worrying during the initial boot
+phase when the BIOS probes devices but nothing appears.)
+
+Boot the file server, hit a key within 5 seconds to enter config
+mode, and type `allow' to stop permission checking, `noauth' in case
+it makes any difference, then `end' to start up the file server. At
+the normal command prompt type flag authdisable to disable
+authentication checking.
+
+With the new file server running, attach to it on the bootstrap
+machine using 9fs. I'd do that in at least two windows so you can
+keep an eye on progress in one whilst installing in the other. (I
+thought I'd slipped up here by using 9fs and getting a mount without
+-c, which caused me trouble later, but I've just checked that 9fs
+does use mount -c.) If even the flag authdisable doesn't allow mounts
+to work (you get an authentication error, you can start up your
+cpu/auth server, connect, and then shut down the cpu server again).
+
+My file server has got a (pseudo-)worm, so all the 3rd Edition
+binaries and source were in the dump, and all I needed to preserve
+immediately were mailboxes, /adm files, some /lib/ndb files, and the
+usual odds and ends I can't remember to list. Because it's in the
+worm, there's no space freed up by removing the 3rd Edition content,
+so I simply moved it all aside during installation, using something
+like this:
+
+! for(a in list-of-all-files-but-adm-and-usr){mv $a 3e_$a}
+
+leaving 3e_sys 3e_lib, etc. That way there was also half a chance I
+could mv it back if it went wrong.
+
+! rm -r usr/glenda NOTICE LICENSE
+
+because I wanted the update to include the new usr/glenda (for
+reference) and knew it would moan if I'd already got one. You could
+{mv usr/glenda usr/3e_glenda} I suppose. I made a mkfs archive copy
+of adm to save the bootstrap machine, just in case, but left it in
+place (wanting my existing users and keys, and relying on the update
+process not overwriting existing files).
+
+The result is a root containing several 3e_* directories, and my
+existing `adm' and `usr' directories. (Note that I mv'd mail to
+3e_mail, but later I mv'd it back after the update installed its
+version, mv'ing that to 4e_mail to allow me to compare /mail/lib
+contents.)
+
+3. Prepare for installation
+
+Create the directories for the replica description. On the file
+server console type:
+
+! create /dist sys sys 775 d
+! create /dist/replica sys sys 775 d 
+! create /dist/replica/ndist sys sys 775 
+! create /dist/replica/client sys sys 775 d 
+! create /dist/replica/client/plan9.db sys sys 664 
+! create /dist/replica/client/plan9.log sys sys 664 a
+
+I found the file server wouldn't allow files to be created in /
+except through the console, even in allow mode. I thought at the time
+that I'd failed to mount -c, and perhaps that was the problem. In any
+case it will be helpful if the owners and modes are set. If you find
+you can create names in the mounted file server, you can skip this
+next bit.
+
+Make the directories in / required for installation:
+
+For each of the following names:
+
+! 29000 386 68000 68020 960 acme alpha
+! arm cron lib lp mips mnt n rc sparc power sys usr adm
+
+issue the following file server command for NAME set to each one of
+those names in turn:
+
+! create /NAME sys sys 775 d 
+
+For each of the following names:
+
+! env fd swap tmp 
+
+issue the following file server command for NAME set to each one of
+those names in turn:
+! create /NAME sys sys 555 d 
+Then issue:
+
+! create /mail upas upas 775 d 
+! create /LICENSE sys sys 444
+! create /NOTICE sys sys 444
+
+(Keyboard fans will enjoy that bit.)
+
+3. Define the replica
+
+Now we need to make a replica description on the bootstrap machine
+that refers to the target file server. I put the following in
+/dist/replica/dispensa on the bootstrap machine.
+
+! #!/bin/rc
+! 
+! s=/n/dist/dist/replica
+! serverroot=/n/dist
+! serverlog=$s/plan9.log
+! serverproto=$s/plan9.proto
+! fn servermount { status='' } 
+! fn serverupdate { status='' }
+! 
+! fn clientmount { status='' }
+! c=/n/dispensa/dist/replica
+! clientroot=/n/dispensa
+! clientproto=$c/plan9.proto
+! clientdb=$c/client/plan9.db
+! clientexclude=(dist/replica/client)
+! clientlog=$c/client/plan9.log
+! 
+! applyopt=(-t -u -T$c/client/plan9.time)
+
+Make the file executable {chmod +x /dist/replica/dispensa} or
+replica/pull will not find it.
+
+I've already got the file server (client) mounted on /n/dispensa, so
+clientmount simply sets true status.
+
+Servermount doesn't do anything either because I'm going to mount the
+distribution on /n/dist myself. As mentioned above, I had the
+distribution plan9.iso file as /n/c/tmp/plan9.iso on the bootstrap
+machine. Now we need to mount it via 9660srv.
+
+! 9660srv mount /srv/9660 /n/dist /n/c/tmp/plan9.iso
+
+All set, I think.
+
+4. Install the content on the file server.
+
+With all the preparation, the following should start the installation
+process. First make your pot of tea, then on the bootstrap machine
+type:
+
+! replica/pull /dist/replica/dispensa
+
+(You might be tempted as I was to use -n to see what it would do
+first, but replica/pull still fiddles with logs if you do that, as I
+discovered, and not knowing at the time what difference that might
+make, I had to fuss to undo it.)
+
+During the installation you'll see messages of the form `not updating
+mumble; locally created' (I forget the exact wording) for all those
+files in the distribution replica that already exist in the file
+server. Those should be (only) the files that you actually did wish
+to retain, such as those in /adm in my case. I simply kept an eye on
+the window as complaints appeared. I also watched its progress on the
+target file system in another window, partly to check that modes and
+owners were being set correctly. (You might remember that I had
+forgotten to mount the file server in more than one window, but I
+used srvfs in the original window to allow me to watch it elsewhere.)
+
+I found it shuffled things across fairly quickly, but the pot of tea
+was still useful.
+
+5. Interval
+
+4th Edition now occupies the file server. Although I did not do so
+this time, if you have a pseudo-worm, you might decide to do a `dump'
+at this point to snapshot the unmodified 4th Edition content, in case
+you slip up when editing. Since I could always retrieve things from
+plan9.iso or the bootstrap system, I did not bother.
+
+6. Configuration
+
+The rather tedious business of copying local configuration changes
+across begins. The main ones to watch are /lib/ndb/local,
+/lib/ndb/auth, /rc/bin/termrc and /rc/bin/cpurc, and of course
+/lib/sky/here. The details are site-dependent, and if you are
+upgrading, you've presumably done it once, so I have no real advice
+to offer here. (Note that aux/timesync in the prototype has the L
+option to coexist with Windows' idea of time; you might remove that
+as I do.) In the prototype cpurc, note that ndb/dns is started -r but
+you might use -s, and the timesync server, as the comment requests,
+should NOT be plan9.bell-labs.com . The prototype also includes -t
+/rc/bin/service.auth as parameters to aux/listen. I replace those
+lines with a case statement distinguishes my cpu/auth server from any
+other general- or special-purpose cpu servers (eg, gateways), and set
+cpurc to do appropriate things in each arm. For a cpu/auth/dhcp
+server I use:
+
+! switch($sysname){ 
+! case lavoro 
+! 	ip/dhcpd 
+! 	ip/tftpd
+! 	ip/httpd/httpd -d $facedom
+! 	auth/keyfs -m /mnt/keys /adm/keys
+! 	auth/cron
+! 	aux/listen -q -d /rc/bin/service -t /rc/bin/service.auth il
+! 	aux/listen -q -d /rc/bin/service -t /rc/bin/service.auth tcp
+
+(The prototype has a different invocation of auth/cron.) For
+everything else I use:
+
+! case * 
+! 	aux/listen -q il
+! 	aux/listen -q tcp 
+! }
+
+Next, sort out /rc/bin/service and /rc/bin/service.auth.
+
+For a cpu server that is also an authentication server:
+
+! cp /rc/bin/service.auth/authsrv.il566 /rc/bin/service.auth/il566 
+! cp /rc/bin/service.auth/authsrv.tcp567 /rc/bin/service.auth/tcp567 
+! mv /rc/bin/service/il566 /rc/bin/service/_il566 
+! mv /rc/bin/service/tcp567 /rc/bin/service/_tcp567 
+
+You'll probably find the last two aren't there anyway.
+
+Several files seem to be missing to allow the new cpu service to run
+(it's ncpu=17010). I installed these based on other files and the old
+edition:
+
+! /rc/bin/service/il17010 
+! #!/bin/cpu -R
+! /rc/bin/service/tcp17010 
+! #!/bin/cpu -R 
+
+make them executable.
+
+ncpunote is reserved in /lib/ndb/common but I'm not sure whether
+there's actually a service behind it.
+
+I also added these two:
+
+! cp /bin/service/_il17007 /bin/service/il17007
+! 
+! /rc/bin/service/il17009 
+! #!/bin/rc 
+! exec /bin/ip/rexexec 
+
+but you might decide otherwise.
+
+7. Factotum
+
+/sys/src/9/boot, in the built-in root of a kernel as /boot, expects
+factotum to help authenticate for it if it's going for a root from a
+file server, but factotum expects an authentication server to be
+running to make tickets for it. This poses a problem if your cpu/auth
+server takes its root over the network from your file server.
+
+I copied the factotum source and changed it to make a ticket for a
+server, which it can do since it has a copy of the server's key kept
+in notional NVRAM (typically a file on a diskette, but it can prompt
+if that's not available). My change does that only if the attempt to
+use an authentication server fails. (There was already some
+commented-out code near that point referring to a nonexistent
+function mktickets.)
+
+In my copy of /sys/src/cmd/auth/factotum I changed p9sk1.c's
+gettickets to call a new function:
+
+!    static int
+!    mkserverticket(State *s, char *tbuf)
+!    {
+!        Ticketreq *tr = &s->tr;
+!        Ticket t;
+! 
+!        if(strcmp(tr->authid, tr->hostid) != 0 || strcmp(tr->authid, tr->uid) != 0)
+!            return -1;
+!        memset(&t, 0, sizeof(t));
+!        memmove(t.chal, tr->chal, CHALLEN);
+!        strcpy(t.cuid, tr->uid);
+!        strcpy(t.suid, tr->uid);
+!        memrandom(t.key, DESKEYLEN);
+!        t.num = AuthTc;
+!        convT2M(&t, tbuf, s->key->priv);
+!        t.num = AuthTs;
+!        convT2M(&t, tbuf+TICKETLEN, s->key->priv);
+!        return 0;
+!    }
+! 
+!    static int
+!    gettickets(State *s, char *trbuf, char *tbuf)
+!    {
+!    /*
+!        if(mktickets(s, trbuf, tbuf) >= 0)
+!            return 0;
+!    */
+!        if(getastickets(s, trbuf, tbuf) >= 0)
+!            return 0;
+!        if(sflag)
+!            return mkserverticket(s, tbuf);
+!        return -1;
+!    }
+8. Configure and build new cpu kernel
+
+Once again, you need to change /sys/src/9/pccpu (or a copy) to suit
+your existing cpu server configuration. Before building it, I bound
+my modified factotum over /386/bin/factotum so that modified version
+would be put in the root of the cpu/auth server kernel.
+
+Copy it onto a boot diskette. (I simply overwrote the 9pccpu.gz file
+on my existing boot diskette. No going back for me.) Before booting
+it, type flag authdisable on the file server console to toggle the
+flag to ensure that you test authentication. flag attach is useful to
+see the effect. Now try booting the cpu/auth server. It should
+authenticate, connect, and boot up. Watch for errors from running
+cpurc.
+
+9. Terminal
+
+Build a 4th Edition terminal kernel and boot it up on another
+machine, if you've got one. I had nothing spare at the time and I was
+confident enough to use my bootstrap machine, rebooting it in its
+usual mode as a terminal.
+
+Then I set about removing obsolete 3e_ files and directories, still
+in `allow' mode to bypass permissions checking, before shutting
+everything down and rebooting in `normal' file server mode.
+
+10. Run
+
+Now is the time to start changing all your code to fit in. (I went to
+bed.)
+
+NEMO'S COMMENTS
+
+I followed most of forsyth's instructions, but did several steps in a
+different way, which I think is simpler. What I did is
+
+ *	Setup a standalone 4th edition cpu server. Remember to follow
+	forsyth's advice regarding authentication.
+ *	Compile a 4th edition file server
+ *	Boot the 3rd edition file server with the 4th edition kernel
+	(Remember to issue the commands to disable auth, as said in
+	forsyth's guide).
+ *	Update the 4th edition cpu server's kfs with config from the file
+	server (ndbs, services, cpurc, termrc, mail, etc.)
+ *	Boot a 4th edition terminal to test mail and other services as
+	provided by the standalone 4th edition cpu server.
+ *	Move file server files /x to /x_3e (see forsyth's guide).
+ *	Use disk/mkfs and disk/mkext to copy the entire kfs file system
+	from the cpu server to the real file server.
+ *	Reboot a diskless terminal, see that it works
+ *	Reboot the cpu server, diskless this time.
+ *	Once I'm happy, reboot all machines to enable permission checking
+	on the file server.
+ *	All set.
+
+The good thing of doing it this way is that I didn't have to fully
+understand the replica thing to get the machines upgraded. Now that I
+have a full 4th ed network, I can take time to learn.
+

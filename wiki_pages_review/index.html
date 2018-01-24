@@ -1,0 +1,1314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Wiki pages review (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Wiki pages review</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+The
+plan
+is
+to
+review
+all
+the
+current
+pages
+in
+the
+wiki,
+removing
+'junk'
+pages,
+and
+trying
+to
+fix
+and
+update
+the
+valid
+ones.
+<p class='para'>
+Because
+we
+can't
+delete
+files
+from
+the
+wiki,
+for
+now
+we
+can
+just
+list
+them
+under
+the
+TO
+DELETE
+list.
+</p>
+
+<p class='para'>
+Here
+is
+the
+full
+list
+of
+pages
+in
+the
+wiki
+as
+of
+now,
+generated
+with
+the
+following
+command:
+<pre>
+Local cd /mnt/wiki/; ls -Q | awk '{ print " *	[" $1 "]"}'
+</pre>
+
+</p>
+
+<p class='para'>
+Take
+one
+by
+one,
+review
+if
+it
+has
+any
+errors
+or
+it's
+obviously
+outdated,
+if
+you
+are
+fairly
+sure
+that
+a
+page
+is
+correct,
+add
+it
+to
+the
+list
+REVIEWED
+and
+include
+the
+date
+and
+your
+name
+after
+it;
+if
+the
+updates
+required
+are
+too
+big
+to
+take
+care
+of
+right
+now,
+add
+it
+to
+the
+FIXME
+list,
+with
+a
+short
+comment
+about
+what
+you
+think
+needs
+updating,
+your
+name
+and
+date.
+</p>
+
+<p class='para'>
+If
+the
+page
+is
+obviously
+garbage
+add
+it
+to
+the
+GARBAGE
+list
+with
+date
+and
+name;
+and
+if
+while
+it's
+not
+obvious
+garbage,
+you
+still
+think
+that
+the
+page
+should
+probably
+be
+deleted(eg.,
+has
+been
+obsoleted
+by
+another
+page),
+add
+it
+to
+the
+TO
+DELETE
+list
+with
+a
+comment,
+name
+and
+date.
+</p>
+
+<a name="REVIEWED" /><h3>REVIEWED</h3>
+
+<ul>
+
+<li>
+<a href="../9grid">9grid</a>
+-gks-2005-12-22
+</li>
+
+<li>
+<a href="../acme_wiki_instructions">acme
+wiki
+instructions</a>
+-gks-2005-12-21
+</li>
+
+<li>
+<a href="../adding_a_new_user">adding
+a
+new
+user</a>
+-gks-2005-12-21
+</li>
+
+<li>
+<a href="../contrib">contrib</a>
+-gks-2005-12-22
+</li>
+
+<li>
+<a href="../documentation">documentation</a>
+-gks-2005-12-21
+</li>
+
+<li>
+<a href="../irc">irc</a>
+-gks-2005-12-21
+</li>
+
+<li>
+<a href="../kuroneko">kuroneko</a>
+-gks-2005-12-21
+</li>
+
+<li>
+<a href="../mail_configuration">mail_configuration</a>
+-gks-2005-12-21
+</li>
+
+<li>
+<a href="../overview">overview</a>
+-gks-2005-12-22
+</li>
+
+<li>
+<a href="../plan_9_documentation_task_force">plan_9_documentation_task_force</a>
+-gks-2005-12-21
+</li>
+
+<li>
+<a href="../plan_9_wiki">plan_9_wiki</a>
+-gks-2005-12-21
+</li>
+
+<li>
+<a href="../rsc">rsc</a>
+-gks-2005-12-21
+</li>
+
+<li>
+<a href="../sandbox">sandbox</a>
+-gks-2005-12-21
+</li>
+
+<li>
+<a href="../screenshots">screenshots</a>
+-gks-2005-12-21
+</li>
+
+<li>
+<a href="../setting_the_right_monitor_size">setting_the_right_monitor_size</a>
+-gks-2005-12-21
+</li>
+
+<li>
+<a href="../software_for_plan_9">software_for_plan_9</a>
+-gks-2005-12-25
+</li>
+
+<li>
+<a href="../sources_repository">sources_repository</a>
+-gks-2005-12-22
+</li>
+
+<li>
+<a href="../staying_up_to_date">staying_up_to_date</a>
+-gks-2005-12-24
+</li>
+
+<li>
+<a href="../system_requirements">system_requirements</a>
+-gks-2005-12-25
+</li>
+
+<li>
+<a href="../tip9ug">tip9ug</a>
+-gks-2005-12-25
+</li>
+
+<li>
+<a href="../twente9con_2004_report">twente9con_2004_report</a>
+-gks-2005-12-25
+</li>
+
+<li>
+<a href="../unix_to_plan_9_command_translation">unix_to_plan_9_command_translation</a>
+-gks-2005-12-22
+</li>
+
+<li>
+<a href="../using_acme">using_acme</a>
+-gks-2005-12-22
+</li>
+
+<li>
+<a href="../using_rio">using_rio</a>
+-gks-2005-12-22
+</li>
+
+<li>
+<a href="../using_vncv">using_vncv</a>
+-gks-2005-12-22
+</li>
+
+<li>
+<a href="../web_browsers">web_browsers</a>
+-gks-2005-12-22
+</li>
+
+<li>
+<a href="../wiki_index">wiki_index</a>
+-gks-2005-12-22
+</li>
+
+<li>
+<a href="../wiki_pages_review">wiki_pages_review</a>
+-gks-2005-12-22
+</li>
+
+<li>
+<a href="../wiki_syntax">wiki_syntax</a>
+-gks-2005-12-22
+</li>
+
+<li>
+<a href="../why_static">why_static</a>
+-gks-2005-12-22
+</li>
+</ul>
+
+<a name="TODO" /><h3>TODO</h3>
+
+<p class='para'>
+These
+pages
+contain
+something
+useful,
+or
+at
+least
+are
+not
+garbage
+pages.
+</p>
+
+<ul>
+
+<li>
+<a href="../22c3">22c3</a>
+</li>
+
+<li>
+<a href="../9blogs">9blogs</a>
+</li>
+
+<li>
+<a href="../9con">9con</a>
+</li>
+
+<li>
+<a href="../9p2000.u">9p2000.u</a>
+</li>
+
+<li>
+<a href="../adding_your_face">adding_your_face</a>
+</li>
+
+<li>
+<a href="../books">books</a>
+</li>
+
+<li>
+<a href="../bootdir">bootdir</a>
+</li>
+
+<li>
+<a href="../boyd">boyd</a>
+</li>
+
+<li>
+<a href="../cfp">cfp</a>
+</li>
+
+<li>
+<a href="../clt2006">clt2006</a>
+</li>
+
+<li>
+<a href="../collaborative_environments">collaborative_environments</a>
+</li>
+
+<li>
+<a href="../community">community</a>
+</li>
+
+<li>
+<a href="../compiling_kernels">compiling_kernels</a>
+</li>
+
+<li>
+<a href="../configuring_a_standalone_cpu_server">configuring_a_standalone_cpu_server</a>
+</li>
+
+<li>
+<a href="../connecting_from_other_oses">connecting_from_other_oses</a>
+</li>
+
+<li>
+<a href="../connecting_to_other_oses">connecting_to_other_oses</a>
+</li>
+
+<li>
+<a href="../contrib_index">contrib_index</a>
+</li>
+
+<li>
+<a href="../cross_domain_authentication">cross_domain_authentication</a>
+</li>
+
+<li>
+<a href="../development">development</a>
+</li>
+
+<li>
+<a href="../dialup_modem_config">dialup_modem_config</a>
+</li>
+
+<li>
+<a href="../divergefs">divergefs</a>
+</li>
+
+<li>
+<a href="../divergefs_manpage">divergefs_manpage</a>
+</li>
+
+<li>
+<a href="../dns_configuration_notes">dns_configuration_notes</a>
+</li>
+
+<li>
+<a href="../download">download</a>
+</li>
+
+<li>
+<a href="../drawterm">drawterm</a>
+</li>
+
+<li>
+<a href="../drawterm_to_your_terminal">drawterm_to_your_terminal</a>
+</li>
+
+<li>
+<a href="../dual_booting_bare_machine_and_vmware">dual_booting_bare_machine_and_vmware</a>
+</li>
+
+<li>
+<a href="../ericvh">ericvh</a>
+</li>
+
+<li>
+<a href="../errata">errata</a>
+</li>
+
+<li>
+<a href="../faq">faq</a>
+</li>
+
+<li>
+<a href="../fosdem_2005_9con">fosdem_2005_9con</a>
+</li>
+
+<li>
+<a href="../fosdem_2006_9con">fosdem_2006_9con</a>
+</li>
+
+<li>
+<a href="../future_development_directions">future_development_directions</a>
+</li>
+
+<li>
+<a href="../future_directions">future_directions</a>
+</li>
+
+<li>
+<a href="../happy_users'_thanks">happy_users'_thanks</a>
+</li>
+
+<li>
+<a href="../high_performance_computing_using_plan_9">high_performance_computing_using_plan_9</a>
+</li>
+
+<li>
+<a href="../how_to_contribute">how_to_contribute</a>
+</li>
+
+<li>
+<a href="../informal_wiki_setup">informal_wiki_setup</a>
+</li>
+
+<li>
+<a href="../installation_instructions">installation_instructions</a>
+</li>
+
+<li>
+<a href="../installation_on_ipaq">installation_on_ipaq</a>
+</li>
+
+<li>
+<a href="../installation_troubleshooting">installation_troubleshooting</a>
+</li>
+
+<li>
+<a href="../installer_errata">installer_errata</a>
+</li>
+
+<li>
+<a href="../installing_a_plan_9_file_server">installing_a_plan_9_file_server</a>
+</li>
+
+<li>
+<a href="../installing_in_xen">installing_in_xen</a>
+</li>
+
+<li>
+<a href="../integrating_9load_into_the_linuxbios">integrating_9load_into_the_linuxbios</a>
+</li>
+
+<li>
+<a href="../intro_to_tools_philosophy_for_windows_users">intro_to_tools_philosophy_for_windows_users</a>
+</li>
+
+<li>
+<a href="../iwp9_2006">iwp9_2006</a>
+</li>
+
+<li>
+<a href="../kfs_file_system_configuration">kfs_file_system_configuration</a>
+</li>
+
+<li>
+<a href="../libre_software_meeting_2005">libre_software_meeting_2005</a>
+</li>
+
+<li>
+<a href="../madrid9con_2006">madrid9con_2006</a>
+</li>
+
+<li>
+<a href="../mailing_lists">mailing_lists</a>
+</li>
+
+<li>
+<a href="../man_pages_review">man_pages_review</a>
+</li>
+
+<li>
+<a href="../map">map</a>
+</li>
+
+<li>
+<a href="../mirrors">mirrors</a>
+</li>
+
+<li>
+<a href="../mouse_vs._keyboard">mouse_vs._keyboard</a>
+</li>
+
+<li>
+<a href="../network_configuration">network_configuration</a>
+</li>
+
+<li>
+<a href="../news">news</a>
+</li>
+
+<li>
+<a href="../nluug_2005_spring_day">nluug_2005_spring_day</a>
+</li>
+
+<li>
+<a href="../old_wiki_pages">old_wiki_pages</a>
+</li>
+
+<li>
+<a href="../organizations_using_plan_9_and_inferno">organizations_using_plan_9_and_inferno</a>
+</li>
+
+<li>
+<a href="../ozinferno">ozinferno</a>
+</li>
+
+<li>
+<a href="../papers">papers</a>
+</li>
+
+<li>
+<a href="../people">people</a>
+</li>
+
+<li>
+<a href="../plan_9_resources_in_other_languages">plan_9_resources_in_other_languages</a>
+</li>
+
+<li>
+<a href="../plan_9_wiki_wish_list">plan_9_wiki_wish_list</a>
+</li>
+
+<li>
+<a href="../porting_alien_software_to_plan_9">porting_alien_software_to_plan_9</a>
+</li>
+
+<li>
+<a href="../printer_configuration">printer_configuration</a>
+</li>
+
+<li>
+<a href="../radeon_drivers">radeon_drivers</a>
+</li>
+
+<li>
+<a href="../recommended_readings">recommended_readings</a>
+</li>
+
+<li>
+<a href="../replacing_9load">replacing_9load</a>
+</li>
+
+<li>
+<a href="../setting_up_a_inferno_mirror">setting_up_a_inferno_mirror</a>
+</li>
+
+<li>
+<a href="../setting_up_a_sources_mirror">setting_up_a_sources_mirror</a>
+</li>
+
+<li>
+<a href="../setting_up_fossil">setting_up_fossil</a>
+</li>
+
+<li>
+<a href="../setting_up_venti">setting_up_venti</a>
+</li>
+
+<li>
+<a href="../ssh_configuration">ssh_configuration</a>
+</li>
+
+<li>
+<a href="../supported_pc_hardware">supported_pc_hardware</a>
+</li>
+
+<li>
+<a href="../supported_pdas">supported_pdas</a>
+</li>
+
+<li>
+<a href="../tex_configuration">tex_configuration</a>
+</li>
+
+<li>
+<a href="../thm_2005-04-12_log">thm_2005-04-12_log</a>
+</li>
+
+<li>
+<a href="../thm_2005-04-12_summary">thm_2005-04-12_summary</a>
+</li>
+
+<li>
+<a href="../thm_2005-05-19_log">thm_2005-05-19_log</a>
+</li>
+
+<li>
+<a href="../thm_2005-05-19_summary">thm_2005-05-19_summary</a>
+</li>
+
+<li>
+<a href="../thm_2005-06-23_log">thm_2005-06-23_log</a>
+</li>
+
+<li>
+<a href="../thm_2005-06-23_summary">thm_2005-06-23_summary</a>
+</li>
+
+<li>
+<a href="../thm_2005-08-15_log">thm_2005-08-15_log</a>
+</li>
+
+<li>
+<a href="../thm_2005-08-15_summary">thm_2005-08-15_summary</a>
+</li>
+
+<li>
+<a href="../thm_2005-09-24_summary">thm_2005-09-24_summary</a>
+</li>
+
+<li>
+<a href="../thm_2005-09-25_log">thm_2005-09-25_log</a>
+</li>
+
+<li>
+<a href="../tip_o'_the_day">tip_o'_the_day</a>
+</li>
+
+<li>
+<a href="../todo">todo</a>
+</li>
+
+<li>
+<a href="../town_hall_meetings">town_hall_meetings</a>
+</li>
+
+<li>
+<a href="../troubleshooting_plan9_&_lilo">troubleshooting_plan9_&amp;_lilo</a>
+</li>
+
+<li>
+<a href="../upgrading_to_fourth_edition">upgrading_to_fourth_edition</a>
+</li>
+
+<li>
+<a href="../uriel">uriel</a>
+</li>
+
+<li>
+<a href="../user_groups">user_groups</a>
+</li>
+
+<li>
+<a href="../using_plumbing">using_plumbing</a>
+</li>
+
+<li>
+<a href="../using_pq">using_pq</a>
+</li>
+
+<li>
+<a href="../using_troff">using_troff</a>
+</li>
+
+<li>
+<a href="../v9fs">v9fs</a>
+</li>
+
+<li>
+<a href="../v9fs-2.1">v9fs-2.1</a>
+</li>
+
+<li>
+<a href="../v9fs-roadmap">v9fs-roadmap</a>
+</li>
+
+<li>
+<a href="../v9srv">v9srv</a>
+</li>
+
+<li>
+<a href="../video_drivers_development">video_drivers_development</a>
+</li>
+
+<li>
+<a href="../what's_new">what's_new</a>
+</li>
+
+<li>
+<a href="../what_do_people_like_about_plan_9">what_do_people_like_about_plan_9</a>
+</li>
+
+<li>
+<a href="../what_the_hack">what_the_hack</a>
+</li>
+
+<li>
+<a href="../wince_ftp">wince_ftp</a>
+</li>
+
+<li>
+<a href="../write_missing_man_pages">write_missing_man_pages</a>
+</li>
+</ul>
+
+<a name="FIXME" /><h3>FIXME</h3>
+
+<p class='para'>
+this
+is
+more
+a
+question
+than
+a
+review.
+isn't
+it
+true
+that
+plan9
+under
+vmware
+no
+longer
+works,
+and
+people
+are
+encouraged
+to
+use
+xen
+or
+qemu?
+if
+so,
+these
+two
+pages
+should
+be
+buried
+under
+<a href="../old_wiki_pages">old_wiki_pages</a>
+rather
+than
+encouraging
+futile
+attempts
+by
+newcomers.
+if
+you
+don't
+agree,
+please
+delete
+this
+text
+and
+move
+the
+pages
+back
+to
+the
+TODO
+section.
+<ul>
+
+<li>
+<a href="../vmware4">vmware4</a>
+</li>
+
+<li>
+<a href="../vmware_playground_for_plan9">vmware_playground_for_plan9</a>
+</li>
+</ul>
+
+</p>
+
+<p class='para'>
+No,
+I
+use
+a
+current
+version
+of
+Plan
+9
+regularly
+under
+VMware
+server.
+There
+are
+slight
+problems,
+but
+it
+is
+workable.
+Lucio
+De
+Re
+-
+March
+1st,
+2008.
+</p>
+
+<a name="TO_DELETE" /><h3>TO DELETE</h3>
+
+<p class='para'>
+Pages
+that
+either
+can't
+be
+opened
+in
+acme
+or
+the
+web
+interface,
+that
+have
+been
+replaced,
+are
+failed
+tests,
+and
+other
+junk
+(should
+be
+self-evident
+by
+trying
+to
+visit
+them):
+</p>
+
+<ul>
+
+<li>
+<a href="../idiots">idiots</a>
+-
+We
+all
+already
+know
+this...
+-
+uriel
+-
+20-03-2005
+</li>
+
+<li>
+<a href="../index.html">index.html</a>
+-
+same
+as
+<a href="../idiots">idiots</a>
+but
+this
+is
+confusing
+as
+some
+people
+thinks
+it's
+the
+main
+wiki
+page
+-
+uriel
+-
+20-03-2005
+</li>
+
+<li>
+<a href="../rfc9p1">rfc9p1</a>
+never
+took
+off?
+-mjl
+-
+26-03-2005
+</li>
+
+<li>
+<a href="../rfc9p2000">rfc9p2000</a>
+never
+took
+off?
+-mjl
+-
+26-03-2005
+</li>
+
+<li>
+<a href="../rfc9p2000.u">rfc9p2000.u</a>
+never
+took
+off?
+-mjl
+-
+26-03-2005
+</li>
+
+<li>
+<a href="../rfc">rfc</a>
+never
+took
+off?
+-uriel-
+21-12-2005
+</li>
+
+<li>
+<a href="../the_plan_9_web_server">the
+plan
+9
+web
+server</a>
+-
+doesn't
+work
+-
+soul9
+-
+03-03-2008
+</li>
+
+<li>
+<a href="../the_plan_9_web_server_httpd(8)_has_some_interesting_features._it">the
+plan
+9
+web
+server
+httpd(8)
+has
+some
+interesting
+features.
+it</a>
+-
+what
+the
+heck
+is
+this
+anyways?
+-
+soul9
+-
+03-03-2008
+</li>
+
+<li>
+<a href="../test2">test2</a>
+-
+weird
+stuff
+-
+soul9
+-
+03-03-2008
+</li>
+
+<li>
+<a href="../test_page">test
+page</a>
+-
+some
+test
+-
+soul9
+-
+03-03-2008
+</li>
+</ul>
+
+<p class='para'>
+uriel
+explained
+the
+need
+for
+the
+following
+pages,
+so
+my
+objections
+are
+removed.
+i
+leave
+it
+to
+his
+judgement
+what
+to
+do
+with
+them.
+<ul>
+
+<li>
+<a href="../plan_9_documentation">plan_9_documentation</a>
+</li>
+
+<li>
+<a href="../intro_to_tools_philosophy_for_*nix_users">intro_to_tools_philosophy_for_*nix_users</a>
+</li>
+
+<li>
+<a href="../background">background</a>
+</li>
+
+<li>
+<a href="../summary_of_the_plan_9_development_environment">summary_of_the_plan_9_development_environment</a>
+</li>
+
+<li>
+<a href="../softwaretools">softwaretools</a>
+</li>
+
+<li>
+<a href="../plan_9_related_publications">plan_9_related_publications</a>
+</li>
+
+<li>
+<a href="../twente9con_2004">twente9con_2004</a>
+maybe
+move
+to
+<a href="../old_wiki_pages">old_wiki_pages</a>
+rather
+than
+delete,
+but
+it
+doesn't
+look
+to
+be
+of
+any
+interest
+to
+the
+general
+public.
+<a href="../twente9con_2004_report">twente9con_2004_report</a>
+is
+much
+more
+interesting.
+</li>
+</ul>
+
+</p>
+
+<a name="TO_RENAME" /><h3>TO RENAME</h3>
+
+<p class='para'>
+(random
+newbie
+being
+picky)
+</p>
+
+<ul>
+
+<li>
+<a href="../recomended_readings">recomended_readings</a>
+-&gt;
+recommended_reading
+</li>
+
+<li>
+<a href="../video_drivers_development">video_drivers_development</a>
+-&gt;
+video_driver_development
+</li>
+</ul>
+
+<a name="GARBAGE" /><h3>GARBAGE</h3>
+
+<ul>
+
+<li>
+<a href="../sandbox_two">sandbox_two</a>
+</li>
+
+<li>
+<a href="../test2">test2</a>
+</li>
+
+<li>
+<a href="../new">new</a>
+blank
+page.
+at
+least
+needs
+some
+text
+describing
+intended
+use.
+probably
+better
+to
+trash.
+</li>
+
+<li>
+<a href="../bleepbybloop">bleepbybloop</a>
+</li>
+
+<li>
+<a href="../test_page">test
+page</a>
+</li>
+
+<li>
+<a href="../testtest">testtest</a>
+</li>
+
+<li>
+<a href="../avoiding_screen_pollution_from_kernel_messges">avoiding_screen_pollution_from_kernel_messges</a>
+typo
+in
+title,
+proper
+article
+is
+at
+<a href="../avoiding_screen_pollution_from_kernel_messages">avoiding_screen_pollution_from_kernel_messages</a>
+</li>
+</ul>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Sun Jan 31 03:53:50 EST 2010</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

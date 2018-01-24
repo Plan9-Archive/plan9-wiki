@@ -1,0 +1,24 @@
+iPhone drawterm
+
+Now that the iPhone SDK is out -- what about an iPhone version of
+drawterm that exposes graphics, audio, etc. from the phone?
+
+I'd put forth the idea of a hosted inferno port, but it strikes me
+that would be significantly more work.
+
+Perhaps the PlanB/Octopus crowd has better ideas of a iPhone-style
+client.
+
+MILESTONES
+
+ *	hello world style application that connects to a Plan 9 or inferno
+	server and exports an event file linked to a button
+ *	framebuffer/devdraw support
+ *	pointer support (unitouch)
+ *	(stretch) audio support
+ *	(stretch) multitouch support
+ *	(stretch) /mnt/term local file system access
+ *	(stretch) opengl support
+ *	(stretch) soft-keyboard support
+ *	(stretch) accelerometer support
+

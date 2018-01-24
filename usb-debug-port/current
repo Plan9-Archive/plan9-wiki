@@ -1,0 +1,20 @@
+usb-debug-port
+D1205348832
+Adavide
+#
+#PROJECT STATEMENT
+#
+#Since USB controllers appear to be an inexorable feature of the
+#future, and an increasing number of machines lack RS-232 serial
+#ports, implement a driver for the [USB 2.0 debug port |
+#http://www.usb.org/developers/presentations/pres0602/john_keys.pdf].
+#Apparently there is only one bridge which implements this standard,
+#a device called the NET20DC (if the purchase price would be an issue
+#for you, please not this in your application and we will look into
+#sponsorship).
+#
+#Please note that while this project should not require large amounts
+#of code, it will definitely be a grimy driver-debugging experience.
+#Warm-up work would probably include setting up two Plan 9 machines
+#to do RS-232 kernel debugging.
+#

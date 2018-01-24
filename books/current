@@ -1,0 +1,63 @@
+Books
+D1275197201
+Auriel
+#These are books related to Plan 9, its ideas, its design and its
+#style.
+#
+# *	[The Elements of Style |
+#	http://www.ablongman.com/professional/catalog/academic/product/1,4096,020530902X,00.html] William Strunk, Jr. E. B. White ([Online version of the first edition | http://orwell.ru/library/others/style/])
+#
+# *	[The Mythical Man-Month: Essays on Software Engineering |
+#	http://www.amazon.com/exec/obidos/tg/detail/-/0201835959/] by
+#	Frederick P. Brooks.
+#
+# *	[Lions' Commentary on UNIX | http://www.lulu.com/content/99701]
+#	by John Lions. ([Ps and Pdf versions of the book |
+#	http://www.lemis.com/grog/Documentation/Lions/index.html]; prepared
+#	source code for v6 Unix: [Ps and Postscript |
+#	http://v6.cuzuco.com/] and [HTML |
+#	http://www.tom-yam.or.jp/2238/src/] versions)
+#
+#PROGRAMMING
+#
+# *	[The Unix Programming Environment |
+#	http://cm.bell-labs.com/cm/cs/upe/index.html] by Brian W. Kernighan
+#	and Rob Pike. ISBN 0-13-937681-X (paperback), 0-13-937699-2
+#	(hardback).
+#
+# *	[The Practice of Programming |
+#	http://cm.bell-labs.com/cm/cs/tpop/index.html] by Brian W.
+#	Kernighan and Rob Pike. ISBN 0-201-61586-X.
+#
+# *	[The C Programming Language |
+#	http://cm.bell-labs.com/cm/cs/cbook/] by Brian W. Kernighan and
+#	Dennis M. Ritchie. ISBN 0-13-110362-8 (second edition, paperback)
+#
+# *	[The AWK Programming Language |
+#	http://cm.bell-labs.com/cm/cs/awkbook/] by Alfred V. Aho, Brian W.
+#	Kernighan and Peter J. Weinberger. ISBN 0-201-07981-X.
+#
+# *	[Communicating Sequential Processes (CSP) |
+#	http://www.usingcsp.com/cspbook.pdf] by Tony Hoare - CSP is the
+#	concurrency model used in Inferno and thread(2) - For more
+#	information see [http://www.usingcsp.com]
+#
+#PLAN 9
+#
+# *	[Das Netzbetriebssystem Plan 9 |
+#	http://www.amazon.de/exec/obidos/ASIN/3446188819/] von Hans-Peter
+#	Bischof, Gunter Imeyer, Bernhard Kühl. (In German. Outdated, it
+#	only covers 2nd edition); Now available from [lulu |
+#	http://www.lulu.com/content/406379]
+#
+#INFERNO AND LIMBO
+#
+# *	[Inferno Programming with Limbo |
+#	http://doc.cat-v.org/inferno/books/inferno_programming_with_limbo/]
+#	by Phillip Stanley-Marbell. ISBN: 0-470-84352-7 (Slightly outdated).
+#
+# *	[Principles of Operating Systems: Design and Applications |
+#	http://www.amazon.com/gp/product/1418837695/] by Brian L Stuart.
+#	ISBN: 1-4188-3769-5 (general operating systems textbook with
+#	coverage of Inferno internals)
+#

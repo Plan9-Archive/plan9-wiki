@@ -1,0 +1,209 @@
+<html>
+<head>
+<title>uriel (Editing Sun Feb 24 00:56:44 EST 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>uriel</b></font> (Editing Sun Feb 24 00:56:44 EST 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="uriel">
+<input type="hidden" name="version" value="1361685404">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+ *	Name: [uriel | http://uriel.cat-v.org]
+ *	Email: u@[berlinblue.org | http://berlinblue.org]
+ *	Www: [http://cat-v.org]
+ *	Blog: [http://www.advogato.org/person/uriel/]
+
+ *	Note: Sadly, uriel passed away in 2012. His software projects,
+	document archives, and tireless advocacy of non-harmful software are
+	a lasting and significant contribution to the Plan 9 community.
+
+------------------------------------------------------ 
+PROJECTS
+
+ *	[werc document management system | http://werc.cat-v.org/]
+ *	[The Documentation Archive: Collection of Plan 9, Inferno and
+	other related documents and papers | http://doc.cat-v.org]
+ *	[NineTimes: Plan 9, Inferno and 9P news |
+	http://ninetimes.cat-v.org]
+ *	[9P Resources | http://9p.cat-v.org]
+ *	[http://glenda.cat-v.org]
+
+------------------------------------------------------ 
+COMMUNITY TODO:
+
+Pending:
+ *	Integrate Inferno or 'native' dis in main Plan 9 distribution
+ *	Fix licenses to allow better sharing of components with other
+	projects(troff, ?c, ...)
+ *	open up 9trouble
+ *	Release management plan(proposal: daily snapshots; full release
+	every six months)
+ *	Installer/bootable system unification, floppy deprecation
+ *	Move ports page to wiki
+ *	Do something about comp.os.inferno and comp.lang.limbo (what about
+	comp.os.plan9?)
+ *	issue/bug/task/feature tracking system? (bugfs?)
+ *	9grid.net update
+ *	Have http://public.www.planetmirror.com/pub/plan9/ updated
+
+In progress:
+
+ *	sources mirrors (20h, nashi, uriel,nemo)
+ *	Better documentation, in particular document devlopment process
+	and how to get involved. (uriel)
+ *	Reduce split of codebases and documentation between p9p and Plan 9
+	(oksel)
+ *	Access to grid.plan9.bell-labs.com -> ericvh?
+ *	New main page([rsc], uriel; almost done)
+ *	[News] page/site (see news(1)?) -> Given up, see [NineTimes |
+	http://ninetimes.cat-v.org] instead.
+
+Done:
+ *	[Add http://plan9.bell-labs.com/sys/doc/fossil.pdf to papers page
+	| http://doc.cat-v.org/plan_9/4th_edition/papers/fossil/].
+ *	Stablish procedure to get your own sources dir. See: [How to
+	contribute]
+ *	Monthly irc meetings. See: Town Hall Meetings
+ *	Setup [Plan 9 Documentation Task Force]
+ *	Have an automatically generated changelog and commits-list
+
+Wont fix:
+ *	Extend to use of patch(1) with comments for all changes done to
+	the main distribution. The people at the Labs just wont do it.
+
+------------------------------------------------------ 
+TECH TODO
+
+ *	Make awk work properly (use rc for system and |, errstr, exits,
+	more things that I forgot)
+
+BUGS
+
+ *	HTML version of vgadb(6) and plan9.ini(8) are broken.
+ *	cpp breaks when finding ' inside // comments
+ *	cpp should ignore // ... at the end of #statements
+
+------------------------------------------------------ 
+WIKI TODO
+
+Current wiki short term features:
+
+ *	Make /n/sources/.. strings into links to the sources web
+	interface(once it's up)
+ *	Nested lists(syntax still not decided)
+ *	Explicity syntax for headers and sub-headers(tentative syntax: <<
+	Second header >>), this is needed by wikis in languages that don't
+	use latin alphabets.
+ *	Url-encode page names in the web interface.
+ *	The web interface for the wiki seems to not set the proper header
+	to avoid browser caching in the wrong cases(need to investigate
+	exact causes).
+ *	Script to check for broken wiki links
+ *	Display missing pages nicely, ie., return only index.html for
+	missing pages only on walk, might break something?
+
+Maybe:
+ *	A way to scape [[] and []] - I have a partial fix for this, that
+	makes [[ not become a link(even when]] appears later in the same
+	line), but I can't find a sane way to have it displayed as a single
+	braket, specially in acme(could be done for HTML interface but would
+	be an ugly hack).
+ *	A way to force new lines - not sure how either, and probably not
+	even a good idea.
+
+Done:
+ *	New css based style for web interface
+ *	----- -> hr
+ *	Relative links
+ *	https links are broken (eg.
+	[https://lists.cse.psu.edu/mailman/listinfo/9fans])
+ *	Add extra info to [what's new]
+ *	Replace "Edit" and "New" web pages with ones explaining that the
+	web interface is disabled and acme is needed. (rsc removed the
+	links, so not needed anymore)
+ *	Better display of html diffs, show deleted and changed text.
+
+Acme's Wiki features and bugs
+ *	Better conflicting commit error reporting
+ *	Make Zerox work properly, in particular edits in Zeroxed
+	window(Maybe fixed by AxelB's fixes?)
+
+------------------------------------------------------ 
+TO MOVE TO SOURCES
+
+ *	f2f's stuff (ffmpeg and xaos still missing?)
+ *	pegasus, rit and latest python
+
+------------------------------------------------------ 
+MISC TODO
+
+ *	New wiki/HIT
+ *	Wikipedia Plan 9/Inferno related pages work, see
+	[http://en.wikipedia.org/wiki/User:Lost.goblin]
+ *	TPOP links broken.
+
+------------------------------------------------------ 
+RANDOM
+
+ *	Boydo hacking prize
+ *	"The elements of Kernel hacking style" -> nemo, bruce perens series
+ *	Talk at mozdev meeting
+
+------------------------------------------------------ 
+TINY TASKS
+
+ *	Document pci ID card identification in vgadb(6) and remove BUGS
+	section
+
+SMALL TASKS
+
+ *	Make page(1) render next page in advance
+ *	Add gregsub to regexp(2) for global subs
+
+ACME TASKS
+
+ *	Make 'grow' operation show as much of the file as possible
+ *	A way for apps to enable the 'scratch' bit on windows
+ *	Make acme/Mail use the built-in Undo/Redo mechanisms
+ *	In acme/Mail 'save' should give some feedback to the current email
+	page(maybe just make 'save' go away from tag bar?)
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

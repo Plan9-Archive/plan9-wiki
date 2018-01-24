@@ -1,0 +1,68 @@
+Mailing Lists
+
+
+9FANS
+
+9fans is a list for discussion about Plan 9 and related technologies.
+
+To subscribe you can send an email to [9fans-request@9fans.net] with
+"subscribe 9fans" as the body or use the web form at:
+[http://mail.9fans.net/listinfo/9fans]
+
+An unidirectional gateway forwards all 9fans emails to the Usenet
+group [comp.os.plan9 |
+http://groups-beta.google.com/group/comp.os.plan9]; this used to be a
+bidirectional gateway, but seems to be broken, so please only post to
+9fans directly and not to comp.os.plan9.
+
+Please avoid sending messages containing MIME or HTML.
+
+9fans is archived in various places:
+
+ *	[http://9fans.net/archive/] - Complete archives.
+ *	[http://marc.info/?l=9fans] - Full searchable archives at MARC
+ *	[http://dir.gmane.org/gmane.os.plan9.general] - Web interface to
+	archives since 2002.
+ *	[http://www.bx.psu.edu/~schwartz/9fans] - Complete archives in
+	mbox format. (404!)
+ *	[http://archive.netbsd.se/?ml=Plan9-9fans] - Archives sinde 2004,
+	searchable and rss feeds.
+ *	[comp.os.plan9 archives in Google Groups |
+	http://groups.google.com/groups?hl=en&lr=&group=comp.os.plan9]
+
+9TROUBLE
+
+You can also email [9trouble@plan9.bell-labs.com |
+mailto:9trouble@plan9.bell-labs.com] for support or report bugs. But
+probably using 9fans is a better idea as the persons taking care of
+9trouble are usually very busy.
+
+INFERNO-LIST
+
+Vita Nuova runs an Inferno Mailing List for the discussion related to
+the Inferno operating system and the Limbo programming language.
+
+To subscribe to the list, send a message to
+inferno-list-request@vitanuova.com, including the word "subscribe" in
+the subject or body of the message.
+
+List archives:
+ *	[http://dir.gmane.org/gmane.os.inferno.general]
+ *	[http://archive.netbsd.se/?ml=Inferno-discussion]
+
+OLD LISTS
+
+The following lists are not actively used. Their archives are listed
+for the curious.
+
+ *	[plan9dev@googlegroups.com] This was intended as a list for Plan 9
+	developers but was shut down because all discussions were in 9fans
+	anyway. [http://groups-beta.google.com/group/plan9dev] (archives
+	offline, we are trying to bring them back one way or another)
+ *	9fans.es: [http://groups.google.com/group/9fans-es/about]
+ *	9fans.de: Archive is missing.
+ *	[Tokyo Inferno/Plan 9 Users Group | http://www.tip9ug.jp]
+ *	plan9-tech: [http://groups.google.com/group/plan9-tech/about]
+ *	plan9changes: [http://groups.google.com/group/plan9changes]
+ *	9phackers: [http://groups.google.com/group/9p-hackers]
+

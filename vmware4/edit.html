@@ -1,0 +1,122 @@
+<html>
+<head>
+<title>vmware4 (Editing Wed Jan 25 19:31:44 EST 2006 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>vmware4</b></font> (Editing Wed Jan 25 19:31:44 EST 2006 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="vmware4">
+<input type="hidden" name="version" value="1138235504">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+The VMware 4 disk image is now sorely outdated and is no longer
+distributed. You can install into a VMware4 virtual machine using the
+install CD just like on a real computer.
+
+Here are some tips on [dual booting bare machine and vmware] using
+the same physical disk for both, while avoiding a couple of pitfalls.
+
+Problems and work-arounds:
+ *	There is a problem with the CDROM in VMWare 4.5. If you boot Plan9
+	with a CDROM device attached to your virtual machine 9Load will hang
+	unless a CDROM is present ("connected"). If you don't need CDROM
+	support it is recommended that you remove the CDROM device from your
+	virtual machine. If you need this device, make sure to keep a CD
+	image attached.
+
+ *	Problem with 9load hanging when booting in VMWare can be avoided
+	if you move the CD-ROM drive to the SCSI bus. VMWare allows SCSI
+	simulation for ATA CD-ROM drives: just select appropriate radio
+	button in the cd-rom settings dialog. SCSI controller (BT-958) is
+	supported by Plan 9. In this case use /dev/sd00 for access to CDROM
+	drive.
+
+ *	There is a problem using more than two buttons on an IBM Thinkpad.
+	Russ Cox described a workaround on 9fans:
+
+! Date: Mon, 17 Feb 2003 09:43:25 -0500
+! Subject: [9fans] VMware and Plan9
+! 
+! Two things.  First, go into Control Panel -> Mouse -> Trackpoint
+! and make sure that the middle button setting is "neither" (there
+! are three choices: "scrolling", "zooming", and "neither").
+! 
+! Second, start regedit.  Look for
+! 
+! 	HKEY_LOCAL_MACHINE
+! 	 System
+! 	  CurrentControlSet
+! 	   Enum
+! 	    ACPI
+! 	     IBM3780
+! 	      <ugly hex>
+! 	       DeviceParameters
+! 
+! You may have to substitute something else for IBM3780 depending
+! on who makes your laptop.  Find the one with keys named "MouseResolution",
+! "MouseDataQueueSize", etc.  Add a new DWORD variable "NumberOfButtons"
+! with value 3.  
+! 
+! Now you should be okay.
+! 
+! The problem is actually not the IBM-supplied mouse driver but the
+! underlying Windows-supplied basic i8042 PS/2 mouse driver, on which
+! the Trackpoint driver sits.
+! 
+! The Windows driver expects the Trackpoint to respond to command E9
+! as the Logitech mice do, giving the number of buttons as the second byte.
+! Unfortunately, the Trackpoint sends back some form of sampling resolution
+! instead, and even more unfortunately the default resolution is encoded
+! as 0x02, tricking Windows into thinking that there are but two mouse
+! buttons on the Trackpoint.  Since this is the Trackpoint controller simply
+! implementing a different command E9, the only way to get the hardware
+! to respond correctly is to turn it off in the BIOS, so that the external
+! mouse can respond for itself.
+! 
+! Happily, Windows is nothing if not configurable.  The registry key makes
+! Windows ignore what it has incorrectly interpreted the hardware to have said.
+! DirectInput (which VMware uses, but most apps don't) ignores the middle
+! button when it thinks the mouse has only two buttons.  The stock Windows 
+! mouse path has no problem with a "two"-button mouse generating middle-button
+! events.
+! 
+! Russ
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

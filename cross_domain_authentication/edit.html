@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>Cross domain authentication (Editing Tue Jul  5 18:59:44 EDT 2005 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Cross domain authentication</b></font> (Editing Tue Jul  5 18:59:44 EDT 2005 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Cross domain authentication">
+<input type="hidden" name="version" value="1120604384">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+Cross domain authentication has been implemented in two different
+forms recently (Jul 2005), however there is still discussion about
+the "best" solution.
+
+IMPLEMENTATION 2
+
+Central authentication server
+[http://groups-beta.google.com/group/comp.os.plan9/msg/4625ee53672ef106?dmode=source&hl=en]
+
+IMPLEMENTATION 1
+
+Distributed authentication
+[http://groups-beta.google.com/group/comp.os.plan9/msg/3c379056e750c514?dmode=source&hl=en]
+
+A EARLIER, SIMILAR PROPOSAL
+
+(Taken from a post by David Presotto to the 9grid list:
+[http://nwn.definitive.org/pipermail/9grid/2004-September/000269.html])
+
+In the current scheme, when a user authenticates, he/she gets a list
+of domains that the server will accept and picks one to use (i.e. one
+he has a key for). That should provide the second part of the name,
+i.e., if I'm presotto authenticating via the domain bignose.com then
+I should be presotto@bignose.com. Tacking on the @bignose.com is
+currently missing.
+
+That of course leaves the server to map the domain bignose.com to an
+auth server that it trusts (i.e. has a key for and trusts others to
+authenticate via). Currently that's done via the lib/ndb entry
+
+! 	authdom=bignose.com auth=1.2.3.4
+
+So we have a way to trust other authentication domains but not yet a
+way to tag the resulting name. However, that's like 1 line of code in
+factotum.
+
+However, this requires that there be a shared key twixt each server
+and each domain that it trusts. I'll leave it up to you if that's too
+much.
+
+If the server is a cpu server, then the caller can export its
+factotum to its process on that cpu server so that it can
+authenticate further. Is this a good idea? Would we be letting too
+much access to the factotum? Might we want the user to start a second
+less capable factotum for 9net access?
+
+The client coming into the cpu server will need at least readonly
+access to binaries and to enough directory structure to set up a name
+space on that machine. I already had to make that work for the deep
+lens survey stuff. I made ken's group 'noworld' access work for that.
+If we put each 9net user in the 'noworld' group, then we can point
+him to a file server and he can only get at files that are accessible
+by his uid or by the 'noworld' group. You could even give him some
+write access if you wanted to. It keeps such users from accessing
+anything that was accidentally made world readable or writable. It
+does mean that you have to change the file server so that anyone
+coming in as a@b is just treated as a 'noworld' group user.
+
+My 2 cents.
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

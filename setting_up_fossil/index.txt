@@ -1,0 +1,257 @@
+Setting up Fossil
+
+Venti is necessary to get the most out of Fossil. See [setting up
+Venti].
+
+If you are using a Venti server on your local machine, you need to
+find your local IP address (cat /net/ndb) and set
+
+! % venti=your-ip-address
+
+in your environment.
+
+The main data storage for Fossil is the Venti server. Fossil keeps
+dirty blocks and ephemeral snapshots in a local disk partition called
+the write buffer.
+
+The write buffer does not need to be as big as the file system you
+wish to store, but it it doesn't hurt and it makes the initialization
+easier. Rsc's laptop uses a fossil write buffer of a gigabyte, and
+sources server uses a mere half gigabyte.
+
+Note that if you built a fossil (non-kfs) machine with the help of
+the installer, many of the steps in this document have already been
+done by the installer. It's probably worth your time to understand
+what it did on your behalf, but you can skip over doing things until
+the part about adding "listen" commands to serve files to other
+machines.
+
+Format the write buffer with:
+
+! % fossil/flfmt /dev/sdC0/fossil
+
+Then create a file called flproto containing:
+
+! srv -p fscons
+! srv fossil
+! fsys main config /dev/sdC0/fossil
+! fsys main open -AWP
+! fsys main
+
+note: make sure the file ends in '\n' (i.e. hit enter after the last
+line) -- otherwise, fossil will silently treat it as an error.
+
+See fossilcons(8) for more about what the commands mean. Run
+
+! % fossil/fossil -c '. flproto'
+! % con -l /srv/fscons
+
+to start fossil, execute the flproto script, and connect to the
+console.
+
+If any command in the script fails, the script does not continue.
+Connecting to /srv/fscons should show you any errors. If you type
+enter a few times you should get
+
+! prompt:
+! main: 
+! main:
+
+(The first prompt is printed before the script runs. The last command
+in the script changes the default file system to `main'; subsequent
+prompts reflect this.)
+
+Draw a new window and mount fossil:
+
+! % mount -c /srv/fossil /n/fossil
+
+Now you have a console window and a window with fossil mounted.
+You'll be switching between them quite a bit. The examples will show
+the % prompt for the shell commands and main: for the fossil console
+commands.
+
+The -AWP flags in the open command turn off authentication, turn on
+arbitrary wstats, and turn off permission checking.
+
+The fossil file system has three main trees: /active, /archive, and
+/snapshot. The active file system is in /active. When you mounted
+/srv/fossil before, you attached to /active. See fossil(4) for more.
+
+Before you can create files with particular users and groups, you
+need to add them to the users table. Execute the following at the
+fossil console to create a users file:
+
+! main: create /active/adm adm sys d775
+! main: 
+
+You'll probably want to use the same set of users from your current
+file system. The file format has changed slightly from the old kfs
+format, in that the first field is now a string rather than a number.
+(The string is what gets stored in the fossil disk structures, just
+like a number gets stored in the kfs and fs disk structures.) You can
+convert by running:
+
+! % sed 's/^([^:]+):([^:]+)/\2:\2/' /adm/users >/n/fossil/adm/users
+
+Here, /adm/users comes probably from your local kfs. Then tell fossil
+to reload the users file:
+
+! main: users -r /active/adm/users
+
+Test that the reload worked by running:
+
+! % echo hi >/n/fossil/foo
+! % chgrp glenda /n/fossil/foo
+! % ls -l /n/fossil/foo
+! % rm /n/fossil/foo
+
+The chgrp should succeed. If it doesn't, the users table isn't right.
+
+Now you're in a good state for initializing the file system, which
+you can do with:
+
+! % mount /srv/kfs /n/kfs
+! % disk/mkfs -a -s /n/kfs /sys/lib/sysconfig/proto/allproto | 
+! 	disk/mkext -u -d /n/fossil
+
+If your kfs and fossil write buffer are on the same disk, you may
+find that running one and then the other is much faster so they don't
+contend for the disk:
+
+! % disk/mkfs -a -s /n/kfs /sys/lib/sysconfig/proto/allproto >/somewhere/else
+! % disk/mkext -u -d /n/fossil </somewhere/else
+
+Now you have a file system. The users file probably just got
+overwritten, so put it back:
+
+! main: users -w
+
+This will overwrite /adm/users with the current in-memory table.
+
+Take an archival snapshot:
+
+! main: snap -a
+
+(Note: even though a prompt is printed immediately after you hit
+enter, the command takes up to 10 seconds to commence.)
+
+After a short pause, the disk will start whirring as all the blocks
+you just copied get sent off to Venti. Eventually this will finish,
+but it is likely to take a long time depending on what you copied to
+your active system. When Fossil finishes archiving, it will print a
+message like:
+
+! archive vac:080b64...
+
+to the console. The vac hash of the archive can be given to
+fossil/flfmt to reset the fossil partition if it is ever lost, or to
+vacfs to look at the archive.
+
+For kicks, kill off fossil and restart it:
+
+! % kill fossil | rc
+! % fossil/fossil -c '. flproto'
+
+In your console window you'll have to connect to /srv/fscons again.
+
+Check that everything is there:
+
+! % mount /srv/fossil /n/fossil
+! % mount /srv/fossil /n/archive main/archive
+! % ls -l /n/fossil
+! % ls -l /n/archive
+
+Neat, huh?
+
+Now we're ready to start things for real. Add the line
+
+! users -r /active/adm/users
+
+to the flproto file and remove the -AWP flags from open. Restart
+fossil:
+
+! g% kill fossil | rc
+! g% fossil/fossil -c '. flproto'
+! g% mount /srv/fossil /n/fossil
+! g% mount /srv/fossil /n/archive main/archive
+! g% ls -l /n/archive
+
+If you want to serve the network you can run the commands
+
+! listen tcp!*!9fs
+! listen il!*!9fs
+
+in flproto or at the console. Now others can connect.
+
+Note that if your fossil is your primary file system and is being
+launched at boot time by boot(8) you should use the numerical forms
+of the port numbers (tcp!*!564 and il!*!17008) instead of the
+symbolic names because the ndb(8) servers won't be running yet. Also,
+you will probably want to brand your flproto onto your fossil
+partition using fossil/conf, see fossil(4).
+
+Connections (even over local /srv files) are authenticated using
+factotum. If you are booting standalone and don't use p9sk1 keys,
+you'll have to add a key to your factotum to use for the
+authentication. Specifically, if
+
+! % grep p9sk1 /mnt/factotum/ctl
+
+doesn't find anything, then you should run
+
+! % echo 'key proto=p9sk1 user=you dom=local !password=local' >/mnt/factotum/ctl
+
+to set up a key. This will be necessary for the mount to work once
+you lose the -AWP flags.
+
+The user name should be your user name on the local machine. The
+password can be anything. (Since both mount and fossil are using the
+same factotum and thus the same keys, the authentication will
+succeed!)
+
+Congratulations! You have a fossil.
+
+See fossil(4) and fossilcons(8) for more information.
+
+BOOTING A STANDALONE FOSSIL SYSTEM
+
+NOTE: this section relates to an older type of kernels, called 'pcfl'
+which have now been deprecated for the 'pcf' ones, which allow you to
+change fossil configurations without having to recompile kernels.
+
+If you have installed Plan 9 directly onto a disk without using a kfs
+partition then you do not need to read this section.
+
+This is complicated and clunky. You will have to debug something
+along the way. You really need to understand how the system works and
+how all the pieces fit together before you attempt this.
+
+It is possible to build a kernel that boots from a local fossil
+system. The pc kernel configuration pcfl is the starting point. Copy
+pcfl to pcyour-sys-name and then:
+
+ *	change cpuserver = 0 to cpuserver = 1 in port if you want a cpu
+	server.
+ *	change fl to your own system name in the paths in the bootdir
+	section.
+
+You need to create /sys/lib/sysconfig/your-sys-name and populate it.
+The files in /sys/lib/sysconfig/fl are a good starting point. You'll
+want to edit them to suit your setup. In particular, you need to:
+
+ *	change boot's cpuserver=no to cpuserver=yes if desired
+ *	change boot's venti command line if desired
+ *	change flproto to fit your configuration; note that the srv file
+	must be named boot and not fossil.
+ *	change venti.conf to fit your configuration.
+
+You may also have to edit the set of boot files in the configuration
+file for the kernel to include fdisk, and run fdisk -p from your boot
+script, if your venti partitions need so to be learned.
+
+Now you should be able to build a kernel and boot it. Note that you
+have to run lnfs in order to build.
+
+It probably won't boot because something isn't set up quite right.
+You're on your own for debugging.
+

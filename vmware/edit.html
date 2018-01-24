@@ -1,0 +1,122 @@
+<html>
+<head>
+<title>VMWare (Editing Thu Dec  6 18:08:30 EST 2007 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>VMWare</b></font> (Editing Thu Dec  6 18:08:30 EST 2007 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="VMWare">
+<input type="hidden" name="version" value="1196982510">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+The VmWare links below are a little old but should still work,
+however we now use VESA to access the VmWare framestore, and this
+does not support hardware acceleration. Thus you will need to disable
+this as soon as you have booted plan9, ideally put the command below
+in /rc/bin/termrc so it will be done for you.
+
+! echo hwaccel off > /dev/vgactl
+
+In VMWare Server (and possibly other versions), although the
+installation can be done using either IDE or SCSI cdrom drives for
+the hosted OS, it is necessary to switch the virtual machine's cdrom
+type to SCSI prior to actually booting Plan 9 from the hard drive.
+
+See [Vmware_playground_for_plan9] and [vmware4]
+
+AUDIO for VmWARE Server
+
+VmWare Server was made to bring up sb16 emulation; however not
+without some extraneous artifacts in the audio. There seem to be
+timing problems. Perhaps someone knows a better setting to implement.
+Here is my setup:
+
+Find your vmx file where the Vmware Guest files are stored: (e.g.
+/var/lib/vmware/Virtual Machines/plan9/plan9.vmx)
+
+Make sure the configuration does not have a sound card installed by
+the Vmware wizard.
+
+Then edit your vmx configuration file with your favorite text editor,
+and add the following lines:
+
+! sound.present = "TRUE"
+! sound.virtualDev = "sb16"
+! sound.baseAddr = "0x220"
+! sound.dma16 = "5"
+! sound.dma8 = "1"
+! sound.irq = "5"
+! sound.mpu401baseAddr = "0x330"
+! sound.Opl3BaseAddr = "0x388"
+! sound.smallBlockSize = 1024
+! sound.maxLength = 2048
+! sound.buffering = "10000000000.0"
+! sound.copyDelayFactor = "1000000.0"
+! sound.directSound = "false" 
+! sound.highPriority = "true"
+! sound.ignoreOverflows = "true"
+! sound.virtualrealcorrection ="10000000000.0"
+! pciSound.priorityBoost = "true"
+
+Then boot your Plan 9 guest and add the following to plan9.ini:
+
+! audio0=type=sb16 port=0x220 irq=5 dma=5
+
+Before trying the audio feature, you must reboot your Plan 9 guest
+and once logged in, do:
+
+! term% bind -a '#A' /dev
+
+Make sure the rio window covers a significant area of the screen, or
+otherwise the audio driver seems to give garbage beeps and groans
+instead of the audio you want.
+
+! term % cat a000 > /dev/audio
+
+The audio that comes out is interrupted by short and frequent timing
+jitters. When you resize the rio window while the audio is playing,
+the artifacts go away for awhile, but there is a more pronounced
+interruption during the resizing operation.
+
+Otto Schulze
+
+American Conservatory of Music [http://www.americanconservatory.edu]
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

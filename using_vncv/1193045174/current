@@ -1,0 +1,84 @@
+Using vncv
+D1193045174
+Ackeen
+#Getting vncv working on Plan 9 usually alleviates the pain caused by
+#reliance on specific applications from other operating systems.
+#Sometimes it is proper to relearn a way of doing things - I wouldn't
+#use this to get MS Word from a Windows machine when we have a
+#perfectly good document formatting subsystem using the old reliable
+#troff, but having a web browser that can keep up with the changing
+#web-world sure is nice.
+#
+#What I'm going to describe is the procedure for viewing linux X
+#applications on the Plan 9 desktop. Other operating systems are
+#supported but I have no use for them and as a result, no experience.
+#
+#Firstly, you'll want to download the vncserver from
+#[http://www.tightvnc.com/download.html] and install it in your
+#system I copied the files to /usr/local/bin, you do what's best for
+#your system.
+#
+#Secondly, on the linux machine you'll want to type (and should see
+#something like):
+#
+#! $ vncserver -geometry 1024x768
+#! 
+#! New 'X' desktop is linux:1
+#! 
+#! Starting applications specified in /home/sah/.vnc/xstartup
+#! Log file is /home/sah/.vnc/linux:1.log
+#
+#There are a multitude of settings for the vncserver, but just the
+#above seems to work fine. The first time you start up the vncserver
+#you'll be asked to specify a password to access the desktop.
+#
+#Log out of the linux box above and in the same terminal window, type:
+#! term% vncv linux:1
+#
+#provided linux is a system defined in your /lib/ndb/local.
+#Otherwise, just use the ip address of the machine.
+#
+#The really nice thing about vnc is that updates are client-triggered
+#so the server never goes down for lack of input. If you disconnect
+#from it for days on end and then resume the connection with:
+#! term% vncv linux:1
+#
+#(staying with the above example), you get your exported desktop just
+#as it was when you left it.
+#
+#Problems can happen on X11 systems, when you want to use the
+#clipboard between e.g. Firefox and Plan 9, where Firefox uses a
+#different clipboard buffer than the VNC server. The manual solution
+#for this is to use xcutsel(1) on the non-Plan 9 system. You can find
+#an automatic solution at [http://www.nongnu.org/autocutsel/], that
+#gets the two clipboards into sync, on change.
+#
+#If you want your connection secured by TLS, you can use
+#tlsclienttunnel (described in the tlssrv(8) man page) to encrypt and
+#authenticate your connection. You need a tls tunnel application on
+#the unix machine, e.g. stunnel ( [http://www.stunnel.org] ). Add a
+#section to stunnel's config file like this:
+#
+#! [vnc]
+#! accept = 7777
+#! connect = 5901
+#
+#Change the accept port to your preferences. Create a thumb file for
+#your vnc server's fingerprint. We will fill it later. Now establish
+#the connection with
+#
+#! tlsclienttunnel tcp!yourhost!7777 tcp!localhost!5901 vnc.thumb
+#
+#You will get a response like this:
+#
+#! /bin/tlsclienttunnel: server certificate sha1hash not recognized
+#
+#Snarf and paste the sha1hash to your thumb file:
+#
+#! echo 'x509 sha1=sha1hash' > vnc.thumb
+#
+#Now reestablish the tunnel with the tlsclient command above and
+#connect to it securely with
+#
+#! vncv localhost:1
+#

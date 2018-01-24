@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Setting up a sources mirror (as of Sat Nov 17 16:11:51 EST 2007)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Setting up a sources mirror</h1>
+<h2><i>-as of Sat Nov 17 16:11:51 EST 2007-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+To
+setup
+a
+mirror
+of
+the
+<a href="../../sources_repository">sources
+repository</a>.
+<a name="WHAT_YOU_NEED" /><h3>WHAT YOU NEED</h3>
+
+<ul>
+
+<li>
+http://swtch.com/lsr.c
+</li>
+</ul>
+
+<a name="PREPARATION" /><h3>PREPARATION</h3>
+
+<pre>
+# lsr
+# This is for the cputype "386". Fill in your appropriate value.
+ramfs;
+hget http://swtch.com/lsr.c &gt; /tmp/lsr.c;
+cd /tmp;
+8c lsr.c;
+8l -o lsr lsr.8;
+cp lsr /386/bin/lsr;
+chmod 775 /386/bin/lsr;
+rm lsr.8;
+
+# lsrupd
+hget http://www.r-36.net/lsrupd &gt; /rc/bin/lsrupd;
+chmod 775 /rc/bin/lsrupd;
+</pre>
+
+<a name="MIRRORING_SOURCES" /><h3>MIRRORING SOURCES</h3>
+
+<pre>
+# The example mirrors sources to /dist/sources.
+9fs sources;
+lsrupd /dist/sources /n/sources;
+</pre>
+
+<a name="THE_CRONJOB" /><h3>THE CRONJOB</h3>
+
+<pre>
+# This example assumes "bootes" being able to access /dist/sources.
+# The cronjob will be done every night at 0:00 on the computer.
+# In the factotum of "cron" needs to be a key for accessing sources.
+echo '0 0 * * * local {9fs sources; lsrupd /dist/sources /n/sources; \
+unmount /n/sources}' &gt;&gt; /cron/bootes/cron;
+</pre>
+
+<p class='para'>
+Have
+fun.
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Sat Nov 17 16:11:51 EST 2007</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

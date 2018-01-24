@@ -1,0 +1,509 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Integration with other OSs (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Integration with other OSs</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+
+<a name="UNIX,_AND_ITS_COUSINS" /><h3>UNIX, AND ITS COUSINS</h3>
+
+<p class='para'>
+SSH
+can
+be
+used
+to
+gain
+command
+line
+access
+to
+Unices,
+though
+at
+present
+only
+ssh
+V1
+is
+supported
+by
+plan9.
+Version
+one
+of
+the
+protocol
+is
+often
+disabled
+by
+default
+and
+must
+be
+explicitly
+enabled.
+</p>
+
+<p class='para'>
+Remote
+file
+access
+can
+be
+gained
+using
+<a href="http://plan9.bell-labs.com/magic/man2html/4/nfs"><i>nfs</i>(4)</a>
+or
+<a href="http://plan9.bell-labs.com/magic/man2html/4/u9fs"><i>u9fs</i>(4)</a>.
+U9fs
+can
+be
+started
+from
+a
+network
+listner,
+e.g.
+<a href="http://plan9.bell-labs.com/magic/man2html/8/inetd"><i>inetd</i>(8)</a>
+or
+via
+srvssh
+over
+an
+ssh
+link.
+</p>
+
+<p class='para'>
+To
+use
+<a href="http://plan9.bell-labs.com/magic/man2html/1/inetd"><i>inetd</i>(1)</a>
+Add
+this
+line
+to
+/etc/inetd.conf:
+</p>
+
+<pre>
+u9fs     stream  tcp     nowait  root   /usr/etc/u9fs   u9fs
+</pre>
+
+<p class='para'>
+and
+this
+to
+/etc/services:
+</p>
+
+<pre>
+u9fs     564/tcp       9fs
+</pre>
+
+<p class='para'>
+Note:
+the
+service
+is
+defined
+as
+u9fs
+rather
+than
+9pfs
+as
+some
+inetd
+implementations
+treat
+service
+names
+starting
+with
+a
+digit
+as
+numeric
+port
+numbers.
+</p>
+
+<a name="MAC_OS_X" /><h3>MAC OS X</h3>
+
+<p class='para'>
+U9fs
+can
+be
+started
+via
+ssh
+using
+<a href="http://plan9.bell-labs.com/magic/man2html/4/srvssh"><i>srvssh</i>(4)</a>,
+or
+by
+<a href="http://plan9.bell-labs.com/magic/man2html/8/launchd"><i>launchd</i>(8)</a>,
+(the
+Mac
+OS
+X
+replacement
+for
+<a href="http://plan9.bell-labs.com/magic/man2html/1/inetd"><i>inetd</i>(1)</a>
+and
+/etc/rc<a href="../0-9">0-9</a>.d/*).
+Launchd
+needs
+a
+configuration
+file
+of
+the
+form:
+</p>
+
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;
+&lt;plist version="1.0"&gt; 
+&lt;dict&gt; 
+	&lt;key&gt;Label&lt;/key&gt; 
+	&lt;string&gt;com.bell-labs.plan9.u9fs&lt;/string&gt; 
+	&lt;key&gt;Program&lt;/key&gt; 
+	&lt;string&gt;/usr/bin/u9fs&lt;/string&gt; 
+	&lt;key&gt;ProgramArguments&lt;/key&gt; 
+	&lt;array&gt; 
+		&lt;string&gt;u9fs&lt;/string&gt; 
+		&lt;string&gt;-l&lt;/string&gt; 
+		&lt;string&gt;/var/log/u9fs.log&lt;/string&gt; 
+		&lt;string&gt;-a&lt;/string&gt; 
+		&lt;string&gt;p9any&lt;/string&gt; 
+		&lt;string&gt;/opt/plan9&lt;/string&gt;
+	&lt;/array&gt; 
+	&lt;key&gt;Sockets&lt;/key&gt; 
+	&lt;dict&gt; 
+		&lt;key&gt;Listeners&lt;/key&gt; 
+		&lt;dict&gt; 
+			&lt;key&gt;SockServiceName&lt;/key&gt; 
+			&lt;string&gt;9pfs&lt;/string&gt; 
+		&lt;/dict&gt; 
+	&lt;/dict&gt; 
+	&lt;key&gt;inetdCompatibility&lt;/key&gt; 
+	&lt;dict&gt; 
+		&lt;key&gt;Wait&lt;/key&gt; 
+		&lt;false/&gt; 
+	&lt;/dict&gt; 
+&lt;/dict&gt; 
+&lt;/plist&gt;
+</pre>
+
+<p class='para'>
+To
+cause
+this
+to
+be
+run
+on
+system
+start,
+this
+should
+be
+installed
+as
+/Library/LaunchDaemons/9pfs.plist.
+Installing
+instead
+in
+/Library/LaunchAgents
+will
+cause
+it
+to
+be
+run
+only
+when
+a
+user
+is
+logged
+in,
+while
+$HOME/Library/LaunchAgents
+will
+cause
+it
+to
+be
+run
+only
+when
+that
+particular
+user
+is
+logged
+in.
+</p>
+
+<p class='para'>
+In
+order
+to
+start
+the
+listner
+it
+must
+first
+be
+``loaded''
+</p>
+
+<pre>
+$ sudo launchctrl load /path/to/9pfs.plist
+</pre>
+
+<p class='para'>
+If
+you
+are
+running
+the
+Mac
+OS
+X
+firewall
+you
+will
+need
+to
+add
+an
+entry
+pass
+the
+9pfs
+protocol
+in:
+</p>
+
+<pre>
+SystemPreferences-&gt;Sharing-&gt;Firewall
+</pre>
+
+<p class='para'>
+The
+example
+9pfs.plist
+above
+uses
+9p
+authentication,
+described
+in
+detail
+in
+<a href="http://plan9.bell-labs.com/magic/man2html/4/u9fs"><i>u9fs</i>(4)</a>,
+and
+serves
+only
+/opt/plan9.
+</p>
+
+<a name="MICROSOFT_WINDOWS" /><h3>MICROSOFT WINDOWS</h3>
+
+<p class='para'>
+<a href="http://www.cygwin.com">Cygwin</a>
+provides
+a
+posix
+environment
+that
+allows
+u9fs
+and
+ssh
+to
+be
+implemented
+as
+described
+in
+the
+Unix
+section
+above.
+</p>
+
+<p class='para'>
+Alternatively
+a
+native
+Windows
+file
+protocol
+client
+is
+available
+as
+the
+<a href="http://plan9.bell-labs.com/magic/man2html/1/contrib"><i>contrib</i>(1)</a>
+package
+steve/cifs.
+This
+has
+been
+tested
+with
+Windows
+95,
+NT,
+2k,
+and
+XP.
+</p>
+
+<p class='para'>
+Problems
+have
+been
+reported
+with
+Windows
+Vista
+which
+is
+believed
+to
+be
+due
+to
+Vista
+requiring
+more
+complex
+authentication
+than
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cifs"><i>cifs</i>(1)</a>
+can
+provide.
+It
+has
+been
+suggested
+that
+fixing
+this
+is
+a
+simply
+a
+matter
+of
+changing
+Vista's
+default
+configuration.
+</p>
+
+<p class='para'>
+The
+steve/9win
+package
+contains
+a
+preliminary
+command
+line
+client
+and
+server.
+It
+provides
+slightly
+tighter
+integration
+than
+ssh,
+however
+It
+should
+be
+replaced
+by
+a
+native
+cpu
+server
+for
+windows
+as
+soon
+as
+possible.
+</p>
+
+<p class='para'>
+A
+client
+for
+historic
+NetWare
+servers
+is
+also
+available
+in
+the
+package
+steve/ncpfs.
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Fri Dec  4 11:19:29 EST 2009</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

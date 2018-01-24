@@ -1,0 +1,98 @@
+<html>
+<head>
+<title>TeX Configuration (Editing Thu Feb 16 09:27:46 EST 2006 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>TeX Configuration</b></font> (Editing Thu Feb 16 09:27:46 EST 2006 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="TeX Configuration">
+<input type="hidden" name="version" value="1140100066">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+The Plan 9 documentation is in troff; however, TeX has been compiled
+and brought up under the ANSI/POSIX Environment (APE). It is a
+separate package from the main distribution due to its size.
+
+The TeX distribution can be found in /n/sources/extra/tex.iso.bz2
+
+This is a TeX distribution that uses the kpathsearch modifications;
+the main library tree is kept in /sys/lib/texmf.
+
+DVIPS
+
+The Plan 9 TeX installation defines three dvips printer drivers (to
+use with dvips -Pdrivername): ps, psfonts, and bitmapfonts. The
+appropriate driver to use depends on the intended use of the output.
+
+ *	The ps driver (the default) generates Postscript files with
+	references to the Postscript versions of any TeX fonts. These fonts
+	are kept in subdirectories of /sys/lib/postscript/font. The files
+	are small, are generated quickly, and work well with page(1) and
+	lp(8), but since the Postscript versions of the TeX fonts are not
+	commonly installed elsewhere, they are not particularly good for
+	giving to friends or posting on web pages.
+ *	The psfonts driver generates Postscript files with reference to
+	the Postscript versions of the TeX fonts, and also includes the
+	fonts in the Postscript file. The files are fairly large, generated
+	quickly, and are attractive when viewed in Postscript previewers or
+	turned into PDF via Acrobat Distiller.
+ *	The bitmapfonts driver is equivalent to the default on most dvips
+	systems. Bitmap versions of the TeX fonts are included in the output
+	files, making them larger than `ps' but smaller than `psfonts'
+	files, slow to generate, and not particularly attractive when viewed
+	on screen.
+
+ADDING SUPPORT FOR OTHER LANGUAGES
+
+To add hyphenation patterns for other languages, do the following.
+
+ *	Uncomment the desired language patterns in
+	/sys/lib/texmf/tex/generic/config/language.dat
+
+ *	Make new TeX fmt files:
+
+! cd /sys/src/cmd/tex/web2c/tex
+! rm *.fmt
+! mk install-fmt
+
+It gives errors saying that a file is too old. Go to the file and
+change the date from 1999 to 200x. Repeat.
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

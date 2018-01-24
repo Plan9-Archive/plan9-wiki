@@ -1,0 +1,39 @@
+22C3
+
+Chaos Communication Congress Where: Berlin, Germany When:
+27-30/12/2005 URL: [http://www.ccc.de/congress/]
+
+Who will be there?
+ *	20h
+ *	MTG
+ *	garbeam
+ *	[uriel]
+ *	Oksel
+ *	gdiaz
+
+We will have six places in the Hackcenter and so enough place for us
+all.
+
+What we will need:
+
+ *	everyone should bring his/her own CAT5 cable or WLAN support
+ *	plain printed glendas
+ *	stickers (MTG: 250x; 20h: 250x)
+ *	flags (MTG: 4x; 20h: 2x)
+ *	1 junction box (20h: 1x)
+ *	3 boxes of beer (20h: 3x)
+ *	enough duct tape (20h)
+ *	1 big switch
+
+Last year were the tables, the chairs, one [CAT5 | http://cat-v.org]
+cable and one power cable provided.
+
+What will be provided at the booth:
+
+ *	hourly ranting about our BSD neighbours
+ *	hourly ranting about the Linux guys in the next room
+ *	Plan 9/Inferno support
+ *	individual Plan 9/Inferno presentation
+
+(no special talks planned)
+

@@ -1,0 +1,485 @@
+<html>
+<head>
+<title>Supported PC Hardware (Editing Wed Aug 13 18:28:43 EDT 2014 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Supported PC Hardware</b></font> (Editing Wed Aug 13 18:28:43 EDT 2014 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Supported PC Hardware">
+<input type="hidden" name="version" value="1407968923">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+This page lists hardware known to work with Plan 9. Most hardware is
+listed by chipset, you may need to know what chipset your particular
+cards use. There is also a list of known [broken hardware].
+
+IDE/ATAPI CONTROLLERS
+
+Plan 9 supports almost all motherboard IDE/ATAPI controllers, but DMA
+transfers are only used on these recognized chipsets (chipsets not
+listed here will simply run slower; you can try turning on DMA by
+editing /sys/src/9/pc/sdata.c).
+
+ *	ALi M1543, M5288 SATA
+ *	AMD 755, 756, 766, 768, 3111, CS5536
+ *	AMD/ATI SB400, 200M, 4379 SATA
+ *	CMD 640B, 646
+ *	HighPoint HPT366
+ *	Intel PIIX, PIIX3, PIIX4, ICH, ICH0, ICH2-7, ICH9, 6300ESB
+ *	NS PC87415
+ *	nVidia nForce 1-4, MCP 55, 61, 65, 69, 430
+ *	PC-Tech RZ1000
+ *	Promise PDC202xx, Ultra/133 TX2, 20378
+ *	ServerWorks IB6566
+ *	SiL 3112 SATA, 3114 SATA/RAID
+ *	SiS 962
+ *	VIA 82C686, VT8237 SATA/RAID
+
+SATA CONTROLLERS
+
+Plan 9 supports a few SATA controllers in their native AHCI mode, as
+opposed to the IDE-compatibility mode that some of them offer.
+
+ *	AMD SB600
+ *	Intel 63xxESB
+ *	Intel 82801GxM, for x = B or H
+ *	Intel ICH8, ICH9
+
+The non-AHCI Marvell 88SX series four- and eight-port PCI-X chipsets
+are also supported.
+
+ATA-OVER-ETHERNET DEVICES
+
+Plan 9 supports access to ATA-over-Ethernet devices.
+
+USB
+
+USB audio, disks, Ethernet, keyboards, mice and printers are
+supported (see usb(4)) via the UHCI, OHCI and EHCI interfaces. XHCI
+(USB 3, 5Gb/s) is not yet started.
+
+ETHERNET
+
+Plan 9 will automatically recognize the PCI and PCI-Express Ethernet
+cards that it can drive. The following chips/cards are supported, in
+decreasing order of speed:
+
+ *	Intel 8259x 10Gb
+ *	Myricom 10Gb
+
+ *	Alteon, DEC, or SGI Acenic fiber Gigabit
+ *	Intel 8254x PRO/1000 Gigabit
+ *	Intel 8256x, 8257x Gigabit PCI-Express
+ *	National Semiconductor DP83820 Gigabit
+ *	Netgear GA620 Gigabit (discouraged due to large firmware blob)
+ *	Realtek 8110S/8169S Gigabit
+ *	Via Velocity Gigabit
+
+ *	3Com 3C562, 3C589, and 3C589E PCMCIA
+ *	3Com 3C450, 3C575, 3C59x, 3C90x, 3CSOHO100-TX
+ *	Accton EtherPair-PCMCIA EN2216
+ *	AMD 79C970
+ *	D-Link DFE-538TX, DFE-560TXD
+ *	Dell TrueMobile 1150 wireless
+ *	Digital (now Intel) 2114x and clones. (Tulip, PIC, PIC-II,
+	Centaur, Digital DE-500)
+ *	EtherFast 10/100 PC Card
+ *	Intel 82562EM/EZ/ET/VE, 8255x PRO/100
+ *	Intel 82801DB PRO/100 VE
+ *	Intersil Prism2.5 wireless
+ *	Linksys EC2T Combo PCMCIA EtherCard, NB10T
+ *	Linksys WPC-11 wireless
+ *	Lucent/Agere/Avaya/Orinoco Wavelan wireless
+ *	NE2000 clones
+ *	National Semiconductor DP83815, DP8390
+ *	Netgear FA310, FA311, FA312, FA410TX, FA411 PCMCIA
+ *	Realtek 8029, 8139 - DL10038(D) (Remark of Realtek 8139)
+ *	SMC 1211, 8040TX PCMCIA, 91CXX PCMCIA
+ *	VIA Rhine VT6102 (pxe-bootable)
+ *	VIA Rhine II VT6103 (pxe-bootable)
+ *	Western Digital/SMC WD8003, WD8013, WD8216
+ *	Winbond 89C940
+
+VESA VIDEO CARDS
+
+Plan 9 can attempt to drive video cards using the VESA BIOS
+extensions instead of using drivers specific to particular chips. To
+use VESA, choose "vesa" as your monitor type during the CD boot or
+when making an install floppy.
+
+The following cards are known to work using VESA. (Cards not listed
+here are still worth trying!)
+ *	Intel 82865G Integrated Graphics Controller (Dell desktops)
+ *	Intel 82845G Integrated Graphics Controller (Compaq Evo D510 SFF)
+ *	Intel 855GM Integrated Graphics Device (Thinkpad X40)
+ *	Radeon 9200 Mobile (Compaq NX7010)
+ *	Radeon Mobility 9600 (ThinkPad T42p)
+ *	Radeon Mobility 7500 M7 LW (Compaq Presario 1500)
+ *	Radeon R200 QH (Fire GL 8700 and 8800)
+ *	Radeon RV280 (9200 SL)
+ *	Nvidia Quadro4 980 XGL
+ *	SiS630 onboard
+ *	SiS630 ST onboard ([JVC MP-XP3 |
+	http://9fans.net/archive/2009/12/291])
+ *	VIA Technologies, Inc. CN700 VIA/S3G UniChrome Pro IGP
+
+(Some of the cards in this list have been moved to the main table)
+
+The following cards are known not to work with VESA:
+ *	Neomagic NM2360/MagicMedia 256ZX (Thinkpad 600X): Blank screen.
+ *	Cirrus Logic CL-GD5436/46 (no VESA support?)
+ *	AMD Geode GX2. Blank screen. Bug identified by Russ Cox, but hard
+	to solve.
+
+VGA CARDS AND CHIPSETS
+
+For VGA cards it is more precise to describe the chips we support
+rather than the cards they are based on, since the cards are more
+ephemeral. Beware: different revisions of a card may use different
+chip sets.
+
+Plan 9 can use some basic acceleration features such as filling and
+scrolling rectangles.
+
+NOTE: If your chipset is not listed or listed as not supported, try
+the VESA driver by entering "vesa" as your monitor type.
+
+! 	Chip					| Native	| VESA	| Notes
+! 	-------------------------------------------------------------------------------------
+! 	#9 Ticket to Ride IV		| Yes		| ?	| 	for SGI 1600SW
+! 	3Dfx Voodoo Banshee	| Yes?	| ?	| 	Works perfectly with Elpin Banshee(Rev 1.1) 3Dfx 55-0013-04
+! 	3Dfx Voodoo 3
+! 	    1000				| Yes		| ?	|
+! 	    2000				| Yes		| ?	|
+! 	    3000				| Yes		| ?	|
+! 	AMD Geode GX2		| No		| No	|
+! 	ARK 2000pv			| Yes(2)	| ?	|
+! 	ATI Mach
+! 	    Mach 32			| Yes(2)| ?	|	|
+! 	    Mach64xx			| Yes?	| ?	| 	Some newer Mach64 don't work(eg, later ATI Xpert)
+! 	ATI Rage - http://en.wikipedia.org/wiki/ATI_Rage
+! 	    Rage IIc			| Yes		| ?	| 	Needs hwaccel off
+! 	    Rage 3D II+			| Broken	| Yes	| 	Garbled display
+! 	    Rage 128			| No		| ?	| 	Too different from the Mach 64
+! 	    Rage XL				| Yes		| Yes	|
+! 	ATI Radeon
+! 	    (789)xxx			| (1)		| Yes	| 	Works well with VESA
+! 	    Mobility M7 LW		| No		| Yes	| 	Max: 1024x768x24
+! 	    X1600 Pro			| No		| No	|
+! 	CHIPS hiQVideo
+! 	    65550				| Yes		| ?	|
+! 	    65554				| Yes		| ?	|
+! 	    69000				| Yes		| ?	|
+! 	Cirrus Logic
+! 	    CL-GD542x			| Yes		| ?	|
+! 	    CL-GD543x			| Yes		| No	|
+! 	    CL-GD544x			| Yes		| Yes	| 	Used by qemu
+! 	    CL-GD546x Laguna	| Yes		| ?	|
+! 	Intel i81x				| Yes		| ?	|
+! 	Intel i740				| No		| ?	|
+! 	Intel i950				| No		| Yes	|
+! 	Intel 82845G			| No		| Yes |
+! 	Intel GMA3100			| No		| Yes |
+! 	Matrox (Note: GXXX series only support 8bit and 32bit depths)
+! 	    G200				| Yes		| ?	|
+! 	    G400				| Yes		| ?	|
+! 	    G450				| Yes		| Yes	|
+! 	    G550				| Yes		| Yes	|
+! 	    P650				| No		| Yes	|
+! 	Matrox Millennium II	| Yes		| ?	|
+! 	Neomagic
+! 	    MagicGraph			| Yes		| ?	|
+! 	    MagicMedia			| Yes		| No	|
+! 	NVIDIA
+! 	    TNT				| Yes		| ?	|
+! 	    TNT2				| Yes		| Yes	|
+! 	    GeForce			| Yes?	| ?	|
+! 	    GeForce 2			| Yes		| ?	|
+! 	    GeForce 2 DVI		| Yes		| ?	|
+! 	    GeForce 2 MX/MX 400  | Yes		| Yes	|
+! 	    GeForce 3			| Yes		| ?	|
+! 	    GeForce 4			| Yes		| ?	|
+! 	    GeForce 4 MX		| Yes		| Yes	|
+! 	    GeForce FX 5200		| Yes		| Yes	| 	Native: Some people have reported problems with DVI.
+! 	    GeForce 6200		| No		| Yes	|
+! 	    GeForce 6800 XT		| Yes		| ?	|
+! 	S3 801, 805, 864, 928	| Yes(2)	| ?	|
+! 	S3 968				| Yes		| ?	|
+! 	S3 Savage
+! 	    Savage 4			| Yes		| ?	|
+! 	    Savage IX/MV		| Yes		| ?	|
+! 	    SuperSavage IXC/16	| Yes		| ?	|
+! 	    SavagePro8/DDR		| Yes		| ?	|
+! 	    Savage 2000			| No		| ?	|
+! 	S3 ViRGE DX,GX,GX2,MX,VX	|Yes	| ?	|
+! 	S3 Trio64V+			| Yes		| No	|	dbvesa: invalid vesa signature 
+! 	S3 Elsa 1000Trio/V		| Yes		| No	| 	Works fine with 1024x768x8, supports max. 8 bit depth.
+! 	S3 Trio3D				| No		| Yes	|
+! 	Tseng ET4000			| Yes(2)	| ?	|
+! 	Trident Cyber938x		| Yes		| ?	|
+! 	VIA UniChrome (EPIA-MS) | No		| Yes	|
+! 	VMware virtual chipset (vmware won't release documentation, please use qemu instead)
+! 	    4.5				| Yes		| ?	|
+! 	    5.0				| Yes		| ?	| 	Needs hwaccel off
+
+(1) See the [radeon drivers] page.
+
+(2) Only tested with old editions of Plan 9.
+
+Cards supported in the third edition but not tested in current system:
+ *	ATI Graphics Xpression
+ *	ATI Xpert 98
+ *	ATI xpert@work
+ *	ATI Xpert LCD
+ *	#9FX Reality 334
+ *	Diamond Stealth3D 2000 vers 1.04
+ *	Diamond Stealth64 Video 2001
+ *	Diamond SpeedStar 64
+
+Cards supported in the first and second editions but not tested in
+the current system:
+ *	#9FX Reality 332
+ *	#9GXE Level-11, Level-12, Level-16
+ *	#9GXE 64
+ *	#9GXE 64pro
+ *	Diamond SpeedStar Pro
+ *	Hercules Terminator
+ *	NCR 3230
+ *	Orchid Fahrenheit 1280
+ *	Orchid Kelvin 64
+ *	Quadtel S3 86C801, 86C805
+ *	STB PowerGraph X-24
+ *	STB Velocity 3D
+ *	STB Velocity 64 Video
+ *	Stealth 64 Video 3000
+ *	Stingray 64/Video
+ *	Various Rackmount SBCs
+
+SCSI CONTROLLERS
+
+ *	[LSI Logic | http://www.lsilogic.com] 53C8xx and 53C1010 chipsets,
+	e.g., cards from: Tekram, LSI Logic, Symbios, Compaq, NCR, I-O DATA,
+	ASUS. The chip numbers matter more than the brand. LSI Logic now
+	owns Symbios and Mylex. You may need to configure the SCSI BIOS to
+	"START UNIT" (spin up) the bootable drive so I/O works for the main
+	BIOS. Also, beware 53C1020/1030 cards--they are "Fusion/MPT" and
+	cannot be supported by this driver.
+ *	Buslogic BT-948 or BT-958 (AKA Mylex multimaster series). These
+	aren't being made any more, but you might be able to buy them used.
+ *	Adaptec 1540 or 1542 for the ISA bus
+ *	Ultrastor 14F ISA or 34F VLB
+
+KEYBOARDS
+
+Any PS/2 or USB keyboard should work. The bootstraps require PS/2
+"emulation" in your BIOS to make USB keyboards work.
+
+MICE
+
+Plan 9 supports PS/2, PS/2 Intellimouse, and serial mice. USB mice
+are supported via a user-space driver. See usb(4), usbd(4), and
+usb(3).
+
+You will want a 3 button mouse for plan9, using the scroll wheel as
+the middle button is not really satisfactory. The IBM 40K9201 and HP
+DY651A are both good quality USB optical mice with three real buttons.
+
+There is preliminary support for the scroll wheel and extra buttons
+as on the Toshiba Portege 3440CT.
+
+Most laptops present their built-in pointing devices as PS/2 mice.
+
+The middle mouse button on the virtual VMware mouse appears not to
+work when running Plan 9 under Windows 2000 on certain laptops,
+notably IBM Thinkpads. To the extent that fault can be assigned, it
+is a hardware bug. The mouse controllers do not follow the same
+protocol that all other 3-button mice do for reporting the button
+count. See
+[http://lists.cse.psu.edu/archives/9fans/2002-May/017472.html] for a
+Windows workaround.
+
+LAPTOPS
+
+Laptops are often the hardest systems to get Plan 9 running on,
+because you can't choose the hardware piece by piece.
+
+The following laptops are known to work in the current release:
+ *	Acer TravelMate 4052 WmLi (no wireless, no sound)
+ *	Acer Aspire 5024WLMi (wireless and sound not tested, *nousbohci=1
+	required; tested with 9atom)
+ *	Asus F7400
+ *	Compaq Presario 1500 (ATI Radeon Mobility M7 LW, Intel PRO 100/VE
+	i82562, usb mouse works)
+ *	Dell Inspiron 2650 (mouse not working though)
+ *	Dell Inspiron 70n 7000
+ *	Dell Inspiron 1000 (no ether, no sound, cardbus not tested)
+ *	IBM Thinkpad 560, 560E, 600E, T20, T21, T23, T30 (using Philippe
+	Anel's [Radeon Drivers]), T42p (no wireless), X20, X40, X60
+ *	NEC Versa LX, SX
+ *	Sharp Actius A250
+ *	Sony Vaio PGC-105k (uk)
+ *	Sony Vaio PCG-GR114EK
+ *	Toshiba Portege 3440CT
+ *	Toshiba Tecra 750CDM
+ *	HP Compaq nx6315 (No net)
+ *	[JVC MP-XP3 | http://9fans.net/archive/2009/12/291]
+
+The following laptops worked in previous releases and may work in the
+current one:
+ *	AT&T GIS Globalyst 250
+ *	Compaq Armada 7710 MT
+ *	Dell Dimension cpi 333
+ *	IBM Thinkpad 560X, 570
+ *	NEC Versa 6030X, 6200MX
+ *	Sony VAIO PCG 747
+ *	Toshiba Satellite 2800
+
+The following laptops are known not to work with Plan 9:
+ *	Compaq Armada 7800 (does not detect all physical memory, runs out,
+	apparently hardware cursor doesn't work either)
+ *	Compaq LTE 5300 (unsupported video card Cirrus Logic GD7543)<- Are
+	You sure about this? I think CL-GD7543 is well supported (Generic
+	640x480 LCD), I had a COMPAQ Armada 1120T, but the problem was the
+	memory (24MB) not the graphical chip set! see [google groups |
+	http://groups.google.com/groups?q=group:comp.os.plan9+5300&hl=en&lr=&ie=UTF-8&oe=UTF-8&selm=fa2d4dc3.0206230630.4477bd8a%40posting.google.com&rnum=1]
+ *	Dell Inspiron 4000, 5000e (unsupported video card ATI Mobility M3)
+ *	Zenith Znote 425 (not enough RAM)
+
+CARDBUS AND PCMCIA CONTROLLERS
+
+The following cardbus controllers are supported:
+ *	Ricoh 476 PCI/Cardbus bridge
+ *	Ricoh 478 PCI/Cardbus bridge
+ *	TI PCI-1131 Cardbus controller
+ *	TI PCI-1250 Cardbus controller
+ *	TI PCI-1450 Cardbus controller
+ *	TI PCI-AC51 Cardbus controller
+
+If the cardbus chipset is not supported, Plan 9 falls back to the
+PCMCIA driver, which handles the Intel i82365, Cirrus Logic
+CL-PD6710, Cirrus Logic CL-PD6720, Vadem VG-46x, and compatibles.
+This covers most laptops.
+
+AUDIO
+
+Supported audio devices:
+ *	Sound Blaster 16 or later, ISA card
+ *	ESS 1688 running in 8-bit SBPro mode
+ *	most USB audio devices
+ *	Intel 82801DB/DBL/DBM (ICH4/ICH4-L/ICH4-M) AC'97 Audio Controller
+	(with code addition from http://kamalatta.ddnss.de/config/ac97k.tar
+
+Supported but not as well tested:
+ *	Any Sound Blaster 16 clones (NOT Sound Blaster Pro clones)
+
+USB audio devices that have been reported to work:
+ *	Edirol UA-1X (recording untested, but believed to work)
+ *	Edirol UA-3
+ *	Philips USB speakers, model DSS 370/17
+ *	Xitel AN1
+ *	[Xitel Pro HiFi-Link |
+	http://lists.cse.psu.edu/archives/9fans/2004-August/037647.html]
+	(setting and reading back the volume works, but does not seem to
+	affect the playback.)
+ *	[Xitel MD-Port DG2 |
+	http://lists.cse.psu.edu/archives/9fans/2002-July/018740.html]
+ *	[Onkyo SE-U55X |
+	http://lists.cse.psu.edu/archives/9fans/2004-September/038020.html]
+ *	[Onkyo SE-U55GX |
+	http://lists.cse.psu.edu/archives/9fans/2004-October/038264.html]
+ *	Auditek USB speakers using C-Media CM102 chip (supports 48000Hz
+	playback only)
+ *	Creative Sound Blaster MP3+
+ *	Creative Sound Blaster live! ( Can't set record speed )
+ *	M-Audio FastTrack USB (recording untested; gets "Can't set record
+	speed" message on startup; setting and volume succesds but has no
+	effect.)
+
+FLOPPY DISKS
+
+Plan 9 supports generic floppy drives, although some people have had
+trouble accessing them. If you have trouble accessing your 3.5"
+floppy drive and also have a 5.25" floppy drive, try disabling the
+latter in the BIOS.
+
+USB floppy drives are not supported.
+
+MAGNETO-OPTICAL DISK JUKEBOXES
+
+Virtually any modern SCSI jukebox will work. The key thing to look
+for (probably on the manufacturer's web site) is that the jukebox
+must implement the SCSI SMC (SCSI Media Changer) command set. Media
+(M-O disks) and jukeboxes can be had cheaply on ebay.com. We have had
+good experience with these models on Plan 9 file servers:
+ *	HP 330FX (choline)
+ *	HP 160FX (original emelie)
+ *	HP 1200EX (emelie)
+
+We've had limited experience with these models (bought used), and
+they failed within a few months, one mechanically and the other
+electronically:
+ *	HP 40FX
+ *	HP 80EX
+
+The 160FX and up seem to be built much more sturdily than the smaller
+jukeboxes, which are the size of large tower PCs.
+
+MOTHERBOARDS
+
+ *	ASUS A8R32-MVP (onboard NIC not supported, use a PCI NIC instead)
+
+THIN CLIENTS
+
+(e.g. Terminal/CPU/Auth-Server)
+
+ *	IGEL LX 3210 (Via C3 Esther 400Mhz, 256MB RAM, ether,
+	graphics(VGA+DVI), usb, PS/2,) - Sound (Via AC97) doesn't work)
+
+ *	IGEL LX 4210 (Via C3 Esther 800Mhz, 128MB RAM, ether,
+	graphics(VGA), usb, PS/2,) - Sound (Via AC97) doesn't work)
+
+ *	HP Compaq T5000 (Via C3 Samuel 400Mhz - BIOS says Via Eden - ,
+	128MB RAM, network vt6102, graphics(VGA), usb, PS/2) - Sound (Via
+	AC97) doesn't work)
+
+ *	HP T5720 (AMD Geode NX1500 1 Ghz, 256MB RAM, ether, usb, PS/2, SiS
+	7012 SiS 7012 Audio Device / Realtek AC'97 Audio works)
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

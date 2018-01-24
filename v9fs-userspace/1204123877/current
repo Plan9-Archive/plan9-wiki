@@ -1,0 +1,35 @@
+v9fs-userspace
+D1204123877
+Aericvh
+#Three basic userspace components to improve v9fs usability under
+#Linux.
+#
+#MOUNT HELPER
+#
+# *	hueristic for determining transport type
+# *	DNS support for resolving hostname &lt;-&gt;ip address
+# *	ssh-based tunneling support (will require server work as well)
+# *	man pages
+# *	debian packaging
+# *	rpm packaging
+# *	(stretch) authentication support (w/p9p)
+# *	(stretch) integration with idmap solution
+#
+#SERVER
+#
+# *	based on spfs/npfs
+# *	allow for multiple exports w/anames and specification of root
+#	directory
+# *	man pages
+# *	debian packaging
+# *	rpm packaging
+# *	(stretch) authentication support (w/p9p)
+# *	(stretch) integration with idmap solution
+#
+#IDMAP
+#
+# *	maps local uids/gids/error-codes to strings
+# *	userspace daemon to provide mapping
+# *	hooks in v9fs to use mapping
+# *	(stretch) synthetic file server approach to update mappings
+#

@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>SSH Configuration (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+SSH Configuration <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Mon Jun 13 18:04:41 EDT 2011</a>, glenda
+</div><hr />Plan9's
+ssh
+client
+supports
+only
+the
+SSH
+v1
+protocol,
+If
+you
+simply
+must
+have
+the
+V2
+protocol,
+a
+port
+of
+OpenSSH
+exists
+(see
+<a href="../Contrib_index">Contrib
+index</a>),
+or
+you
+can
+volunteer
+to
+finish
+the
+native
+SSH
+v2
+client
+-
+work
+on
+which
+has
+stalled.
+<p class='para'>
+If
+SSH
+v1
+is
+ok
+you
+can
+use
+auth/raskeygen
+to
+create
+a
+key
+for
+yourself.
+</p>
+
+<p class='para'>
+Assuming
+the
+remote
+system
+is
+called
+unix:
+</p>
+
+<pre>
+auth/rsagen -t 'service=sshserve owner=*' &gt; key
+auth/rsa2ssh key | ssh unix 'cat &gt;&gt;.ssh/authorized_keys'
+cat key &gt;/mnt/factotum/ctl
+</pre>
+
+<p class='para'>
+You
+may
+now
+want
+to
+use
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ipso"><i>ipso</i>(1)</a>
+to
+install
+the
+key
+in
+your
+secstore.
+</p>
+
+<p class='para'>
+For
+more
+information
+see
+<a href="http://plan9.bell-labs.com/magic/man2html/8/rsa"><i>rsa</i>(8)</a>
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Mon Jun 13 18:04:41 EDT 2011</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

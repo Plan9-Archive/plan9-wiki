@@ -1,0 +1,2019 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Tip o' the day (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Tip o' the day <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Thu May  6 14:58:07 EDT 2010</a>, uriel
+</div><hr />See
+also
+the
+<a href="http://ninetimes.cat-v.org/tips/">Tips
+and
+tricks</a>
+section
+of
+<a href="http://ninetimes.cat-v.org">9times</a>.<hr /><a href="#SHELL_TIPS">Shell
+tips</a>
+|
+<a href="#ACME_TIPS">Acme
+tips</a>
+|
+<a href="#PLUMBING_TIPS">Plumbing
+tips</a>
+|
+<a href="#DUMP_AND_FOSSIL_TIPS">Dump
+and
+fossil
+tips</a>
+|
+<a href="#DEBUGGING_TIPS">Debugging
+tips</a>|
+<a href="#NETWORKING_TIPS">Networking
+tips</a>
+|
+<a href="#MISC_TIPS">Misc
+tips</a><hr />
+<a name="SHELL_TIPS" /><h3>SHELL TIPS</h3>
+<hr />(Based
+in
+a
+post
+by
+Mike
+Haertel:
+<a href="http://tinyurl.com/arnnd">http://tinyurl.com/arnnd</a>)
+<p class='para'>
+To
+run
+u9fs
+without
+inetd
+(from
+a
+Plan
+9
+host):
+</p>
+
+<pre>
+	% ssh myname@remotehost u9fs -a none -u myname &lt;[0=1] | echo 0 &gt;/srv/remotehost 
+	% mount /srv/remotehost /n/kremvax
+</pre>
+
+<p class='para'>
+You
+could
+also
+simply
+use
+srvssh
+or
+srv
+-e,
+see
+<a href="http://plan9.bell-labs.com/magic/man2html/4/srv"><i>srv</i>(4)</a>,
+but
+this
+example
+goes
+to
+explaining
+/srv.
+Newsham
+explains:
+You
+can
+establish
+a
+two
+way
+pipe
+to
+a
+command
+in
+/srv:
+</p>
+
+<pre>
+	% cmd &lt;[0=1] | echo 0 &gt; /srv/name
+</pre>
+
+<p class='para'>
+and
+then
+access
+/srv/name
+to
+communicate
+with
+the
+command,
+c.f.
+<a href="http://plan9.bell-labs.com/magic/man2html/3/srv"><i>srv</i>(3)</a>.
+As
+an
+example:
+</p>
+
+<pre>
+	% mail &lt;[0=1] | echo 0 &gt; /srv/mailcons 
+	% con -l /srv/mailcons ...
+	connected to mail until ^\ quit ... 
+	% con -l /srv/mailcons ...
+	connected again ...
+</pre>
+
+<p class='para'>
+will
+let
+you
+detach
+and
+re-attach
+to
+the
+pipe
+to
+a
+long-lived
+mail
+command.
+</p>
+
+<pre>
+	{while () dc} &lt;[0=1]|echo 0&gt;/srv/calc
+</pre>
+
+<p class='para'>
+will
+make
+/srv/calc
+a
+connection
+to
+dc,
+and
+restart
+dc
+if
+it
+is
+quit.
+</p>
+<hr />
+<pre>
+	fn f { du -a $* | sed 's/^.*    //g' }    &lt;-- that whitespace is a tab 
+</pre>
+Tree
+enumerator
+(simple
+"find")
+useful
+for
+many
+purposes
+<pre>
+	fn s { lc *.[chsyl] } 
+</pre>
+List
+out
+the
+sources
+in
+the
+current
+directory.
+<pre>
+	fn gn { grep -n $* /dev/null } 
+</pre>
+Grep,
+but
+force
+listing
+of
+filename:lineno
+so
+you
+can
+click
+on
+an
+entry
+to
+jump
+to
+it
+in
+an
+editor.
+<pre>
+	fn g { grep -n $* *.[chsyl] /dev/null } 
+</pre>
+gn
+on
+all
+sources
+in
+the
+current
+directory<hr />To
+set
+your
+prompt
+in
+rc
+to
+reflect
+your
+current
+directory
+add
+this
+to
+your
+profile.
+<pre>
+fn cd { builtin cd $* &amp;&amp; prompt=(`{pwd}^% '' ) }
+</pre>
+
+<p class='para'>
+If
+you
+make
+frequent
+use
+of
+cpu's
+-h
+and
+-u
+arguments,
+this
+variant
+keeps
+track
+of
+the
+host
+you
+are
+connected
+to,
+and
+as
+which
+user:
+</p>
+
+<pre>
+prompt = (`{cat /dev/user}^@^`{cat /dev/sysname}^'% '  '	')
+fn `{echo $prompt(1) | tr -d ' 	'} { $* }
+</pre>
+
+<p class='para'>
+The
+second
+line
+ensures
+the
+prompt
+is
+a
+no-op
+for
+9term's
+send
+operation.
+(The
+quoted
+string
+in
+the
+tr
+command
+contains
+a
+space
+and
+a
+tab.)
+</p>
+<hr />
+<a name="ACME_TIPS" /><h3>ACME TIPS</h3>
+<hr />To
+search
+backwards
+for
+'foobar'
+right-click
+on:
+<pre>
+      :-/foobar
+</pre>
+<hr />Selection
+tricks:
+<ul>
+
+<li>
+Press
+Esc
+to
+select
+the
+last
+typed
+text,
+press
+Esc
+again
+to
+delete
+any
+selected
+text.
+</li>
+</ul>
+
+<ul>
+
+<li>
+To
+select
+the
+whole
+file
+execute:
+Edit
+,
+</li>
+
+<li>
+If
+you
+are
+lazy,
+you
+can
+"look"
+for
+:,
+</li>
+</ul>
+
+<ul>
+
+<li>
+To
+select
+the
+text
+delimited
+by
+{},
+()
+or
+<a href="../"></a>
+you
+can
+double
+click
+to
+the
+right
+of
+the
+opening
+char
+or
+on
+the
+closing
+char.
+</li>
+</ul>
+
+<ul>
+
+<li>
+Double
+click
+before
+the
+start
+or
+end
+of
+a
+line
+to
+select
+the
+whole
+line.
+</li>
+</ul>
+<hr />To
+find
+out
+the
+current
+line
+number
+execute:
+Edit
+=<hr />Rather
+than
+setting
+up
+acme
+each
+time
+you
+start
+it,
+running
+stuff
+like
+/acme/mail/Mail
+can
+be
+done
+automatically
+if
+you
+make
+a
+dump
+file.
+Just
+setup
+acme
+the
+way
+you
+like
+it,
+then
+click
+on
+the
+"Dump"
+tag,
+this
+makes
+the
+file
+acme.dump
+copy
+this
+file
+to
+another
+location
+like
+acmemail.dump.
+Now
+to
+load
+your
+configuration
+start
+acme
+like:
+<pre>
+	acme -l acmemail.dump
+</pre>
+<hr />Here
+is
+the
+function
+to
+start
+acme
+mail
+in
+its
+own
+rio
+window,
+it
+contains
+my
+favorite
+fonts
+here,
+but
+you
+can
+make
+your
+own
+file
+by
+starting
+Mail
+and
+issuing
+a
+'Dump'
+command,
+then
+cp-ing
+acme.dump
+to
+acmemail.dump:
+<pre>
+	% cat /env/'fn#amail' 
+	fn amail {acme -l $home^/acmemail.dump} 
+</pre>
+
+<pre>
+	% cat $home/acmemail.dump 
+	/usr/andrey 
+	/lib/font/bit/10646/7x13/7x13.font 
+	/lib/font/bit/10646/7x13/7x13.font 
+	 0 e 0 0 0 0 1 1 49 143 0 0 /mail/fs/mbox/ Del Snarf | Look Put Mail Delmesg 
+	/acme/mail 
+	Mail mbox 
+</pre>
+<hr />/acme/mail/Mail
+has
+-s
+and
+-S
+options
+to
+reduce
+the
+size
+of
+the
+headers
+it
+adds.<hr />Acme
+cd
+to
+keep
+the
+tag
+line
+up
+to
+date:
+<pre>
+	fn cd { builtin cd $* &amp;&amp; awd $sysname }
+</pre>
+<hr />
+<pre>
+	/rc/bin/wurl2txt http://www.website.com
+</pre>
+<hr />A
+function
+to
+clear
+a
+"win"
+session
+in
+an
+acme
+window.
+<pre>
+	fn winclear {
+	echo -n Edit ,d &gt; /dev/acme/body
+	echo -n /Edit ,d/ &gt; /dev/acme/addr
+	echo -n 'dot=addr' &gt; /dev/acme/ctl
+	cat /dev/acme/addr | awk '{printf("MX%s %s\n", $1, $2)}' &gt; /dev/acme/event
+	}
+</pre>
+<hr />To
+execute
+rc
+functions
+defined
+in
+your
+profile,
+prefix
+the
+function
+name
+with
+a
+semicolon.
+This
+will
+force
+acme
+to
+use
+rc
+to
+interpret
+the
+command.<hr />To
+set
+the
+rio
+label
+of
+an
+acme
+window,
+execute
+the
+following
+text:
+<pre>
+	Local echo -n 'new label' &gt; /dev/label
+</pre>
+<hr />
+<a name="DUMP_AND_FOSSIL_TIPS" /><h3>DUMP AND FOSSIL TIPS</h3>
+<hr />To
+get
+the
+last
+valid
+venti
+archive
+score:
+<pre>
+	fossil/last /dev/sdC0/fossil
+</pre>
+<hr />To
+discard
+old
+snapshots
+in
+fossil:
+<pre>
+	snapclean timeout_in_min 
+</pre>
+
+<p class='para'>
+See
+<a href="http://plan9.bell-labs.com/magic/man2html/8/fossilcons"><i>fossilcons</i>(8)</a>.
+</p>
+<hr />Loading
+old
+backups
+into
+fossil
+<p class='para'>
+In
+this
+example
+we
+have
+cdrom
+of
+the
+user
+fred's
+home
+dir
+from
+01/04/2001
+</p>
+
+<pre>
+	@{cd /n/cdrom/fred &amp;&amp; tar cf /fd/1 .}|@{cd /n/boot/usr/fred/tmp/2001/0104/usr &amp;&amp; tar xTf /fd/0}
+</pre>
+and
+then
+on
+the
+fossil
+console
+type
+prompt:
+<pre>
+	fsys main snap -a -s /active/usr/fred/tmp/2002 -d /archive/2002
+</pre>
+<hr />Accessing
+the
+dump
+of
+another
+file
+system:
+<pre>
+	% 9fs sources 
+	% 9fs sourcesdump 
+	% history -d sourcesdump /n/sources/plan9/sys/src/cmd/ls.c 
+	Jul  1 20:32:24 MDT 2004 /n/sources/plan9/sys/src/cmd/ls.c 5400 [jmk] 
+	Jul  1 20:32:24 MDT 2004 /n/sourcesdump/2005/0215/plan9/sys/src/cmd/ls.c 5400 [jmk] 
+	...
+</pre>
+
+<p class='para'>
+Note
+that
+for
+sources
+it's
+enough
+to
+do:
+<pre>
+% 9fs sources
+history /n/sources/plan9/sys/src/cmd/ls.c
+</pre>
+
+</p>
+<hr />
+<a name="PLUMBING_TIPS" /><h3>PLUMBING TIPS</h3>
+<hr />Local
+is
+in
+the
+plumbing
+rules
+as
+this
+:
+<pre>
+	type	is	text
+	data	matches	'Local (.*)'
+	plumb	to	none
+	plumb	start	rc -c $1
+</pre>
+
+<p class='para'>
+So
+one
+can
+plumb
+a
+command
+and
+any
+adjustments
+to
+the
+namespace
+will
+be
+reflected
+across
+the
+same
+processes
+as
+covered
+by
+the
+instance
+of
+the
+plumber.
+</p>
+
+<p class='para'>
+Then
+you
+can
+plumb:
+<pre>
+       Local bind -c /n/unix/some/awfully/long/path/name /n/anything 
+</pre>
+
+</p>
+
+<p class='para'>
+This
+is
+particularly
+useful
+if
+one
+wants
+to
+page
+something
+one
+has
+found
+in
+Acme.
+</p>
+
+<p class='para'>
+A
+little
+shell
+script,
+"local"
+completes
+the
+picture:
+<pre>
+       #!/bin/rc 
+       plumb 'Local ' ^ $"* 
+</pre>
+
+</p>
+
+<p class='para'>
+And
+/n/anything
+is
+immediately
+visible
+everywhere
+(including
+in
+cpu's
+shells
+under
+/mnt/term)
+and
+i
+can
+plumb
+files
+in
+it
+without
+any
+further
+hassle.
+</p>
+
+<p class='para'>
+This
+is
+great
+when
+constantly
+dealing
+with
+namespaces
+that
+come
+and
+go
+(and
+particularly
+since
+i
+can
+import
+namespaces
+directly
+from
+Inferno,
+which
+means
+it's
+easy
+to
+gateway
+across
+to
+Windows
+machines).
+</p>
+<hr />To
+plumb
+web
+links
+to
+a
+Windows
+web
+browser
+(in
+a
+vnc
+window)
+look
+at:
+<a href="http://www.tip9ug.jp/magic/srcgw/sys/src/cmd/unix/winplumb.c">/sys/src/cmd/unix/winplumb.c</a>.<hr />
+<a name="DEBUGGING_TIPS" /><h3>DEBUGGING TIPS</h3>
+<hr />When
+you
+see
+something
+like
+this
+on
+the
+console:
+<pre>
+	 lock 0x802fe414 loop key 0xdeaddead pc 0x801a25b5 held by pc 0x801a281c proc 3974
+	3979: cat pc 801b0ce3 dbgpc 2ae5 Fault (Running) ut 0st 370 bss 7000qpc 801a87f3 nl 0 nd 0 lpc 80125493 pri 3
+</pre>
+try:
+<pre>
+	acid /386/9pcf (or whatever)
+	src(0x801a25b5)
+	src(0x801a281c)
+</pre>
+and
+see
+what
+locks
+were
+used.<hr />To
+make
+a
+core
+image
+from
+a
+Broken
+process
+using
+<a href="http://plan9.bell-labs.com/magic/man2html/4/snap"><i>snap</i>(4)</a>:
+<pre>
+	snap -o imgfile pid_of_Broken_process
+	snapfs imgfile
+	acid pid_of_the_image
+</pre>
+<hr />Things
+to
+try
+if
+your
+machine
+is
+very
+sick
+or
+hung
+<p class='para'>
+This
+text
+is
+lifted
+from
+the
+BUGS
+section
+of
+the
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cons"><i>cons</i>(1)</a>
+manpage
+</p>
+
+<p class='para'>
+For
+debugging,
+two
+control-T's
+followed
+by
+a
+letter
+generate
+console
+output
+and
+manage
+debugging:
+`^T^Td'
+toggles
+whether
+the
+console
+debugger
+will
+be
+run
+if
+the
+system
+fails.
+`^T^TD'
+starts
+the
+console
+debugger
+immediately.
+`^T^Tk'
+kills
+the
+largest
+process;
+use
+with
+care.
+`^T^Tp'
+prints
+data
+about
+processes.
+`^T^Tq'
+prints
+the
+run
+queue
+for
+pro-
+cessor
+0.
+`^T^Ts'
+prints
+the
+kernel
+stack.
+`^T^Tx'
+prints
+data
+about
+kernel
+memory
+allocation.
+</p>
+
+<p class='para'>
+The
+system
+can
+be
+rebooted
+by
+typing
+`^T^Tr'.
+</p>
+<hr />Use
+<a href="http://plan9.bell-labs.com/magic/man2html/2/getcallerpc"><i>getcallerpc</i>(2)</a>
+to
+record
+a
+function's
+caller
+for
+debugging.<hr />
+<a name="NETWORKING_TIPS" /><h3>NETWORKING TIPS</h3>
+<hr />To
+turn
+on
+debug
+on
+ndb/dns:
+<pre>
+echo -n debug &gt; /net/dns
+</pre>
+then
+look
+into
+/sys/log/dns<hr />To
+tunnel
+out
+through
+a
+restrictive
+firewall
+to
+another
+Plan
+9
+box.
+<p class='para'>
+On
+the
+internal
+machine
+run:
+</p>
+
+<pre>
+	inside%  cpu -c 'rm -f /srv/inside ; srvfs inside /mnt/term ; while() sleep 600'
+</pre>
+
+<p class='para'>
+To
+see
+files
+on
+the
+machine
+you
+can
+see
+internal
+files
+with:
+</p>
+
+<pre>
+	outside% mount /srv/inside /n/inside
+</pre>
+
+<p class='para'>
+You
+can
+then
+do
+the
+following
+to
+cpu
+to
+the
+internal
+machine:
+</p>
+
+<pre>
+	outside% bind /n/inside/net /net.alt
+	outside% cpu -h /net.alt/tcp!inside
+</pre>
+
+<p class='para'>
+The
+network
+peformance
+from
+outside
+to
+inside
+is
+pretty
+miserable,
+but
+this
+can
+be
+partially
+mitigated
+by
+cpu'ing
+to
+inside
+and
+starting
+any
+file
+copies
+from
+there.
+</p>
+<hr />To
+refresh
+cs
+*NOW*
+after
+changing
+/lib/ndb/local:
+<pre>
+	echo -n refresh &gt; /net/cs
+</pre>
+<hr />Use
+<a href="http://plan9.bell-labs.com/magic/man2html/4/httpfile"><i>httpfile</i>(4)</a>
+to
+view
+an
+ISO
+on
+a
+HTTP
+server
+without
+downloading
+it
+locally:
+<pre>
+	ip/httpfile -m /tmp http://www.9grid.de/plan9/plan9.iso
+	9660srv
+	mount -c /srv/9660 /n/cdrom /tmp/plan9.iso
+</pre>
+<hr />Tips
+for
+connecting
+to
+a
+Unix
+machine:
+<ul>
+
+<li>
+Install
+fgb's
+openssh
+package
+</li>
+
+<li>
+Use
+vt
+and
+switch
+to
+raw
+mode
+after
+connecting
+</li>
+
+<li>
+It
+helps
+to
+have
+a
+good
+font;
+/lib/font/bit/fixed/unicode.7x13.font
+works
+well.
+</li>
+</ul>
+<hr />
+<a name="MISC_TIPS" /><h3>MISC TIPS</h3>
+<hr />Almost
+anywhere
+(<a href="http://plan9.bell-labs.com/magic/man2html/1/sam"><i>sam</i>(1)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/1/acme"><i>acme</i>(1)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/1/window"><i>window</i>(1)</a>)
+you
+can
+use
+the
+following
+shortcuts:
+<pre>
+^U Delete from cursor position to start of line
+^W Delete the word to the left of the cursor
+^H Delete the character to the left of cursor (same as backspace)
+</pre>
+
+<p class='para'>
+(^U
+Means
+Ctrl-U
+and
+so
+on...)
+</p>
+<hr />In
+the
+installer
+prompt,
+you
+can
+use
+the
+special
+magic
+!
+command
+to
+excute
+any
+external
+command.
+For
+example
+to
+get
+a
+shell
+enter:
+<pre>
+	!rc
+</pre>
+<hr />If
+you
+want
+to
+watch
+how
+9p
+works
+between
+client
+and
+server,
+use
+<a href="http://plan9.bell-labs.com/magic/man2html/4/iostats"><i>iostats</i>(4)</a>.
+<pre>
+	iostats -df /fd/1 rc
+</pre>
+<hr />To
+burn
+CD
+using
+<a href="http://plan9.bell-labs.com/magic/man2html/4/cdfs"><i>cdfs</i>(4)</a>:
+<pre>
+	cdfs
+	cp some.iso /mnt/cd/wd
+	rm /mnt/cd/wd
+</pre>
+<hr />You
+can
+use
+<a href="http://plan9.bell-labs.com/magic/man2html/8/stub"><i>stub</i>(8)</a>
+to
+provide
+single
+file
+mount
+points
+in
+a
+similar
+way
+to
+how
+<a href="http://plan9.bell-labs.com/magic/man2html/4/mntgen"><i>mntgen</i>(4)</a>
+provides
+a
+directory
+of
+them.<hr />
+<pre>
+	fn c {history -D /$1} 
+</pre>
+
+<p class='para'>
+so
+you
+can
+paste
+the
+output
+of
+replica/pull
+somewhere.
+</p>
+<hr />To
+look
+for
+a
+function
+definition
+from
+the
+manual
+pages,
+use
+<a href="http://plan9.bell-labs.com/magic/man2html/1/sig"><i>sig</i>(1)</a>:
+<pre>
+	% sig memmove
+	void* memmove(void *s1, void *s2, long n)
+</pre>
+
+<p class='para'>
+To
+open
+(plumb)
+the
+source
+file
+for
+an
+executable
+use
+<a href="http://plan9.bell-labs.com/magic/man2html/1/src"><i>src</i>(1)</a>:
+<pre>
+	% src ls
+</pre>
+
+</p>
+<hr />To
+build
+a
+kernel
+without
+write
+permisions
+to
+the
+source
+tree:
+<pre>
+	mkdir -p $home/src/kernel/ ^ (pc boot ip port) 
+	for (i in pc boot ip port) { 
+	       bind -c $home/src/kernel/$i $home/src/kernel/$i 
+	       bind -a /sys/src/9/$i $home/src/kernel/$i 
+	} 
+</pre>
+
+<pre>
+	cd $home/src/kernel/pc
+	mk 'CONF=pccpuf' 
+</pre>
+
+<p class='para'>
+In
+order
+to
+make
+actual
+changes
+to
+existing
+files
+in
+/sys/...,
+You
+need
+to
+copy
+them
+into
+your
+own
+directory
+before
+doing
+the
+binding.
+</p>
+
+<p class='para'>
+Or
+you
+can
+try
+the
+<a href="http://cm.bell-labs.com/sources/contrib/de0u/divergefs.tar.gz">divergefs</a>
+file
+system,
+which
+will
+let
+you
+freely
+modify
+source
+files:
+<pre>
+	divergefs -p $home/src/kernel /sys/src/9
+	cd /sys/src/9/pc
+	mk 'CONF=pccpuf'
+</pre>
+
+</p>
+<hr />To
+allow
+drawterm
+to
+connect
+to
+a
+terminal,
+run
+this
+script:
+<pre>
+	#bin/rc
+	rfork ne
+	auth/keyfs -p
+	aux/listen1 -t tcp!*!ticket /bin/auth/authsrv &amp;
+	service=cpu aux/listen1 tcp!*!cpu /bin/cpu -O &amp;
+	service=cpu aux/listen1 tcp!*!ncpu /bin/cpu -R &amp;
+</pre>
+
+<p class='para'>
+This
+will
+prompt
+you
+for
+hostid,
+authdom,
+and
+password.
+If
+you
+get
+sick
+of
+typing
+these
+in,
+you
+can
+initialise
+an
+nvram
+partition
+with
+this
+info
+using
+<a href="http://plan9.bell-labs.com/magic/man2html/8/auth/wrkey"><i>auth/wrkey</i>(8)</a>.
+If
+you
+don't
+have
+an
+nvram
+partition,
+you
+can
+create
+one
+using
+<a href="http://plan9.bell-labs.com/magic/man2html/1/prep"><i>prep</i>(1)</a>
+to
+steal
+the
+last
+sector
+from
+your
+swap
+partition
+and
+name
+it
+nvram.
+</p>
+<hr />(from
+a
+post
+by
+Matthias
+Bauer:
+<a href="http://shoestringfoundation.org/cgi-bin/blosxom.cgi/2007/06/27#learned">http://shoestringfoundation.org/cgi-bin/blosxom.cgi/2007/06/27#learned</a>)
+<p class='para'>
+While
+typing
+from
+one
+machine
+I
+remembered
+I
+had
+already
+solved
+a
+problem
+in
+a
+one-liner,
+but
+on
+a
+different
+drawterm
+which
+ran
+on
+a
+Unix
+box
+miles
+away.
+</p>
+
+<pre>
+	cpu% echo $wsys
+	/srv/rio.myname.1234
+	cpu% lc /srv/rio.*
+	rio.myname.1234		rio.myname.5678
+</pre>
+
+<p class='para'>
+So
+the
+other
+drawterm
+runs
+the
+<a href="http://plan9.bell-labs.com/magic/man2html/1/rio"><i>rio</i>(1)</a>
+mounted
+on
+/srv/rio.myname.5678.
+To
+get
+at
+the
+scrollback
+of
+a
+window
+displayed
+on
+a
+screen
+on
+a
+totally
+different
+machine:
+</p>
+
+<pre>
+	cpu% mount /srv/rio.myname.5678 /n/wsys 1
+	cpu% cat /n/wsys/text 
+	[...lines of output...]
+	[...including the one-liner...]
+</pre>
+<hr />Some
+extra
+clauses
+for
+/rc/bin/9fs
+<p class='para'>
+Historic
+unix
+sources
+-
+chose
+a
+local
+mirror
+<pre>
+	case unix
+		dom=`{ndb/ipquery sys $sysname dnsdomain | sed 's/^dnsdomain=//'}
+		ftpfs -r/pub/mirror/unix-archive/UnixArchive -m /n/$1 -q -a $user@$dom ftp.win.tue.nl 
+</pre>
+
+</p>
+
+<p class='para'>
+usb
+memory
+stick
+-
+needs
+usb
+code
+in
+/n/sources/contrib/miller
+<pre>
+	case stick
+	 	if (! test -f /srv/$1){
+	 		if (! test -f /n/ums/data)
+	 			usb/usbsfs
+			i=`{disk/fdisk -p /n/ums/data | grep dos}
+	 		dossrv -f /n/ums/data:$i(3) $1 &gt;[2] /dev/null
+		}
+		mount /srv/$1 /n/$1
+</pre>
+
+</p>
+
+<p class='para'>
+news
+<pre>
+	case usenet
+		nntpfs some.news.server
+</pre>
+
+</p>
+
+<p class='para'>
+ssh
+connection
+to
+unix
+systems
+user@system
+starts
+an
+ssh
+connection
+using
+u9fs
+-
+note
+the
+directory
+where
+u9fs
+is
+expected.
+<pre>
+	case *@*
+		sys=`{echo $mnt | sed 's/^[^@]*@//'}
+	 	srvssh -u '''bin/`uname -m`/u9fs''' $1 $sys $sys
+</pre>
+
+</p>
+<hr />Boot
+kernel
+/386/your.kernel
+directly
+without
+the
+intermediate
+9load
+and
+bios
+delays,
+very
+useful
+for
+kernel
+hacking
+<pre>
+	echo reboot /386/your.kernel &gt; /dev/reboot
+</pre>
+<hr />To
+make
+scrolling
+with
+the
+mouse
+wheel
+faster,
+you
+can
+set
+the
+"mousescrollsize"
+environement
+var
+in
+your
+profile
+to
+the
+number
+of
+lines
+you
+want
+to
+scroll,
+the
+default
+is
+1
+but
+a
+value
+of
+4
+might
+be
+more
+convenient.<hr />To
+run
+charon
+on
+its
+own
+rio
+window
+(from
+the
+inferno
+mailing
+list):
+<pre>
+#!/bin/rc
+
+rfork n
+
+if(! test -f /dev/draw/new){
+	bind -a '#i' /dev
+}
+
+exec /usr/inferno/Plan9/$objtype/bin/emu -G -I -c1 /dis/sh.dis -c '
+	mount -bc {mntgen} /mnt
+	bind -c ''#U*'' /n/local
+	bind -c ''#₪'' /srv
+	rioimport {
+		charon -buttons plain -framework all,exit $* &gt; /dev/null &gt;[2=1]
+		echo halt &gt; /dev/sysctl
+	} $*
+' $*
+</pre>
+<hr />To
+have
+your
+keys
+automatically
+loaded
+in
+factotum,
+add
+this
+to
+your
+cpurc
+or
+termrc:
+<pre>
+@{
+	auth/secstored
+	auth/secstore -G factotum | read -m &gt; /mnt/factotum/ctl
+}
+</pre>
+
+<p class='para'>
+then
+you
+can
+edit
+your
+keys
+with
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ipso"><i>ipso</i>(1)</a>.<hr />For
+changing
+your
+keyboard
+layout
+permanently,
+add
+the
+following
+line
+to
+your
+profile:
+</p>
+
+<pre>
+cat /sys/lib/kbmap/$lang &gt; /dev/kbmap
+</pre>
+
+<p class='para'>
+$lang
+is
+the
+name
+of
+a
+file
+in
+/sys/lib/kbmap,
+which
+are
+the
+ccTLDs
+of
+the
+different
+countries
+and
+languages.<hr />To
+set
+up
+your
+timezone
+correctly,
+figure
+out
+in
+which
+timezone
+you
+are,
+and
+then,
+assuming
+e.g.
+you
+are
+in
+the
+CET
+zone:
+</p>
+
+<p class='para'>
+log
+in
+as
+user
+adm,
+and:
+</p>
+
+<pre>
+cp /adm/timezone/CET /adm/timezone/local
+</pre>
+
+<p class='para'>
+and
+reboot.
+Note
+that
+the
+short
+timezone
+names
+are
+not
+standardized;
+check
+the
+first
+line
+of
+the
+file
+to
+ensure
+the
+offset
+is
+right
+for
+you.
+You
+can
+also
+play
+around
+with
+a
+new
+timezone
+with:
+</p>
+
+<pre>
+	cp /adm/timezone/CET /env/timezone
+</pre>
+
+<p class='para'>
+Subsequent
+command
+will
+pick
+up
+the
+new
+timezone,
+but
+nothing
+already
+running
+or
+not
+sharing
+the
+environment
+will
+be
+affected.
+</p>
+<hr />For
+more
+tips
+see
+the
+old
+<a href="http://web.archive.org/web/20061012075020/http://pages.cpsc.ucalgary.ca/~mirtchov/lanlp9/tips.html">LANL
+tips</a>.
+<p class='para'>
+(TODO:
+The
+LANL
+tips
+page
+is
+being
+slowly
+merged
+into
+this
+one)
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Thu May  6 14:58:07 EDT 2010</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

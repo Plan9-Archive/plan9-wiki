@@ -1,0 +1,98 @@
+Staying up to Date
+D1405886749
+Aglenda
+#Once you have Plan 9 installed, you'll probably want to keep your
+#installation up to date with respect to the changes that come out of
+#the labs. Assuming you have decent network access, the easiest way
+#to do this is to use replica/pull.
+#
+#The instructions on this page assume you are updating a server or
+#standalone machine with x86 architecture. For a standalone ARM
+#computer such as the Raspberry Pi, read this page for background and
+#then see [Updating an ARM system].
+#
+#UPDATING
+#
+#To update your system, a script named 'pull' is available and is
+#located in the directory '/usr/glenda/bin/rc' (user glenda's home
+#directory). Note that this script assumes you are using the kfs(4)
+#file system, which nowadays is not likely to be the case. If your
+#system uses fossil(4), see the next paragraph below.
+#
+#To execute the 'pull' script, just type:
+#
+#! pull
+#
+#Your system will be updated and you should see the files which are
+#updated scrolling down your window. If you do not have the pull
+#script installed, see the instructions below for your filesystem
+#type.
+#
+#For more information, see replica(1).
+#
+#When the update is finished, old versions of binary files in /bin
+#and /bin/*/ will have been renamed by prefixing with an underscore
+#character. These can safely be deleted.
+#
+#Pull uses the file server sources.cs.bell-labs.com. You can poke
+#around by running:
+#
+#! 9fs sources
+#! cd /n/sources
+#! lc
+#
+#FOSSIL
+#
+#To update your fossil file system, you can usually just run the
+#following command:
+#
+#! replica/pull -v /dist/replica/network
+#
+#The -v option puts pull in verbose mode, allowing you to see the
+#current activity it is performing. This is useful if you're
+#interested in seeing what's being updated, but can produce lots of
+#output, so it's best to run it in a scrolling window or omit the -v.
+#
+#Note that replica/pull takes care not to overwrite local changes,
+#and flags conflicts with error messages so that you can resolve them
+#by hand.
+#
+#If you have done local modifications, pull will not overwrite the
+#changed file if an update occurs on sources. Use
+#! pull -s path/to/file
+#(where 'path/to/file' is the absolute path without the leading /) to
+#get the server-version of the specified file, or subtree if 'file'
+#is a directory, where in contrast -c keeps the client-version. Be
+#aware of running 'pull -s/' which specifies the server-version of
+#all files, as local configuration files may be updated undesirably.
+#You can do a "dry run" using the -n option, which will print the
+#list of files which would be updated but not perform the actual
+#update.
+#
+#OTHER ACCESS
+#
+#You can also get access to the bleeding-edge sources and extra
+#software by typing:
+#! 9fs sources
+#! ls /n/sources
+#
+#In case you don't have a Plan 9 network connection, you can always
+#download the nightly CD image from the download page and use it to
+#update.
+#
+#! mount /srv/9660 /n/dist /tmp/plan9.iso
+#
+#If you burned a CD with the unpacked image, the steps are
+#
+#! 9660srv
+#! mount  /srv/9660 /n/dist /dev/sdD0/data
+#! replica/pull -v /dist/replica/cd
+#
+#assuming you have the CDROM drive as the master on the second IDE
+#controller.
+#
+#SEE ALSO
+#
+#[Updating an ARM system], [Sources repository], [Use latest kernel
+#after a pull], replica(1)
+#

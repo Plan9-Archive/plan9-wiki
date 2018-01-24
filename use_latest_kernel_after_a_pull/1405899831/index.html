@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Use latest kernel after a pull (as of Sun Jul 20 19:43:51 EDT 2014)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Use latest kernel after a pull</h1>
+<h2><i>-as of Sun Jul 20 19:43:51 EDT 2014-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+While
+updating
+your
+system
+using
+pull
+(as
+per
+<a href="../../Staying_up_to_date">Staying_up_to_date</a>),
+your
+system
+binaries
+will
+be
+updated.
+But
+your
+kernel
+does
+not
+automatically
+get
+updated,
+and
+as
+a
+result
+you
+may
+encounter
+problems.
+For
+example,
+in
+May
+2014,
+a
+new
+system
+call
+was
+added
+to
+the
+kernel
+and
+some
+system
+binaries
+were
+recompiled
+to
+make
+use
+of
+this
+system
+call.
+Executing
+those
+binaries
+without
+having
+a
+recent
+kernel
+could
+result
+in
+an
+error.
+<a name="UPDATING_YOUR_KERNEL" /><h3>UPDATING YOUR KERNEL</h3>
+
+<p class='para'>
+To
+solve
+this
+problem,
+you
+will
+need
+to
+reboot
+your
+system
+using
+the
+updated
+kernel
+that
+you
+have
+pulled.
+After
+you
+have
+pulled,
+you
+can
+switch
+to
+the
+latest
+kernel
+by
+executing
+the
+following:
+</p>
+
+<pre>
+term% 9fat:
+term% cp /386/9pcf /n/9fat   # May differ based on your term's architecture
+term% fshalt
+prompt:^t^tr
+</pre>
+
+<p class='para'>
+Optionally,
+make
+a
+backup
+copy
+of
+your
+old
+kernel
+beforehand.
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Sun Jul 20 19:43:51 EDT 2014</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

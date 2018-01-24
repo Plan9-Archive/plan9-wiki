@@ -1,0 +1,180 @@
+<html>
+<head>
+<title>Guruplug (Editing Tue Apr 12 10:24:54 EDT 2011 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Guruplug</b></font> (Editing Tue Apr 12 10:24:54 EDT 2011 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Guruplug">
+<input type="hidden" name="version" value="1302618294">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+This document is based on the notes I took and found around 9fans and
+various Plan 9 related sites with respect to getting the Globalscale
+Guruplug platform booting Plan 9.
+
+STEP 1 - SET UP A CPU/FS/AUTH SERVER
+
+Directions for how to do this are listed in the [Configuring a
+standalone CPU server] section of this wiki.
+
+You may already have one of these running, but I've found that in
+some cases, when trying to compile for ARM, certain packages may be
+installed that do not work very well. They have to be added to the
+BUGGERED list in /sys/src/cmd/mkfile.
+
+Example:
+
+! 	BUGGERED=unix|postscript|upas
+
+Note that upas is not malfunctioning, nor is it true to say that it
+would not compile on my system. I just did not have upas privileges
+and could not complete the upas installation. Since I was not
+concerned with email, I skipped it by placing it on the BUGGERED list.
+
+It is possible to turn off permissions checking or the user you're
+logged in as to the upas group if needed, but that's beyond the scope
+of this wiki page.
+
+STEP 2 - BUILD YOUR ARM TOOLCHAIN
+
+Follow Geoff's directions from the 9fans posting here: [sheevaplug
+port available | http://9fans.net/archive/2009/11/225]
+
+A slight modification of those instructions is below:
+
+!      cd /sys/src/cmd
+!       for(i in ?c ?a ?l) {
+!               if(! ~ $i cc rc) @{
+!                       cd $i
+!                       mk clean
+!                       objtype=$cputype mk install
+!                       mk clean
+! 		}
+! 	}
+
+STEP 3 - POPULATE YOUR ARM TREE
+
+! 	cd /sys/src
+! 	objtype=arm mk install
+
+If you fail to install something in this step you can try to add
+names to the BUGGERED list as above and retry the mk install.
+
+STEP 4 - COPY NVRAM FROM YOUR CPU SERVER FOR THE GURUPLUG IMAGE
+
+Part of setting up a CPU server is setting up the nvram of your
+machine. You should have an "nvram" partition on your boot disk if
+you followed the standard wiki CPU setup instructions.
+
+Copy this file into /sys/src/9/kw
+
+! 	dd -if /dev/sdC0/nvram -of /sys/src/9/kw/nvram
+
+Now when you compile your kernel, you'll have a valid nvram file.
+
+STEP 5 - COMPILE THE KW KERNEL
+
+! 	cd /sys/src/9/kw
+! 	mk 'CONF=plug' install
+
+After this step you now have all the pieces you need to run Plan 9 on
+an ARM system.
+
+STEP 6 - CONFIGURE PXE TO BOOT YOUR GURUPLUG
+
+In /lib/ndb/local you'll need an entry like the following
+
+! 	ip=192.168.1.77 sys=bunnyplug dom=bunnyplug.homework.net
+! 		bootf=/arm/9plug
+! 		gw=192.168.1.1
+! 		dns=192.168.1.1
+! 		fs=<YOUR-FS-SERVER>
+! 		auth=<YOUR-AUTH-SERVER>
+
+I'm using a vmware plan 9 CPU AUTH and FS server so I just use the
+same IP address for the fs and auth items.
+
+PXE needs to be configured as well. In /cfg/pxe you should see a file
+"example-kw". You may copy this to
+/cfg/pxe/<your-guruplug-mac-address>
+
+This same filename will be specified as a parameter in the u-boot
+loader of your guruplug.
+
+STEP 7 - ENSURE FOSSIL IS LISTENING
+
+NOTE: this step will make fossil listen on port 564 without
+encryption!
+
+! 	fossil/conf /dev/sdC0/fossil > flproto
+! 	cat >> flproto << EOF
+! 	listen tcp!*!564
+! 	EOF
+! 	fossil/conf -w /dev/sdC0/fossil flproto
+
+STEP 8 - READ MAN PAGE AND SET UP THE GURU PLUG FOR PXE
+
+The booting(8) manpage has instructions for the Marvell Kirkwood CPU
+Server kernel.
+
+I recommend that you backup your Guruplug's default bootcmd
+environment variable parameters before setting these, or just
+skipping the saveenv step that overwrites the defaults.
+
+In case you clobberred your u-boot settings, I'm listing my defaults
+in case they would work for you to get back into Linux
+
+! 	bootcmd=${x_bootcmd_ethernet}; ${x_bootcmd_usb}; ${x_bootcmd_kernel}; setenv bootargs ${x_bootargs} ${x_bootargs_root}; bootm 0x6400000;
+
+I don't want to commit my only Guruplug to Plan 9 just yet so I just
+enter the following manually (cut and paste) each time I want to boot
+Plan 9.
+! 	setenv bootcmd 'dhcp 0x800000; tftp 0x1000 /cfg/pxe/<MAC>; go 0x800000'
+! 	boot
+
+THANKS
+
+Thanks to the Geoff Collyer, the folks behind [Inferno-kirkwood |
+http://code.google.com/p/inferno-kirkwood/], David du Colombier, and
+Skip Tavakkolian for their excellent work and notes on getting this
+platform documented.
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

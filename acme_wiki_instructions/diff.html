@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Acme Wiki instructions (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Acme Wiki instructions <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Sat Nov 10 14:11:02 EST 2007</a>, josh
+</div><hr />If
+you
+want
+to
+access
+this
+site
+using
+Acme,
+have
+a
+look
+at
+/acme/wiki/guide.
+<p class='para'>
+You
+can
+execute
+the
+first
+line
+to
+import
+the
+wiki,
+</p>
+
+<pre>
+Local srv net!plan9.bell-labs.com!wiki wiki /mnt/wiki
+</pre>
+
+<p class='para'>
+and
+the
+third
+line
+to
+bring
+up
+the
+browser
+-
+though
+if
+you
+don't
+use
+the
+latest
+version
+of
+acme
+you'll
+need
+to
+run
+a
+new
+instance
+of
+Acme
+because
+Local
+doesn't
+import
+into
+the
+current
+namespace
+</p>
+
+<pre>
+Wiki /mnt/wiki/
+</pre>
+
+<p class='para'>
+The
+browser
+should
+be
+fairly
+intuitive
+given
+familiarity
+with
+acme.
+</p>
+
+<p class='para'>
+To
+follow
+wiki
+links,
+right-click
+page
+names
+inside
+square
+brackets:
+<a href="../sandbox">sandbox</a>.
+</p>
+
+<p class='para'>
+You
+can
+edit
+any
+wiki
+page,
+then
+click
+Put
+in
+the
+acme
+tag
+to
+save
+your
+changes
+to
+the
+server.
+</p>
+
+<p class='para'>
+To
+add
+a
+new
+wiki
+page,
+click
+New
+in
+the
+acme
+tag,
+then
+type
+the
+title
+in
+the
+first
+line
+of
+the
+resulting
+window,
+followed
+by
+a
+newline,
+then
+your
+content
+for
+the
+new
+page.
+Use
+<a href="../Wiki_syntax">Wiki
+syntax</a>
+for
+formatting.
+</p>
+
+<p class='para'>
+You
+may
+need
+to
+add
+the
+following
+line
+to
+/lib/ndb/common
+to
+define
+the
+default
+wiki
+file
+service
+TCP
+port:
+</p>
+
+<pre>
+tcp=wiki port=17035
+</pre>
+
+<p class='para'>
+though
+this
+is
+defined
+in
+the
+distributed
+/lib/ndb/common
+as
+of
+Sept.
+07.
+</p>
+
+<a name="SEE_ALSO" /><h3>SEE ALSO</h3>
+
+<p class='para'>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/acme"><i>acme</i>(1)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/4/wikifs"><i>wikifs</i>(4)</a>
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Sat Nov 10 14:11:02 EST 2007</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

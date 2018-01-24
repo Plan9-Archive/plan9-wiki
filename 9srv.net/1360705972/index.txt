@@ -1,0 +1,24 @@
+9srv.net
+
+9srv.net offers Plan 9 accounts to the public. All systems are
+provided on a best-effort basis. There are two stable (more or less)
+cpu servers; other cpu servers come and go.
+
+To request an account, send your real name, prefered user name,
+contact email address, contact phone number, and location to a at
+9srv dot net. You will receive back a message with a brief
+introduction to the system and your initial password (which you are
+requested to change immediately). While not required, you are highly
+encouraged to attach a picture of yourself suitable for use as a
+face(6) file. If you do pgp/gpg, optionally, include in your initial
+message a pointer to your public key and I'll encrypt the message
+containing your initial password; my key is available on the major
+public keyservers.
+
+The systems are currently located in Cleveland, Ohio, US. They're on
+a business-class DSL line, but it's fairly asymetric in what is
+usually the wrong direction for this sort of usage. Be gentle.
+
+9srv.net also runs the default server for [snip] and offers a public
+repository of faces (see "[adding_your_face]").
+

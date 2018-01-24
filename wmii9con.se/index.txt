@@ -1,0 +1,30 @@
+wmii9con.se
+
+The first wmii9con.se will take place in Stockholm the 18/19 of
+February.
+
+The intention is to have fun, meet other Plan 9 and WMII users and
+learn new things about those systems.
+
+Location:
+
+Bråvallavägen 10, Djursholm ([Map |
+http://www.gulasidorna.se/query?what=map&mapstate=6%3B1628733.183%3B6589892.439%3B0%3B1627728.0%3B6590694.0%3B1629737.0%3B6589090.0%3B&mapcomp=%3B%3B%3BBr%E5vallav%E4gen%3B10%3B%3B18266%3BDJURSHOLM%3B%3B%3B%3B%3B1628733.183%3B6589892.439%3B%3B%3B%3B%3Bmaps_address.1001657.11&streetname=Br%E5vallav%E4gen+10+Djusholm&streetnumber=&city=&heading_exact=&heading=&company_name=&ns=&as=t&ax=])
+
+By subway go to Tekniska hogskolan and take the Roslagsbanan towards
+Nasbypark to the Altorp station, it's the closest building to the
+Altorp station.
+
+Network connectivity and a already running Plan 9 network will be
+available, but bringing at least a laptop is recommended. There are
+sleeping places for five or six people, but they will need to bring
+sleeping bags.
+
+WHO WAS THERE:
+
+ *	Maguus Engström ( maguus AT aoeu.info )
+ *	Andreas Samuelsson ( andreas AT softlight.se )
+ *	Samuel "Wolf on Air" ( salj AT triplefusion.net )
+ *	Jrny Gustavsson, Karlstad ( ft.gustavsso AT bredband.net )
+ *	[Uriel] ( uriel AT [cat-v.org | http://cat-v.org] )
+

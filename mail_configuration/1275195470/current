@@ -1,0 +1,187 @@
+Mail Configuration
+D1275195470
+Auriel
+#
+#READING MAIL
+#
+#To read mail on Plan 9, you currently need a Plan 9 system that runs
+#an SMTP server and spools your messages; attempting to read messages
+#from a mounted Unix or NFS file system will not work, as Plan 9 uses
+#different mechanisms to lock mailboxes.
+#
+#There are a few ways around this, though; upas/fs (see upasfs(4))
+#can present POP3 and IMAP4 accounts as well as normal mail files. To
+#use it, start upas/fs with the -f option specifying the "virtual"
+#mail file to use. For example,
+#
+#!  upas/fs -f/pop/your.host
+#
+#Other access methods (instead of "pop") include apop, poptls, and
+#apoptls, imap, and imaps. If you use POP via SSL on port 995, you
+#should use "pops" instead of "poptls".
+#
+#The appropriate Factotum key to be used is for example:
+#
+#! ; auth/factotum -g 'proto=pass dom=pop.gmx.de service=pop user=$your_username !password?'
+#
+#for POP3.
+#
+#To use the TLS-enabled access methods to a Plan 9 mail server
+#(poptls, apoptls, and imaps) you need to generate a certificate and
+#key for your mail server and tell the factotum of the server about
+#that key:
+#
+#You can also use the [using ssl] page, for detailed instructions.
+#! Login to a unix box with openssl installed (or install /n/sources/contrib/fgb/openssl.tgz) and generate the cert:
+#! unix$ openssl req -x509 -nodes -newkey rsa:1024 -keyout key.pem -out cert.pem
+#! 
+#! Logout and copy the files back to your mail server
+#! ; cp /n/unix/.../cert.pem  /sys/lib/tls/imap.pem
+#! ; cp /n/unix/.../key.pem /sys/lib/tls/key.pem
+#! 
+#(I think the plan9 tools do a much better job with this, e.g. for
+#tlssrv, what is needed:
+#! auth/rsagen -t 'service=tls role=client owner=*' > /sys/lib/tls/key
+#! auth/rsa2x509 'C=FR CN=*.fakedom.dom' key | auth/pemencode CERTIFICATE > /sys/lib/tls/cert
+#where FR is a two digit country code, and fakedom.dom is the fully
+#qualified domainname.)
+#! 
+#! Tell your factotum about the new key...
+#! ; ramfs
+#! ; cd /tmp
+#! ; auth/secstore -g factotum
+#! ; auth/secretpem /sys/lib/tls/key.pem >> factotum
+#! ; auth/secstore -p factotum
+#! You may also write factotum to /mnt/factotum/ctl
+#! Exit this shell to destory the /tmp ramfs that has your keys in.
+#! 
+#
+#Then you must add your mail server's fingerprint to
+#/sys/lib/tls/mail.
+#
+#If you are connecting to a third party mail server which is already
+#set up for TLS authentication, you only need to teach Plan 9 about
+#the fingerprint of its certificate.
+#
+#The easiest way to get the fingerprint is to run
+#
+#! ; upas/fs -f /imaps/your.host
+#
+#(instead of imaps you may be using poptls or apoptls) and look at
+#the error message, something like
+#
+#! upas/fs pop3: server certificate 22471E10D5C1E41768048EF5567B27F532F33 not recognized
+#! upas/fs: opening mailbox: bad server certificate
+#
+#To add this certificate type:
+#
+#! ; echo 'x509 sha1=22471E10D5C1E41768048EF5567B27F532F33' > /sys/lib/tls/mail
+#
+#If you are going to run an SMTP server, you should edit the files
+#/mail/lib/smtpd.conf and /mail/lib/blocked to configure it. In
+#addition, you should ensure that /mail/tmp exists and is world
+#writeable (0777) if you want to receive emails larger than 64k.
+#
+#Looking in the other direction, Plan 9 comes with POP3 and IMAP4
+#servers.
+#
+#SENDING MAIL
+#
+#To send mail from Plan 9, you need to configure the outgoing mailer;
+#its main configuration file is /mail/lib/rewrite, which is supplied
+#as an empty file. The manual rewrite(6) is worth reading. You'll
+#want to start by copying either rewrite.gateway or rewrite.direct
+#from the same directory and editing it to suit. Setting the smtp=
+#attribute in your network database (file /lib/ndb/local) is all that
+#is necessary to use rewrite.gateway, which sends all mail containing
+#an @ sign to your local mail gateway. Mail to unqualified names
+#(names without @somewhere) will still be delivered to local
+#mailboxes. If you would like all mail to unqualified names to have a
+#default domain added, start with rewrite.direct and edit to suit.
+#
+#The last rule in the rewrite files calls /mail/lib/qmail, which both
+#queues the message and starts a daemon to try to deliver the
+#messages currently in the queue (see qer(8) for more details). On
+#systems not always connected to the internet, you may wish to use
+#/mail/lib/justqmail instead, which only queues the message, and does
+#not start a delivery daemon. When you are connected to the internet
+#or your mail gateway, you can run /mail/lib/kickqueue to have the
+#daemon try to send mail.
+#
+#If things aren't going right, look in /sys/log (mail smtp smtp.fail
+#runq) are of interest.
+#
+#/mail/lib/remotemail, which actually delivers mail via SMTP,
+#contains a default domain name used for unqualified outgoing mail;
+#you will want to change it from yourdomain.dom to something more
+#appropriate. If your SMTP-Server uses SMTP-AUTH to authenticate, add
+#the "-a" flag to the upas/smtp-command (see smtp(8)). Also, note
+#that you need to add your login information to factotum(4):
+#
+#! ; auth/factotum -g 'proto=pass service=smtp user=$your_username server=$the_addr_of_your_smtpserver !password?'
+#
+#Each local user has a mail directory /mail/box/$user; among other
+#things, it usually contains a mailbox and a headers file
+#/mail/box/$user/headers; the contents of the latter are included in
+#all outgoing messages from that user. To add a ``full name'' field
+#to your outgoing mail, add
+#
+#! From: "Glenda" <glenda@myserver.dom>
+#
+#If you wish to dynamically change your source domain (eg for
+#laptops) the upasname environment variable can be set before
+#executing the mail command; This ignores From: names set in
+#/mail/box/$user/headers. EG
+#
+#! upasname=janet@machine.dom mail fred@machine.edu
+#
+#SMTP TLS AUTH
+#
+#Like the situation described above, you need to get the servers
+#certificate fingerprint and add it to the list of authorised
+#fingerprints, for smtp this time.
+#
+#Try to send email to the server:
+#
+#! ;upas/smtp -d -a -h mymachine.dom net!smtp.myserver.dom account-on-server  dest-user@sest-system.dom
+#
+#this will probably fail with:
+#
+#! 220 2.0.0 Ready to start TLS
+#! Wed Dec  1 13:52:01 GMT 2004 connect to net!smtp.server.dom:
+#! 220 2.0.0 Ready to start TLS
+#! errors Permanent Failure
+#! QUIT
+#! exits Permanent Failure
+#
+#now check /sys/log/smtp for the fingerprint
+#
+#! ; tail -1 /sys/log/smtp
+#! felix Dec  1 14:17:56 remote cert. has bad thumbprint: x509 sha1=CE3C0D3BDA4B44A353C59EA665B7F8C109714341 server=smtp.server.dom
+#
+#and install this fingerprint for smtp
+#
+#! echo 'x509 sha1=CE3C0D3BDA4B44A353C59EA665B7F8C109714341' >> /sys/lib/tls/smtp
+#
+#PROBLEMS
+#
+#Some SMTP servers refuse to accept mail from clients that don't
+#supply fully qualified domain names when authenticating (HELO or
+#EHLO messages) - an anti-spam measure.
+#
+#This name is generated from either the site enviroment var, or if
+#that is not set, by appending the sending machines domain to its
+#system name. The domain is picked up from the dom= attribute from
+#/lib/ndb/local.
+#
+#SEE ALSO
+#
+#[Upas - A Simpler Approach to Network Mail by David L. Presotto |
+#http://doc.cat-v.org/bell_labs/upas_mail_system/] - The original
+#paper describing Upas.
+#
+#/n/sources/contrib/maht/rc/warlock_mail - "Mail Warlock", an
+#interactive script for configuring your outgoing email. See [sources
+#repository] for connecting to sources, or
+#[http://plan9.bell-labs.com/sources/contrib/maht/rc/warlock_mail].
+#

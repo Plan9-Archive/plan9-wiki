@@ -1,0 +1,26 @@
+v9fs-2.1
+
+The principal problems seen during v9fs-2.0 use is the difficulty in
+the setup of the server and performance problems associated with
+multiple extraneous copies in standard data flow. This is
+particularly the case when trying to optimize communication using
+intelligent networks or shared memory between virtualized partitions.
+
+ *	[v9fs-2.0 Design | http://v9fs.sf.net/v9fs-2.0.jpg]
+
+As you can see from the above illustration, each white arrow involves
+a copy. Also, if you want to access a remote synthetic file system
+you end up traversing the v9fs layer multiple times.
+
+In version 2.1 we will try to address these problems by eliminating
+unnecessary copies from the transport path and moving portions of the
+server into the v9fs kernel code.
+
+ *	[v9fs-2.1 Design | http://v9fs.sf.net/v9fs-2.1.jpg]
+
+In the 2.1 design we move the servers into the client allowing
+short-circuiting local access to synthetic file systems and resources
+including synthetic gateways to system devices. The main point is to
+help prevent multiple copies through user-space when exporting local
+devices (and synthetic gateways to those devices) through the server.
+

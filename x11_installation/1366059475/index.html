@@ -1,0 +1,408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>X11 installation (as of Mon Apr 15 16:57:55 EDT 2013)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>X11 installation</h1>
+<h2><i>-as of Mon Apr 15 16:57:55 EDT 2013-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+
+<a name="OFFICIAL_X11_PORT" /><h3>OFFICIAL X11 PORT</h3>
+
+<p class='para'>
+The
+X11
+iso
+image
+predates
+the
+fossil
+filesystem
+and
+unfortunately
+has
+some
+hard
+coded
+references
+to
+the
+kfs
+filesystem
+in
+its
+installation
+package;
+however
+once
+installed
+it
+is
+filesystem
+independant.
+The
+following
+will
+allow
+this
+package
+to
+be
+installed
+on
+a
+fossil
+filesystem.
+</p>
+
+<p class='para'>
+download
+the
+iso
+and
+uncompress
+it.
+<pre>
+	hget http://plan9.bell-labs.com/sources/extra/X11.iso.bz2 | bunzip2 &gt; /tmp/X11.iso
+</pre>
+
+</p>
+
+<p class='para'>
+start
+the
+iso9660
+filesystem
+server
+<pre>
+       9660srv 
+</pre>
+
+</p>
+
+<p class='para'>
+disable
+the
+9fs
+command
+by
+binding
+echo
+over
+it
+<pre>
+       bind /386/bin/echo /rc/bin/9fs
+</pre>
+
+</p>
+
+<p class='para'>
+mount
+a
+pseudo
+/n/kfs
+pointing
+to
+the
+root
+of
+your
+fossil
+filesystem
+<pre>
+       mount /srv/boot /n/kfs
+</pre>
+
+</p>
+
+<p class='para'>
+mount
+the
+iso
+<pre>
+	mount /srv/9660 /n/dist /tmp/X11.iso
+</pre>
+
+</p>
+
+<p class='para'>
+initialise
+the
+replica
+logs
+<pre>
+       /n/dist/X11.setup
+</pre>
+
+</p>
+
+<p class='para'>
+do
+the
+pull
+<pre>
+       replica/pull /n/dist/X11
+</pre>
+
+</p>
+
+<p class='para'>
+Next,
+you
+need
+to
+actually
+build
+X11.
+Close
+this
+rio
+window
+and
+open
+a
+new
+one.
+This
+will
+remove
+the
+bind
+on
+/rc/bin/9fs.
+</p>
+
+<p class='para'>
+There
+is
+a
+problem
+with
+one
+file
+that
+prevents
+X11
+from
+building
+with
+current
+systems.
+Type
+<pre>
+       9fs sources
+       cp /n/sources/contrib/pietro/shape.c /sys/src/X11/programs/Xserver/Xext/shape.c 
+</pre>
+to
+fix
+the
+bug.
+</p>
+
+<p class='para'>
+NOTE:
+If
+you
+get
+this
+error
+when
+buidling
+X11:
+<pre>
+       /sys/include/ape/u.h:4[stdin:7038] not a function
+       /sys/include/ape/u.h:4[stdin:7038] syntax error, last name: header
+</pre>
+it
+is
+due
+to
+the
+fact
+that
+the
+preprocessor
+constant
+_PLAN9_SOURCE
+is
+not
+defined.
+The
+easiest
+way
+is
+to:
+<pre>
+      cp /sys/include/ape/u.h /tmp/u.h
+</pre>
+modify
+/tmp/u.h
+as
+follows:
+<pre>
+ #ifndef __U_H
+ #define __U_H
+ #ifndef _PLAN9_SOURCE
++ #ifndef	BRAZIL
+    This header file is an extension to ANSI/POSIX
++ #endif
+ #endif
+</pre>
+and
+bind
+the
+modified
+version
+over
+the
+original:
+<pre>
+       bind /tmp/u.h /sys/include/ape/u.h
+</pre>
+and
+restart
+the
+build.
+</p>
+
+<p class='para'>
+Finally,
+to
+build
+and
+install,
+type
+<pre>
+       cd /sys/src/X11
+       ape/psh
+       makew
+       make install
+       make clean
+</pre>
+
+</p>
+
+<p class='para'>
+It
+is
+a
+good
+idea
+to
+turn
+on
+scrolling
+for
+both
+rio
+windows
+so
+you
+could
+do
+something
+else
+while
+building
+(makew
+is
+a
+lengthy
+process).
+</p>
+
+<a name="EQUIS" /><h3>EQUIS</h3>
+
+<p class='para'>
+Equis
+is
+an
+X11
+server
+for
+Plan
+9
+created
+by
+Federico
+G.
+Benavento
+(fgb).
+It
+may
+be
+installed
+using
+the
+contrib
+system:
+</p>
+
+<pre>
+	contrib/install fgb/X11
+</pre>
+
+<p class='para'>
+or
+by
+copying
+the
+necessary
+files
+directly
+from
+his
+<a href="http://plan9.bell-labs.com/sources/contrib/fgb/">contrib
+directory</a>:
+</p>
+
+<pre>
+	mkdir /386/bin/X11 /386/lib/ape/X11
+	9fs sources
+	dircp /n/sources/contrib/fgb/root/386/bin/X11 /386/bin/X11
+	dircp /n/sources/contrib/fgb/root/386/lib/ape/X11 /386/lib/ape/X11
+</pre>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Mon Apr 15 16:57:55 EDT 2013</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

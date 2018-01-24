@@ -1,0 +1,243 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Avoiding Screen Pollution From Kernel Messages (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Avoiding Screen Pollution From Kernel Messages</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+By
+default,
+the
+kernel
+will
+print
+messages
+to
+the
+console
+device
+(see
+<a href="http://plan9.bell-labs.com/magic/man2html/3/cons"><i>cons</i>(3)</a>).
+This
+can
+be
+problematic
+when
+also
+running
+rio
+on
+the
+console,
+as
+is
+common
+on
+terminals:
+the
+console
+output
+will
+overwrite
+the
+existing
+screen
+contents.
+<p class='para'>
+To
+work
+around
+this
+problem,
+open
+a
+new
+terminal
+window
+and
+do:
+</p>
+
+<pre>
+cat /dev/kprint
+</pre>
+
+<p class='para'>
+This
+works
+because,
+according
+to
+the
+kprint
+discussion
+in
+<a href="http://plan9.bell-labs.com/magic/man2html/3/cons"><i>cons</i>(3)</a>,
+"if
+(the)
+console
+is
+a
+graphics
+screen,
+the
+data
+is
+sent
+either
+to
+the
+display
+or
+to
+kprint,
+but
+not
+both."
+</p>
+
+<p class='para'>
+If
+you'd
+like
+a
+more
+permanent
+solution
+to
+the
+problem,
+make
+a
+directory
+'/sys/log/consoles'
+and
+put
+a
+line
+like
+</p>
+
+<pre>
+cat /dev/kprint &gt;&gt;/sys/log/consoles/$sysname &gt;[2=1] &amp;
+</pre>
+
+<p class='para'>
+somewhere
+in
+termrc
+or
+the
+included
+files
+(see
+<a href="http://plan9.bell-labs.com/magic/man2html/8/cpurc"><i>cpurc</i>(8)</a>),
+or
+in
+your
+rio
+startup.
+On
+cpu
+servers,
+it
+may
+be
+useful
+to
+open
+a
+new
+window
+with
+something
+like:
+</p>
+
+<pre>
+{cat /dev/kmesg ; cat /dev/kprint} | tee /sys/log/consoles/$sysname
+</pre>
+
+<p class='para'>
+This
+will
+save
+a
+copy
+of
+the
+console
+output
+while
+also
+displaying
+it
+in
+a
+more
+controlled
+fashion.
+</p>
+
+<p class='para'>
+It
+is
+probably
+not
+a
+good
+idea
+to
+redirect
+these
+to
+/dev/null;
+they
+may
+be
+important.
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Fri Feb  4 22:09:35 EST 2011</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

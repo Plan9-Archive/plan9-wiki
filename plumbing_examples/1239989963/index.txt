@@ -1,0 +1,37 @@
+Plumbing examples
+
+In addition to its more conventional functions, the plumber can also
+provide easy shortcuts for common functions.
+
+The next few examples assume a program called 'web', which takes a
+URL to open as an argument. Given that, the following plumbing rule
+will turn the string 'MR:1234' into a Bugzilla search for bug 1234:
+! 	# MRs open Bugzilla via web.
+! 	type is text
+! 	data matches 'MR:([0-9]+)'
+! 	plumb to web
+! 	plumb start web http://bugzilla.mozilla.org/show_bug.cgi?id=$1
+(obviously, you should substitute "bugzilla.mozilla.org" with the
+Bugzilla install you're interested in). If you have multiple issue
+tracking systems to deal with, just give each a unique tag:
+! 	# RT tickets open RT via web.
+! 	type is text
+! 	data matches 'RT:([0-9]+)'
+! 	plumb to web
+! 	plumb start web http://rt.example.com/Ticket/Display.html?id=$1
+Now plumbing 'RT:23' will bring up issue #23 in that RT3
+installation. This extends to any sort of query, of course. Make
+'RFC:2325' bring up over-engineered coffee-making instructions:
+! 	# RFC's from one of the nicer-looking repositories.
+! 	type is text
+! 	data matches 'RFC:([0-9]+)'
+! 	plumb to web
+! 	plumb start web http://rfc.sunsite.dk/rfc/rfc$1.html
+
+From our friends over at Acme-SAC, the following will search for
+books by ISBN.
+! 	type is text
+! 	data matches 'ISBN:([0-9]+)[ \-]?([0-9]+)[ \-]?([0-9]+)[ \-]?([0-9X]+)([ \-]?([0-9]+))?'
+! 	plumb to web
+! 	plumb start web http://lookupbyisbn.com//search.aspx?page=1&key=$1$2$3$4$6
+

@@ -1,0 +1,85 @@
+GSoC Mentor Expectations
+D1360960482
+Aa
+#GSoC is primarialy a mentorship program, and we take the
+#responsibilities implied by that seriously. Towards that end, here
+#are some of the expectations we have of our mentors. If you would
+#like to work with us in GSoC as a mentor, you should be comfortable
+#with these. We've had very good experiences here for the past two
+#years, and this is mostly in the interest of making things a bit
+#more formal (in the sense of "official", not "stuffy").
+#
+# *	Qualifications: Generally speaking, mentors are expected to be
+#	known members of the community who've demonstrated an ability to
+#	work colaboratively with others, as well as a good command of the
+#	ideas and technology involved. Note that mentors sign up for a
+#	general "pool" at first, but will only be assigned to specific
+#	projects they're interested in (you are not expected to be a master
+#	of everything in computer science!).
+#
+# *	Mentors are expected to be in regular contact with their
+#	students. In this context "regular" should probably mean every
+#	other workday or so, but this contact needn't be particularly
+#	involved. The objective here is simply to ensure the student's
+#	actively engaged on an ongoing basis, and a set of diffs or such
+#	would be plenty. The mentor should feel free to determine the form
+#	of this communication, as long as it's sufficient to ensure the
+#	student's actively engaged.
+#
+# *	Mentors may roll that communication up into regular, public
+#	updates by their students. If students are posting code to a public
+#	repository (with notifications) as often as they'd otherwise be
+#	mailing diffs to their mentor, that's probably sufficient.
+#
+# *	Mentors should acknowledge such communication, each time, even if
+#	it's just along the lines of "got it, thanks". It may well not be
+#	appropriate to do a detailed review of each day's work (actually,
+#	most likely that won't be appropriate in most cases), but mentors
+#	should be giving at least that level of positive reinforcement to
+#	their students.
+#
+# *	While those actual reviews needn't happen daily, they must
+#	happen, probably weekly or better. It's important that the mentors
+#	ensure their students aren't headed off into the weeds, even if the
+#	student doesn't _think_ they have any questions.
+#
+# *	Mentors should, of course, be prepared to respond quickly to
+#	actual questions from their students. In some sense this is the
+#	main job of the mentor, and I don't believe we've had any problems
+#	here in our past three years participating, but it's worth stating
+#	explicitly.
+#
+# *	Mentors should inform the project admins (Anthony and Devon) of
+#	any problems communicating with the student, or indication that
+#	they're not actively engaged, as soon as they come up. We should
+#	never get to a point where an admin hears "I haven't seen any work
+#	from my student in two weeks...". In many cases, just getting other
+#	people involved can help the student correct any lapses before
+#	things become a crisis.
+#
+# *	We will be requiring regular status reports from the students to
+#	the mailing list again this year, sent on a weekly basis. Mentors
+#	should make sure these happen on time, and contact students who
+#	miss any scheduled reports right away.
+#
+# *	Mentors will complete their midterm and final evaluation forms on
+#	time, and will remind their students to do the same. Any problems
+#	getting their own forms completed, or reported or observed problems
+#	from their students, should be reported to the organization admins
+#	as soon as possible.
+#
+#Students will also be assigned a backup mentor for each project. The
+#qualifications are about the same, but the expectations are a
+#different.
+#
+# *	Backup mentors are not expected to have the same level of day to
+#	day interaction with their students (although they're certainly
+#	welcome to do so). They are expected to follow along well enough
+#	that they can pick up the role in a relatively short amount of
+#	time, with minimal disruption to the student, in the even that the
+#	primary mentor gets hit by the proverbial mentor-hunting bus.
+#
+# *	If the backup mentor notices a lapse in communication, they
+#	should get in touch with both the primary mentor and the org admins
+#	to discuss the problem immediately.
+#

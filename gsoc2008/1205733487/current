@@ -1,0 +1,127 @@
+GSoC2008
+D1205733487
+Amtg
+#
+#GUIDELINES
+#
+#See [GSoC 2008 Student Guidelines] and also the [GSoC 2008
+#Application Template]. In addition, if you are interested in GSoC,
+#you should probably be subscribed to the [plan9-gsoc mailing list at
+#Google Groups | http://groups.google.com/group/plan9-gsoc].
+#
+#IDEAS
+#
+# *	IdeaName (author/mentor) - one line summary, put long description
+#	in a wiki link
+# *	[v9fs-userspace] - userspace mount helper and server (based on
+#	spfs)
+# *	[olpc-inferno] - work on the OLPC hosted inferno environment and
+#	apps
+# *	[p9-scm] - Plan 9 native source control system with a venti
+#	backend
+# *	[vbackup-plus] - wrappers for p9p vbackup to make it more user
+#	friendly
+# *	[gsocfs] - synthetic file system to help manage future google
+#	summer of code
+# *	[inferno-ds] (npe, salva) - various drivers and other
+#	implementation details for the Nintendo ds Inferno port. The
+#	project homepage is [here | http://code.google.com/p/inferno-ds/]
+# *	[svg support] - provide libraries under Inferno or Plan 9 to
+#	support SVG.
+# *	[iPhone drawterm] - use iPhone SDK to create a drawterm-like
+#	application.
+# *	[Inferno hosted video] - hosted device driver for Inferno
+# *	[more Inferno projects |
+#	http://code.google.com/p/inferno-os/wiki/Project_Suggestions] -
+#	Inferno project suggestions on Google Code, including summer
+#	projects (some of them would be simplified, based on experience of
+#	GSoC2007)
+# *	[Native Omero] (nemo) - Viewer for o/mero system on a mainstream
+#	OS using that OS's "native" widgets.
+# *	[Omero on Plan 9] (nemo) - Port the o/mero window system to Plan
+#	9.
+# *	[Firefox Plugin] (nemo) - Port the MSIE plug-in to Firefox.
+# *	[XYZ Shell] (caerwyn) - Implement an xy shell for namespace
+#	command, as per [IPN lab 78 |
+#	http://www.caerwyn.com/ipn/2007/07/lab-78-dynamic-dispatch.html]
+# *	[lguest on Plan 9] (rminnich) - Make lguest run on Plan 9,
+#	allowing Plan 9 to host another OS, like Linux.
+# *	[Plan 9 on lguest 2.6.24] (rminnich) - Update the Plan 9 lguest
+#	support to 2.6.24.
+# *	[JIT for fixed precision arithmetic] (caerwyn) - Write the JIT
+#	for ARM and x86 architectures to support the newish fixed precision
+#	in Limbo.
+# *	[Extend Jwin] (caerwyn) - Extend Jwin from [IPN lab 79 |
+#	http://www.caerwyn.com/ipn/2007/07/lab-79-acme-javascript.html] to
+#	support more of the real world's interfaces.
+# *	[Eclipse Plugin] (caerwyn) - Implement the Eclipse filesystem
+#	provider interface via styx.
+# *	[IP path MTU discovery] (quanstro) - Allow Plan 9's IP stack to
+#	discover MTU of its path to target.
+# *	[Boot from USB root] (quanstro) - Add needed elements for Plan 9
+#	to bood from USB.
+# *	Port Inferno/EMU (maht) to Symbian Series 60
+# *	Port Inferno/EMU (maht) to Python - useful for use on Python
+#	enabled mobile phones such as Symbian Series 60 or those with
+#	[Python interpreters built in |
+#	http://www.sparkfun.com/commerce/product_info.php?products_id=7917]
+# *	[usb-debug-port] (Eckhardt) - Grimy driver hacking to support USB
+#	"debug port"
+# *	[usb-vga] (Eckhardt) - User-space device driver for a USB VGA
+#	adaptor
+# *	[usb-wifi] (Eckhardt) - User-space device driver for a USB WiFi
+#	adaptor
+# *	9p implementations in other languages (see below):
+# *	Finish server-side [PHP implementation |
+#	http://www.kix.in/projects/web9/] from last year
+# *	bring outdated implementations (Python, most importantly) back to
+#	current status and make them appear in the standard distributions
+#	for those languages
+# *	Perl-9p (andrey) name says it all
+# *	Other programming languages for Plan 9 (see below):
+# *	Ocaml (andrey) -- Ocaml has a compiler all its own and the
+#	bytecode interpreter is ported to Plan 9. No idea how much work
+#	this will require, but it will definitely be less than the work
+#	required to get gcc in plan 9. Ocaml is a good language
+# *	Scripting languages in Plan 9 (andrey): Updated and working
+#	versions of python and perl for Plan 9. Emphasys should be put on
+#	having a working GUI modules for Plan 9
+# *	Distributed Computing (see below; the things here may be a bigger
+#	byte)
+# *	Unified library for writing synthetic file servers in distributed
+#	computing infrastructures: a standard set of files and commands
+#	operating on them so that we have common language between different
+#	parts of a computing environment
+# *	v9fs Auth: Finish authentication for v9fs; both plan9-style (auth
+#	server) and xcpy-style (challenge/response)
+# *	[m-o-a-f] (skip) mother-of-all-fs or filterfs. experiment with
+#	devising and adding a language to exportfs and measure its
+#	usability for writing filters and simple file servers.
+# *	vbackup/vnfs for Windows to archive NTFS filesystems using the
+#	volume shadowing service API
+#
+#MENTOR VOLUNTEERS
+#
+# *	Name (inferno/plan9/both) - who you are and what you are
+#	interested in
+# *	Anthony Sorace (inferno) - mostly Limbo applicaiton programming.
+# *	Maht Lawless (both) - whatever I can do, C isn't my strong point
+# *	Salva Peiró (inferno) - anything related with the [inferno-ds |
+#	http://code.google.com/p/inferno-ds/] Port
+# *	Skip Tavakkolian (plan 9) - languages, filesystems, 9p, or web
+#	related.
+#
+#INTERESTED STUDENTS
+#
+# *	Name (inferno/plan9/both) - who you are and what you are
+#	interested in
+# *	Anant - 'plotfs' for Plan 9, native replacement for
+#	gnuplot/octave/matplotlib
+# *	stefanha (plan9) - Stefan Hajnoczi discussing with Ron Minnich,
+#	lguest host for Plan 9: run Linux and Plan 9 guests inside a Plan 9
+#	host system
+# *	Oleg Finkelshteyn (plan9) - p9-scm, or a more general versioning
+#	file system for Plan 9.
+# *	Juan M. Mendez-vejeta (plan9) - Interested in plan9 under lguest,
+#	also in helping packaging v9fs mount helpers as .deb
+#

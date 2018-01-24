@@ -1,0 +1,339 @@
+<html>
+<head>
+<title>GSoC-2013-ideas (Editing Fri Mar 29 15:33:46 EDT 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>GSoC-2013-ideas</b></font> (Editing Fri Mar 29 15:33:46 EDT 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="GSoC-2013-ideas">
+<input type="hidden" name="version" value="1364585626">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+Plan 9 and related technologies cover a huge range of topics. Below
+we've put together a list of some ideas which we think would be good
+candidates for stundents looking for summer-sized projects with us.
+Each idea includes at least a brief description and a list of
+"sponsors" for the idea (people who've suggested it or volunteered to
+work with folks on it). Ideas are rated for estimated difficulty from
+1 to 5 stars (1=easy, 5=hard) and may contain links to further
+information or discussion.
+
+Note! We actively encourage students to submit applications for
+projects not on this list, too. We've accepted such projects three
+out of four years we've participated. Plan 9 (and its cousins) embody
+a different way of approaching problems, and we get most excited when
+we see a student (or anyone, for that matter) apply those ideas to
+their own set of problems.
+
+In addition to this ideas page, prospective students should look over
+our [GSoC Student Expectations] and be prepared to submit an
+application matching our [GSoC Student Application]. For more
+information, note our general [GSoC] page.
+
+If you're looking for additional ideas, you might check out the todo,
+bugs, and ideas lists for [Inferno |
+http://code.google.com/p/inferno-os/wiki/Project_Suggestions], [9atom
+| http://www.quanstro.net/plan9/9atom/todo.html], and [Acme-SAC |
+http://code.google.com/p/acme-sac/issues/list]. These lists are more
+general and will not all be a good size for a summer, but are good
+sources of inspiration. Some of the most promising fits are
+duplicated below.
+
+If you're a community member and you have an idea you'd be willing to
+act as mentor for, please add it to this page! Just follow the format
+given and provide a good summary of the project. If you'd like,
+create and link a wiki page with as much detail as you'd like (but
+please don't swamp this page). Please only add ideas you're willing
+to mentor (or have directly spoken to whoever you're marking down as
+mentor).
+
+Several of these ideas have the title linked to a page containing
+more information on the project.
+
+ *	[Graphics / UI / draw(3)-related ideas | #GRAPHICS_IDEAS]
+ *	[Kernel / port / low-level ideas | #KERNEL_IDEAS]
+ *	[Web-related ideas | #WEB_IDEAS]
+ *	[Compiler / dev tools / library ideas | #DEV_TOOLS_IDEAS]
+ *	[Application ideas | #APPLICATION_IDEAS]
+ *	[Networking ideas | #NETWORKING_IDEAS]
+ *	[Other ideas | #OTHER_IDEAS]
+
+------------------------------------------------------ 
+GRAPHICS IDEAS
+
+Ideas related to Plan 9's graphics systems, including kernel devices,
+window systems, and supporting libraries.
+
+ *	HTML5 based draw server ✪✪✪✪ (Skip Tavakkolian)
+
+Implement the draw device capabilities -- draw(3) -- in HTML5
+(Javascript), using Canvas graphics primitives and export the draw
+hierarchy via 9P using the Websocket API. The client side can be
+implemented relatively easily on Plan 9 using Go language and the
+http and net/websocket packages and import(4). This has a potential
+of becoming a universal GUI capability for Go language as well. This
+is similar in approach to noVNC, but should be easier to implement.
+The implementation can be simplified using either Dart (dart2js) or
+Java (GWT), rather than using Javascript.
+
+ *	Create an [alternative window system] ✪✪ (Anthony Sorace)
+
+The Plan 9 windowing system is quite different from X11. Rendering is
+handled by the kernel graphics driver itself, with a user-mode
+application responsible for window management issues like placement,
+sizing, labels, and visability. Today, the only such program is
+rio(1). It would be fun to have a few alternatives. Design and
+implement an alternative interface. Some popular ideas include tiling
+interfaces (similar to acme(1) or X11's wmii or dwm), exploring
+keyboard-driven control, or touch-based interaction.
+
+A student looking to work on a project in this area should be
+familiar with Plan 9's existing windowing system, including rio(1)
+and draw(3), at a minimum. It would be good to also review some of
+the rio hacks found in the [contrib index].
+
+------------------------------------------------------ 
+KERNEL IDEAS
+
+Project ideas related to the kernel, the various ports, or driver
+support. Note that we're always interested in ports to new hardware,
+provided you can ensure that you and your mentors have the same
+device. Pick anything and get Plan 9 working on it!
+
+ *	lockdep for Plan 9 ✪✪✪✪✪ (Erik Quanstrom)
+
+Linux includes a utility called lockdep which has been very helpful
+for them in identifying and eliminating hard lockups caused by
+improperly managed locks. A similar tool could be useful for Plan 9.
+This is an ambitious project, likely best suited to a graduate-level
+student already familiar with the Plan 9 kernel internals.
+
+ *	ARM vfp kernel emulator ✪✪✪ (Erik Quanstrom)
+
+The Plan 9 kernel for ARM runs on systems with both 7500-style and
+the newer vfp floating point instructions. The kernel includes an
+emulator for the 7500-style instructions, as well. Unfortunately,
+this means that in mixed environments you can only safely assume
+7500-style floating point. It would be nice to replace that emulator
+with one which handles vfp, so we can safely generate those
+instructions by default.
+
+ *	[Raspberry Pi] work ✪✪✪ (Bakul Shah)
+
+We have a port of Plan 9 to the Raspberry Pi which has proven very
+popular. The port is stable and performs well, but there is more work
+to be done. We could certainly use drivers for I²C, I²S, audio, gpio,
+pwm, and spi. If you have compatible hardware, it might be neat to
+take a look at the DSI or CSI-2 connectors (although note that
+hardware for those is not common, and for hardware projects you must
+ensure you and your mentor have the same kit). Oh, and those LEDs!
+Put together a proposal for a set of drivers you'd be interested in
+working on and a sample application.
+
+------------------------------------------------------ 
+WEB IDEAS
+
+Project ideas related to the web, either in Plan 9 tools providing
+web services or in ways to interact with Plan 9 systems.
+
+ *	[OAuth] for factotum(4) ✪✪✪ (Anthony Sorace, Skip Tavakkolian)
+
+OAuth is a very common method for users to provide authorization to
+web services. To facilitate writing Plan 9 and Inferno clients for
+many of these services, it would be nice to teach factotum(4) how to
+speak OAuth. There are some design considerations that need to be
+thought through; the models don't map directly. Add OAuth to either
+the Plan 9 or Inferno factotums and write an example client.
+
+While it isn't OAuth, [flickrfs |
+https://bitbucket.org/bedo/flickrfs] has support for Flickr's
+pre-OAuth authentication method, which has some similarities.
+Interested students might look to it for reference or inspiration.
+
+ *	[Replace language for wikifs](4) ✪ (Anthony Sorace)
+
+The wikifs(4) in both Plan 9 and Inferno understand a very small set
+of cues when generating HTML. That set can be limiting. Replace it
+with something better, like Markdown. Markdown engines in C already
+exist, so the Plan 9 part of this shouldn't be too hard. I'd suggest
+doing the Inferno version as well, to make it a good summer sized
+project. Use any remaining time to convert any existing wiki docs
+that need it.
+
+ *	Make wikifs(4) authenticate against an auth server ✪✪ (Anthony
+	Sorace)
+
+Our wikifs(4) doesn't currently do any authentication. Our web server
+and supporting libraries have support for http authentication, but
+using data stored in the file system directly. It would be nice if
+web applications could authenticate against a real Plan 9
+authentication server. A student submitting a proposal for this
+should also investigate what's involved in getting wikifs working
+over https (it shouldn't be much) to ensure passwords are submitted
+securely.
+
+ *	Make man2html produce better html ✪✪ (Erik Quanstrom)
+
+The html generated by man2html (and related tools, like ms2html(1))
+is serviceable but basic and outdated. Take a look at the output and
+suggest a set of enhancements. Ideas include optional use of style
+sheets and handling of preprocessors like pic(1) and tbl(1). The
+difficulty of this project will depend on the scope of your specific
+proposal.
+
+------------------------------------------------------ 
+DEV TOOLS IDEAS
+
+Project ideas related to compilers, development tools, or supporting
+libraries.
+
+ *	FXR/LXR-like tree comparisons for Plan 9 ✪✪✪ (Anthony Sorace, Jeff
+	Sickel)
+
+[The LXR project | http://lxr.sourceforge.net] has created some very
+useful tools for cross-referencing different source trees. This idea
+has been productively expanded by [FXR | http://fxr.watson.org/] to
+compare across operationg systems (FXR includes various BSDs,
+Linuxes, and an old Plan 9 tree). As Plan 9 evolves, it would be very
+useful to tree maintainers to have an easy way to find, track, and
+explore differences between trees. This project would be to provide
+tools to scan different source trees (the Bell Labs tree, 9atom, NIX,
+NxM, 9front, possibly Inferno and Plan 9 from User Space) and allow
+users to see specific changes, perhaps including changes over time.
+Your proposal should describe the interface you're thinking about
+providing (file server? web application?), what you think some of the
+important issues are, and clearly define the scope of work (for
+example, will you be doing multi-way diffs, or just 1-to-1
+comparisons?). Multiple Plan 9 sites would be happy to host the
+results of this work.
+
+------------------------------------------------------ 
+APPLICATION IDEAS
+
+Ideas for applications; user-mode code in an existing environment.
+
+ *	Port rtl-sdr to Plan 9 ✪✪✪ (Skip Tavakkolian)
+
+[rtl-sdr | http://sdr.osmocom.org/trac/wiki/rtl-sdr] is a C library
+that enables using the Realtek RTL2832U based DVB-T receivers as
+Software Defined Radio receivers (SDR). These inexpensive USB dongles
+($20-$30) have been used as receivers for a variety of signaling
+systems and frequencies including ADS-B, GPS and GSM. Typically
+additional signal processing is performed by GnuRadio on data
+captured by rtl-sdr library. The main porting activity will involve
+replacing the calls to [LibUSB | http://www.libusb.org/] with an
+interface to Plan 9's usb server.
+
+------------------------------------------------------ 
+NETWORKING IDEAS
+
+ *	Teach pcipl to pass dhcp leases to the kernel ✪✪ (Erik Quanstrom)
+
+When booting off the network, the bootloader often does dhcp to
+discover various network information. The lease given is discarded
+once the kernel is running, and the kernel (typically) runs DHCP over
+again itself, just to get the same information back. Teach pcipl (one
+of the new generation of Plan 9 bootladers) to pass the lease to the
+kernel (and teach the kernel how to accept it, of course). This can
+make a difference on moderately-sized networks where the spanning
+tree might take some time to run.
+
+ *	Teach Plan 9 to speak mDNS/Bonjour ✪✪✪ (Jeff Sickel)
+
+It would be nice for Plan 9 to be able to speak Bonjour. When in
+heterogeneous networks, there are various services that Plan 9 cannot
+serve without being able to do so. Get the protocol working and
+integrate it with Plan 9's existing ndb/cs infrastructure.
+
+ *	Add keyboard-interactive authentication to ssh2 ✪ (Steve Simon)
+
+Plan 9's new ssh2 implementation does not currently implement the
+keyboard-interactive authentication method. There are lots of systems
+where this would be very useful. Add it. This is almost certainly not
+a summer-sized project on its own, but could be a good addition to
+other projects, especially if you're already working on ssh,
+factotum, or authentication.
+
+ *	Write a 9P implementation in Dart ✪✪✪ (Charles Forsyth)
+
+Plan 9 and Inferno represent services and resources as directories of
+file-like names, that can be opened, read and written to use the
+service. A single file service protocol, 9P, is used to implement and
+access those services. Write the client-side implementation of 9P in
+[Dart | http://www.dartlang.org/], to allow applications in web
+browsers to access network resources and services that are
+represented using 9P. The package should allow concurrent use of the
+connection, multiplexing access to files within several remote name
+spaces (mount points). 9P is also implemented by Linux (as *v9fs*),
+which further extends the reach of this package.
+
+------------------------------------------------------ 
+OTHER IDEAS
+
+Project ideas that don't fit into - or span multiple of - the above
+catagories.
+
+ *	Write a basic Dis interpreter for web browsers in Dart ✪✪✪
+	(Charles Forsyth)
+
+This involves both development tools and web ideas. Limbo programs
+are currently compiled into a simple portable, concurrent,
+memory-memory machine language called [Dis |
+http://www.vitanuova.com/inferno/papers/dis.html]. It is then either
+interpreted or compiled-on-the-fly into target machine code. I'd
+quite like to write simple Limbo programs that will run in any web
+browser. [Dart | http://www.dartlang.org] is a language from Google,
+similar to C# or Java, which runs in web browsers, one way or another.
+
+Starting with the existing Dis interpreter as a model, roughly 4,300
+lines of C, write a Dis interpreter in Dart that will load and run a
+non-trivial subset of Dis. It should include Dis processes, which
+will be multiplexed within the interpreter, much as in the current
+interpreter. It should include the current Sys module, or a large
+subset, but is unlikely to include Draw.
+
+The advantage of Dart over (say) raw JavaScript is that most people
+familiar with Java and especially C# ("Java with the bugs fixed")
+should be able to pick up Dart quickly, and Dart already has an
+extensive library of interfaces into the underlying web browser and
+network, which might be useful. Another notation that compiles into
+JavaScript could be used instead.
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

@@ -1,0 +1,20 @@
+v9fs-roadmap
+
+Planned Versions:
+
+ *	v9fs-2.0: update Linux [9P | http://9p.cat-v.org] client to 2.6
+	and integrate into Linux kernel
+ *	[v9fs-2.1]: integrate server into kernel and add file system hooks
+
+TODO Items:
+
+ *	Linux authentication server
+ *	User/Group ID Mapping Daemon
+ *	Kerberos Authentication Support
+ *	Cache Layer
+ *	User-Space File System Library & Examples
+ *	Alternate Transports
+ *	* Shared Memory
+ *	* Xen Device Channel
+ *	* Infiniband
+

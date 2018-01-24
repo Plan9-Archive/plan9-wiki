@@ -1,0 +1,42 @@
+Setting up a sources mirror
+D1195333911
+Afhs
+#To setup a mirror of the [sources repository].
+#
+#WHAT YOU NEED
+#
+# *	http://swtch.com/lsr.c
+#
+#PREPARATION
+#
+#! # lsr
+#! # This is for the cputype "386". Fill in your appropriate value.
+#! ramfs;
+#! hget http://swtch.com/lsr.c > /tmp/lsr.c;
+#! cd /tmp;
+#! 8c lsr.c;
+#! 8l -o lsr lsr.8;
+#! cp lsr /386/bin/lsr;
+#! chmod 775 /386/bin/lsr;
+#! rm lsr.8;
+#! 
+#! # lsrupd
+#! hget http://www.r-36.net/lsrupd > /rc/bin/lsrupd;
+#! chmod 775 /rc/bin/lsrupd;
+#
+#MIRRORING SOURCES
+#
+#! # The example mirrors sources to /dist/sources.
+#! 9fs sources;
+#! lsrupd /dist/sources /n/sources;
+#
+#THE CRONJOB
+#
+#! # This example assumes "bootes" being able to access /dist/sources.
+#! # The cronjob will be done every night at 0:00 on the computer.
+#! # In the factotum of "cron" needs to be a key for accessing sources.
+#! echo '0 0 * * * local {9fs sources; lsrupd /dist/sources /n/sources; \
+#! unmount /n/sources}' >> /cron/bootes/cron;
+#
+#Have fun.
+#

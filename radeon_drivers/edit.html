@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Radeon Drivers (Editing Wed Jan 20 11:01:10 EST 2010 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Radeon Drivers</b></font> (Editing Wed Jan 20 11:01:10 EST 2010 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Radeon Drivers">
+<input type="hidden" name="version" value="1264003270">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+Much of the following is historical; the Radeon drivers are now
+(1/2010) part of the distribution.
+------------------------------------------------------ 
+
+Unofficial drivers for ATI Radeon (789)xxx on CRT display works
+courtesy of Philippe Anel's. There are reports that it works on TFT
+displays on some IBM T30 thinkpads.
+
+The homepage for the drivers is
+[http://web.archive.org/web/20041030113126/http://mapage.noos.fr/philippe.anel/plan9rxxx.html]
+
+For using the Radeon in Plan 9, you need to compile the Radeon driver
+of Philippe Anel into the kernel. For my Radeon, I used:
+
+[http://web.archive.org/web/20041030113126/http://mapage.noos.fr/philippe.anel/radeon_howto.txt]
+
+with the driver posted on 22 March 2004:
+
+[http://web.archive.org/web/20041030113126/http://mapage.noos.fr/philippe.anel/radeon.tbz]
+
+and the vgadb extension from:
+
+[http://web.archive.org/web/20041030113126/http://mapage.noos.fr/philippe.anel/radeon_vgadb]
+
+NOTE: The original host for the drivers is down, the links now point
+to the archive.org mirror, I also mirrored them in
+/n/sources/contrib/uriel/mirror/philippe.anel/radeon/
+
+An updated (July 2009) version of the driver that builds against
+recent Plan 9 kernels is available at
+[http://endeavour.zapto.org/src/radeon].
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

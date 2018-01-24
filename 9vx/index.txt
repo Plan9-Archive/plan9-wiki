@@ -1,0 +1,35 @@
+9VX
+
+9vx is essentially a port of the Plan 9 kernel to the [vx32 |
+http://pdos.csail.mit.edu/~baford/vm/] user-mode virtualization
+environment. A special kernel device (#Z) provides access to the
+local file system, similar to Inferno's #U.
+
+9vx was originally written by [rsc | Russ Cox]. A version of it is
+included in the vx32 distribution. Users can run that version against
+a full Plan 9 tree to get a very good emulation of Plan 9.
+
+Note that since the entire system runs as the invoking user, some
+things aren't quite right. For example, all file access is done as
+the invoking user, not the Plan 9 user. Networking is also provided
+by a stripped-down IP stack that passes through to the host OS's IP
+stack, but only tcp and udp.
+
+There are extensions to 9vx to provide it a raw ethernet device
+(which it may then run a real Plan 9 IP stack above) and allow direct
+access to raw disk devices, which allow it to use a real fossil (and
+optionally venti) partition, instead of #Z. Search 9fans; Brian
+Stuart did the later; dho and/or quanstro did the networking. When
+you find good links, come back and put them here!
+
+For more information, see [Russ's original 9vx page |
+http://swtch.com/9vx/].
+
+PATCHES
+
+Several users have modified and extended 9vx to their needs. See the
+patches for their details.
+
+ *	[yiyus's 9vx | https://bitbucket.org/yiyus/vx32]
+ *	[rminnich's 9vx | https://bitbucket.org/rminnich/vx32]
+

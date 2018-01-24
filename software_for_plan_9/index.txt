@@ -1,0 +1,47 @@
+Software for Plan 9
+
+There are many software packages for Plan 9, both native and ported
+from other systems. The main repository for Plan 9 software is
+"sources". For instructions on how to get access to sources please
+read the [Staying up to date] page, if you have all setup properly
+you can just run:
+! 	9fs sources; cd /n/sources/
+
+There is a web interface to sources:
+[http://plan9.bell-labs.com/sources/]
+
+Packages in sources:
+
+ *	/n/sources/contrib - Software by external contributors - See
+	[Contrib index] for details
+ *	/n/sources/extra - Various random bits, including retired bits
+ *	/n/sources/xen - The Plan 9 port to Xen
+
+Packages hosted elsewhere (in process of moving to sources):
+
+ *	[Charles Forsyth's collection | http://www.terzarima.net/plan9/].
+ *	[Doug McIlroy's released source |
+	http://www.cs.dartmouth.edu/~doug/source.html] - Includes data files
+	for map(7)
+ *	[http://rs-rlab.narod.ru/plan9.html]
+ *	[Kenji Arisawa's software page for Plan 9 |
+	http://plan9.aichi-u.ac.jp/netlib/]
+ *	[cat-v code repo | http://repo.cat-v.org]
+ *	[werc: web framework/CMS | http://werc.cat-v.org]
+
+Defunct Pages (can be found on Archive.org):
+
+ *	[Nemo's collection | http://plan9.escet.urjc.es].
+ *	[Caerwyn's collection | http://www.caerwyn.com/download.html]
+
+Please, if you write any software, get your own directory in sources
+and host it there; to get your own dir in sources please email [Geoff
+Collyer | mailto:geoff@plan9.bell-labs.com].
+
+Also remember to add/update an entry in the [TODO] section if you are
+working on a Plan 9 (or derivative) project.
+
+SEE ALSO
+
+[Web browsers], [Drawterm], [Contrib Index] [Games]
+

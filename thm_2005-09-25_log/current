@@ -1,0 +1,572 @@
+thm 2005-09-25 Log
+D1127612273
+Auriel (82.182.149.46)
+#(sorry, the page name has the wrong date, it was late in the night
+#:))
+#
+#! 19:57 [Users #plan9dev]
+#! 19:57 [ __20h__] [ booyaa] [ garbeam] [ lantis] 
+#! 19:57 [ axelB  ] [ Fish  ] [ gdiaz  ] [ uriel ] 
+#! 19:59 -!- axelB [~belinfan@demeter.ewi.utwente.nl] has quit [Quit: ]
+#! 19:59 -!- Nemo [~root@142.Red-83-42-180.dynamicIP.rima-tde.net] has joined #plan9dev
+#! 19:59 -!- gdiaz [~gdiaz@73.Red-83-58-115.dynamicIP.rima-tde.net] has quit [Ping timeout: 480 seconds]
+#! 19:59 <Nemo> Hi there
+#! 20:00 <lantis> welcome back
+#! 20:00 <uriel> hi again
+#! 20:00 <Nemo> anyone wants to add anything to the topic-list?
+#! 20:00 <uriel> this looks rather dead, maybe saturday was a bad choice of day... during the week people comlained they had to work, during the weekend it seems they prefer to party :(
+#! 20:01 <uriel> hmm.. charles is comming over?
+#! 20:01 <Nemo> Don't know. I think he could
+#! 20:01 -!- gdiaz [~gdiaz@73.Red-83-58-115.dynamicIP.rima-tde.net] has joined #plan9dev
+#! 20:01 <Nemo> At least he said he couldn't the last week
+#! 20:02 <uriel> hey gdiaz 
+#! 20:02 <gdiaz> hi
+#! 20:02 <uriel> maybe lets give an extra five min to see if anyone more shows up...
+#! 20:03 <Nemo> Ok. 
+#! 20:04 <Nemo> Next time I think it would be better during the week :-)
+#! 20:04  * uriel isn't sure really, during the week people complained they had meetings and other things to do...
+#! 20:05 <gdiaz> why we are here and not in #plan9 at freenode as usual? (sorry if i missed something)
+#! 20:05 <uriel> gdiaz: we only had it once in #plan9
+#! 20:05 <uriel> but that channel has too much noise
+#! 20:05 <Nemo> Perhaps some of them are ate #plan9?
+#! 20:05 <lantis> gdiaz: it is about some things freenode, only registered users can privmsg people, and some other things
+#! 20:05 <uriel> like newbies commint to ask questions and such
+#! 20:06 <uriel> yes, and the change of network is because what lantis said; if they are in #plan9 they are probably away, because it's in the topic the anouncement for the meeting
+#! 20:06 <gdiaz> ok
+#! 20:06 <gdiaz> :) 
+#! 20:07 <lantis> btw, I am really ok with weekend (I prefer that), my only problem is that I am not "prepared" (it is a bit late at Germany, at least for me), so I am tired and will go to bed soon
+#! 20:07 <lantis> ;)
+#! 20:07 <uriel> lantis: 20h and others are at parties drinking... :/
+#! 20:08 <uriel> and it's still a bit early for the .jp folks, but vt3 had said he would turn up(during week it would be impossible due to work)
+#! 20:08 <lantis> if they prefer drugs.. In the week, your RL is a bit "nearer", you got to catch enough sleep so you can get up for the job, etc ;)
+#! 20:08 <uriel> it's really hard to find a good time/day that fits everyone
+#! 20:09 <lantis> yeah, of course ;|
+#! 20:09 <uriel> yea, that is why I thought maybe friday is a good compromise... I don't know really...
+#! 20:09 <Nemo> Perhaps split this in two, one for US/Europe another for JP/??
+#! 20:10 <uriel> Nemo: I think that would just complicate things more, only nashi, harakora(who was around a bit ago, weird) and nashi are from .jp or near TZ
+#! 20:10 <uriel> (well, newsham is in haway... god, we are all over the place, and then there is the .au folks, but that is just kuroneko)
+#! 20:11 <Nemo> Ok, what do we do. Do we start?
+#! 20:11 <uriel> I think it's best to just set a fixed data/time and hold it every month, and whoever can make it, will show up, consistency is better, so people can plan for it in advance
+#! 20:11 <uriel> yea, lets start
+#! 20:11 <uriel> I guess charles is not coming up :(
+#! 20:11 <uriel> so, I guess I can start with the new website
+#! 20:12 <Nemo> Ok. the first point was the wiki, right? go ahead
+#! 20:12 <uriel> not much to say, this was something I wanted to do for quite some time, specially as result of all the people asking the same questions again and again in #plan9
+#! 20:12 <uriel> and it took some momentum after the last THM
+#! 20:12 <uriel> here is the proposed new main page: http://glendy.se.cat-v.org/who/uriel/p9site/
+#! 20:13 <uriel> the idea is to make all links point to the wiki, so people can take care of the content, because the current non-wiki content is badly maintained
+#! 20:13 <uriel> surprisingly russ liked the idea
+#! 20:14 <uriel> now it's only left to fix the wiki so it 's style matches the start page, and add a bit of new content so all links are covered
+#! 20:14 <uriel> (I'd like to convert some pages like the papers page, and also bring all the Inferno papers and any related stuff)
+#! 20:14 <uriel> the papres are problematic because ms2html is quite broken
+#! 20:15 <Nemo> pdf is fine, isn't it?
+#! 20:15 <uriel> not sure what will happen with that, I fixed (mostly) most of the papers by hand, but russ didn't like to have them hacked by hand, fixing ms2html is beyond my skills(and russ looked into it too and gave up)
+#! 20:15 <uriel> hmmm. some people don't like .pdf
+#! 20:15 <uriel> and it's nice to be able to link to html versions
+#! 20:15 <lantis> I like to have a choice ;)
+#! 20:15 <uriel> an option is to get rid of the html versions maybe
+#! 20:16 <uriel> lantis: yea, having choice is nice, I was thinking even converting them to plain text so they can be meged into the wiki and updated
+#! 20:16 <uriel> I'm not really sure what we should do about that, some of the papers are really good, but quite outdated
+#! 20:16 <Nemo> just link what we have
+#! 20:17 <uriel> Nemo: what are you doing with your papers? would you be interested to have them in a shared place with the Plan 9 papers?
+#! 20:17 <Nemo> sure. Some are in troff, some are in latex.
+#! 20:17 <uriel> problems is things like the bottom of: http://plan9.bell-labs.com/sys/doc/auth.html or like in the rc paper, that the $ symbols are missing(!)
+#! 20:17 <uriel> well, that is secondary, what does people think of the new start page?
+#! 20:18 <Nemo> I think the page is fine
+#! 20:18 <uriel> there is a controversial question:
+#! 20:18 <Nemo> At least, it's good to have something that people can update
+#! 20:18 <uriel> should we keep the "Fourth Edition" or should we indicate that things have changed at least a bit since Fourth Edition
+#! 20:19 <uriel> that seems to be a big source of confusion for new users, that think the CD they download is 3 years old
+#! 20:19 <Nemo> It's still 4th ed.
+#! 20:19 <Nemo> You could say 4th ed vX/X/X (with a date)
+#! 20:19 <uriel> yes, but would be nice to have a way to indicate some changes have gone in since 4th ed
+#! 20:20 <Nemo> Those that deserve a paper or a man page or whatever, may be linked from
+#! 20:20 <uriel> yea, but where you put that? there are new releases every day... someone in #plan9 would not believe me when I told him the ISOs are built every day from the latest sources..
+#! 20:20 <Nemo> a changes version.
+#! 20:20 <uriel> ah
+#! 20:20 <uriel> BTW, one of the ideas of the new website is to move more things to sources too
+#! 20:20 <uriel> so it can easily be mirrored
+#! 20:20 <Nemo> ?
+#! 20:20 <uriel> because plan9.bell-labs.com has been rather unreliable lately
+#! 20:21 <Nemo> ah
+#! 20:21 <Nemo> I can provide a file server
+#! 20:21 <uriel> that would be nice
+#! 20:21 <Nemo> We could setup a replica for sources (should russ agree)
+#! 20:21 <uriel> we got mirrors in mordor and in 9grid.de(soon in 9grid.nl too)
+#! 20:21 <uriel> russ has a new mirroring system he worked on with 20h
+#! 20:21 <uriel> I can forward to you the relevant emails
+#! 20:21 <Nemo> please do
+#! 20:21 <uriel> (it uses /n/sources/lsr )
+#! 20:22 <uriel> thing is: bell labs can't offer web interface to sources
+#! 20:22 <uriel> so we have to do it thru the mirrors
+#! 20:22 <uriel> Nemo: are you interested in mirroring the .iso too? 
+#! 20:22 <Nemo> I thought you meant a real mirror for /n/sources
+#! 20:22 <Nemo> I can mirror whatever it's convenient. No problem.
+#! 20:23 <Nemo> We run our own dns, thus our site should be reliable.
+#! 20:23 <uriel> yes, yes, I mean a real mirror of /n/sources; but we also need a web interface to sources, and we can do that with the main sources archive(lawyers wont let them)
+#! 20:23 <uriel> cool
+#! 20:23 <Nemo> does russ agree with all this?
+#! 20:23 <uriel> that is another thing I plan to change, so the download page just has a link of iso mirrors
+#! 20:23 <uriel> yes, as far as I have discused with him, yes
+#! 20:24 <Nemo> Ok. how much storage are we talking about?
+#! 20:24 <uriel> the exact content that will go in the wiki is not worked out, but anyone can edit it, which is the point
+#! 20:24 <uriel> hmmm.. 20h would know, but I think it's ~300Mb
+#! 20:24 <Nemo> We have a machine that I think could easily host all of this. We can provide 9fs and web
+#! 20:24 <uriel> usually the main problem is bandwith, specially if we link the .iso
+#! 20:25 <uriel> (but the iso is rather small actualy, so...)
+#! 20:25 <Nemo> Our link is not too good, but I think it's enough (at least from spain :-)).
+#! 20:25 <uriel> ok, I think I'm done, I passed my due time by a long shot and people don't seem too interested :)
+#! 20:25 <Nemo> We're only a few, so I think that's a problem.
+#! 20:25 <gdiaz> :)
+#! 20:26 <uriel> ok, as long as it works and they dont' kick you out of the uni for getting /.doted ;)
+#! 20:26 <lantis> heh
+#! 20:26 <Nemo> I wouldnt mind :)
+#! 20:26 <uriel> (the problem for 20h is that his bandwith is borrowed, so he can't abuse it too much)
+#! 20:26 <uriel> anyway, fortunately our .isos are rather small by lunix standards ;)
+#! 20:26 <uriel> ah, one last thing
+#! 20:26 <uriel> the news page
+#! 20:26 <uriel> I would apreciate help with that
+#! 20:27 <Nemo> The university bw is to transfer tech to/from educational institutions. no problem.
+#! 20:27 <Nemo> What kind of help?
+#! 20:27 <uriel> posting things like the release of plan b and such there would be nice
+#! 20:27 <lantis> hm
+#! 20:27 -!- forsyth [none@spc1-york1-5-0-cust142.seac.broadband.ntl.com] has joined #plan9dev
+#! 20:27 <uriel> hey forsyth!
+#! 20:27 <Nemo> Ok, what we could do is that who procuces the news updates the news section 
+#! 20:27 <Nemo> Hi forsyth!
+#! 20:27 <forsyth> um, yes.  i remembered this morning but forgot this evening...
+#! 20:28 <Nemo> :)
+#! 20:28 <lantis> you mean like, if there is some interesting stuff or newsflash on 9fans, update the news-page on the wiki?
+#! 20:28 <uriel> forsyth: hehehe :)
+#! 20:28 <uriel> lantis: yes
+#! 20:28 <Nemo> I mean like, if a 9fan does X, he tells other also in the news section.
+#! 20:28 <lantis> Nemo: good idea! Problem might be to differ between "news" and normal comments or other emails ;)
+#! 20:29 <Nemo> well, if someone thinks something is not news, just update the wiki.
+#! 20:29 <uriel> Nemo: well, I think it would be mostly for things of general interest, like if a new python port comes out, or a new 9grid node goes up, and that kind of thing
+#! 20:29 <Nemo> yep
+#! 20:29 <uriel> there are lots of things that don't make it to 9fans which I think people would find interesting too
+#! 20:30 <uriel> (eg., the new pyhton port is an example of something I think never made it to 9fans)
+#! 20:30 <Nemo> just send a mail there then.
+#! 20:30 <uriel> yea, but I didn't do it ;)
+#! 20:30 <Nemo> Ok. done with news? do we move to next topic?
+#! 20:30 <uriel> yea, just one thing
+#! 20:30 <uriel> forsyth: what do you plan for Inferno wiki?
+#! 20:31 <uriel> (there was some talk in inferno-list of a more business-oriented site, and a more hacker-oriented site, maybe an inferno wiki would take that role?)
+#! 20:32 <forsyth> i suppose a wiki probably is more hacker-oriented
+#! 20:32 <uriel> forsyth: yes, exactly, that is what I meant, sorry
+#! 20:32 <uriel> forsyth: caerwyn(sp?) has acme/Wiki for inferno now BTW
+#! 20:32 <forsyth> so yes, it seemed worthwhile to me
+#! 20:33 <Nemo> Why not a single site for both?
+#! 20:33 <uriel> forsyth: do you have a place to host it? or maybe we could merge it with the Plan 9 wiki? there is quite an overlap
+#! 20:33 <forsyth> actually, i thought caerwyn had volunteered; otherwise i can put it somewhere
+#! 20:34 <uriel> forsyth: I just would like to see the Inferno stuff move more towars sources, as centralizing things makes it easier to mirror and keep track of(right now stuff seems really spread all over)
+#! 20:34 <Nemo> One thing I feel is that we still dup. work.
+#! 20:34 <forsyth> if people thought it was better to have both 9 and inferno in one place, i don't mind.
+#! 20:35 <Nemo> I mostly refer to source. we all speak 9p. would be nice to have a central place to look at for services.
+#! 20:35 <forsyth> at the moment i can't run inferno or 9 with any bandwidth > 1mbit anyway
+#! 20:35 <uriel> Nemo: oh, there I agree, but I don't dear to mention it ;)
+#! 20:35 <Nemo> drivers, for example. 
+#! 20:36 <uriel> forsyth: how much work is to keep things like the compilers and drivers in sync? why not merge them into a single central repository?
+#! 20:36 <forsyth> drivers shouldn't be duplicated now:
+#! 20:36 <gdiaz> i think that service provider could be 9grid. . .or i would like at at least :)
+#! 20:36 <forsyth> if i do a pc driver for inferno i'll add it to 9.
+#! 20:37 <uriel> gdiaz: thing is, things are moving towars 9grid.* nodes providing full mirror of sources/plan9.bell-labs.com, so if things move there, they will be picked up by whatever 9grid nodes are around
+#! 20:37 <forsyth> more usually, though, inferno runs on things that 9 doesn't, so some of those drivers don't go back yet.
+#! 20:37 <forsyth> or, as with the powerpc, the underlying kernels diverged.
+#! 20:37 <uriel> forsyth: what about changes to Plan 9 drivers? isn't it some work to bring them back into Inferno?
+#! 20:37 <forsyth> not usually: i usually just copy in ether drivers, for instance.
+#! 20:38 <Nemo> right. but I mean, reworking things so we could have: /sys/src/pc-drivers or whatever. So the source could be the same.
+#! 20:38 <uriel> yea, and all the utils/ stuff in inferno also could share a single source tree with Plan 9, I think(or in some cases maybe with p9p?)
+#! 20:38 <forsyth> one difference there is that there are quite a few inferno users that don't run plan 9,so they wouldn't get them that way
+#! 20:39 <uriel> forsyth: hum.. what do you mean? sources is accessible to everyone
+#! 20:39 <gdiaz> unless exists a web interface to sources
+#! 20:39 <gdiaz> :-?
+#! 20:39 <forsyth> not if you're running windows
+#! 20:39 <uriel> forsyth: it isn't from inferno?
+#! 20:39 <Nemo> if both 9 and inferno included the very same directory for drivers, no-one would loose any.
+#! 20:40  * uriel has not tried to mount sources from inferno, should try
+#! 20:40 <uriel> Nemo: also another thing that would be nice is more integration of Inferno into Plan 9, so for example the default iso could include Inferno already setup
+#! 20:40 <forsyth> as it stands, drivers are sometimes duplicated (in source) even within each of the systems.
+#! 20:41 -!- lantis [~lantis@c147119.adsl.hansenet.de] has quit [Quit: "thanks, but I am really tired"]
+#! 20:41 <Nemo> yes. I'm talking about undoing that.
+#! 20:41 <uriel> forsyth: does your new distribution system has something like patch(1)?
+#! 20:42 <forsyth> i find a tension between having one copy of something and not being able to find things at all (which is what i find  with linux, where i cannot find my way round at all)
+#! 20:44 <uriel> forsyth: well, I would think that having a single copy of things would make it easier to find things, no?
+#! 20:44 <uriel> (and yes, I can't believe anyone can find anything in linux)
+#! 20:45 <Nemo> ok. next topic?
+#! 20:45 <uriel> yea, I guess so :)
+#! 20:45 <uriel> 9con.Madrid? :)
+#! 20:45 <forsyth> good topic
+#! 20:45 <uriel> Nemo: comments? I don't really have much to say about it, except that I hope to show up :)
+#! 20:46 <Nemo> Well, it's to early to know the status of this thing.
+#! 20:46 <uriel> well, I don't think anyone has even proposed any dates..
+#! 20:46 <uriel> Nemo: when would it be most convinient for you?
+#! 20:46 <Nemo> Any time:
+#! 20:47 <Nemo> the thing is that we wanted to poll the university to get some support
+#! 20:47 <Nemo> I'm waiting until gorka comes back to see what we can do.
+#! 20:47 <uriel> ah, I wasn't sure when he would be back
+#! 20:47 <uriel> I was hoping he would be here today
+#! 20:47 <Nemo> At the very least, the urjc could provide a place to meet, network, and the like.
+#! 20:48 <uriel> yea, that is really all that is needed
+#! 20:48 <uriel>  that is what we got in twente
+#! 20:48 <Nemo> We have to see if we could get money to pay some interesting people to give a talk to the others.
+#! 20:48 <uriel> (and in London, except charles brought t-shirts and dave bought snaks :))
+#! 20:48 <gdiaz> that would be very nice!
+#! 20:49 <uriel> Nemo: well, that would be nice, I just mean, that we don't need to be over-ambitious...
+#! 20:49 <Nemo> We could perhaps schedule for May?
+#! 20:49 <uriel> bringing russ or jmk would be nice though
+#! 20:49 <uriel> oh, /me was thinking before the end of the year =)
+#! 20:49 -!- Netsplit helium.oftc.net <-> arion.oftc.net quits: Fish, Nemo
+#! 20:49 <uriel> Nemo: dunno, that would be fine for me, I think, let me check when is FOSDEM
+#! 20:49 <uriel> shit
+#! 20:49 <gdiaz> yes
+#! 20:50 <gdiaz> :)
+#! 20:50 -!- Netsplit over, joins: Fish, Nemo
+#! 20:50 <uriel> 21:49 <uriel> bringing russ or jmk would be nice though
+#! 20:50 <uriel> 21:49 <uriel> oh, /me was thinking before the end of the year =)
+#! 20:50 <uriel> 21:49 -!- Netsplit helium.oftc.net <-> arion.oftc.net quits: Fish, Nemo
+#! 20:50 <uriel> 21:49 <uriel> Nemo: dunno, that would be fine for me, I think, let me check when is FOSDEM
+#! 20:51 <Nemo> Ok. perhaps we can propose some time in the list.
+#! 20:51 <Nemo> If no support is needed, we can schedule at any time.
+#! 20:51 <Nemo> If we need support for talks or the like, we are going to need a bit of time to
+#! 20:51 <Nemo> run our local bureaucrats.
+#! 20:52 <uriel> Nemo: ok, well, I guess you can decide what you consider best
+#! 20:52 <uriel> something that might be good first of all, is poll around to see who might be inerested in comming to give talks at all :)
+#! 20:52 <Nemo> I'll wait until all the LS members are back in town, ask them, and later we'll see.
+#! 20:53 <gdiaz> i will prefer a 9con with as much people as possible, and better if it is supported
+#! 20:53 <Nemo> Forsyth, would you be comming?
+#! 20:53 <uriel> (I'm not sure we will be able to convince any of the google folks, that leaves us russ, jmk, geoff and brucee, I think)
+#! 20:53 <uriel> forsyth said he was interested, so he better come :)
+#! 20:54 <gdiaz> i would like sape comming, as i'm debt of a beer with him :-D
+#! 20:54 <forsyth> yes, i was hoping to attend, although it depends a bit on dates.
+#! 20:54 <uriel> gdiaz: axelB is not here(!?!?!), but I think there will be another 9con.twenet
+#! 20:54 <uriel> er, twente, or whatever it's called :)
+#! 20:55 <forsyth> if it's half-term in schools here, i can combine it with a holiday..
+#! 20:55 <Nemo> Which month would be better? December? May?
+#! 20:56 <uriel> Nemo: december might be a bit overkill, some of us are going to CCC
+#! 20:56 <Nemo> ok
+#! 20:56 <Nemo> anyway. Let's discuss dates on 9fans.
+#! 20:56 <uriel> but I don't know, 20h said he could not make it anyway, so it would leave just me, and I might just go Madrid/Berlin
+#! 20:56 <uriel> ok
+#! 20:57 <uriel> so I think it's you turn then :)
+#! 20:57 <Nemo> Ok.
+#! 20:57 <uriel> Nemo: just one thing before you get into Plan B
+#! 20:57 <uriel> are you planing to update the kernel notes?
+#! 20:57 <Nemo> Yes, but that's still down in my list.
+#! 20:57 <uriel> if not, could you remove the comments about "don't distribute ..." from the front
+#! 20:57 <uriel> ok, I see
+#! 20:57 <uriel> that would be very cool
+#! 20:58 <Nemo> I think I'm going just to face reality and remove that comment and
+#! 20:58 <uriel> sounds like a good idea :)
+#! 20:58 <Nemo> send the thing to the print in my univsersity and update the web.
+#! 20:58 <uriel> cool
+#! 20:58 <uriel> BTW, is there a printable version of the source? (I think I saw it once, but was looking for it the other day and I could not find it)
+#! 20:58 <Nemo> I'll do this probably next week, to get rid of another item in my todo list.
+#! 20:59 <Nemo> Yes, I prepared one for students, but I don't know where it is. The students
+#! 20:59 <Nemo> are now using the system as is, we give the lectures in a lab.
+#! 21:00 <uriel> I see, if you find it, please put it up somewhere... I like to read that stuff in dead tree, with acme is very nice too, but I like having choice for when I'm traveling and such
+#! 21:00 <uriel> (somewhere -> sources ;))
+#! 21:00 <Nemo> I have the code from that time. it's our local /sys/src/9jun :-)
+#! 21:00 <uriel> yea, I got the tarball, just not in a printable form
+#! 21:01 <Nemo> planb?
+#! 21:01 <uriel> yea :)
+#! 21:01 <Nemo> Well, we just wanted two things:
+#! 21:01 <Nemo> - avoid static mounts and let the system adapt to FS availability
+#! 21:02 <Nemo> - follow the "everything is a file" idea to the limit.
+#! 21:02 <Nemo> For example, I was disappointed because in rio I couldnt
+#! 21:02 <Nemo> use files to operate on widgets and the like.
+#! 21:02 <Nemo> In the same way, I couldn't copy an mp3 file to somewhere to make it play.
+#! 21:03 <Nemo> The same happen to other services. But most notably, the UI.
+#! 21:03 <Nemo> What we do is to announce resources to the network, and then mount them using our
+#! 21:04 <Nemo> volume stuff (dynamic mounts, really).
+#! 21:04 <Nemo> For example, mount -U /what /what
+#! 21:04 <Nemo> is what we use to get in /what
+#! 21:04 <Nemo> the union of all file trees for information about things.
+#! 21:04 <Nemo> A result is that you can ls /what to see what machines are around.
+#! 21:05 <Nemo> The same for other resources. For example, we use du to locate
+#! 21:05 <Nemo> things like button:Pause (pause buttons) in UIs found
+#! 21:05 <Nemo> at /devs/*ui/ or any other place.
+#! 21:05 <Nemo> Then we can 'echo press' >/devs/....../button:Pause/ctl
+#! 21:06 <Nemo> to press the button. I think this gives the idea.
+#! 21:06 <uriel> yes :)
+#! 21:06 <Nemo> There are two things that are really useful: being able to import
+#! 21:06 <uriel> (BTW, I wante to note that caerwyn was working on something very similar for inferno/tk)
+#! 21:07 <Nemo> resources without having to mount them by hand, and 2, having a
+#! 21:07 <Nemo> very detailed interface for services (having a file for the button).
+#! 21:07 <Nemo> The idea is not new.
+#! 21:07 <Nemo> I think fresco tried to do something similar. But they lacked Plan 9.
+#! 21:07 <uriel> but they had CORBA!
+#! 21:08 <uriel> er... nevermind =)
+#! 21:08 <Nemo> That's a con, not a pro, right?
+#! 21:08 <uriel> Nemo: it was suposed to be a joke :)
+#! 21:08 <Nemo> Sorry, kind of sleepy here :-)
+#! 21:08 <uriel> Nemo: actually, I think it was Hans Raiser that said "CORBA was inspired by Plan 9" or some such nonsense :)
+#! 21:09 <Nemo> Don't belive it.
+#! 21:09 <uriel> it was in 9fans some years back, that guy is delusional
+#! 21:09 <uriel> anyway, I think caerwyin was working on something along the lines of squeak
+#! 21:09 <uriel> he was just explaining it today in #inferno
+#! 21:10 <Nemo> We have a similar thing in that
+#! 21:10 <uriel> so each widget used file2chan, and you could write commands to it
+#! 21:10 <Nemo> we can handle each widget as it is.
+#! 21:10 <gdiaz> nemo are you talking with bl to make plan-b things back to plan9?
+#! 21:10 <Nemo> Copy the volume gauge to the ipaq and the like.
+#! 21:10 <uriel> and then reading from it would get you all the commands to setup the widget, so you could use cp and tar to pass widgets around
+#! 21:10 <Nemo> Well, my plan now is to change Plan 9, if system authors agree  of course, to include these ideas.
+#! 21:11 <Nemo> I'm talking with russ, I don't know if I should be talking besides to jmk or
+#! 21:11 <Nemo> someone else. I just didn't want to bother, so
+#! 21:11 <uriel> Nemo: I wish we would get more feedback from the old gang, but I'm not sure they are even interested
+#! 21:11 <Nemo> I thought that talking to russ would be enough to interface to whoever is
+#! 21:11 <Nemo> still active in Plan 9.
+#! 21:11 <uriel> (only rob seems to barely follow 9fans)
+#! 21:11 <gdiaz> well, i suppose they speak each other :-) do it's not necessary to bother
+#! 21:11 <Nemo> I have just finished the volume mounter for Plan 9
+#! 21:12 <Nemo> I have been using it for a couple of days, and I'm now changing
+#! 21:12 <uriel> yea, saw that in 9fans, can you explain a bit how it works
+#! 21:12 <Nemo> it to make it faster.
+#! 21:12 <Nemo> It rewrite fids to mach those of a real FS at the other end.
+#! 21:12 <Nemo> The daemon sends/listens for announces,
+#! 21:12 <uriel> it sounds like a /srv but that doesn't 'hang'(ie., you can attach servers and detach them without lossing the connection from the client)
+#! 21:13 <Nemo> file servers register with /srv/vols to let volfs know that there's anew service.
+#! 21:13 <Nemo> (if you want to, of course)
+#! 21:13 <Nemo> So, your volfs knows of several FSs
+#! 21:13 <Nemo> that have a given name, and a set of constraints.
+#! 21:13 <Nemo> For example, /usr/nemo!Unemo!Lhome!Cok
+#! 21:14 <Nemo> which means, this thing is a file tree for "/usr/nemo"
+#! 21:14 <Nemo> that is owned by nemo, located at home (whatever that might mean), and the
+#! 21:14 <Nemo> latency of the connection from your machine to the FS seems to be good enough
+#! 21:14 <Nemo> to page-in binaries.
+#! 21:15 <Nemo> Well, the point is that volfs has the list of known volumes.
+#! 21:15 <Nemo> Then, you mount volumes from it:
+#! 21:15 <Nemo> mount /srv/vols /usr/nemo /usr/nemo!Cok
+#! 21:15 <Nemo> which means, you mount at /usr/nemo
+#! 21:15 <Nemo> the spec "/usr/nemo/!Cok".
+#! 21:16 <Nemo> The daemon takes care of supplying a file tree that matches your request.
+#! 21:16 <gdiaz> a kind of hot swap filesystems, you ask the manager if it is available (mounting it) or not :-?
+#! 21:16 <Nemo> It does failover in that if your server goes away
+#! 21:16 <Nemo> it can pick up another one. And it may hold your fids
+#! 21:16 <Nemo> Yes, exactly. But the main point is that you may ask for
+#! 21:16 <uriel> nice
+#! 21:16 <Nemo> resources that have certain properties:
+#! 21:17 <Nemo> mount /devs/audio!L136
+#! 21:17 <uriel> what requirements does the failover mechanism need? both trees need to look similar?
+#! 21:17 <Nemo> mount an audio device located at 136.
+#! 21:17 <Nemo> None
+#! 21:17 <uriel> I see...
+#! 21:17 <Nemo> If a file is not there, the fid will give I/O error.
+#! 21:17 <Nemo> If there's no volume, it appears to be an empty dir.
+#! 21:17 <uriel> hmm... the !Csdas syntax looks a bit of a hack I must say
+#! 21:17 <Nemo> Only that all your binds are preseved
+#! 21:18 <Nemo> (the binded dirs appear to be empty dirs while they are not there).
+#! 21:18 <Nemo> I have tested this both binding from and to volume files, like in
+#! 21:18 <Nemo> bind /usr/nemo/bin/rc /bin
+#! 21:19 <Nemo> I think I'll have a version that others may use in a few days.
+#! 21:19 <uriel> sounds cool
+#! 21:19 <Nemo> My plan is to use this as the boot file server,
+#! 21:19 <Nemo> so you could failover and the like.
+#! 21:19 <Nemo> I think russ did like the idea, but time will say.
+#! 21:19 <uriel> so, the 'spec' is passed as part of the aname?
+#! 21:20 <Nemo> Yep. aname is <volname>!<volconstraints>
+#! 21:20 <Nemo> After this, the idea is to take service by service,
+#! 21:20 <uriel> maybe volfs should export a dir like /srv listing all volumes, so the spec would be passed as aname on it's own
+#! 21:20 <Nemo> those that we have in Plan B, and move them to Plan 9.
+#! 21:20 <uriel> (or maybe I'm overengenieering)
+#! 21:20 <Nemo> Yes, if you mount a nil spec:
+#! 21:21 <Nemo> mount /srv/volfs /dev (-b, I mean)
+#! 21:21 <Nemo> then you get /dev/vols
+#! 21:21 <Nemo> you can read to list volumes, and write to add/handle volumes.
+#! 21:21 <Nemo> for example, to change constraints.
+#! 21:21 <Nemo> You get a line per volume, listing it.
+#! 21:22 <Nemo> If you want to see volume files, just mount them:
+#! 21:22 <Nemo> mount -b /srv/volfs /devs */devs/ui
+#! 21:22 <Nemo> adds all your /devs/nautilusui /devs/sargazosui, etc.
+#! 21:23 <Nemo> Each one is an omero file tree, for the UI on that machine.
+#! 21:23 <uriel> hmmm.. I'm still confused as to who/how parses/interprets the 'spec' part
+#! 21:23 <Nemo> volfs
+#! 21:24 <Nemo> our mount <volname>!<constraints> /mnt
+#! 21:24 <uriel> hmmm... that seems like mixing two concepts, the failover/hotswap of file servers, and the spec stuff, which I'm not sure I understood yet how it works :)
+#! 21:24 <Nemo> Nope. it's the same concept.
+#! 21:25 <Nemo> you want to mount X, with property Y at Z.
+#! 21:25 <uriel> then I'm seriously confused :)
+#! 21:25 <gdiaz> as failover/hotswap is just other property
+#! 21:25 <uriel> ok, I see
+#! 21:25 <uriel> I think I got it now
+#! 21:25 <Nemo> You don't mind which particular FS is implementing it, as long as it meets your reqs.
+#! 21:25 <uriel> so to fail over somewher, it has to have all the constrains you had set on mount
+#! 21:25 <Nemo> If one goes away, and there's another, you start using the other.
+#! 21:25 <Nemo> right.
+#! 21:26 <uriel> how do you chose if there are two?
+#! 21:26 <Nemo> We use about 4 or so.
+#! 21:26 <Nemo> most of the times, we dont.
+#! 21:26 <uriel> (and is there a way to change the constrains on the fly?)
+#! 21:26 <Nemo> when we what, we use !H<sysname>, which is added automatically to identify the machine
+#! 21:26 <Nemo> providing the service.
+#! 21:27 <Nemo> Yes, there is, not yet in volfs (it's only in planb); but I'll put that in soon.
+#! 21:27 -!- Fish [~SPARCman@AVelizy-154-1-22-27.w82-124.abo.wanadoo.fr] has quit [Quit: So Long, and Thanks for All the Fish.]
+#! 21:27 <Nemo> So, I think those are the plans. Any comment?
+#! 21:27 <uriel> what I'm not sure I see yet is the use cases(except for failover and such traditional things)
+#! 21:28 <uriel> but I guess that fits with the UIfs stuff
+#! 21:28 <Nemo> Send voice messages to a room,
+#! 21:28 <Nemo> mount your binaries from the FS is latency is good, from local fossil otherwise
+#! 21:28 <Nemo> fail over to fossil if your FS goes away.
+#! 21:29 <Nemo> Get into /usr the set of /usr dirs in your friend's laptops (when not
+#! 21:29 <Nemo> connected to the file server), etc.
+#! 21:29 <uriel> I see...
+#! 21:29 <gdiaz> and the DFS stuff steve told in 9fans :)
+#! 21:30 <Nemo> Forsyth, still awake? what do you think?
+#! 21:30 <uriel> I think I only understand the thid one though, the voice message one, I'm not sure I understand what advantage volfs gives you there, and I'm not sure I understood what you mean by FS on the second example
+#! 21:30 <uriel> sorry if I'm dense, you know I'm not too bright ;)
+#! 21:30 <Nemo> may you ask one by one? thx.
+#! 21:30 <uriel> yea, how does the use case for voice messages to a room work in pracice
+#! 21:31 -!- Fish [~SPARCman@AVelizy-154-1-22-27.w82-124.abo.wanadoo.fr] has joined #plan9dev
+#! 21:31 <Nemo> The voice device is named like: /devs/voice!L136
+#! 21:31 <Nemo> if it's located at room 136.
+#! 21:31 <uriel> I see, so it kind of replaces ndb
+#! 21:31 <Nemo> You usually want voice (or audio) at a certain location.
+#! 21:32 <Nemo> Complements it. Think that machines and users may move around.
+#! 21:32 <uriel> (because L136 maps to a box fixed on that location)
+#! 21:32 <Nemo> at that point in time.
+#! 21:32 <Nemo> Of course, this depends on the server updating the constraints.
+#! 21:33 <Nemo> but yes, that's it.
+#! 21:33 <uriel> uhmmm.. I don't buy that one :) if you seend a voice message to a room, i think it better be to a computer fixed in that room that I know has speakers plugged and turned on all time :)
+#! 21:33 <Nemo> To which one? Do you have to remember?
+#! 21:33  * uriel ponders... I guess there are other cases where it makes more sense though
+#! 21:33 <forsyth> yes, i'm still here
+#! 21:33 <uriel> Nemo: I guess it might make more sense, for example 'send text/audo message to a user'
+#! 21:34 <forsyth> i thought i'd read through all those papers at the ls web site
+#! 21:34 <Nemo> our /bin/tell program does that. it uses the !L thing to locate the right device.
+#! 21:35 <uriel> Nemo: ok, can you explain the second use case now then :) " mount your binaries from the FS is latency is(sic) good, from local fossil otherwise"; hmmmm... why not always mount from local if it's available?
+#! 21:35 <Nemo> Because you want to use the real thing. I mean,
+#! 21:35 <uriel> Nemo: sorry if I'm playing devils advocate, I just want to get a clear picture of how it fits on day to day system usage
+#! 21:36 <forsyth> because you want to share if possible
+#! 21:36 <Nemo> I prefer the laptop to be stateless. This means that 
+#! 21:36 <Nemo> exactly, forsyth eplained exactly why I want it to be stateless.
+#! 21:36 <uriel> yea, but if you got binaries in your laptop, you rather use those, no? :)
+#! 21:36 <Nemo> No.
+#! 21:36 <Nemo> I update /sys/src/whatever, mk install.
+#! 21:36 <Nemo> I'd rather use the new binary.
+#! 21:37 <uriel> ah, I see... 
+#! 21:37 <Nemo> However, if the connection is really bad, I want the system to switch to a local
+#! 21:37 <Nemo> copy instead.
+#! 21:37 <uriel> does it do that on the fly? it can get confusing :)
+#! 21:37 <Nemo> It's not, because changes do not happen often, and you really notice.
+#! 21:38 <Nemo> For example, right now I have this set of volumes:
+#! 21:38 <Nemo> bind -VcC /n/nautilus:adm /adm
+#! 21:38 <Nemo> bind -VcC /n/nautilus:386 /386
+#! 21:38 <Nemo> bind -VcC /n/nautilus:bin /bin
+#! 21:38 <Nemo> bind -VcC /n/nautilus:lib /lib
+#! 21:38 <Nemo> bind -VcC /n/nautilus:mail /mail
+#! 21:38 <Nemo> etc.etc, and then, from the real file server:
+#! 21:38 <Nemo> bind -UcC /n/whale:who /who
+#! 21:38 <Nemo> bind -VbcC /n/whale:sys:log /sys/log
+#! 21:38 <Nemo> bind -VbcC /n/whale:mail /mail
+#! 21:38 <Nemo> bind -UcC /n/whale:what /what
+#! 21:38 <Nemo> bind -UcC /n/whale:where /where
+#! 21:39 <Nemo> (sorry for the long list).
+#! 21:39 <Nemo> I notice that I'm using local binaries because I now the connection is bad right now.
+#! 21:39 <Nemo> when I suspend and move to the university, I'll notice that things get faster, and I'll
+#! 21:39 <uriel> looks good, now show us the list of /dev/vols
+#! 21:40 <Nemo> now that I have switched to the other ones. 
+#! 21:40 <Nemo> Ok, here it goes:
+#! 21:40 <Nemo> /n/nautilus:adm	/adm	!Tdir!Hnautilus!Dls!Cok!Lhome!Unemo	3	
+#! 21:40 <Nemo> /n/nautilus:386	/386	!A386!Hnautilus!Dls!Cok!Lhome!Unemo	4	
+#! 21:40 <Nemo> /n/nautilus:bin	/bin	!A386!Tbin!Hnautilus!Dls!Cok!Lhome!Unemo	5	
+#! 21:40 <Nemo> /n/nautilus:lib	/lib	!Tdir!Hnautilus!Dls!Cok!Lhome!Unemo	6	
+#! 21:40 <Nemo> (note the Cok, it's local, so that's not a surprise). And from the fs:
+#! 21:40 <Nemo> /n/whale:adm	/adm	!Tdir!Hwhale!Dls!Cbad	125	
+#! 21:40 <Nemo> /n/whale:386	/386	!A386!Hwhale!Dls!Cbad	126	
+#! 21:40 <Nemo> /n/whale:alpha	/alpha	!Aalpha!Hwhale!Dls!Cbad	127	
+#! 21:40 <Nemo> /n/whale:arm	/arm	!Aarm!Hwhale!Dls!Cbad	128	
+#! 21:40 <Nemo> Note the Cbad.
+#! 21:41 <uriel> I see...
+#! 21:41 <Nemo> For example, if you look at /386 above
+#! 21:41 <Nemo> you'll see that you can also use !A386
+#! 21:42 <Nemo> to ask for relevant binaries for your architecture. That's an example
+#! 21:42 <Nemo> of the previous discussion about the !Lblah
+#! 21:42 <Nemo> any other question or comment?
+#! 21:42 <uriel> ok, I'm staring to buy it
+#! 21:42 <uriel> it certainly makes dynamic environments much more useable
+#! 21:43 <Nemo> The point that makes me buy it is that after
+#! 21:43 <Nemo> trying it, I feel really unconfortable in Plan 9.
+#! 21:43 <uriel> hehe, that is a good point :)
+#! 21:43 <Nemo> Thus, this may be solving some real problems.
+#! 21:43 <Nemo> Therefore my plan of doing the same in Plan 9 to get back
+#! 21:43 <Nemo> to it.
+#! 21:43 <gdiaz> i would like that
+#! 21:44 <Nemo> I don't know if services moved to Plan 9 will be exactly the same,
+#! 21:44 <Nemo> they will probably be better, because of the discussion with
+#! 21:44 <Nemo> people from plan 9 and because of fixing what we now know that does not
+#! 21:45 <Nemo> work well enough. But anyway, I'm working on this these days.
+#! 21:45 <Nemo> I expect to have all of it done before the next summer.
+#! 21:45 <gdiaz> with services you mean filesystems like the /what thing
+#! 21:45 <uriel> I still feel it overlaps a bit with ndb, would be nice to have both systems work in a more similar way
+#! 21:45 <Nemo> omero UIs, mpeg players, the /what thing, execution of commands, etc.
+#! 21:46 <uriel> (but probably I'm missing something)
+#! 21:46 <Nemo> maybe. Perhaps a real file system for ndb is what we might get,
+#! 21:46 <Nemo> I don't know.
+#! 21:46 <Nemo> but anyway, you want to specify what you require in your mount request. That's needed.
+#! 21:46 <gdiaz> yes, and one that can be auto-handled by servers who publish their services
+#! 21:47 <uriel> yea, I'm not sure which aproach is best for presentation, user-manipulation and so on
+#! 21:47 <Nemo> and client's that know what happen through the net (eg. time).
+#! 21:47 <Nemo> For exmple, a service that 
+#! 21:48 <Nemo> is really nice is our mail system.
+#! 21:48 <Nemo> It simply stores mails in the same way they are presented in your reader.
+#! 21:48 <Nemo> A "text" file has the mail text (as shown in the viewer), and each
+#! 21:48 <Nemo> attach is stored as the real file for the attach.
+#! 21:48 <Nemo> We grep for mails, du for attachs, and lp them.
+#! 21:49 <Nemo> No mailfs needed for that.
+#! 21:49  * uriel feels /srv, ndb/ and volfs might be possible to be merged into a more coherent system, as I feel there are some overlaping, but geting it right might be tricky to keep simple and clear)
+#! 21:50 <uriel> ah, that mail system sounds nice
+#! 21:50 <uriel> upas/fs has some limitations and would be nice to move forward
+#! 21:50 <uriel> still, I wish we would hear from geoff about RSMTP soon
+#! 21:51 <gdiaz> you have done a lot of work nemo
+#! 21:51 <uriel> yup
+#! 21:51 <gdiaz> i think i will need to use it  to really know what all that work implies :-) i've got the iso form lsub
+#! 21:53 <uriel> Nemo: I'm thinking, what about a more /net-like interface, so you don't need to pass the params thru mount, you just setup a new endpoint thru a clone file or something like that, write some constrains/spec and then mount a fd file which volfs provides
+#! 21:53 <uriel> (not sure if I'm making much sense)
+#! 21:53 <uriel> taht same interface could let you change the constrains on the fly
+#! 21:54 <uriel> and such thing could easily replace /srv too, I think
+#! 21:54 <gdiaz> i am going to sleep, thank you very much for all the talk
+#! 21:55 <uriel> (it would be like /srv, but with each entry being a dir, with a clone file and a set of connection dirs(this might even allow also to share the connections thru volfs?)
+#! 21:55 <uriel> gdiaz: good night
+#! 21:57 -!- gdiaz [~gdiaz@73.Red-83-58-115.dynamicIP.rima-tde.net] has quit [Quit: Leaving]
+#! 21:57  * uriel also wonders how this fits with things like inferno-grid and distributed auth...
+#! 22:00 <uriel> hummmm... everyone gone already? :)
+#! 22:02 -!- Nemo [~root@142.Red-83-42-180.dynamicIP.rima-tde.net] has quit [Quit: see you in 9fans]
+#! 22:02 <forsyth> it's quiet ... too quiet
+#! 22:03 <uriel> oh, I guess my idea wasn't too good :)
+#! 22:03 <uriel> forsyth: my offer for kencc.sf.net stands ;)
+#! 22:04 <forsyth> i was hoping to get to that after doing more work documenting one other thing that's higher priority
+#! 22:04 <uriel> forsyth: and btw, about what you said that not everyone can access sources, so, it's not possible to mount it from inferno?
+#! 22:05 <uriel> forsyth: well, all I wanted is just to setup a site with a link to the tarball, that is all, would take five min
+#! 22:05 <forsyth> you probably could do that now
+#! 22:05 <forsyth> i wanted to work out first what the contents would be inside that tarball
+#! 22:06 <uriel> oh, well, just what is in utils/
+#! 22:06 <uriel> I mean, having people be able to get their hands on the code can't hurt, but well, that is just IMHO
+#! 22:06 <uriel> I already did a tarball ;)
+#! 22:07 <forsyth> it's true that having to install inferno to get that is a little extreme, even if it is good for the soul.
+#! 22:08 <uriel> the problem is that no one does it, i wish they did ;)
+#! 22:09 <forsyth> i've got the download list (which admittedly is not the installation list) but in either case i don't think i'd say `no one'
+#! 22:09 <forsyth> still, it isn't intended to be a requirement for kencc
+#! 22:09 <uriel> well, I mean the kind of people I talk to about kencc
+#! 22:10 <uriel> which for some reason tend to be very different from the kind of people interested in Inferno
+#! 22:10 <uriel> (most of the time anyway)
+#! 22:10 <uriel> one thing, I think I asked before, but I'm not sure if you answered, the new distribution/update system, does it include something like patch(1)?
+#! 22:10 <forsyth> i know.  in order to use other software i have to download tons of other stuff, but when i ask them to do it, they wont'.  oh well
+#! 22:11 <forsyth> i haven't done a patch yet but it was intended
+#! 22:12 <uriel> that is because no one does it, they would go nuts, they just use apt-get blah, or use a distro that includes ten tons of crap by default
+#! 22:12 <forsyth> or the functionality is intended
+#! 22:12 <uriel> cool
+#! 22:12 <uriel> the problem is that in Linux/BSD the packaing issues has goten so out of hand that people don't want anything to do with it
+#! 22:13 <uriel> there is always some monkey that knows all the dark magic to build packages for distro blah
+#! 22:13 <uriel> trouble is to find the sucker that will do it for your project :)
+#! 22:13 <forsyth> the problem really is they start off with a really elaborate design of sorts, and then never quite finish it.
+#! 22:13 <forsyth> sorry, i mean never quite finish implementing it.
+#! 22:14 <uriel> you mean the packaging systems? well, they are all a disaster... because I suspect they just can't be finished because they want to be too smart
+#! 22:14 <forsyth> if they implemented it, it would be really complicated but would match the design; because it's a complicated design but not implemented, it's far too complicated for what it actually does!
+#! 22:15 <forsyth> oh well.  i've got to go now
+#! 22:15 <uriel> good night!
+#! 22:15 <uriel> see you around at the next 9con
+#! 22:15 <forsyth> ok
+#! 22:15 <forsyth> e
+#! 22:16 -!- forsyth [none@spc1-york1-5-0-cust142.seac.broadband.ntl.com] has quit [Quit: EPIC - EOF from stdin]
+#

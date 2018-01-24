@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Troubleshooting Plan9 & lilo (as of Fri Jul 12 14:10:57 EDT 2002)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Troubleshooting Plan9 & lilo</h1>
+<h2><i>-as of Fri Jul 12 14:10:57 EDT 2002-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+If
+you're
+trying
+to
+boot
+plan9
+from
+lilo
+and
+you
+get
+the
+following
+message:
+<pre>
+Loading &lt;imagename&gt;
+PBS...Bad format or I/O error
+Press a key to reboot
+</pre>
+
+<p class='para'>
+...
+then
+this
+might
+help.
+</p>
+
+<p class='para'>
+Boot
+from
+your
+install
+floppy.
+When
+the
+system
+comes
+up,
+open
+a
+shell
+window
+by
+using
+the
+right
+mouse
+button
+against
+the
+rio
+backdrop.
+At
+the
+command
+prompt,
+type
+the
+mount
+line
+that
+is
+listed
+in
+the
+"status"
+window
+below
+your
+install
+command
+interpreter
+window.
+This
+will
+mount
+your
+hard
+disk
+at
+/n/kfs.
+</p>
+
+<p class='para'>
+Now,
+do
+the
+following:
+</p>
+
+<pre>
+term% cd /n/kfs/386
+term% /n/kfs/rc/bin/9fat:
+term% cp /n/9fat/plan9.ini .
+term% unmount /n/9fat
+term% disk/format -b ./pbslba -d -r 2 /dev/$DISK/9fat ./9load ./9pcdisk ./plan9.ini
+</pre>
+
+<p class='para'>
+...
+where
+$DISK
+is
+your
+system
+media;
+mine
+is
+sdC0.
+The
+mount
+command
+you
+gave
+before
+should
+give
+you
+a
+clue.
+</p>
+
+<p class='para'>
+Reboot.
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Fri Jul 12 14:10:57 EDT 2002</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

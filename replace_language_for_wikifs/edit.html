@@ -1,0 +1,97 @@
+<html>
+<head>
+<title>Replace language for wikifs (Editing Fri Mar 29 15:52:28 EDT 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Replace language for wikifs</b></font> (Editing Fri Mar 29 15:52:28 EDT 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Replace language for wikifs">
+<input type="hidden" name="version" value="1364586748">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+The wikifs(4) in both Plan 9 and Inferno understand a very small set
+of cues when generating HTML. That set can be limiting. It should be
+replaced with something better, like Markdown.
+
+Markdown engines in C already exist, and have been ported to Plan 9
+via APE. For proper integration this should likely be turned into a
+native parser, but that should be a relatively easy task.
+
+Doing this for the Inferno wikifs would be a bit more work, as no
+Markdown implementation exists in Limbo today (although there are
+similar things).
+
+These two together should make a good summer-sized project. Any extra
+time could be spent converting the existing pages (or, even better,
+writing a conversion program).
+
+It is not particularly important that the language understood by
+wikifs be markdown, per se, but it would be very nice if it was one
+of the widely understood similar alternatives (rather than a new
+creation). It is more important that the language understood by the
+Plan 9 and Inferno wikifs implementaitons be the same (or, at the
+very minimum, one a proper subset of the other).
+
+LINKS
+
+The original writeup on [Markdown |
+http://daringfireball.net/projects/markdown/], including the initial
+perl implementation.
+
+[Discount | http://www.pell.portland.or.us/~orc/Code/markdown/], a
+Markdown implementation with Plan 9 support (via APE) in the mainline
+tree.
+
+[textmangle | https://bitbucket.org/mjl/textmangle], a Limbo
+implementation of a markdown-like library (with moderately different
+syntax).
+
+[Pandoc |
+http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown] and
+[MultiMarkdown | http://fletcherpenney.net/multimarkdown/] are two
+possible extensions worth considering. There are lots of others.
+
+[Textile | http://en.wikipedia.org/wiki/Textile_(markup_language)]
+and [reStructuredText |
+http://en.wikipedia.org/wiki/ReStructuredText] are alternatives to
+Markdown which might be suitable, although neither is in as
+widespread use.
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

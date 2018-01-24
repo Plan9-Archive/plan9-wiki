@@ -1,0 +1,95 @@
+Drawterm to your terminal
+
+This memo describes how to setup your standalone terminal to accept
+[drawterm] and cpu(1) connections.
+
+INSTANT CPU SERVER FROM LIVE CD
+
+This assumes DHCP internet service. Change the ip/ipconfig line if
+needed.
+
+! term% ip/ipconfig
+! term% auth/factotum
+! term% echo 'key proto=p9sk1 dom=livecd user=glenda !password=password' >/mnt/factotum/ctl
+! term% aux/listen1 -t tcp!*!17010 /bin/cpu -R &
+
+This shortcut works on any Plan 9 system that isn't already running a
+standard authserver + keyfs. It works because starting listen1 with
+the -t flag keeps the factotum available in the namespace of the cpu
+listener for direct authentication. Drawterm from another OS will
+connect as usual. CPU from Plan 9 requires an auth server to validate
+the key.
+
+(There seems to be a "direct auth" trick drawterm does that CPU(1)
+does not. It would be nice if CPU(1) also could connect without an
+authserver with this setup.)
+
+SETTING UP WITH KEYFS AND AUTHSRV
+
+Keyfs(4) is the process managing the users' key database. Create a
+new key database as $home/lib/keys.
+! term% touch  $home/lib/keys
+
+Start keyfs(4). It will ask you the password which is used to encrypt
+the key database file ($home/lib/keys).
+! term% auth/keyfs  -p  $home/lib/keys
+! Password: keyfilepassword
+! 0 keys read
+! term%
+
+Add a user to the key database
+! term% auth/changeuser  -p  glenda
+! Password: loginpassword
+! Confirm password: loginpassword
+! assign Inferno/POP secret? (y/n) n
+! Expiration date (YYYYMMDD or never)[return = never]:
+! 1 keys read
+! Post id:
+! User's full name:
+! Department #:
+! User's email address:
+! Sponsor's email address:
+! changeuser: can't open /adm/keys.who
+
+The last line is just a warning. You can ignore it.
+
+Now populate the factotum(4) with the hostowner information.
+! term% echo 'key user=glenda dom=drawterm.test proto=p9sk1 !password=loginpassword' > /mnt/factotum/ctl
+
+Start the authentication server on the "ticket" port.
+! term% aux/listen1 -t 'tcp!*!ticket' /bin/auth/authsrv &
+
+Start the cpu service listener on the "ncpu" port.
+! term% service=cpu aux/listen1 'tcp!*!ncpu' /bin/cpu -R &
+
+Then connect to your terminal using drawterm.
+! $ drawterm  -a  ip.of.the.term  -c  ip.of.the.term
+
+Once you've finished the above sequence, the key database should be
+created correctly. So if you reboot your terminal, you don't need to
+repeat the whole thing again. In short, it should be enough to do the
+following:
+! term% auth/keyfs -p $home/lib/keys # you can add this command to your profile
+! Password: keyfilepassword
+! 1 keys read
+! term% echo 'key user=glenda dom=drawterm.test proto=p9sk1 !password=loginpassword' > /mnt/factotum/ctl
+! term% aux/listen1 -t 'tcp!*!ticket' /bin/auth/authsrv &
+! term% service=cpu aux/listen1 'tcp!*!ncpu' /bin/cpu -R &
+
+ANCIENT DRAWTERM VERSIONS
+
+If you need access from really old versions of drawterm that don't
+support 9p2000 change the aux/listen1 call to listen on port "cpu"
+and call cpu with the -O arg. Note that '-O' refers to the capital
+letter O and not a zero.
+
+! term% service=cpu aux/listen1 'tcp!*!cpu' /bin/cpu -O &
+
+SEE ALSO
+
+To setup a proper cpu/auth server see: [Configuring a standalone CPU
+server].
+
+See the [drawterm] page for links to download source and binaries for
+various architectures.
+

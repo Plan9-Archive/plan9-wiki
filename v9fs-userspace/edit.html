@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>v9fs-userspace (Editing Wed Feb 27 09:51:17 EST 2008 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>v9fs-userspace</b></font> (Editing Wed Feb 27 09:51:17 EST 2008 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="v9fs-userspace">
+<input type="hidden" name="version" value="1204123877">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+Three basic userspace components to improve v9fs usability under
+Linux.
+
+MOUNT HELPER
+
+ *	hueristic for determining transport type
+ *	DNS support for resolving hostname &lt;-&gt;ip address
+ *	ssh-based tunneling support (will require server work as well)
+ *	man pages
+ *	debian packaging
+ *	rpm packaging
+ *	(stretch) authentication support (w/p9p)
+ *	(stretch) integration with idmap solution
+
+SERVER
+
+ *	based on spfs/npfs
+ *	allow for multiple exports w/anames and specification of root
+	directory
+ *	man pages
+ *	debian packaging
+ *	rpm packaging
+ *	(stretch) authentication support (w/p9p)
+ *	(stretch) integration with idmap solution
+
+IDMAP
+
+ *	maps local uids/gids/error-codes to strings
+ *	userspace daemon to provide mapping
+ *	hooks in v9fs to use mapping
+ *	(stretch) synthetic file server approach to update mappings
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

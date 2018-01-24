@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>9P2010 (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+9P2010</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+
+<a name="MOTIVATION" /><h3>MOTIVATION</h3>
+
+<p class='para'>
+In
+my
+use
+of
+9P
+within
+the
+Linux
+and
+IBM
+communities
+there
+have
+been
+several
+requests
+for
+extensions
+to
+better
+support
+Linux
+environments
+or
+features
+not
+currently
+a
+part
+of
+the
+protocol
+(locking,
+caching,
+batch
+operations,
+storage
+networking,
+etc.)
+As
+such,
+I'd
+like
+to
+work
+towards
+a
+specification
+of
+the
+protocol
+which
+can
+accomodate
+these
+extensions
+in
+as
+non-intrusive
+a
+way
+as
+possible
+(the
+counter-example
+being
+9P2000.u
+which
+while
+negotiated
+ends
+up
+complicating
+clients
+and
+servers
+who
+wish
+to
+use
+it).
+</p>
+
+<a name="BASICS" /><h3>BASICS</h3>
+
+<p class='para'>
+The
+core
+protocol
+(size
+prefix,
+operation,
+tag)
+remains
+the
+same.
+The
+existing
+9P2000
+operations
+remain
+the
+same,
+9P2000.u
+will
+be
+depricated
+by
+the
+new
+extension
+model.
+Extensions
+will
+exist
+in
+a
+complimentary
+namespace
+--
+that
+is
+to
+say
+operation
+identifiers
+will
+not
+overlap
+with
+existing
+operations,
+and
+all
+extensions
+will
+use
+new
+operations
+as
+opposed
+to
+changes
+to
+existing
+operations.
+Alternate
+extension
+op-codes
+spaces
+may
+be
+negotiated
+by
+optional
+prefixes
+during
+Tversion
+negotiation
+--
+but
+every
+effort
+will
+be
+made
+to
+keep
+operations
+within
+the
+existing
+namespace.
+</p>
+
+<p class='para'>
+The
+extensions
+are
+OPTIONAL,
+servers
+which
+don't
+wish
+to
+implement
+them
+(or
+any
+subset
+of
+them)
+simply
+returns
+Rerror
+--
+well
+behaved
+clients
+will
+fall
+back
+to
+the
+core
+9P2000
+operations.
+</p>
+
+<a name="OPERATION_CODE_RESERVATION" /><h3>OPERATION CODE RESERVATION</h3>
+
+<p class='para'>
+To
+facilitate
+complimentary
+extensions,
+we'll
+use
+a
+wiki
+page
+<a href="../9P2010_Operations">9P2010
+Operations</a>
+to
+coordinate
+op-code
+reservation
+for
+specific
+extensions.
+It
+will
+be
+the
+definitive
+registration
+resource
+for
+the
+time
+being.
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Thu Sep 18 12:05:30 EDT 2008</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

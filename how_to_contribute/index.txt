@@ -1,0 +1,133 @@
+How to contribute
+
+
+PATCH
+
+The tool used to submit changes to the Plan 9 distribution is called
+patch(1) (not to be confused with the unix tool of the same name.)
+
+Patches are processed by the maintainers at Bell Labs (typically
+geoff or jmk). When sending a patch, follow these guidelines:
+
+ *	If this is a bug fix, explain the bug clearly. Don't assume the
+	bug is obvious from the fix.
+ *	If this is a new feature, explain it clearly. Don't assume it is
+	obvious from the change.
+ *	Make the new code look as much like the old code as possible:
+	don't make gratuitous changes and follow the style of the old code.
+	See CODING STYLE below.
+ *	If necessary, update the manual page.
+
+If you use patch/email to attach an email address to the patch, that
+address will be mailed when the patch is either applied or rejected.
+If the latter, the email will contain a note explaining why and
+probably listing suggested changes and encouraging you to resubmit.
+
+An archive of all submitted patches is in /n/sources/patch.
+
+SOURCES/CONTRIB
+
+If you have Plan 9-related code you would like to publish but not
+submit (yet?) to be part of the main distribution, you can place it
+in your own directory in /n/sources/contrib.
+
+To get your own directory under /n/sources/contrib, mail
+contrib@plan9.bell-labs.com.
+
+Once you have your own directory under /n/sources/contrib, you can use
+! srv -q tcp!sources.cs.bell-labs.com sources /n/sources
+to connect to sources, and then just copy your file(s) to your
+directory. By the way, don't forget to create an INDEX file to
+describe your upload, so it will be auto-indexed.
+
+See also [Contrib] and [Contrib index]
+
+TIPS FOR CONTRIBUTING TO PLAN 9
+
+Find something you're interested in doing. If it's a big project, it
+is worth it mailing 9fans first, just to see if anyone else is
+already working on such a thing or knows why it hasn't already been
+done.
+
+Do it.
+
+Submit it via patch(1).
+
+The patch may well come back in the "sorry" category rather than the
+"applied" category, with suggestions on what should be changed to
+make it better and a request to resubmit it. This doesn't mean you
+should give up. It means you did a good job and the maintainers think
+it's worth trying to get you to make the job even better. Remember:
+you can't polish a turd.
+
+If the patch does get applied but you notice that the code has been
+edited and is not exactly what you submitted, the same comment still
+applies. Look at the diffs and understand why the changes were made.
+Remember: you can't polish a turd.
+
+CODING STYLE
+
+Plan 9 C code has its own conventions, documented in style(6). You
+would do well to follow them. Here are a few:
+ *	don't use // comments; some old Plan 9 code does, but we're
+	converting it as we touch it. We do sometimes use // to comment-out
+	a few lines of code.
+ *	avoid gotos.
+ *	no tabs expanded to spaces.
+ *	no white space before opening braces.
+ *	no white space after the word "if", "for", "while", etc.
+ *	no braces around single-line blocks (e.g., if, for, and while
+	bodies).
+ *	integer-valued functions return -1 on error, 0 or positive on
+	success.
+ *	functions that return errors should set errstr(2).
+ *	variable and function names are all lowercase, with no underscores.
+ *	enum or #defined constants should be Uppercase or UPPERCASE.
+ *	struct tags are Uppercase, with matching typedefs.
+ *	automatic variables (local variables inside a function) are never
+	initialized at declaration.
+ *	follow the standard idioms: use x<0 not 0>x, etc.
+
+Ultimately, the goal is to write code that fits in with the other
+code around it and the system as a whole. If the file you are editing
+already deviates from these guidelines, do what it does. After you
+edit a file, a reader should not be able to tell just from coding
+style which parts you worked on.
+
+COMMENTS
+
+If your code is readable, you shouldn't need many comments. A line or
+two comment above a function explaining what it does is always
+welcome.
+
+Comment any code you find yourself wondering about for more than 2
+seconds, even if it's to say that you don't understand what's going
+on. Explain why.
+
+Don't use commenting as an excuse for writing confusing code. Rewrite
+the code to make it clear.
+
+EFFICIENCY
+
+Do the simple thing. Don't optimize unless you've measured the code
+and it is too slow. Fix the data structures and the algorithms
+instead of going for little 5% tunings.
+
+SEE ALSO
+
+ *	["Notes on Programming in C" by Rob Pike |
+	http://doc.cat-v.org/bell_labs/pikestyle], [pdf |
+	http://www.literateprogramming.com/pikestyle.pdf])
+ *	[Notes on Programming Projects | http://swtch.com/~rsc/worknotes/]
+	- by Russ Cox
+ *	[Program Design in the UNIX Environment by Rob Pike and Brian
+	Kernighan | http://harmful.cat-v.org/cat-v/] (AKA "cat -v considered
+	harmful")
+ *	[How to Use the Plan 9 C Compiler |
+	http://doc.cat-v.org/plan_9/4th_edition/papers/comp] - Introduction
+	to the Plan 9 developement environment, not only the compilers, but
+	the libraries, build (mk(1)) and debugging (acid(1)) tools.
+ *	[The Practice of Programming |
+	http://cm.bell-labs.com/cm/cs/tpop/index.html] by Brian W. Kernighan
+	and Rob Pike. ISBN 0-201-61586-X.
+
