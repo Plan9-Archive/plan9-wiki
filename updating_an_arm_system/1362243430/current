@@ -1,0 +1,34 @@
+Updating an ARM System
+D1362243430
+Aglenda
+#As described in [Staying up to date], any Plan 9 fossil file system
+#can be brought up to date with the sources distribution with this
+#command:
+#
+#! replica/pull -v /dist/replica/network
+#
+#Historically the update procedure assumes a network with an
+#x86-based server as the main installation machine, which is used in
+#turn to build software for machines of other architectures. For a
+#stand-alone ARM system, some adaptations need to be made.
+#
+#BUILDING ARM BINARIES
+#
+#The sources repository used by replica/pull contains compiled binary
+#files (object libraries and executable commands) only for the x86
+#architecture. If you have an ARM computer such as the Sheevaplug or
+#Raspberry Pi, the pull command will only update the source code, and
+#you will need to recompile anything which has changed by running 'mk
+#install' in the appropriate directory.
+#
+#OMITTING 386 BINARIES
+#
+#If your ARM computer is not acting as a server for any x86 machine,
+#you may not want to keep x86 binaries in its local file system. To
+#prevent replica/pull from trying to download these, you can edit the
+#script /rc/bin/replica/pull and insert these two lines just before
+#the last line of the file:
+#
+#! grep -v ' 386/(9|bin|lib|init)' $clientlog >$clientlog.arm
+#! bind $clientlog.arm $clientlog
+#

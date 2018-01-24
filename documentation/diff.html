@@ -1,0 +1,637 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Documentation (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Documentation <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Sat Feb 23 21:34:08 EST 2013</a>, mycroftiv
+</div><hr />
+<ul>
+
+<li>
+<a href="../FAQ">FAQ</a>
+-
+Frequently
+Asked
+Questions.
+</li>
+
+<li>
+<a href="../Recommended_Readings">Recommended
+Readings</a>
+</li>
+
+<li>
+<a href="../Papers">Papers</a>
+and
+other
+publications.
+</li>
+
+<li>
+<a href="../Books">Books</a>
+</li>
+
+<li>
+<a href="../Supported_PC_hardware">Supported
+PC
+hardware</a>,
+<a href="../other_hardware">other
+hardware</a>,
+<a href="../virtual_machines">virtual
+machines</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/sys/man/">Online
+Manual
+pages</a>
+-
+<a href="http://man.cat-v.org/plan_9/">man
+pages
+mirror</a>
+</li>
+</ul>
+
+<a name="INSTALLATION" /><h3>INSTALLATION</h3>
+
+<ul>
+
+<li>
+<a href="../Installation_instructions">Installation
+instructions</a>
+</li>
+
+<li>
+<a href="../Installation_troubleshooting">Installation
+troubleshooting</a>
+</li>
+
+<li>
+<a href="../Setting_the_right_monitor_size">Setting
+the
+right
+monitor
+size</a>
+</li>
+
+<li>
+<a href="../Setting_the_right_keyboard_map">Setting
+the
+right
+keyboard
+map</a>
+</li>
+
+<li>
+<a href="../Adding_a_new_user">Adding
+a
+new
+user</a>
+</li>
+
+<li>
+<a href="../Network_configuration">Network
+configuration</a>
+</li>
+
+<li>
+<a href="../Using_AoE_(ATA-over-Ethernet)">Using
+AoE
+(ATA-over-Ethernet)</a>
+</li>
+
+<li>
+<a href="../Staying_up_to_date">Staying
+up
+to
+date</a>
+</li>
+</ul>
+
+<a name="INSTALLATION_IN_SPECIAL_ENVIRONMENTS" /><h3>INSTALLATION IN SPECIAL ENVIRONMENTS</h3>
+
+<ul>
+
+<li>
+<a href="../Installing_Plan_9_on_Qemu">Installing
+Plan
+9
+on
+Qemu</a>
+-
+Plan
+9
+works
+reliably
+in
+Qemu
+</li>
+
+<li>
+<a href="../vmware4">vmware4</a>
+-
+Plan
+9
+under
+vmware4.
+</li>
+
+<li>
+<a href="../Installing_in_Xen">Installing
+in
+Xen</a>
+</li>
+
+<li>
+<a href="../Installing_in_Parallels_Desktop_on_Mac_OS_X">Installing
+in
+Parallels
+Desktop
+on
+Mac
+OS
+X</a>
+</li>
+
+<li>
+<a href="../Installing_Plan_9_in_a_VirtualBox">Installing
+Plan
+9
+in
+a
+VirtualBox</a>
+</li>
+
+<li>
+<a href="../Guruplug">Guruplug</a>
+</li>
+
+<li>
+<a href="../Installation_on_Ipaq">Installation
+on
+Ipaq</a>
+(<a href="../Supported_PDAs">Supported
+PDAs</a>)
+</li>
+
+<li>
+<a href="../Other_hardware">Other
+hardware</a>
+</li>
+</ul>
+
+<a name="USING_THE_SYSTEM" /><h3>USING THE SYSTEM</h3>
+
+<ul>
+
+<li>
+<a href="../Using_rio">Using
+rio</a>
+-
+An
+introduction
+to
+using
+the
+window
+system.
+</li>
+
+<li>
+<a href="../Using_acme">Using
+acme</a>
+-
+Acme
+is
+a
+hybrid
+editor
+and
+shell/windowing
+application.
+</li>
+
+<li>
+<a href="../Using_plumbing">Using
+plumbing</a>
+-
+The
+plumber
+sends
+messages
+to
+the
+appropriate
+program.
+</li>
+
+<li>
+<a href="../9p_services_using_srv,_listen,_exportfs,_import">9p
+services
+using
+srv,
+listen,
+exportfs,
+import</a>
+-
+How
+Plan
+9
+systems
+communicate.
+</li>
+
+<li>
+<a href="../Fonts">Fonts</a>
+-
+for
+the
+screen
+and
+otherwise.
+</li>
+
+<li>
+<a href="../Using_troff">Using
+troff</a>
+-
+Formatting
+text
+for
+printing
+on
+a
+typesetter.
+</li>
+
+<li>
+<a href="../Using_vncv">Using
+vncv</a>
+-
+Remote
+use
+of
+applications
+on
+other
+OSes.
+</li>
+
+<li>
+<a href="../Using_SSL">Using
+SSL</a>
+-
+How
+to
+store
+keys
+and
+certificates.
+</li>
+
+<li>
+<a href="../Using_aescbc_to_store_factotum_keys">Using
+aescbc
+to
+store
+factotum
+keys</a>
+-
+<a href="http://plan9.bell-labs.com/magic/man2html/1/secstore"><i>secstore</i>(1)</a>
+for
+stand-alone
+terminals.
+</li>
+
+<li>
+<a href="../Connecting_to_other_OSes">Connecting
+to
+other
+OSes</a>
+-
+ssh,
+telnet,
+u9fs,
+SMB,
+NFS...
+</li>
+
+<li>
+<a href="../Connecting_from_other_OSes">Connecting
+from
+other
+OSes</a>
+-
+drawterm,
+v9fs,
+9vx...
+</li>
+
+<li>
+<a href="../X11_installation">X11
+installation</a>
+-
+Functional
+but
+not
+recommended.
+</li>
+
+<li>
+<a href="../Linux_emulation">Linux
+emulation</a>
+-
+Rudimentary
+support
+for
+running
+Linux
+programs
+on
+Plan
+9.
+</li>
+
+<li>
+<a href="../UNIX_to_Plan_9_command_translation">UNIX
+to
+Plan
+9
+command
+translation</a>.
+</li>
+
+<li>
+<a href="../Tip_o'_the_day">Tip
+o'
+the
+day</a>
+</li>
+</ul>
+
+<a name="CONFIGURATION" /><h3>CONFIGURATION</h3>
+
+<ul>
+
+<li>
+<a href="../Configuring_a_standalone_CPU_server">Configuring
+a
+standalone
+CPU
+server</a>
+-
+The
+next
+step
+after
+installation.
+</li>
+
+<li>
+<a href="../Compiling_kernels">Compiling
+kernels</a>
+</li>
+
+<li>
+<a href="../Dns_configuration_notes">Dns
+configuration
+notes</a>
+</li>
+
+<li>
+<a href="../Mail_configuration">Mail
+configuration</a>
+</li>
+
+<li>
+<a href="../Adding_your_face">Adding
+your
+face</a>
+</li>
+
+<li>
+<a href="../Printer_configuration">Printer
+configuration</a>
+</li>
+
+<li>
+<a href="../SSH_configuration">SSH
+configuration</a>
+</li>
+
+<li>
+<a href="../TeX_configuration">TeX
+configuration</a>
+</li>
+
+<li>
+<a href="../Informal_Wiki_Setup">Informal
+Wiki
+Setup</a>
+</li>
+
+<li>
+<a href="../Setting_up_Fossil">Setting
+up
+Fossil</a>
+-
+How
+to
+manually
+setup
+fossil
+</li>
+
+<li>
+<a href="../Setting_up_Venti">Setting
+up
+Venti</a>
+-
+How
+to
+manually
+setup
+venti
+</li>
+
+<li>
+<a href="../Mirroring_with_Fossil_and_Venti">Mirroring
+with
+Fossil
+and
+Venti</a>
+</li>
+
+<li>
+<a href="../Expanding_your_Grid">Expanding
+your
+Grid</a>
+-
+An
+overview
+of
+adding
+more
+systems
+</li>
+</ul>
+
+<a name="ADDITIONAL_TOPICS" /><h3>ADDITIONAL TOPICS</h3>
+
+<ul>
+
+<li>
+<a href="../Drawterm_to_your_terminal">Drawterm
+to
+your
+terminal</a>
+</li>
+
+<li>
+<a href="http://www.plan9.bell-labs.com/wiki/plan9/avoiding_screen_pollution_from_kernel_messages/index.html">Console
+messages</a>
+</li>
+
+<li>
+<a href="../Using_PQ">Using
+PQ</a>
+-
+The
+implicit
+relational
+database
+client
+and
+server.
+</li>
+
+<li>
+<a href="../Configuring_file-backed_Venti_stores">Configuring
+file-backed
+Venti
+stores</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/sources/contrib/steve/doc/Venti-rescue.pdf">Venti-Rescue</a>
+-
+How
+to
+rebuild
+your
+system
+when
+your
+disks
+crash.
+</li>
+
+<li>
+<a href="../Kfs_file_system_configuration">Kfs
+file
+system
+configuration</a>
+-
+Of
+historical
+interest;
+kfs
+is
+now
+deprecated.
+</li>
+
+<li>
+<a href="../Installing_a_Plan_9_File_Server">Installing
+a
+Plan
+9
+File
+Server</a>
+-
+Instructions
+for
+installing
+the
+old
+dedicated
+file
+server;
+in
+most
+cases
+it
+is
+recommended
+that
+you
+use
+fossil
+instead.
+</li>
+
+<li>
+<a href="../Mouse_vs._keyboard">Mouse
+vs.
+keyboard</a>
+</li>
+
+<li>
+<a href="../Dialup_modem_config">Dialup
+modem
+config</a>
+</li>
+
+<li>
+<a href="../Installing_Plan_B_on_Qemu">Installing
+Plan
+B
+on
+Qemu</a>
+</li>
+</ul>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Sat Feb 23 21:34:08 EST 2013</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

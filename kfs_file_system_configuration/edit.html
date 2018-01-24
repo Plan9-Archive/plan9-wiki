@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>Kfs file system configuration (Editing Mon Sep 26 23:04:13 EDT 2005 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Kfs file system configuration</b></font> (Editing Mon Sep 26 23:04:13 EDT 2005 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Kfs file system configuration">
+<input type="hidden" name="version" value="1127790253">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+
+USERS AND PERMISSIONS
+
+There is no super-user; the closest equivalent is the person who
+booted the terminal (generically called Eve; Adm owns the file
+server). Most devices are owned by Eve, and the local kernel will let
+Eve do most things commonly associated with a super-user (for
+example, debug or kill processes she doesn't own). Eve's power does
+not extend past the local machine, though, or even into the kfs file
+system. The important difference is that the kfs file system is being
+provided by a user process, which has its own permissions checking
+separate from the kernel, and it does not care to let the hostowner
+have special permissions directly.
+
+Of course, permissions need to be bypassed once in a while. For
+example, the file /adm/users (the equivalent of a combination of
+Unix's /etc/passwd and /etc/group) is not writable except by members
+of group adm. Rather than put yourself into the group adm, we usually
+type 'disk/kfscmd allow' to turn off permission checking on the kfs
+file server, edit /adm/users, make kfs read it back by typing
+disk/kfscmd user, and then turn permission checking back on by typing
+'disk/kfscmd disallow' (If you're running a network file server, the
+preferred but rarer setup, all this hair-raising stuff is avoided;
+appropriate control is provided on the file server console and
+nowhere else.)
+
+To add a new user, add the user to the /adm/users file and then run
+the user command; the format of the file is documented in users(6).
+(Note that on a standalone file server, the newuser command manages
+users, to avoid turning off permission checking.) The fs(8) and
+kfscmd(8) manual pages explain more file system commands.
+
+To create a new user, you can run
+
+! disk/kfscmd 'newuser tor'
+
+it will automatically perform the following tasks
+
+- add a line like
+
+! 282:tor:tor:
+
+to /adm/users
+
+- run disk/kfscmd user - run the following commands
+
+! disk/kfscmd 'create /usr/tor tor tor 775 d'
+
+I think these two commands have to be executed manually
+
+! disk/kfscmd 'create /mail/box/tor tor upas 775 d'
+! disk/kfscmd 'create /mail/box/tor/mbox tor upas 622 al'
+
+creating tor's home directory and mail box. Now you'll want to halt
+the disks and reboot to log in as tor; the first thing to do then is
+to set up a profile and start the window system by running
+
+! /sys/lib/newuser
+
+Note that you had to reboot to log in as a different user; this is
+because the kernel must authenticate to the file server in order to
+obtain startup files like init or its startup script, and the only
+way for a terminal to get authentication credentials is to have a
+user type a name and password. Of course, for kfs this could be
+sidestepped, but this is necessary when booting from a real file
+server on the network.
+
+STARTUP
+
+When a Plan 9 machine boots, it runs the configuration script
+/rc/bin/termrc or /rc/bin/cpurc, depending on whether it is a
+terminal or a CPU server. These set up /dev and initialize some
+common environment variables, in particular $fileserver. This
+variable is used by lp, among other programs. For a standalone
+configuration, this should be kfs, as it is when installed; if you
+set up a real Plan 9 file server and boot over the network, change
+this to be the name of the network file server.
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

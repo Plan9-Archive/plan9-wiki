@@ -1,0 +1,99 @@
+Configuring file-backed Venti stores
+
+Since I needed this, I figured it might be useful for others. Venti
+can be used with files on your Fossil as backing storage. There is no
+steadfast need to create partitions for Venti to run (and in some
+cases, this configuration may even be more convenient, for example
+when you're on a laptop with frequently added and erased data). I was
+bitten by a couple of problems that I figured out after reading the
+manpages several times, so I'll list them here so that you don't have
+to.
+
+My first step was to create the index file. I have no idea how large
+this needs to be, mathematically, compared to the size of the Venti
+arena. I suppose it would be something like:
+
+(arena_size / arena_block_size) / x
+
+Where x is however large a Venti index datastructure is. I could find
+this if I read the paper or source, but I'm too lazy right now.
+
+To create these files, I simply ran:
+
+! 	% dd -if /dev/zero -of isect0 -bs 8192 -count 10000
+! 	% dd -if /dev/zero -of arenas0 -bs 8192 -count 40000
+
+When these completed, the following files were present:
+
+! 	--rw-rw-r-- M 8 dho dho 327680000 Apr  3 20:10 arenas0
+! 	--rw-rw-r-- M 8 dho dho  81920000 Apr  3 20:10 isect0
+
+After this, I simply created a venti.conf file that was the same as
+the one in the manpage:
+
+! 	% cat > venti.conf
+! 	index main
+! 	isect /usr/dho/isect0
+! 	arenas /usr/dho/arenas0
+! 	
+! 	%
+
+Then I had the task of formatting these files. First I ran:
+
+! 	% venti/fmtisect isect0 isect0
+
+This took a little while. In retrospect, I could have used -Z, since
+I created this file with /dev/zero. The -Z flag tells fmtisect and
+fmtarenas to not zero the ``partition'' first, which is superfluous
+since we created the files from zero.
+
+After this, I ran:
+
+! 	% venti/fmtarenas arenas0 arenas0
+
+I should have used -Z here as well. Hereafter,
+
+! 	% venti/fmtindex venti.conf
+
+Yay, all's well, right?
+
+! 	% venti/venti -c /usr/dho/venti.conf
+! 	% venti=127.0.0.1
+! 	% vac -f test.vac testfile
+
+Instead of getting anything useful, I got some error about how I had
+no space in my arena. This didn't make much sense until I read the
+fmtarenas section of the manpage a few more times: Venti creates its
+arenas with a default size of 500MB. Mine's smaller, and since it
+didn't fulfill the size requirement, I didn't get _any_ Venti
+storage. Lame.
+
+So, I went back through and ran:
+
+! 	% venti/fmtisect isect0 isect0
+! 	% venti/fmtarenas -a 327680000 arenas0 arenas0
+! 	% venti/fmtindex venti.conf
+
+I didn't use -Z here, since the fmtindex actually writes to the index
+file. (And I wasn't sure if it wrote to the arenas file too). The -a
+flag specifies a size other than 512MB to use for the arena.
+Apparently this value should always be set to the size of the arena
+file or partition. (Fancy that!)
+
+After this:
+
+! 	% vac -f test.vac test
+! 	packet: 1/9 frag: 1/6 small mem: 1/1 big mem: 1/8
+! 	% ls -l
+! 	d-rwxrwxr-x M 8 dho dho  0 Apr  3 19:15 test
+! 	--rw-rw-r-- M 8 dho dho 45 Apr  3 20:10 test.vac
+! 	% cat test.vac
+! 	vac:d3d2b67810fb0fc289073c4b0c3ac6d9b01010fb
+
+Hope that's useful to someone.
+
+--dho
+
+Does this procedure basically work on Plan 9 Port for Unix-like
+systems as well? (Dave Leimbach)
+

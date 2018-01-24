@@ -1,0 +1,102 @@
+Dns configuration notes
+
+First of all:
+ *	Configure the network as explained in [Network configuration]
+ *	Read the ndb(8) man page
+
+LOCAL DNS
+
+! ndb/dns -r
+
+You only need a
+! dns = 1.1.1.1
+entry in your ipnet configuration ( see [Network configuration] ) and
+that server will be used to answer dns queries.
+
+If you're using ip/ipconfig to configure your network via dhcp, dns
+entry will be automatically setup.
+
+INTERNAL DNS SERVER
+
+(normally used as a dns-cache to avoid waste on bandwidth with
+www.google.com queries :) ndb/dns -s)
+
+You need to use root dns servers directly, then you can answer all
+the names to your clients directly (they doesn't need to go out there
+to ask for them, so you saves bandwidth). You will need an entry like:
+! dom=
+!               ns=A.ROOT-SERVERS.NET
+!               ns=B.ROOT-SERVERS.NET
+!          dom=A.ROOT-SERVERS.NET ip=198.41.0.4
+!          dom=B.ROOT-SERVERS.NET ip=128.9.0.107
+see /lib/ndb/local.complicated for a complete example.
+
+PRIMARY DNS SERVER
+
+(or master -> ndb/dns -s)
+
+You will need an entry like:
+
+! dom=cs.bell-labs.com soa=
+!              refresh=3600 ttl=3600
+!              ns=plan9.bell-labs.com
+!              ns=ns1.cs.bell-labs.com
+!              ns=ns2.cs.bell-labs.com
+!              mb=presotto@plan9.bell-labs.com
+!              mx=mail.research.bell-labs.com pref=20
+!              mx=plan9.bell-labs.com pref=10
+!              dnsslave=nslocum.cs.bell-labs.com
+!              dnsslave=vex.cs.bell-labs.com
+
+in your /lib/ndb/local file. You can see examples in
+/lib/ndb/local.complicated that comes with standard distribution.
+
+If you are familiar with DNS, you will find that entry
+self-explanatory. If not:
+ *	ns - the name of your dns server, this should be defined with a
+	sys entry (see [Network configuration]). You can put all the ns
+	entries that serve your domain (master and slaves)
+ *	mb - the email of the administrator
+ *	mx adn pref - the mail exchanger (mx) and the preference (pref) it
+	has. The lower number is the one with more preference when choosing
+	a mail server.
+ *	dnsslave - the name of your slave dns server (normally other
+	server). As far as i know you can't transfer zones to a Plan9 dns
+	server automatically, you can distribute your ndb file across your
+	plan9 servers via fs or use external tools to query a remote server
+	and write the appropiate ndb file. Steve Simon created such tool,
+	see on /n/sources/contrib/steve/zonefresh.tar.bz2.
+ *	ttl and refresh - the defaults should be enought for normal setups
+
+If you have your zone entry ready, take a look at ndb file again to
+see if all the names you used in the zone definition can be resolved
+using ndb information (with entries like dom=plan9.bell-labs.com
+ip=1.1.1.1 or sys entries as described in [Network configuration] ).
+
+SLAVE DNS SERVER
+
+I never done that in plan9, but i suppose is like setting up a
+primary one. There is no options and no automatic transfer zone from
+a master to a Plan9 dns slave server.
+
+COMBINATIONS (AND NDB/DNS COMMAND)
+
+It is possible to use a mixture of those configurations. You only
+need to make all the entries you need in your ndb file and use the
+correct option to start your dns server:
+
+ *	ndb/dns -r -> this will answer queries using a remote dns server
+	(or can use root servers entry)
+ *	ndb/dns -s -> this will answer queries about your zones
+ *	ndb/dns -sr -> this will answer queries about your zones, and will
+	answer queries about other names as well (can use root servers entry)
+ *	ndb/dns -snr -> this will do the same of he (-sr) and will update
+	the record of the dnsslaves when changed (you need this if use
+	dnsslaves)
+ *	/rc/bin/service/tcp53 -> you will need enable this listener if you
+	want to transfer zones from a Plan9 dns server to unix slave servers
+	(normally move !tcp53 to tcp53 and restart the listeners)
+
+The ndb/dns command normally is executed via /rc/bin/cpurc, so take a
+look in this file for the ndb/dns line.
+

@@ -1,0 +1,115 @@
+Using plumbing
+D1361603512
+Amycroftiv
+#Plumbing is a mechanism for passing messages between applications.
+#It has a customizable set of rules (see [plumb(6) |
+#http://plan9.bell-labs.com/magic/man2html/6/plumb]) to process
+#incoming messages and dispatch them to target applications.
+#
+#The [plumber(4) |
+#http://plan9.bell-labs.com/magic/man2html/4/plumber] is the file
+#server that performs the message processing and dispatch.
+#
+#It is up to each application how it wishes to use this mechanism,
+#but in the user-interface domain, the mechanism often allows the
+#user to point to a file-name or URL and have the associated resource
+#processed by an appropriate application.
+#
+#EXAMPLES
+#
+#In the rc shell window you can select or position the text cursor
+#inside a piece of text and press button 2 and select "plumb" from
+#the pop-up menu. Depending on what the text is, the plumber will
+#perform different actions. For example:
+#
+# *	a .ps, .pdf, or .dvi file name invokes the [page(1) |
+#	http://plan9.bell-labs.com/magic/man2html/1/page] display program
+# *	a .gif, .jpg, .png, .ppm file name also invokes page(1) to
+#	display them
+# *	a compiler error message indicating a file and line number will
+#	invoke the default text editor to open the file at the given line
+#	number
+# *	a .h file name will search /sys/include for the given header and
+#	opens it in the default text editor
+# *	a man(1) page reference invokes man(1) for the appropriate page
+# *	a URL opens the default browser for that page
+#
+#The plumber can provide easy shortcuts for common functions. For
+#example, given a script 'web' which takes an argument of a URL to
+#open in a web browser, the plumbing rule:
+#! 	# RFC's from one of the nicer-looking repositories.
+#! 	type is text
+#! 	data matches 'RFC:([0-9]+)'
+#! 	plumb to web
+#! 	plumb start web http://rfc.sunsite.dk/rfc/rfc$1.html
+#will make RFC:2325 a link to some of the IETF's better work. A
+#number of other potentially useful [plumbing examples] have been
+#collected.
+#
+#A NICE TRICK
+#
+#Namespaces in Plan 9 are local. That is, if you're inside an
+#application that has forked the namespace, you can't change the
+#namespace visible to other applications. In particular, you can't
+#mount a remote file server and then plumb it to another running
+#application. Here's a neat trick that lets you do that.
+#
+#! 	srvfs plumbspace /n
+#! 	plumber
+#! 	rfork n
+#! 	mount -b /srv/plumbspace /n
+#
+#Put this in your /lib/profile (before rio is started) and /n is now
+#an indirect part of the namespace that can be changed in all
+#applications by the plumber. An extra rule in the plumber is all
+#that's needed to make use of it:
+#
+#! type is text
+#! data matches 'Local (.*)'
+#! plumb to none
+#! plumb start rc -c $1
+#
+#For example, say I wished to mount a local kfs disk and edit a file
+#in it. I can open a new shell window, type:
+#
+#! disk/kfs
+#! plumb 'Local mount /srv/kfs /n/kfs'
+#
+#and the files on the new disk will be visible to all applications on
+#the machine, including, for example, an existing incarnation of Acme.
+#
+#PLUMBING BETWEEN MACHINES ON A GRID
+#
+#The plumber is a good example of the power of network transparency
+#in Plan 9. On a well-connected grid, the plumber will naturally act
+#to dispatch messages to applications running on the correct machine.
+#Consider a small grid of 3 machines: terminal, file/cpu/auth, and
+#tcp boot cpu. The user's primary work environment is via cpu(1) to
+#the file/cpu/auth server. A web browser runs on the terminal, and an
+#acme(1) editing and compiling environment runs in a separate cpu(1)
+#session to the tcp boot cpu server.
+#
+#As the user works within the primary cpu workspace, plumbed messages
+#will find the correct destination automatically. Messages of url
+#form will be received by the browser running on the local terminal
+#and links will open there, messages referencing source code files
+#will be received by the editor and appear for editing and
+#compilation on the tcp boot cpu, and messages for applications
+#running on the main cpu will be processed there.
+#
+#The necessary condition for this correct message dispatch between
+#nodes is simply that all applications running on the grid have a
+#connection to the plumber within their namespace, and have a view of
+#file namespace which allows them to access any necessary resources.
+#Programs which the user is interacting with directly should
+#automatically have the plumber available at /mnt/plumb or
+#/mnt/term/mnt/plumb; other programs will need to mount the user's
+#plumber from /srv, possibly after an import(4) of the /srv of the
+#machine hosting the plumber.
+#
+#ADDITIONAL REFERENCES
+#
+#[Plumbing and Other Utilities |
+#http://plan9.bell-labs.com/sys/doc/plumb.html] - A paper on the
+#design and implementation of the plumbing system.
+#

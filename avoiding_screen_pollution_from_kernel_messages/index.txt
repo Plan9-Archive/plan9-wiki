@@ -1,0 +1,32 @@
+Avoiding Screen Pollution From Kernel Messages
+
+By default, the kernel will print messages to the console device (see
+cons(3)). This can be problematic when also running rio on the
+console, as is common on terminals: the console output will overwrite
+the existing screen contents.
+
+To work around this problem, open a new terminal window and do:
+
+! cat /dev/kprint
+
+This works because, according to the kprint discussion in cons(3),
+"if (the) console is a graphics screen, the data is sent either to
+the display or to kprint, but not both."
+
+If you'd like a more permanent solution to the problem, make a
+directory '/sys/log/consoles' and put a line like
+
+! cat /dev/kprint >>/sys/log/consoles/$sysname >[2=1] &
+
+somewhere in termrc or the included files (see cpurc(8)), or in your
+rio startup. On cpu servers, it may be useful to open a new window
+with something like:
+
+! {cat /dev/kmesg ; cat /dev/kprint} | tee /sys/log/consoles/$sysname
+
+This will save a copy of the console output while also displaying it
+in a more controlled fashion.
+
+It is probably not a good idea to redirect these to /dev/null; they
+may be important.
+

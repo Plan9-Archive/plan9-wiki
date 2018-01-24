@@ -1,0 +1,49 @@
+Using SSL
+D1233178729
+Aglenda
+#Programs that use ssl (i was setting this up for tlssrv) need a
+#certificate and a corresponding key to be able to encrypt their
+#connections. The key is secret, and should only be stored in bootes'
+#secstore, loaded at boot into his factotum.
+#
+#1, FIRST, TO GENERATE AN SSL KEY, DO THESE STEPS AS BOOTES:
+#
+#! ramfs
+#! cd /tmp
+#! auth/rsagen -t 'service=tls role=client owner=*' > key
+#Then from this key, we generate a certificate, that's public:
+#! auth/rsa2x509 'C=FR CN=*.fakedom.dom' key | auth/pemencode CERTIFICATE > /sys/lib/tls/cert
+#Where FR is a two-digit country code, and fakedom.dom is your domain.
+#! auth/secstore -g factotum
+#To get bootes' factotum file from the secstore
+#! cat key >> factotum
+#To add the ssl key to the factotum, optionally, you can also add it
+#to his running factotum:
+#! cat key >> /mnt/factotum/ctl
+#Then store the modified factotum file in the secstore:
+#! auth/secstore -p factotum
+#
+#2, TO BE SURE THE KEY GETS LOADED AT BOOT TIME
+#
+#you should be sure to start a factotum before the listen process is
+#started in /rc/bin/cpurc ot termrc, and that the keys do get loaded
+#from the secstore. If you are not sure, you can check by rebooting,
+#then, as hostowner, from the phisical machine do:
+#! cat /mnt/factotum/ctl
+#Should show a key with proto=rsa service=tls role=client.
+#
+#3, TO LOAD THE KEY AT BOOT FROM BOOTES' SECSTORE
+#
+#with the secstore key in the nvram, you can do this:
+#
+#If you are not sure bootes' secstore key is in nvram, you can make
+#sure by doing
+#! auth/wrkey
+#This will prompt for authid (usually bootes), authdom, secstore key
+#and bootes' password.
+#
+#Then, to load the factotum file from secstore to the running
+#factotum, add this to /rc/bin/cpurc or termrc:
+#! auth/secstore -n -G factotum >> /mnt/factotum/ctl
+#Then, to check whether it's loaded retry step 2.
+#

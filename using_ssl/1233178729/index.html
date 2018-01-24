@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Using SSL (as of Wed Jan 28 16:38:49 EST 2009)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Using SSL</h1>
+<h2><i>-as of Wed Jan 28 16:38:49 EST 2009-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+Programs
+that
+use
+ssl
+(i
+was
+setting
+this
+up
+for
+tlssrv)
+need
+a
+certificate
+and
+a
+corresponding
+key
+to
+be
+able
+to
+encrypt
+their
+connections.
+The
+key
+is
+secret,
+and
+should
+only
+be
+stored
+in
+bootes'
+secstore,
+loaded
+at
+boot
+into
+his
+factotum.
+<a name="1,_FIRST,_TO_GENERATE_AN_SSL_KEY,_DO_THESE_STEPS_AS_BOOTES:" /><h3>1, FIRST, TO GENERATE AN SSL KEY, DO THESE STEPS AS BOOTES:</h3>
+
+<pre>
+ramfs
+cd /tmp
+auth/rsagen -t 'service=tls role=client owner=*' &gt; key
+</pre>
+Then
+from
+this
+key,
+we
+generate
+a
+certificate,
+that's
+public:
+<pre>
+auth/rsa2x509 'C=FR CN=*.fakedom.dom' key | auth/pemencode CERTIFICATE &gt; /sys/lib/tls/cert
+</pre>
+Where
+FR
+is
+a
+two-digit
+country
+code,
+and
+fakedom.dom
+is
+your
+domain.
+<pre>
+auth/secstore -g factotum
+</pre>
+To
+get
+bootes'
+factotum
+file
+from
+the
+secstore
+<pre>
+cat key &gt;&gt; factotum
+</pre>
+To
+add
+the
+ssl
+key
+to
+the
+factotum,
+optionally,
+you
+can
+also
+add
+it
+to
+his
+running
+factotum:
+<pre>
+cat key &gt;&gt; /mnt/factotum/ctl
+</pre>
+Then
+store
+the
+modified
+factotum
+file
+in
+the
+secstore:
+<pre>
+auth/secstore -p factotum
+</pre>
+
+<a name="2,_TO_BE_SURE_THE_KEY_GETS_LOADED_AT_BOOT_TIME" /><h3>2, TO BE SURE THE KEY GETS LOADED AT BOOT TIME</h3>
+
+<p class='para'>
+you
+should
+be
+sure
+to
+start
+a
+factotum
+before
+the
+listen
+process
+is
+started
+in
+/rc/bin/cpurc
+ot
+termrc,
+and
+that
+the
+keys
+do
+get
+loaded
+from
+the
+secstore.
+If
+you
+are
+not
+sure,
+you
+can
+check
+by
+rebooting,
+then,
+as
+hostowner,
+from
+the
+phisical
+machine
+do:
+<pre>
+cat /mnt/factotum/ctl
+</pre>
+Should
+show
+a
+key
+with
+proto=rsa
+service=tls
+role=client.
+</p>
+
+<a name="3,_TO_LOAD_THE_KEY_AT_BOOT_FROM_BOOTES'_SECSTORE" /><h3>3, TO LOAD THE KEY AT BOOT FROM BOOTES' SECSTORE</h3>
+
+<p class='para'>
+with
+the
+secstore
+key
+in
+the
+nvram,
+you
+can
+do
+this:
+</p>
+
+<p class='para'>
+If
+you
+are
+not
+sure
+bootes'
+secstore
+key
+is
+in
+nvram,
+you
+can
+make
+sure
+by
+doing
+<pre>
+auth/wrkey
+</pre>
+This
+will
+prompt
+for
+authid
+(usually
+bootes),
+authdom,
+secstore
+key
+and
+bootes'
+password.
+</p>
+
+<p class='para'>
+Then,
+to
+load
+the
+factotum
+file
+from
+secstore
+to
+the
+running
+factotum,
+add
+this
+to
+/rc/bin/cpurc
+or
+termrc:
+<pre>
+auth/secstore -n -G factotum &gt;&gt; /mnt/factotum/ctl
+</pre>
+Then,
+to
+check
+whether
+it's
+loaded
+retry
+step
+2.
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Wed Jan 28 16:38:49 EST 2009</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

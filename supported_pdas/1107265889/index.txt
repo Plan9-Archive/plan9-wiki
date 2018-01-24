@@ -1,0 +1,28 @@
+Supported PDAs
+
+
+COMPAQ IPAQ
+
+The H3630 and H3650 are known to work. It can run rio, acme, and the
+like. These are a number of items known to work:
+
+ *	suspend/resume (success seems to depend on bootldr version, see
+	[installation on ipaq])
+ *	single sleeve PCMCIA backpack
+ *	double sleeve PCMCIA backpack (needs patch, ask axel dot
+	belinfante at cs dot utwente dot nl)
+ *	PCMCIA wavelan cards
+ *	PCMCIA toshiba 2GB (model?) and 5GB (MK5002MPL) hard disks
+ *	PCMCIA IBM Microdrive 340 MB
+ *	Graffiti recognition
+
+These are known problems:
+
+ *	The battery runs just for one day.
+
+See [installation on ipaq] to learn how to install Plan 9 on this
+platform.
+
+Information about the IPAQ hardware can be found [here. |
+http://www.handhelds.org/Compaq/iPAQH3600/iPAQ_H3600.html]
+

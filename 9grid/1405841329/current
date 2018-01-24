@@ -1,0 +1,101 @@
+9grid
+D1405841329
+Aglenda
+#The name 9grid has been used for two separate but related projects.
+#
+#An early grid of Plan 9 servers at Bell Labs and the University of
+#Calgary was called [9grid |
+#http://plan9.bell-labs.com/9grid/index.html]. It is generally closed
+#and not very much used.
+#
+#More recently, private individuals and organizations have created a
+#handful of public-access servers and also use the name 9grid.
+#
+#No active servers are known at the moment. Please list them here if
+#they become available.
+#
+#Each of these servers runs its own authentication domain. For
+#accounts, see the details on the above web sites.
+#
+#OPEN PROBLEMS
+#
+#Open research problems remain in turning the loosely-associated
+#collection of machines above into a true grid of machines, with
+#cross-domain authentication, access controls, resource discovery,
+#and perhaps even load balancing.
+#
+#The rest of this page sketches proposed solutions to some of these
+#problems.
+#
+#AUTHENTICATION
+#
+#We need to establish a consensus on how a griduser should be
+#authenticated on a gridnode.
+#
+# *	Proposal 1: [multiauthdom | http://www.r-36.net/multidomauth.tgz]
+#	by 20h
+# *	Proposal 2: [factotum patch |
+#	http://www.tip9ug.jp/who/nashi/9grid/p9sk1.c] by tip9ug.
+# *	Proposal 3: implementing SPKI
+#
+#Proposal 1 and 2 seemingly agreed on assigning gridusers' name in
+#the form of "username@authdom". Plan 9 kernel surprisingly accepts
+#this notation. The same notation could be used on Proposal 3 too
+#once implemented.
+#
+#LOCAL FILESTORE
+#
+#On gridnodes, accesses by a griduser are treated as none access to
+#the local filesystem unless the user is registered to the
+#filesystem. We need to offer a secure way to grant gridusers the
+#right to store files on the gridnode. ramfs(1) can be used in many
+#cases, but you might want to remember that Plan 9 has the 1.8GB
+#limitation of installable memory, and also, it could be hard to do
+#quota in ramfs.
+#
+#The following proposals are to provide gridusers a way to store
+#their files on a fossil on gridnodes. Quota on these proposals can
+#be done by running some instance of fossil on a partition other than
+#/dev/sdC0/fossil or on an ordinary file on the fossil from which the
+#gridnode booted from.
+#
+# *	Proposal 1: create a "rwxrwxrwx sys sys" directory named by a
+#	random string and pass the secret pathname to a griduser.
+# *	Proposal 2: make a [helper program |
+#	http://www.tip9ug.jp/who/nashi/9grid/mkgdir.c] which will add the
+#	griduser on a fossil and create a "rwx------ griduser sys"
+#	directory in the fossil.
+#
+#LIMITING NETWORK ACCESS
+#
+#Some admins would want to restrict the gridusers to access network
+#from the gridnode considering DDoS. We need to provide a way to give
+#gridnodes' admins the choice if they want to give or not to give the
+#access to the local network interface.
+#
+# *	Proposal 1: patch the kernel so that only the hostowner and none
+#	can access '#I' (ip(3) device) and '#l' (ether(3) device).
+# *	Proposal 2: for gridusers, omit the binding of '#I' and '#l' to
+#	/net and set RFNOMNT. This can be done by setting up gridusers'
+#	environments properly.
+#
+#SETTING UP THE GRIDUSERS' ENVIRONMENTS
+#
+#We need a way to construct gridusers' environments on a gridnode.
+#Environments means... the namespace in Plan 9.
+#
+# *	Proposal: patch [cpu.c | http://www.r-36.net/cpu_home.c] so that
+#	if there is "@" in the username construct the namespace according
+#	to [/lib/namespace.grid | http://www.r-36.net/namespace.grid].
+#	cpu.c also sets RFNOMNT if necessary.
+#
+#RESOURCE DISCOVERY
+#
+#We need a way to discover other 9grid nodes.
+#
+#PARALLEL PROGRAMING PARADIGM
+#
+#We need a version of [MP |
+#http://pages.cpsc.ucalgary.ca/~mirtchov/lanlp9/mp/index.html]
+#adopted to 9grid framework.
+#

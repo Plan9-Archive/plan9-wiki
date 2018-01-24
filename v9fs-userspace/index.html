@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>v9fs-userspace (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+v9fs-userspace</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+Three
+basic
+userspace
+components
+to
+improve
+v9fs
+usability
+under
+Linux.
+<a name="MOUNT_HELPER" /><h3>MOUNT HELPER</h3>
+
+<ul>
+
+<li>
+hueristic
+for
+determining
+transport
+type
+</li>
+
+<li>
+DNS
+support
+for
+resolving
+hostname
+&amp;lt;-&amp;gt;ip
+address
+</li>
+
+<li>
+ssh-based
+tunneling
+support
+(will
+require
+server
+work
+as
+well)
+</li>
+
+<li>
+man
+pages
+</li>
+
+<li>
+debian
+packaging
+</li>
+
+<li>
+rpm
+packaging
+</li>
+
+<li>
+(stretch)
+authentication
+support
+(w/p9p)
+</li>
+
+<li>
+(stretch)
+integration
+with
+idmap
+solution
+</li>
+</ul>
+
+<a name="SERVER" /><h3>SERVER</h3>
+
+<ul>
+
+<li>
+based
+on
+spfs/npfs
+</li>
+
+<li>
+allow
+for
+multiple
+exports
+w/anames
+and
+specification
+of
+root
+directory
+</li>
+
+<li>
+man
+pages
+</li>
+
+<li>
+debian
+packaging
+</li>
+
+<li>
+rpm
+packaging
+</li>
+
+<li>
+(stretch)
+authentication
+support
+(w/p9p)
+</li>
+
+<li>
+(stretch)
+integration
+with
+idmap
+solution
+</li>
+</ul>
+
+<a name="IDMAP" /><h3>IDMAP</h3>
+
+<ul>
+
+<li>
+maps
+local
+uids/gids/error-codes
+to
+strings
+</li>
+
+<li>
+userspace
+daemon
+to
+provide
+mapping
+</li>
+
+<li>
+hooks
+in
+v9fs
+to
+use
+mapping
+</li>
+
+<li>
+(stretch)
+synthetic
+file
+server
+approach
+to
+update
+mappings
+</li>
+</ul>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Wed Feb 27 09:51:17 EST 2008</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

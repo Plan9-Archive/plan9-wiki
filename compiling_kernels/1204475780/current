@@ -1,0 +1,154 @@
+Compiling kernels
+D1204475780
+Astella
+#The source for the Plan 9 kernels (other than the original
+#standalone file server kernels in /sys/src/fs) is kept in
+#/sys/src/9. The distribution includes kernels for the Intel PC, the
+#Alpha PC, a MIPS-based workstation called a Carrera, the Compaq iPAQ
+#(bitsy), and a PowerPC-based embedded system.
+#
+#The machine-independent source code is in /sys/src/9/port. Each
+#architecture also has a machine-dependent directory: pc, alphapc,
+#carrera, mpc, and so on.
+#
+#To build a kernel for a pre-existing configuration you cd into the
+#corresponding arch directory and then run mk with the CONF variable
+#set to the configuration file you want to use.
+#
+#For example to build the default terminal kernel pcf:
+#! cd /sys/src/9/pc
+#! mk 'CONF=pcf'
+#
+#To install the new kernel copy the generated kernel with the name of
+#the config file preceded by 9(eg., 9pcf) to your 9fat directory:
+#! 9fat:
+#! cp /sys/src/9/pc/9pcf /n/9fat/
+#
+#It is recommended that you keep your old kernel around so you can
+#boot it in case something is wrong with the new one, for details of
+#how to do this see plan9.ini(8)
+#
+#HOW TO CONFIGURE A CUSTOM KERNEL
+#
+#A distinction is made between the kernel configuration for terminals
+#and for CPU servers: they have slightly different boot sequences,
+#and different kernel-to-user memory ratios.
+#
+#Each kernel is described by a configuration file. For example, this
+#is an abridged version of the pcdisk terminal configuration file
+#/sys/src/9/pc/pcdisk.
+#
+#! dev
+#! 	root
+#! 	cons
+#! 	arch
+#! 	env
+#! 	ip
+#! 
+#! link
+#! 	ether2000 ether8390
+#! 	ethermedium
+#! 
+#! misc
+#! 	archmp mp apic
+#! 	kfs.root
+#! 	vgamach64xx +cur
+#! 	vgamga2164w +cur
+#! 
+#! ip
+#! 	il
+#! 	tcp
+#! 
+#! port
+#! 	int cpuserver = 0;
+#! 
+#! boot boot #S/sdC0/
+#! 	il
+#! 	local
+#
+#The format is simple: each word on each indented line is the name of
+#an object file to link. The non-indented lines mark sections. You
+#can include or exclude various drivers by inserting or removing
+#lines.
+#
+#The [bootdir] section describes how the the #//boot directory is
+#populated.
+#
+#You might want to edit a pre-existing kernel configuration file if
+#for example you want to build a standalone terminal/CPU/auth server
+#but the default server configuration doesn't have your video card
+#driver. To rebuild 9pccpuf with your card driver, edit
+#/sys/src/9/pc/pccpuf and add the appropriate vga line.
+#
+#For multiprocessors, make sure the line
+#
+#! 	archmp		mp apic
+#
+#appears in your config file or the new kernel will only use one CPU.
+#
+#Then rebuild that kernel and install it:
+#
+#! cd /sys/src/9/pc
+#! mk 'CONF=pccpuf'
+#! cp 9pccpuf /386
+#! 9fat:
+#! cp 9pccpuf /n/9fat/
+#
+#The argument to mk specifies which configuration file to use. The
+#default for the pc kernels is ``pc''.
+#
+#It is usually best to play in a copy of the config files rather than
+#edit them directly. Then you can mk with
+#
+#! mk 'CONF=pcmyusername'
+#
+#But even if you overwrite the existing files, remember that you can
+#always refer to the originals stored in /n/dump (see yesterday(1).)
+#
+#COMPILING WITHOUT WRITE PERMISSIONS FOR /SYS
+#
+#Personally, I prefer not to pollute my default install files. I
+#create a set of empty directories that mirror /sys/src with srcbind:
+#
+#! 	#!/bin/rc
+#
+#! 	if(! test -d $1)
+#! 		exit 'base directory not found (test -d ' ^$1 ^' failed)'
+#
+#! 	for (d in (sys sys/src sys/src/9) )
+#! 		if(! test -d $1/$d ) 
+#! 			mkdir $1/$d
+#
+#! 	for(d in (boot port pc))
+#! 		if(! test -d $1/sys/src/9/$d ) 
+#! 			mkdir $1/sys/src/9/$d
+#
+#! 	bind -b -c $1/sys/src/9/boot /sys/src/9/boot
+#! 	bind -b -c $1/sys/src/9/port /sys/src/9/port
+#! 	bind -b -c $1/sys/src/9/pc /sys/src/9/pc
+#
+#and then
+#
+#! 	ramfs
+#! 	srcbind /tmp
+#! 	cp /sys/src/9/pc/pcf /tmp/sys/src/9/pc/pcf
+#
+#edit pcf
+#
+#! 	cd /sys/src/9/pc
+#! 	mk 'CONF=pcf'
+#
+#! 	ls -l /tmp/sys/src/9/pc/9pcf
+#
+#--rwxrwxr-x M 111 maht maht 2446793 Mar 5 22:56
+#/tmp/sys/src/9/pc/9pcf
+#
+#It would be wise not to use ramfs if you want to keep your updated
+#copy of pcf
+#
+#Copy to 9fat and /386 in the normal way. You only need it in /386 if
+#you boot diskless terminals as they get their kernels from /386
+#
+#In this way you can compile and use a new kernel without having to
+#be in sys or have write permissions turned off.
+#

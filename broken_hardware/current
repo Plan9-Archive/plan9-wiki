@@ -1,0 +1,24 @@
+Broken Hardware
+D1263926834
+Ageoff
+#This page lists hardware known to NOT work with Plan 9.
+#
+#Entries here should note the reason for the incompatibility and
+#include a datestamp. Please be as specific as possible about part,
+#model, and revision numbers, including firmware and BIOS versions
+#when relevant.
+#
+#Don't mention hardware for which there is obviously no driver
+#support; this list is intended to enumerate broken hardware that you
+#would have expected to work ...
+#
+#MOTHERBOARDS
+#
+# *	Intel D945GCLF2: Very broken ACPI implementation. Fails to boot
+#	the Plan 9 loader; seriously hosed under FreeBSD as well.
+#	(2009-12-30 lyndon@orthanc.ca)
+# *	Intel DG45ID: ACPI-only, no MP tables, so only one core will be
+#	seen. (15 Jan 2010 geoff@plan9.bell-labs.com)
+# *	Intel DG45MJ: built-in Ethernet is Realtek and doesn't PXE boot
+#	correctly. (19 Jan 2010 geoff@plan9.bell-labs.com)
+#

@@ -1,0 +1,450 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Using aescbc to store factotum keys (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Using aescbc to store factotum keys <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Mon Feb 18 03:56:13 EST 2013</a>, mycroftiv
+</div><hr /><a href="http://plan9.bell-labs.com/magic/man2html/1/secstore"><i>secstore</i>(1)</a>
+is
+traditionally
+used
+to
+store
+private
+keys
+for
+<a href="http://plan9.bell-labs.com/magic/man2html/4/factotum"><i>factotum</i>(4)</a>.
+When
+an
+auth
+server
+is
+not
+used,
+such
+as
+on
+a
+stand-alone
+terminal,
+a
+different
+solution
+must
+be
+found.
+<a name="GETTING_THE_KEYS" /><h3>GETTING THE KEYS</h3>
+
+<p class='para'>
+The
+easiest
+way
+to
+get
+the
+right
+options
+for
+the
+keys
+is
+to
+let
+factotum
+do
+it
+for
+you.
+Authenticate
+to
+the
+services
+you
+want
+the
+keys
+to
+be
+saved
+for
+and
+read
+factotum's
+control
+file.
+</p>
+
+<pre>
+% cat /mnt/factotum/ctl
+key proto=p9sk1 dom=outside.plan9.bell-labs.com user=rsc !password?
+% 
+</pre>
+
+<a name="SAVING_THE_KEYS" /><h3>SAVING THE KEYS</h3>
+
+<p class='para'>
+First,
+your
+secrets
+file
+must
+be
+initialised.
+</p>
+
+<pre>
+% echo test | auth/aescbc -e &gt; $home/lib/fact.keys
+% aescbc key:
+</pre>
+
+<p class='para'>
+Change
+the
+permissions
+on
+the
+file
+so
+that
+only
+you
+can
+read
+it.
+</p>
+
+<pre>
+% chmod 600 $home/lib/fact.keys
+</pre>
+
+<p class='para'>
+Add
+the
+keys
+to
+the
+secrets
+file.
+</p>
+
+<pre>
+% ipso -a $home/lib/fact.keys
+
+  Warning: The editor will display the secret contents of
+  your aescbc files in the clear.
+
+aescbc password:
+aescbc key:
+</pre>
+
+<p class='para'>
+Replace
+'test'
+with
+the
+keys,
+replacing
+each
+instance
+'!password?'
+to
+'!password=secret'
+where
+'secret'
+is
+the
+password
+for
+the
+key.
+</p>
+
+<a name="POPULATING_FACTOTUM_AT_STARTUP" /><h3>POPULATING FACTOTUM AT STARTUP</h3>
+
+<p class='para'>
+Instead
+of
+manually
+running
+the
+command
+to
+populate
+factotum,
+you
+can
+have
+it
+done
+in
+your
+profile
+</p>
+
+<pre>
+# Add some keys to factotum
+if(test -f $home/lib/fact.keys)
+     auth/aescbc -d &lt; $home/lib/fact.keys | read -m &gt; /mnt/factotum/ctl
+</pre>
+
+<a name="USING_AESCBC_AND_SECSTORE_TOGETHER" /><h3>USING AESCBC AND SECSTORE TOGETHER</h3>
+
+<p class='para'>
+One
+may
+make
+use
+of
+a
+secstore
+server
+even
+if
+one
+prefers
+not
+to
+store
+keys
+in
+unencrypted
+form
+by
+combining
+the
+use
+of
+aescbc
+to
+encrypt
+with
+secstore
+to
+retrieve.
+Here
+is
+a
+script
+which
+replaces
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ipso"><i>ipso</i>(1)</a>
+and
+stores
+data
+only
+in
+encrypted
+form.
+By
+default
+it
+uses
+a
+file
+named
+'p'
+for
+storage.
+-e
+file
+edits
+file,
+-p
+file
+puts
+file
+in
+encrypted
+form
+on
+secstore,
+and
+-g
+retrieves
+an
+encrypted
+file,
+decrypts,
+and
+adds
+it
+to
+factotum.
+-s
+server
+specifies
+a
+secstore
+server.
+It
+uses
+ed
+for
+its
+editor,
+you
+may
+change
+this
+to
+another
+editor
+if
+preferred.
+</p>
+
+<pre>
+#!/bin/rc
+# ipso replacement with encryption of what is stored
+
+rfork e
+while(~ $1 -*){
+	switch($1){
+	case -e
+		mode=edit
+		shift
+	case -g
+		mode=get
+		shift
+	case -p
+		mode=put
+		shift
+	case -s
+		server=$2
+		shift
+		shift
+	case *
+		echo 'usage [-s server] [-egp] [file]'
+		exit usage
+	}
+}
+targ=$1
+if(~ $targ '')
+	targ=p
+if(~ $server '')
+	server=$auth
+
+fn getf{
+	{
+		echo rawon
+		echo -n $name password: &gt;/dev/cons
+		read &gt; f
+		echo &gt; /dev/cons
+	}&lt;/dev/cons &gt; /dev/consctl
+}
+
+fn gettarg{
+	auth/secstore -i -g $targ -s $server &lt;f
+	auth/aescbc -d -i &lt;$targ &gt;q &lt;[3] f
+}
+
+fn puttarg{
+	auth/aescbc -e -i &lt;q &gt;$targ &lt;[3] f
+	auth/secstore -i -p $targ -s $server &lt;f
+}
+
+fn delete{
+	cat /lib/namespace &gt;f
+	cat /lib/namespace &gt;$targ
+	cat /lib/namespace &gt;q
+	rm f $targ q
+	cd /
+}
+
+if(~ $mode put){
+	if(! test -e $targ){
+		echo $targ does not exist
+		exit no.target
+	}
+	rfork ensf
+	if(! test -d /tmp/nada)
+		mkdir /tmp/nada
+	ramfs -p -m /tmp/nada
+	cp $targ /tmp/nada/q
+	cd /tmp/nada
+	
+	getf
+	puttarg
+	delete
+
+	unmount /tmp/nada
+	echo dont forget to remove $targ
+	exit ''
+}
+
+if(~ $mode edit){
+	rfork ensf
+	ramfs -p
+	cd /tmp
+
+	getf
+	gettarg
+	ed q
+	puttarg
+	delete
+
+	unmount /tmp
+	exit ''
+}
+
+if(~ $mode get){	
+	rfork ensf
+	if(! test -d /tmp/nada)
+		mkdir /tmp/nada
+	ramfs -p -m /tmp/nada
+	cd /tmp/nada
+
+	getf
+	gettarg
+	read -m q &gt; /mnt/factotum/ctl
+	delete
+
+	unmount /tmp/nada
+	exit ''
+}
+</pre>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Mon Feb 18 03:56:13 EST 2013</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

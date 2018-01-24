@@ -1,0 +1,372 @@
+Wiki Index
+D1392633010
+Cwiki index script
+Aglenda
+#Index of wiki pages:
+#
+#! 
+# *	[! unix plan 9 from bell labs] (408)
+#
+#2
+# *	[22c3] (243)
+#
+#9
+# *	[9blogs] (211)
+# *	[9con] (182)
+# *	[9fans] (328)
+# *	[9grid] (212)
+# *	[9p2000.u] (170)
+# *	[9p2010] (357)
+# *	[9p2010 operations] (358)
+# *	[9p services using srv, listen, exportfs, import] (400)
+# *	[9pfs.plist] (330)
+# *	[9srv.net] (367)
+# *	[9vx] (365)
+#
+#=
+# *	[== plan 9 wiki ==] (378)
+#
+#[
+# *	[[about plan 9 | #about plan 9]] (386)
+#
+#A
+#
+# *	[acme wiki instructions] (6)
+# *	[adding a monitor to vgadb] (331)
+# *	[adding a new user] (167)
+# *	[adding your face] (196)
+# *	[aedik] (370)
+# *	[aediks] (368)
+# *	[ajft] (290)
+# *	[aleimy] (304)
+# *	[alternative window system] (404)
+# *	[arpunk] (363)
+# *	[avoiding screen pollution from kernel messages] (334)
+# *	[avoiding screen pollution from kernel messges] (333)
+#
+#B
+#
+# *	[background] (56)
+# *	[bleepbybloop] (302)
+# *	[blue gene port] (289)
+# *	[books] (213)
+# *	[bootdir] (58)
+# *	[boyd] (244)
+# *	[broken hardware] (371)
+# *	[btdn] (292)
+#
+#C
+#
+# *	[cfp] (171)
+# *	[clt2006] (275)
+# *	[collaborative environments] (233)
+# *	[community] (172)
+# *	[compiling kernels] (8)
+# *	[configuring a standalone cpu server] (14)
+# *	[configuring file-backed venti stores] (300)
+# *	[connecting from other oses] (155)
+# *	[connecting to other oses] (116)
+# *	[console messages] (285)
+# *	[contrib] (265)
+# *	[contrib index] (267)
+# *	[contrib index test] (360)
+# *	[coraid wiki] (351)
+# *	[cross domain authentication] (216)
+#
+#D
+#
+# *	[dave's plan 9 wiki] (394)
+# *	[development] (260)
+# *	[dialup modem config] (230)
+# *	[divergefs] (240)
+# *	[divergefs manpage] (241)
+# *	[dns configuration notes] (231)
+# *	[dnsmasq] (310)
+# *	[documentation] (261)
+# *	[don't believe everything you read] (314)
+# *	[download] (255)
+# *	[drawterm] (259)
+# *	[drawterm to your terminal] (195)
+# *	[dual booting bare machine and vmware] (174)
+#
+#E
+#
+# *	[ericvh] (173)
+# *	[errata] (270)
+# *	[expanding your grid] (401)
+#
+#F
+#
+# *	[faq] (204)
+# *	[fhs] (354)
+# *	[fonts] (294)
+# *	[fosdem 2005 9con] (190)
+# *	[fosdem 2006 9con] (272)
+# *	[future development directions] (217)
+# *	[future directions] (218)
+#
+#G
+#
+# *	[games] (335)
+# *	[gmail on plan9] (332)
+# *	[gsoc] (389)
+# *	[gsoc-2010] (376)
+# *	[gsoc-2011-ideas] (384)
+# *	[gsoc-2012-ideas] (396)
+# *	[gsoc-2013-ideas] (399)
+# *	[gsoc-2014-ideas] (410)
+# *	[gsoc-student-app-template] (387)
+# *	[gsoc07] (299)
+# *	[gsoc07old] (296)
+# *	[gsoc2007] (298)
+# *	[gsoc2008] (336)
+# *	[gsoc2010] (377)
+# *	[gsoc 2008 application template] (347)
+# *	[gsoc 2008 student guidelines] (346)
+# *	[gsoc admin expectations] (391)
+# *	[gsoc mentor expectations] (390)
+# *	[gsoc student application] (388)
+# *	[gsoc student expectations] (392)
+# *	[gsocfs] (341)
+# *	[guide] (395)
+# *	[guruplug] (381)
+# *	[guruplug (wip)] (382)
+#
+#H
+#
+# *	[happy users' thanks] (28)
+# *	[hare] (364)
+# *	[high performance computing using plan 9] (166)
+# *	[how to contribute] (214)
+# *	[httpd] (318)
+# *	[hubfs] (402)
+#
+#I
+#
+# *	[ideas] (407)
+# *	[inferno-ds] (342)
+# *	[inferno hosted video] (345)
+# *	[informal wiki setup] (162)
+# *	[instalation on the alpha] (281)
+# *	[installation instructions] (4)
+# *	[installation on ipaq] (46)
+# *	[installation troubleshooting] (5)
+# *	[installer errata] (209)
+# *	[installing a plan 9 file server] (15)
+# *	[installing in parallels desktop on mac os x] (306)
+# *	[installing in parallels desktop on mac os x] (303)
+# *	[installing in xen] (188)
+# *	[installing in xen 3] (362)
+# *	[installing in xen 3.0] (288)
+# *	[installing plan 9 in a virtualbox] (397)
+# *	[installing plan 9 on qemu] (311)
+# *	[installing plan b on qemu] (309)
+# *	[integrating 9load into the linuxbios] (80)
+# *	[integration with other oss] (329)
+# *	[intro to tools philosophy for *nix users] (161)
+# *	[intro to tools philosophy for windows users] (160)
+# *	[introduction] (307)
+# *	[iphone drawterm] (344)
+# *	[irc] (206)
+# *	[iwp9 2006] (280)
+# *	[iwp9 2007] (324)
+# *	[iwp9 2007 travel plans] (325)
+#
+#K
+#
+# *	[kfs file system configuration] (7)
+# *	[kuroneko] (222)
+#
+#L
+#
+# *	[lfaq] (385)
+# *	[libre software meeting 2005] (200)
+# *	[linux emulation] (383)
+#
+#M
+#
+# *	[madrid9con 2006] (276)
+# *	[mail configuration] (12)
+# *	[mailing lists] (205)
+# *	[man pages review] (203)
+# *	[mirror] (322)
+# *	[mirror sites] (321)
+# *	[mirroring with fossil and venti] (284)
+# *	[mirrors] (269)
+# *	[modifying sandbox] (393)
+# *	[mouse scrolling] (327)
+# *	[mouse vs. keyboard] (34)
+#
+#N
+#
+# *	[network configuration] (11)
+# *	[news] (238)
+# *	[nluug 2005 spring day] (220)
+#
+#O
+#
+# *	[oauth] (405)
+# *	[old wiki pages] (229)
+# *	[olpc-inferno] (338)
+# *	[organizations using plan 9 and inferno] (271)
+# *	[other hardware] (282)
+# *	[outer space] (380)
+# *	[overview] (24)
+# *	[oy!] (301)
+# *	[ozinferno] (258)
+#
+#P
+#
+# *	[p9-scm] (339)
+# *	[papers] (245)
+# *	[parallels on mac os x] (305)
+# *	[people] (256)
+# *	[plan9 on qemu on windows] (313)
+# *	[plan9 with parallels] (287)
+# *	[plan 9 documentation] (254)
+# *	[plan 9 documentation task force] (202)
+# *	[plan 9 related publications] (175)
+# *	[plan 9 resources in other languages] (228)
+# *	[plan 9 university] (359)
+# *	[plan 9 wiki] (1)
+# *	[plan 9 wiki wish list] (22)
+# *	[plan 9 wiki x] (353)
+# *	[plumbing examples] (323)
+# *	[porting alien software to plan 9] (246)
+# *	[pq] (411)
+# *	[printer configuration] (9)
+# *	[public plan 9 servers] (366)
+#
+#R
+#
+# *	[radeon drivers] (165)
+# *	[raspberry pi] (403)
+# *	[recommended readings] (248)
+# *	[replace language for wikifs] (406)
+# *	[replacing 9load] (278)
+# *	[rfc] (176)
+# *	[rfc9p1] (177)
+# *	[rfc9p2000] (178)
+# *	[rfc9p2000.u] (179)
+# *	[rsc] (263)
+#
+#S
+#
+# *	[salad] (315)
+# *	[sandbox] (2)
+# *	[sandbox two] (251)
+# *	[screenshots] (199)
+# *	[setting the right keyboard map] (369)
+# *	[setting the right monitor size] (186)
+# *	[setting up a inferno mirror] (268)
+# *	[setting up a sources mirror] (257)
+# *	[setting up fossil] (60)
+# *	[setting up venti] (59)
+# *	[snip] (361)
+# *	[software for plan 9] (210)
+# *	[softwaretools] (159)
+# *	[sources repository] (266)
+# *	[ssh configuration] (13)
+# *	[staying up to date] (44)
+# *	[summary of the plan 9 development environment] (21)
+# *	[supported pc hardware] (3)
+# *	[supported pdas] (45)
+# *	[svg support] (343)
+# *	[system requirements] (232)
+#
+#T
+#
+# *	[test] (375)
+# *	[test060910] (379)
+# *	[test2] (279)
+# *	[test page] (286)
+# *	[test sandbox] (409)
+# *	[testing] (352)
+# *	[testtest] (372)
+# *	[tex configuration] (10)
+# *	[the plan 9 web server] (320)
+# *	[the plan 9 web server httpd(8) has some interesting features.
+#	it] (319)
+# *	[thm 2005-04-12 log] (226)
+# *	[thm 2005-04-12 summary] (227)
+# *	[thm 2005-05-19 log] (224)
+# *	[thm 2005-05-19 summary] (225)
+# *	[thm 2005-06-23 log] (234)
+# *	[thm 2005-06-23 summary] (235)
+# *	[thm 2005-08-15 log] (250)
+# *	[thm 2005-08-15 summary] (249)
+# *	[thm 2005-09-24 summary] (264)
+# *	[thm 2005-09-25 log] (252)
+# *	[tip9ug] (180)
+# *	[tip o' the day] (189)
+# *	[tmac] (293)
+# *	[todo] (83)
+# *	[town hall meetings] (223)
+# *	[troubleshooting plan9 & lilo] (36)
+# *	[twente9con 2004] (181)
+# *	[twente9con 2004 report] (185)
+#
+#U
+#
+# *	[unix to plan 9 command translation] (55)
+# *	[updating an arm system] (398)
+# *	[upgrading to fourth edition] (31)
+# *	[uriel] (201)
+# *	[usb-debug-port] (348)
+# *	[usb-vga] (349)
+# *	[usb-wifi] (350)
+# *	[user groups] (221)
+# *	[using acme] (17)
+# *	[using aescbc to store factotum keys] (291)
+# *	[using aoe (ata-over-ethernet)] (373)
+# *	[using aoe (ata-over-ethernet) to coraid devices] (374)
+# *	[using plumbing] (18)
+# *	[using pq] (20)
+# *	[using rio] (16)
+# *	[using ssl] (326)
+# *	[using troff] (19)
+# *	[using vncv] (52)
+#
+#V
+#
+# *	[v9fs] (168)
+# *	[v9fs-2.1] (237)
+# *	[v9fs-roadmap] (236)
+# *	[v9fs-userspace] (337)
+# *	[v9srv] (219)
+# *	[vbackup-plus] (340)
+# *	[video drivers development] (197)
+# *	[virtual machines] (297)
+# *	[vmware] (312)
+# *	[vmware4] (157)
+# *	[vmware playground for plan9] (253)
+#
+#W
+#
+# *	[warren] (295)
+# *	[web browsers] (242)
+# *	[web server] (317)
+# *	[what's new] (148)
+# *	[what do people like about plan 9] (147)
+# *	[what the hack] (198)
+# *	[why static] (164)
+# *	[wiki index] (277)
+# *	[wiki pages review] (207)
+# *	[wiki syntax] (0)
+# *	[wince ftp] (70)
+# *	[wmii9con.se] (283)
+# *	[write missing man pages] (208)
+#
+#X
+#
+# *	[x11 installation] (308)
+#
+#Y
+#
+# *	[yet another useless test wiki page] (316)
+#
+#Z
+#
+# *	[zak b. elep] (355)
+# *	[zakame] (356)
+#

@@ -1,0 +1,131 @@
+divergefs manpage
+D1123032137
+Achaokul (128.2.186.33)
+#
+#DIVERGEFS(4)
+#
+#NAME
+#
+#divergefs - diverge file system
+#
+#SYNOPSIS
+#
+#! divergefs -f rulefile [ -h holefile ] [ -d debuglevel ] mountpoint
+#
+#! divergefs -p defaultpath [ -f rulefile ] [ -h holefile ] [-d debuglevel ] mountpoint
+#
+#DESCRIPTION
+#
+#Divergefs is a user level file server that allows combining
+#arbitrary number of directories on top of the mount point based on
+#user specified rules from rulefile. It can be used but not limited
+#to: modify files on read-only media, speed up compilation where
+#source code is on remote machine.
+#
+#OPTIONS
+#
+#-f Sets the user configuration file which defines what and how the
+#directories will be combined together.
+#
+#-h Specifies the file to store file or directory names that were
+#removed during the mounted session. If holefile exists, it will be
+#used to initialize the file system, and any file matching the
+#filenames after mount will be masked out. (default /tmp/holes or
+#defaultpath/holes if using default path invocation).
+#
+#-d Allows the user to specify the amount of debugging mes- sages to
+#be outputted ranging from 1-5. (default 3)
+#
+#-p Specifies a default path where the holefile will be
+#defaultpath/holes. If rulefile is not specified, a default rule file
+#will be written to defaultpath/rules with content of:
+#defaultpath/files all<> which means that defaultpath/files will be
+#combined on top of mountpoint. defaultpath and defaultpath/files
+#will be automatically created if they do not exist. (default /tmp).
+#
+#EXAMPLES
+#
+#The easiest way to use divergefs is to invoke it only with a default
+#path argument and the mountpoint:
+#
+#divergefs -p /tmp /sys/src
+#
+#or just:
+#
+#divergefs /sys/src
+#
+#in which case the default path will be /tmp. If divergefs is invoked
+#with default path, it will automatically output a rule file at
+#/tmp/rules which you can later modify to suit different needs.
+#
+#Default path is easy to use but is limited to layering one directory
+#on top of the target mountpoint if you use the supplied default rule
+#file. For More advanced usage, you will want to write your own
+#config file. The following is an example:
+#
+#divergefs.rc
+#
+#/tmp/bin mode<x> # redirect executables to /tmp/bin
+#
+#/tmp ext<8> # redirect any files with extension 8 to /tmp
+#
+#Mount command:
+#
+#divergefs -f divergefs.rc mnt
+#
+#After mounting, writing to ./mnt/*/*.8 will be redirected to
+#/tmp/*/*.8 while writing to executables will be redirected to
+#/tmp/bin.
+#
+#It is suggested that you supply your own holefile argument so that
+#holefile from a different session won't be used, and it won't be
+#overwritten accidentally. Note: this only applies if you are not
+#using the default path invocation.
+#
+#SYNTAX
+#
+#config_file = (rule '\n')*
+#
+#rule = path complex_rule
+#
+#path = absolute_path | relative_path
+#
+#complex_rule = simple_rule (("||" | "&&") complex_rule)?
+#
+#simple_rule = concrete_rule '<' setting '>' | '(' complex_rule ')'
+#
+#Concrete rules and corresponding setting syntax are described in the
+#next section. Note: relative_path is rela- tive to the current path
+#at the time of invocation.
+#
+#RULES
+#
+#all<> Matches anything. Note: the setting field must be empty.
+#
+#mode<setting> setting = 'A' | 'L' | 'f' | 'd' | 'r' | 'w' | 'x' |
+#'e' Matches file with the given mode. Each mode can only have one
+#character in the setting field. Please refer to test(1) for details
+#on the meaning of each charac- ter.
+#
+#ext<setting> setting = file extension
+#
+#fregex<setting> setting = regular expression, refer to regexp(2) for
+#details. matches any file name that satisfies the reg- ular
+#expression given.
+#
+#dregex<setting> setting = regular expression, refer to regexp(2) for
+#details. matches any directory name that satisfies the regular
+#expression given.
+#
+#regex<setting> setting = regular expression, refer to regexp(2) for
+#details. matches any name that satisfies the regular expression
+#given.
+#
+#SOURCE
+#
+#SEE ALSO
+#
+#BUGS
+#
+#Renaming read-only directory will result in error.
+#

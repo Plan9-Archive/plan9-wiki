@@ -1,0 +1,27 @@
+divergefs
+D1124943495
+Achaokul (128.2.186.37)
+#Divergefs is a user level file server which layers arbitrary number
+#of directory trees on top of the base directory mountpoint based on
+#user specified rules from rulefile. Its uses include, but are not
+#limited to, temporarily modifying a few files on read-only media or
+#speeding up compilation by storing object files locally instead of
+#on a distant file server.
+#
+#This project is developed by Chao-Kuo Lin as part of the [OS
+#Practicum class at CMU | http://www.cs.cmu.edu/~412/] taught by Dave
+#Eckhardt [community].
+#
+#Project page: [divergefs |
+#http://www.cs.cmu.edu/~412/history/2004S/chaokul.html]
+#
+#Man page: [divergefs(4) |
+#http://www.cs.cmu.edu/~412-s04/chaokul/divergefs.html]
+#
+#Source code: [divergefs.tar.gz |
+#http://www.cs.cmu.edu/~412-s04/chaokul/divergefs.tar.gz]
+#
+#Also in /n/sources/contrib/de0u/
+#
+#Pleaes send any suggestions or bug reports to chaokuo iname com.
+#

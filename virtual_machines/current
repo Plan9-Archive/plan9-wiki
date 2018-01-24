@@ -1,0 +1,100 @@
+Virtual machines
+D1363028292
+Aa
+#Plan 9 can be installed on a variety of virtual machines. For the
+#moment, this page collects links to the various pages related to the
+#subject.
+#
+#9VX
+#
+# *	[9vx] provides a Plan 9 kernel running in user-mode.
+#
+#XEN
+#
+# *	[Installing in Xen]
+# *	[Installing in Xen 3.0]
+#
+#QEMU/KVM
+#
+#For installation instructions, see
+# *	[Installing Plan 9 on Qemu]
+# *	[Installing Plan B on Qemu]
+#
+#If you configure a cpu server ([Configuring a standalone CPU
+#server]), you can run it from a terminal by adding a line
+#! console=0
+#to plan9.ini and invoking the virtual machine with option
+#-nographic. Note that you need to configure Qemu networking to allow
+#connections to the virtual machine.
+#
+#PARALLELS
+#
+#See [Installing in Parallels Desktop on Mac OS X] for installation
+#instructions. There are also some possibly outdated instructions at
+#[Plan 9 on Parallels |
+#http://www.tip9ug.jp/who/leimy/parallels.html].
+#
+#Note that <Del> is <fn>+<Bksp>.
+#
+#VMWARE
+#
+# *	[VMWare]
+# *	[vmware4]
+# *	[Vmware_playground_for_plan9]
+# *	[Dual booting bare machine and vmware]
+#
+#VIRTUAL BOX
+#
+# *	[installing plan 9 in a virtualbox]
+#
+#Note, in particular, the warning about VirtualBox being often
+#broken, with behavior very dependent on exact versions of things. If
+#at all possible, you are advised to use a different VM.
+#
+#VIRTUAL BOX on OS X
+#
+#I used VirtualBox 4.1.6 (with a matching extension pack). This is
+#the latest version at present(2011/11/24). Installed a stock
+#plan9.iso (made on 2011/11/12).
+#
+#Settings:
+# *	Chipset: PIIX3
+# *	Enable IO APIC
+# *	select both buttons on h/w virtualization
+# *	IDE ctrlr: PIIX4, use host I/O cache
+# *	hard disk on IDE primary master
+# *	cdrom on IDE secondary master
+# *	network: bridge adapter
+# *	Adapter type: intel pro/1000 MT server or desktop
+# *	Enable USB, select USB 2.0
+#
+#Other settings may also work.
+#
+#During installation choose Fossil only (I had lot of trouble with
+#fossil + venti, where it dies very early during distcopy).
+#Everything else was basically defaulted.
+#
+#Even with just fossil I see fossil write errors once in a while but
+#fossil/flchk doesn't show any errors.
+#
+#Don't forget to turn on venti on reboot (Yon can use p9p venti --
+#unless you have a physical machine running plan9, running venti
+#natively on the host is faster). For venti add the following to
+#plan9.ini
+#
+#! venti=tcp!<venti-server-ip-addr>!17034
+#
+#Use the numeric ip-address for your venti-server. and telling fossil
+#to use venti & set up a regular snapshots
+#
+#! fossil/conf /dev/sdC0/fossil > fs.cfg
+#! ed fs.cfg <<EOF
+#! /open/s/-V/-AWP/p
+#! a
+#! fsys main snaptime -a hhmm -s 1440
+#! .
+#! EOF
+#! fossil/conf -w /dev/sdC0/fossil fs.cfg
+#
+#Replace hhmm with the time you want to take a snapshot.
+#

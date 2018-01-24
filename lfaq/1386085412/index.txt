@@ -1,0 +1,701 @@
+lfaq
+
+(less frequently asked questions)
+
+[Introduction | #INTRODUCTION]
+
+ *	What is Plan 9?
+ *	For History Buffs
+ *	What is in the latest Plan 9 release?
+ *	What is the names of the “parents”?
+ *	What is its relation to other operating systems?
+ *	What are its key ideas?
+ *	What are the advantages to this approach?
+ *	What Unix Problems Were Too Deep to Fix?
+
+[Hardware and Software | #HARDWARE_AND_SOFTWARE]
+
+ *	What platforms does it run on?
+ *	Does it support symmetric multiprocessing?
+ *	What about development tools?
+ *	Where can I get more Plan 9 software?
+ *	Is it object-oriented?
+ *	What about application portability?
+ *	What resources does it need?
+ *	What GUIs does it support?
+ *	How do I cut and paste with a 2 button mouse?
+ *	Does Plan 9 have any Unix-like terminal emulators?
+ *	What character set does it use?
+ *	What about security and user authentication?
+ *	How does it communicate with other systems?
+
+[Installation and Administration | #INSTALLATION_AND_ADMINISTRATION]
+
+ *	What PC hardware works well with Plan 9?
+ *	Does Plan 9 run under VMware, qemu or Xen?
+ *	How do I Install Plan 9?
+ *	Where can I get the stable and current branches of Plan 9?
+ *	How do I setup the VGA?
+ *	What is the Plan 9 equivalent of the Unix find command?
+ *	How do I control the services that start at boot time?
+ *	How do I setup network services?
+ *	How do I shutdown my system?
+ *	How do I reboot my system?
+ *	How about autologin (or something like that)?
+
+[General Information | #GENERAL_INFORMATION]
+
+ *	Where did the name come from?
+ *	Where did the names for Plan 9 components come from?
+ *	What is the symbol of the system?
+ *	Plan 9 esthetics are really nice: colors, fonts, and so on just
+	``look good''. Who did all that?
+ *	How can I obtain Plan 9?
+ *	How can I get involved?
+ *	Where can I get more detailed technical information?
+ *	I want to stick my face file to the distribution, to whom I must
+	address?
+ *	Are there any Plan 9 user groups?
+ *	What is 9grid?
+ *	Can I emulate Plan 9 under Unix (maybe Windows)?
+
+------------------------------------------------------ 
+INTRODUCTION
+
+ *	What is Plan 9?
+
+Plan 9 is a (relatively) new computer operating system and associated
+utilities. It was built by the Computing Science Research Center of
+AT&T Bell Laboratories (now Alcatel-Lucent), the same group that
+developed Unix, C, and C++.
+
+Plan 9 is a distributed system. In the most general configuration, it
+uses three kinds of components: terminals that sit on users' desks,
+file servers that store permanent data, and other servers that
+provide faster CPUs, user authentication, and network gateways. These
+components are connected by various kinds of networks, including
+Ethernet, specially-built fiber networks, ordinary modem connections,
+and ISDN. In typical use, users interact with applications that run
+either on their terminals or on CPU servers, and the applications get
+their data from the file servers. The design, however, is highly
+configurable; it escapes from specific models of networked
+workstations and central machine service.
+
+------------------------------------------------------ 
+ *	For History Buffs
+
+The first edition of Plan 9 was released in 1993, and was only
+available to universities.
+
+In 1995 the second edition was available for purchase under a
+shrink-wrap license.
+
+On June 7, 2000, the third release was made available for free
+download under an open source agreement.
+
+The current, fourth edition of the system was released on April,
+2002. At first it was made available under same license as a third
+edition, but on 9 June, 2003, was approved new open source license --
+Lucent Public License.
+
+------------------------------------------------------ 
+ *	What is in the latest Plan 9 release?
+
+The fourth release of Plan 9 provides a major overhaul of the system
+at every level. From the underlying file system protocol, [9P |
+http://9p.cat-v.org], through the kernel, libraries, and
+applications, almost everything has been modified and, in many cases,
+redesigned or rewritten. For more details, see the release notes at
+[http://plan9.bell-labs.com/sys/doc/release4.html].
+
+While there have not been any "official" releases for some time
+development is very active both inside and outside the Labs and many
+changes and updates have been done all over the system; the ISO
+images in the web site are rebuilt daily based on the latest source
+tree. For updating running systems the replica(1) system is used. See
+[staying up to date] for more details.
+
+------------------------------------------------------ 
+ *	What are the names of the “parents”?
+
+Plan 9 is the work of many people. The protocol was begun by Ken
+Thompson; naming was integrated by Rob Pike and networking by Dave
+Presotto. Phil Winterbottom simplified the management of name spaces
+and re-engineered the system. They were joined by Tom Killian, Jim
+McKie, and Howard Trickey in bringing the system up on various
+machines and making device drivers. Thompson made the C compiler;
+Pike, window systems; Tom Duff, the shell and raster graphics;
+Winterbottom, Alef; Trickey, Duff, and Andrew Hume, APE. Bob
+Flandrena ported a myriad of programs to Plan 9. Russ Cox did much of
+the work updating the graphics and creating the new disk and
+bootstrap model as well as providing a number of new commands; David
+Hogan ported Plan 9 to the Dec Alpha; and Sape Mullender wrote the
+new thread library. Other contributors include Alan Berenbaum,
+Lorinda Cherry, Bill Cheswick, Sean Dorward, David Gay, Paul Glick,
+Eric Grosse, John Hobby, Gerard Holzmann, Brian Kernighan, Bart
+Locanthi, Doug McIlroy, Judy Paone, Sean Quinlan, Bob Restrick,
+Dennis Ritchie, Bjarne Stroustrup, Cliff Young, Bruce Ellis, Charles
+Forsyth, Eric Van Hensbergen, and Tad Hunt.
+
+Plan 9 group photo is available at Dennis Ritchie's page:
+[http://www.cs.bell-labs.com/who/dmr/pix/index1.html].
+
+------------------------------------------------------ 
+ *	What is its relation to other operating systems?
+
+Plan 9 is itself an operating system; it doesn't run as an
+application under another system. It was written from the ground up
+and doesn't include other people's code. Although the OS's interface
+to applications is strongly influenced by the approach of Unix, it's
+not a replacement for Unix, it is a new design.
+
+------------------------------------------------------ 
+ *	What are its key ideas?
+
+Plan 9 exploits, as far as possible, three basic technical ideas:
+first, all the system objects present themselves as named files that
+are manipulated by read/write operations; second, all these files may
+exist either locally or remotely, and respond to a standard protocol;
+third, the file system name space -- the set of objects visible to a
+program -- is dynamically and individually adjustable for each of the
+programs running on a particular machine. The first two of these
+ideas were foreshadowed in Unix and to a lesser extent in other
+systems, while the third is new: it allows a new engineering solution
+to the problems of distributed computing and graphics. Plan 9's
+approach means that application programs don't need to know where
+they are running; where, and on what kind of machine, to run a Plan 9
+program is an economic decision that doesn't affect the construction
+of the application itself.
+
+------------------------------------------------------ 
+ *	What are the advantages to this approach?
+
+Plan 9's approach improves generality and modularity of application
+design by encouraging servers that make any kind of information
+appear to users and to applications just like collections of ordinary
+files. Here are a few examples.
+
+The Plan 9 window system (called rio) is small and clean in part
+because its design is centered on providing a virtual keyboard,
+mouse, and screen to each of the applications running under it, while
+using the real keyboard, mouse, and screen supplied by the operating
+system. That is -- besides creating, deleting, and arranging the
+windows themselves -- its job is be a server for certain resources
+used by its clients. As a side benefit, this approach means that the
+window system can run recursively in one of its windows, or even on
+another machine.
+
+Plan 9 users do Internet FTP by starting a local program that makes
+all the files on any FTP server (anywhere on the Internet) appear to
+be local files. Plan 9 PC users with a DOS/Windows partition on their
+disk can use the files stored there. ISO 9660 CD-ROMs and tar and
+cpio tapes all behave as if they were native file systems. The
+complete I/O behavior and performance of any application can be
+monitored by running it under a server that sees all its
+interactions. The debugger can examine a program on another machine
+even if it is running on a different hardware architecture.
+
+Another example is the approach to networks. In Plan 9, each network
+presents itself as a set of files for connection creation, I/O, and
+control. A common semantic core for the operations is agreed upon,
+together with a general server for translating human-readable
+addresses to network-specific ones. As a result, applications don't
+care which kind of network (TCP/IP, ISDN, modem) they are using. In
+fact, applications don't even know whether the network they are using
+is physically attached to the machine the application is running on:
+the network interface files can be imported from another machine.
+
+------------------------------------------------------ 
+ *	What Unix Problems Were Too Deep to Fix?
+
+This is best described by Dave Presotto's 9fans post (from 7 May
+2003):
+
+Before Plan 9, we were running lots of Unices held together by a few
+networks, a remote file system (different uid's on each Unix), and a
+bunch of remote execution commands. We hated it since it was much
+harder to manage and use than our old single multiuser machine. We
+wanted an environment that not only put together a lot of boxes and
+made them look like one but which also would make use of the new
+technologies that were appearing (SMP's, heterogeneous architectures,
+juke boxes, ...).
+
+The thought was that the new environment wouldn't change from Unix
+except where we thought it would make our goal easier to build. The
+kernel had to go. The single monitor view of the Unix kernel was a
+real pain for making good use of the SMP's. Therefore, we started
+that from scratch. That didn't mean that the kernel interface had to
+change though. That was a separate topic. Lots of others have
+rewritten the kernel from the ground up while maintaining something
+that looked more like a Unix.
+
+Ken and Rob thought up the idea of building everything around a
+single file system protocol. They also added the idea of a subjective
+namespace to try to unify all the binding ideas of Unix. This name
+space is the one thing underlying Plan 9. We could have done the same
+thing to a Unix kernel (with an infinite amount of sweating) but the
+result would have been the same from the user standpoint, i.e., a
+system that looks very different. The ease which with it can be done
+can be witnessed by the number of failed/stalled attempts to add the
+Plan 9 namespace to Linux ...
+
+Also, we were tired of the general kitchen sink nature of Unix,
+especially of System V. If there were 3 projects or groups to do a
+single thing (like character processing, shared memory, networking,
+...) they all eventually got jammed in. We wanted something simpler
+to work with.
+
+Lastly, we had all developed an extreme allergy to code filled with
+#if, #ifdef, #else, #elseif. Getting rid of that cruft by sticking
+differences into separate files/routines required a hell of a lot of
+rewriting.
+
+So the result was a different kernel, with a different design
+philosophy, a similar but different interface, but mostly the same
+old commands.
+
+If you think that Unix was just a single track in comparison, you're
+sadly mistaken. We just made more of a bend than others did.
+
+We are guilty of rewriting commands just for the sake of doing it.
+The reason there was sometimes legitimate, to match our different
+kernel interfaces or whatever. However, it was just as often so we
+wouldn't have to worry about Unix licenses.
+------------------------------------------------------ 
+
+HARDWARE AND SOFTWARE
+
+ *	What platforms does it run on?
+
+The Plan 9 kernel and applications are highly portable. Plan 9 runs
+on many architectures, among others: x86, MIPS, Alpha, PowerPC, SPARC
+and ARM.
+
+Data structures and protocols are designed for distributed computing
+on machines of diverse design. Except for necessarily
+machine-dependent parts of the kernel, the compilers, and a few
+libraries, there is a single source representation for everything.
+
+To find out whether Plan 9 supports your hardware, read [The Various
+Ports | http://doc.cat-v.org/plan_9/4th_edition/papers/port] and
+[Supported PC Hardware].
+
+------------------------------------------------------ 
+ *	Does it support symmetric multiprocessing?
+
+Yes, SMP has been always well supported and over the years it has
+been used under many architectures. By default, as it comes out the
+box, the release has SMP operation disabled by an option ``*nomp=1''
+in the plan9.ini config file.
+
+------------------------------------------------------ 
+ *	What about development tools?
+
+[Summary of the Plan 9 Development Environment]
+
+------------------------------------------------------ 
+ *	Where can I get more Plan 9 software?
+
+See the [software for Plan 9] page.
+
+------------------------------------------------------ 
+ *	Is it object-oriented?
+
+No, not in the conventional sense. It is written in a strict dialect
+of ISO/ANSI C. In a wider sense, its general design of making all its
+``objects'' look like files to which one talks in a well-defined
+protocol shows a related approach.
+
+------------------------------------------------------ 
+ *	What about application portability?
+
+Plan 9 comes with [APE |
+http://plan9.bell-labs.com/sys/doc/ape.html], a library that makes it
+easy to import POSIX-conforming applications. There is also a library
+that emulates the Berkeley socket interface.
+
+See also [Porting alien software to Plan 9].
+
+------------------------------------------------------ 
+ *	What resources does it need?
+
+As might be expected, the answer depends on what you want to do. The
+kernel, the window system, and the basic applications will run
+comfortably on a PC with 32MB of memory.
+
+------------------------------------------------------ 
+ *	What GUIs does it support?
+
+The standard interface doesn't use icons or drag-n-drop; Plan 9
+people tend to be text-oriented. But the window system, the editor,
+and the general feel are very mousy, very point-and-click: Plan 9
+windows are much more than a bunch of glass TTYs. The system supports
+the graphics primitives and libraries of basic software for building
+GUIs.
+
+Also see the [screenshots] page.
+
+------------------------------------------------------ 
+ *	How do I cut and paste with a 2 button mouse?
+
+Plan 9 really works well only with a three-button mouse. In the
+meantime, Shift-Right-button will simulate a middle button, but that
+is inadequate for acme's chording.
+
+------------------------------------------------------ 
+ *	Does Plan 9 have any Unix-like terminal emulators?
+
+The Plan 9 window system doesn't obey any inline cursor controls,
+since none of the native applications use cursor-addressing. All
+cursor control in rio, Acme and sam is via the mouse.
+
+To see some excellent articles on this important and divisive user
+interface issue read
+[http://www.asktog.com/readerMail/1999-12ReaderMail.html].
+
+If you want to get from Plan 9 to Unix systems, you can run vt in one
+of your windows, telnet/rlogin to Unix, and set the term/TERM
+variable accordingly on the Unix end. See vt(1) for more details;
+note that vt can emulate a VT100 VT220 or ANSI terminal.
+
+------------------------------------------------------ 
+ *	What character set does it use?
+
+The character set is Unicode, the 16-bit set unified with the ISO
+10646 standard for representing languages used throughout the world.
+The system and its utilities support Unicode using a byte-stream
+representation (called UTF-8) that is compatible with ASCII. On Plan
+9, one may grep for Cyrillic strings in a file with a Japanese name
+and see the results appear correctly on the terminal.
+
+The encoding known today as UTF-8 was invented by Ken Thompson. It
+was born during the evening hours of 1992-09-02 in a New Jersey
+diner, where he designed it in the presence of Rob Pike on a placemat
+(see Rob Pike's UTF-8 history). It replaced an earlier attempt to
+design a FSS/UTF (file system safe UCS transformation format) that
+was circulated in an X/Open working document in August 1992 by Gary
+Miller (IBM), Greger Leijonhufvud and John Entenmann (SMI) as a
+replacement for the division-heavy UTF-1 encoding from the first
+edition of ISO 10646-1. Pike and Thompson turned by the end of the
+first week of September 1992 Plan 9 from Bell Labs into the first
+operating system to use UTF-8 and reported about their experience at
+the USENIX Winter 1993 Technical Conference, San Diego, January
+25-29, 1993, Proceedings, pp. 43-50. FSS/UTF was briefly also
+referred to as UTF-2 and later renamed into UTF-8, and pushed through
+the standards process by the X/Open Joint Internationalization Group
+XOJIG.
+
+For more details about the history of UTF-8 see:
+[http://doc.cat-v.org/bell_labs/utf-8_history]
+
+------------------------------------------------------ 
+ *	What about security and user authentication?
+
+Plan 9's authentication design is akin to that of MIT's Kerberos.
+Passwords are never sent over networks; instead encrypted tickets are
+obtained from an authentication server. It doesn't have the concept
+of ``set UID'' programs. The file server doesn't run user programs,
+and except at its own console, it doesn't allow access to protected
+files except by authenticated owners. The concept of a special
+``root'' user is gone.
+
+The fourth edition of Plan 9 includes a substantially reworked
+security architecture, described in the USENIX Security 2002
+conference paper by Russ Cox, Eric Grosse, Rob Pike, Dave Presotto,
+and Sean Quinlan.
+
+[http://plan9.bell-labs.com/sys/doc/auth.pdf].
+
+------------------------------------------------------ 
+ *	How does it communicate with other systems?
+
+The distribution includes a u9fs(4) server that runs on
+Unix-compatible systems and understands the native Plan 9 remote file
+protocol, so that file systems of Unix machines may be imported into
+Plan 9. It also includes an NFS-compatible server that runs on Plan
+9, so that Plan 9 file systems may be accessed from other systems
+that support NFS. It includes the full suite of Internet protocols
+(telnet, rlogin, ftp).
+
+------------------------------------------------------ 
+INSTALLATION AND ADMINISTRATION
+
+ *	What PC hardware works well with Plan 9?
+
+See the [Supported PC Hardware] page.
+
+------------------------------------------------------ 
+ *	Does Plan 9 run under VMware, qemu or Xen?
+
+Plan 9 is ported to Xen and runs well under recent versions of qemu.
+
+VMware used to be supported, but was always problematic and the
+latest versions just wont work, VMware wont release the information
+necessary to make Plan 9 run properly on VMware, and thanks to Xen
+and qemu this days there is no reason to use VMware anymore. Plan 9
+does work under Parallels on Mac OS X.
+
+See
+[http://groups.google.com/group/comp.os.plan9/msg/cdd9cbdb362d2c0c]
+and [Plan9 with Parallels]
+
+------------------------------------------------------ 
+ *	How do I Install Plan 9?
+
+See the [installation instructions] page.
+
+(FIXME: should integrate into instructions page)
+
+The installation is designed to be run from a PC.
+
+1. Read Supported PC hardware to ensure your PC meets the
+requirements. 2. Back up your system. 3. Make sure you've backed up
+your system. 4. Read Installing the Plan 9 Distribution. 5. See the
+Staying up to Date page for information on how to obtain the latest
+fixes. 6. Here are some more questions that have been answered on the
+9fans list:
+
+IP configuration ndb/cs will set the sysname if you setup an
+appropriate entry in /lib/ndb/local. You must specify an ``ether=''
+entry, and the address should be all lower case. If all goes well,
+ip/ipconfig will then configure IP. Name Service If you have having
+problems, first check that ndb/dns is running. It needs to be started
+in /rc/bin/termrc or /rc/bin/cpurc. Also note that only fully
+qualified names are supported, and there isn't a separate resolver.
+Binding and Mounting Devices Note that ``#'' is the shell comment
+character, so you must enclose it in single quotes. For example:
+``bind -a '#R6' /dev''. Auth Server When booting a cpuserver without
+an auth server, if you give 0.1.0.0 as the auth server address
+instead the cpu server's own address, you won't have to wait for it
+to timeout.
+
+------------------------------------------------------ 
+ *	Where can I get the stable and current branches of Plan 9?
+
+The stable branch is an Installation CD image at Plan 9 Additional
+Software page. It can be used: to install Plan 9, to directly boot
+the system from the CD, and to update your Plan 9 installation.
+
+The CD image is built every day from the latest sources.
+
+You can also use replica(1) to update your system either over the
+network or from a downloaded ISO.
+
+See [staying up to date].
+
+------------------------------------------------------ 
+ *	How do I setup the VGA?
+
+If the VGA doesn't work, read the document [Installation
+troubleshooting].
+
+You'll have to find out more about the card so you can configure it.
+The relevant manuals are: vga(3), vgadb(6), vga(8), and 9load(8) and
+also see the [supported PC hardware] page.
+
+Put ``debug=1'' (1st line) in plan9.ini and try again. It may not be
+of much help but will allow to ask a more specific question.
+
+If you have a Radeon card, you can try Philippe Anel's [Radeon
+Drivers].
+
+------------------------------------------------------ 
+ *	What is the Plan 9 equivalent of the Unix find command?
+
+The simplest equivalent is: ``du -a . | grep foo''. A useful
+variation is: ``grep foo `{du -a . | awk '{print $2}'''.
+
+See also [UNIX to Plan 9 command translation].
+
+------------------------------------------------------ 
+ *	How do I control the services that start at boot time?
+
+This is controlled by shell scripts, that are roughly equivalent to
+the /etc/rc files on Unix:
+
+/rc/bin/termrc for terminals /rc/bin/cpurc for cpu servers
+
+See cpurc(8) for more details.
+
+------------------------------------------------------ 
+ *	How do I setup network services?
+
+For UDP services, you must start them up in the appropriate cpurc(8)
+file. For TCP or IL services, you must use the listen(8) daemon.
+
+------------------------------------------------------ 
+ *	How do I shutdown my system?
+
+If you're using a diskless terminal or cpu server, simply turn it
+off. More care must be taken when running a file system, either on a
+dedicated file server or underneath a cpu server or terminal. Failure
+to do this may result in lost data.
+
+Halt the disk by typing ``fshalt'' at a shell prompt. This will halt
+the file system and exit rio(1). On some systems, it will also return
+the console to text mode, which can make automated rebooting more
+reliable. See fshalt(8) (or read /rc/bin/fshalt) for details.
+
+Then turn off the computer or type Ctl-Alt-Del (or Ctl-Alt-Reset :).
+
+------------------------------------------------------ 
+ *	How do I reboot my system?
+
+The system can be rebooted by typing ^T^Tr (two control-T's followed
+by ``r''). CPU servers can be rebooted by typing ^P on the console.
+See the cons(3) manual for more details.
+
+------------------------------------------------------ 
+ *	How about autologin (or something like that)?
+
+For this purpose you'll need to edit plan9.ini: set up default user
+(terminal) ``user=<username>'' and add string like
+``nobootprompt=local!#S/sdC0/fs''.
+
+See plan9.ini(8)
+
+------------------------------------------------------ 
+GENERAL INFORMATION
+
+ *	Where did the name come from?
+
+It was chosen in the Bell Labs tradition of selecting names that make
+marketeers wince. The developers also wished to pay homage to the
+famous Ed Wood's film, Plan 9 From Outer Space, which is about aliens
+who bring earthly corpses back to life.
+
+ *	Where did the names for Plan 9 components come from?
+
+ *	The name of default user “[glenda | http://glenda.cat-v.org/]” was
+	chosen from first full-length Ed Wood film, “Glen or Glenda”.
+ *	The original Unix editor was called ed, so Rob Pike called his
+	[first screen editor jim | http://man.cat-v.org/unix_8th/9/jim], and
+	the next one sam. Sam is actually short for “Samantha”.
+ *	8½ is called that as it was Pike's 8 and a halfth windowing system
+	-- it also happens to be a film by Fellini.
+ *	[Alef | http://doc.cat-v.org/plan_9/2nd_edition/papers/alef/] is
+	named analagously to B and C, just choosing from a new alphabet.
+ *	[Acme | http://acme.cat-v.org] is probably named after Wile E.
+	Coyote's equipment supplier, . It's called acme because it does
+	everything.
+ *	The Plan 9 shell is called [rc | http://rc.cat-v.org], because it
+	“runs commands”.
+ *	Mothra is named after the Japanese horror-movie monster. Tom Duff
+	picked the name because Netscape's browser is called Mozilla, a
+	portmanteau of Mosaic (its progenitor) and Godzilla, and mothra is
+	its Plan 9 ``competition''.
+ *	Kfs -- Ken's File System.
+
+The hermeneutics of naming yields few insights. Things are named
+usually because the name is nice (sam), or there is some private
+reference hard to decode (8½), or in honour (perhaps backhanded) of
+another system (mothra), or an indication of expectation (Plan 9,
+acme), or just because (acid). None of the names tell you anything
+helpful.
+
+Despite the lack of information, those who guess at reasons for
+naming generate volumes of apocrypha. The real reason is usually,
+``because''.
+
+------------------------------------------------------ 
+ *	What is the symbol/mascot of the system?
+
+The mascot of the system is white bunny [Glenda |
+http://glenda.cat-v.org].
+
+[Renee French | http://www.reneefrench.com/] drew Glenda.
+
+------------------------------------------------------ 
+ *	Plan 9 aesthetics are really nice: colors, fonts, and so on just
+	``look good''. Who did all that?
+
+Here is Rob Pike's 9fans answer (from 16 Sep 2003):
+
+I can take no credit for the fonts except for having the good luck to
+know Chuck Bigelow and Kris Holmes well enough to ask them to do a
+deal with Bell Labs and let us use their fonts. The postscript fonts
+used in the manual, which are related to the screen fonts (primarily
+those used in acme), were the first font designed specifically for
+Unicode. I also rather like the screen fonts, which were also maybe
+the first.
+
+The clean appearance of the screen comes mostly from laziness, but
+the color scheme is (obviously) deliberate. The intent was to build
+on an observation by Edward Tufte that the human system likes nature
+and nature is full of pale colors, so something you're going to look
+at all day might best serve if it were also in relaxing shades. Renee
+French helped me with the specifics of the color scheme (she's a
+professional illustrator and my color vision is suspect), once I'd
+figured out how I wanted it to look. There are still some features of
+the color system that I put in that I think no one has ever noticed.
+That's a good thing, in my opinion; the colors should fade away, if
+you'll pardon the expression.
+
+Having used other systems with different approaches to color screens,
+most especially Windows XP (extra pukey), I think Tufte was right.
+
+------------------------------------------------------ 
+ *	How can I obtain Plan 9?
+
+The Plan 9 release is available for free download at
+http://plan9.bell-labs.com/plan9/download.html. It includes source of
+the kernel, libraries, and commands for all supported architectures.
+It also includes complete binaries for the x86 architecture.
+
+See the [download] wiki page.
+
+------------------------------------------------------ 
+ *	How can I get involved?
+
+The best way to learn about the system is to write something that
+other people in the Plan 9 user community could use, or to port the
+system to new platforms.
+
+See the [how to contribute] wiki page.
+
+------------------------------------------------------ 
+ *	Where can I get more detailed technical information?
+
+- See the [Papers] page.
+
+- The manual pages are at [http://plan9.bell-labs.com/sys/man/].
+
+- You can find many other documents and papers in the [Plan 9 section
+of the cat-v.org doc archive | http://doc.cat-v.org/plan_9/].
+
+- See the rest of the wiki.
+
+------------------------------------------------------ 
+ *	I want to add my face file to the distribution, who should I
+	contact?
+
+Geoff Collyer, geoff (at) plan9.bell-labs.com.
+
+------------------------------------------------------ 
+ *	Are there any Plan 9 user groups?
+
+See the [user groups] and [9con] page for the known user groups and
+events where Plan 9 can be found.
+
+------------------------------------------------------ 
+ *	What is 9grid?
+
+In short, 9grid is a distributed computing project, which features
+prominently the Plan 9 from Bell Labs operating system. For
+9grid-related questions, read separate 9grid FAQ.
+
+See [9grid].
+
+------------------------------------------------------ 
+ *	Can I emulate Plan 9 under Unix (maybe Windows)?
+
+[plan9port | http://swtch.com/plan9port] Is a port of most of the
+Plan 9 user space to Unix.
+
+[9vx | http://swtch.com/9vx/] A Plan 9 kernel that runs on user space
+using vx32.
+
+[v9fs | http://v9fs.sf.net] is a [9P | http://9p.cat-v.org]
+implementation for Linux and BSD.
+
+------------------------------------------------------ 

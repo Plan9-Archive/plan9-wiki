@@ -1,0 +1,60 @@
+web_server
+
+The Plan 9 web server httpd(8) has some interesting features. It also
+kept me scratching my head all day getting it going so I thought I'd
+share a few things.
+
+When the httpd runs it sets itself to user "none" and runs newns(2)
+and then addns(2) using the namespace provided on the command line
+(or /lib/namespace.httpd if you didn't give it a -n). This means that
+whatever you supply for the namespace file has to exist in the new
+namespace. ip/httpd/httpd -n /cfg/$sysname/namespace.httpd was my
+solution.
+
+While experimenting I had the problem of how to kill a process owned
+by none, here's how to do it :
+
+! p = `{ps | grep httpd}
+! chmod 777 /proc/$p(2) ^/note && echo kill > /proc/$p(2) ^/note
+
+I'm assuming only one program called httpd is running, of course.
+
+For extra fun ip/httpd/mirror was missing from my distribution (Sept
+07) and I didn't notice for ages.
+
+momo here is a Unix box running u9fs -a none and I'm using a terminal
+to play on so termrc it is
+
+cat /cfg/$sysname/termrc
+
+! fn start_httpd {
+! 	rfork
+! 	bind /n/momo/home/plan9/httpd /usr
+! 	bind /usr/httpd.rewrite /sys/lib/httpd.rewrite
+! 	ip/httpd/httpd -n /cfg/$sysname/namespace.httpd
+! }
+! 
+! 9fs momo
+! 
+! start_httpd &
+
+The folder /n/momo/home/plan9/httpd has in it :
+
+! bin/
+! web/
+! httpd.rewrite
+
+cat /cfg/$sysname/namespace.httpd
+
+! mount /srv/momo /n/momo
+! bind /n/momo/home/plan9/httpd/bin /bin/ip/httpd
+
+So now my /magic/ files are kept on momo so I don't pollute
+/bin/ip/httpd
+
+I also found a bug with vhosts and submitted a patch(1)
+httpd-post-port because vhosts running on non-default port were
+impossible as the :port was being stripped when the vhosts were
+parsed but not when matching http requests. Leaving the :port on is
+the correct behaviour according to RFC 2616 14.23.
+

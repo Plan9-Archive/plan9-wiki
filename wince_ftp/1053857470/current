@@ -1,0 +1,107 @@
+WinCE FTP
+D1053857470
+Cjyg
+Ajygdiy@citiz.net (61.169.122.193)
+#This page describes how to FTP files from a Plan 9 terminal to an an
+#ipaq running WinCE. You can use FTP rather than ActiveSync to
+#download the linux "osloader" to your ipaq. If you do not have a
+#Windows machine to run ActiveSync, then these instructions are for
+#you.
+#
+#Attribution: This is based on a similar process for linux outlined
+#at [http://www.handhelds.org/minihowto/wince-link/index.html].
+#
+#You need the WinCE Internet Explorer, a serial cradle, and a Plan 9
+#terminal with a serial device. The idea is to run an FTP server on
+#the terminal, establish a PPP connection to the ipaq, and use
+#WinCE's IE to download files.
+#
+#CUSTOMIZE PPP
+#
+#Customize ppp(8) to skip authentication when run as a server. This
+#is necessary because it is not evident how to set a WinCE user and
+#secret for CHAP. Here is a patch to the February 21, 2003 version of
+#ppp.c that disables authentication when given an empty secret (with
+#-s ''):
+#
+#! 	/sys/src/cmd/ip/ppp/ppp.c:16 a ppp.c:17
+#! 	> static	int	skipchap = 0;
+#! 	/sys/src/cmd/ip/ppp/ppp.c:253 c ppp.c:254
+#! 	< 		if(server)
+#! 	---
+#! 	> 		if(server && !skipchap)
+#! 	/sys/src/cmd/ip/ppp/ppp.c:2617 a ppp.c:2619,2622
+#! 	> 		if (strlen(secret) == 0) {
+#! 	> 			secret = nil;
+#! 	> 			skipchap = 1;
+#! 	> 		}
+#
+#ON THE TERMINAL
+#
+#Run an FTP server and your custom PPP server on the terminal. The
+#following examples illustrate what you might send to an interactive
+#rc(1).
+#
+# *	Choose an unused IP address for the bitsy. You also need your
+#	terminal's IP address.
+#
+#! 	bitsyip=192.168.1.22
+#! 	termip=`{ndb/query sys $sysname ip}
+#
+# *	Create a directory to hold configuration files and your FTP
+#	server's root directory.
+#
+#! 	root=/usr/$user/tmp/bitsy
+#! 	mkdir $root
+#
+# *	Create an FTP root directory and namespace(6) file.
+#
+#! 	mkdir $root/ftp
+#! 	echo 'mount #s/boot' / > $root/namespace.ftp
+#! 	echo 'bind '$root'/ftp /' >> $root/namespace.ftp
+#
+# *	Use listen1 (in listen(8)) and ftpd (in ipserv(8)) to run your
+#	FTP server:
+#
+#! 	aux/listen1 -tv tcp!*!ftp /bin/ip/ftpd -An $root/namespace.ftp &
+#
+# *	Create a chat file for dealing with WinCE's pre-PPP text.
+#
+#! 	echo ''''' CLIENT' > $root/chat
+#! 	echo 'CLIENTSERVER ''''' >> $root/chat
+#
+# *	Run your modified ppp(8) server; this example assumes the ipaq is
+#	connected to /dev/eia0 and your custom binary is called "myppp".
+#
+#! 	myppp -p /dev/eia0 -b 115200 -f -s '' -S -uM $root/chat $termip $bitsyip
+#
+#You can test your FTP server in another window with "ftpfs
+#$sysname". After logging in as none, you should see the contents of
+#$root/ftp under /n/ftp.
+#
+#ON THE IPAQ
+#
+#Configure WinCE to talk to the terminal and establish a PPP
+#connection. The following worked with WinCE 3.0.9348 (Build 9616).
+#See [http://www.handhelds.org/minihowto/wince-link/index.html] for
+#alternative instructions.
+#
+# *	In Start, Settings, Connections, PC, create a new connection
+#	called 9 with PPP, the $bitsyip IP address, 115200 baud, eight data
+#	bits, no parity, one stop bit, hardware flow control, and autosync
+#	turned off.
+#
+# *	Run Start, Programs, Connections, 9.
+#
+#You can test the connection with "ip/ping $bitsyip" on your terminal.
+#
+#USING THE CONNECTION
+#
+#Put the files you want to download in $root/ftp on the terminal.
+#Open IE on the bitsy, turn on the address bar, if necessary, and
+#enter
+#
+#! 	ftp://$termip/
+#
+#where $termip is your terminal's IP address.
+#

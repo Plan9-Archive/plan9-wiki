@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>Installer Errata (Editing Sun Dec 25 15:39:56 EST 2005 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Installer Errata</b></font> (Editing Sun Dec 25 15:39:56 EST 2005 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Installer Errata">
+<input type="hidden" name="version" value="1135543196">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+This page lists known issues with Plan 9 installer:
+
+Open issues:
+
+ *	9load wont detect your IDE CD-ROM reader device if it's not set as
+	Primary or Secondary Master. Workaround: set your cd-rom as
+	Secondary Master.
+
+ *	Currently there is no way to use a usb mouse during install, but
+	it's possible to install without using the mouse.
+
+Resolved issues as of 11/04/2005:
+ *	If using the text mode installer, page will complain about missing
+	$wsys. You can ignore that error message. FIXED by 20h.
+
+ *	Kfs broken: one can select kfs, but it doesn't work. Please use
+	fossil instead, kfs is not supported and probably will be removed
+	soon. FIXED: kfs support has been removed.
+
+ *	Currently the installer is broken due to missing fcp command used
+	by replica, 20h's patch to add venti installation includes a fix for
+	this. Workaround: you can bind(1) /bin/cp on top of /bin/fcp. FIXED:
+	fcp has been added to the install floppy.
+
+ *	If your MBR is not empty(eg., you have installed lilo before) the
+	installer will not ask you install the Plan 9 MBR, you are expected
+	to manage to boot Plan 9 from your existing boot loader or install
+	the mbr by hand. FIXED: You are now asked if you want to install it
+	when choosing "plan9" as bootmethod.
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

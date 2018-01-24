@@ -1,0 +1,184 @@
+People
+D1358271263
+Ajohn
+#Please Add Yourself
+#
+#FOLKS IN ACADEMIA
+#
+#Dave Eckhardt - Carnegie Mellon University
+# *	Computer Science (OS, Networks)
+# *	[http://www.cs.cmu.edu/~davide/]
+#
+#YAMANASHI Takeshi - 9.nashi AT gmail DOT com - Tokyo Institute of
+#Technology
+# *	Administrating computer systems at Titech
+# *	User registration form system running on Plan 9
+# *	Member of [TIP9UG | http://www.tip9ug.jp/]
+#
+#Kenji Arisawa - Aichi University
+# *	[http://plan9.aichi-u.ac.jp/]
+#
+#FOLKS IN INDUSTRY
+#
+#Marina Brown marina at surferz dot net
+# *	Mainly a unix admin but falling in love with Plan9
+#
+#Brantley Coile - brantley AT coraid DOT com - Athens, GA. Also here
+#at Coraid are Sam Hopkins and Ed Cashin.
+# *	Plan 9 based storage product selling well
+# *	Used Plan 9 first in early 1990.
+# *	Developed PIX firewall on Plan 9.
+# *	Plan 9 is still our development base for our new startup
+# *	[http://www.coraid.com]
+#
+#Geoff Collyer - geoff AT plan9 DOT bell-labs DOT com
+# *	simplifying administration of complex sites
+# *	probably will be working on drivers
+# *	first contact with Plan 9 in 1992 or 1993; owner of a 2e licence
+#
+#Bruce Ellis - brucee AT 9netics DOT com - 9Netics/Rangboom
+# *	Chief Software Architect for [Rangboom | http://www.rangboom.com]
+# *	Windows IFS (Installable Filesystem) to 9P gateway
+# *	9ee
+#
+#Charles Forsyth - forsyth AT vitanuova DOT com - www.terzarima.net
+# *	powerpc compilers and kernel (for BeBox port)
+# *	amd64 compiler suite
+# *	use it day in, day out, out of day
+#
+#Erik Quanstrom - quanstro AT coraid DOT com
+# *	storage drivers: aoe, ahci, marvell orion
+# *	network drivers: intel gigabit and 10gbe pcie drivers, myricom
+#	10gbe driver
+# *	[direct ata | http://www.quanstro.net/plan9/atazz.pdf] commands
+# *	moving [history | http://www.quanstro.net/plan9/history.pdf]
+#	between fileservers
+# *	[diskless | http://www.quanstro.net/plan9/disklessfs.pdf] ken's
+#	fileserver
+# *	[upas | http://www.quanstro.net/plan9/nupas.pdf] scalability
+#
+#Steve Simon - steve AT quintile DOT net
+# *	client file servers: netware, cifs, ldap, webDAV, snmp, cvs
+# *	u9cpu (cpu client for unix) - ssh but exports local environment
+# *	video processing tools & a little language to control them (rc
+#	won't do)
+#
+#Anthony Sorace - anthony AT strand1 DOT com - Strand 1
+# *	Maintaining and enhancing the pq database.
+# *	Working on telecom services using Inferno, Plan 9, and related
+#	tools.
+# *	Working to help Plan 9 and friends play well with others.
+#
+#Skip Tavakkolian - 9nut AT 9netics DOT com - 9Netics/Rangboom
+# *	Inspired by Plan 9, came up with the concept for [Rangboom |
+#	http://www.rangboom.com]
+# *	Works on and in Plan 9 everyday.
+# *	Owner of a 2nd ed. Plan9 license
+#
+#Eric Van Hensbergen ([ericvh]) - ericvh AT gmail DOT com - IBM
+#Austin Research Lab
+# *	Tech-transfer to Linux (v9fs, plan9ports, etc.)
+# *	Plan 9 Hypervisor Support
+# *	PowerPC 64-bit Plan 9 Support
+# *	PROSE Project (9p resource sharing library OS)
+# *	[Blue Gene Port]
+#
+#Jeff Sickel - jas AT corpus-callosum DOT com
+# *	Influenced by Plan 9 and Inferno, used extensively to build an
+#	aero-acoustic levitator.
+# *	9p for 16-bit dsPIC
+# *	Enjoys 2nd ed. Plan 9 books on the shelf
+#
+#John Floren - [jfloren.net | http://jfloren.net] - Sandia National
+#Labs
+# *	64-bit kernel hacking
+# *	Exascale computing
+#
+#FOLKS ELSEWHERE
+#
+#Federico G. Benavento (fgb) - benavento AT gmail DOT com - Law/Arts
+#student - Buenos Aires, Argentina
+# *	[Abaco | http://advogato.org/proj/abaco]'s author
+# *	Getting the job done
+# *	Using Plan 9 since 2002
+# *	[/n/sources/contrib/fgb |
+#	http://plan9.bell-labs.com/sources/contrib/fgb]
+#
+#Peter A. Cejchan (++pac) - pac7 AT post DOT cz- biologist @ Academy
+#of Sciences, Prague, CZ
+# *	Imaging, biology, chemistry
+# *	60+ APE ports, some native development
+# *	Plan 9 user since 3e
+# *	serving [The neXt archive |
+#	ftp://ftp.gli.cas.cz/gli/cejchan/neXt] of Plan 9 stuff
+#
+#Chris Collins ([kuroneko]) - chris AT collins DOT id DOT au - Tech
+#Support, Ursys Pty Ltd, AU
+# *	Porting to sparc/mips/whatever he has spare
+# *	Interested in OS design
+# *	Random hacking
+#
+#Lyndon Nerenberg <lyndon@orthanc.ca> - Vancouver, Canada
+# *	email (better IMAP client and server support)
+# *	typesetting tools (chem, simple integration of 3rd-party
+#	Postscript fonts)
+# *	boat stuff: NMEA 183 and 2000 file servers; sailboat racing
+#	performance analysis and strategy tools; charting software
+# *	ham radio bits (logging software, propagation analysis, radio
+#	control)
+# *	implement the (good) missing bits from 2e (and 10ed UNIX)
+#
+#[uriel] - [uriel | http://uriel.cat-v.org](@)[berlinblue.org |
+#http://berlinblue.org]- Stockholm, Sweden
+# *	[cat-v.org | http://cat-v.org] nut.
+# *	[werc cms | http://werc.cat-v.org] maintainer.
+# *	Aesthetics.
+# *	Spread the Plan 9 ideas, style and philosophy.
+# *	Build a more active and involved community.
+# *	[Random hacking | http://repo.cat-v.org].
+#
+#ChrisGarrod at gmail.com - SanDiego California - 20070518.1655 GMT
+# *	a very slow learner of Plan9 -- since about 1995 after attending
+#	a seminar at UCSD by Ken Thompson
+# *	"Linux is an inferior clone of Unix"
+# *	"Plan9 is Unix without root # the fundamental flaw of Unix"
+# *	Thank you Bell Labs, iou++
+#
+#Joel “chesky” Salomon — JoelCSalomon at Gmail.com — Cooper Union,
+#New York, NY
+# *	Electrical Engineering undergraduate
+# *	Irritating the professor of the Operating Systems course with,
+#	“but Plan 9 handles this so much better…” ☺
+# *	[http://www.tip9ug.jp/who/chesky]
+#
+#Vester "Vic" Thacker - vester.thacker AT gmail DOT com
+# *	Interested in Plan 9 security and software development
+#
+#james francis toy iv -- nil@opensesame.st
+# *	ACPI
+# *	Plan 9 port to OLPC XO-1 (see Tim Newsham as well)
+#
+#Eli "echoline" Cohen - echoline AT gmail DOT com
+# *	Computer Science student at Eastern Oregon University
+# *	Trying to write a driver for the EeePC (could use help on this)
+# *	Plan9 reminds him of his homeworld
+# *	[http://eli.neoturbine.net]
+#
+#David du Colombier - djc AT 9grid DOT fr - Paris, France
+# *	[9grid.fr | http://www.9grid.fr/]'s maintainer
+# *	Using Plan 9 and Inferno since 2004
+# *	Interested in OS research
+# *	Random hacking
+#
+#sl - stanley DOT lieber AT gmail DOT com
+# *	Using Plan 9 daily as main programming/text processing environment
+# *	3270 screen scraping/web interface written in rc(1)
+# *	[Askeladd |
+#	http://plan9.bell-labs.com/sources/contrib/sl/askeladd]
+#	blog/bookmarking/pastebin software written in rc(1)
+# *	Hosting [werc | http://werc.cat-v.org] based [site |
+#	http://plan9.stanleylieber.com] with [rc-httpd |
+#	http://static.ethans.dre.am/rc-httpd] on Plan 9
+# *	[/n/sources/contrib/sl |
+#	http://plan9.bell-labs.com/sources/contrib/sl]
+#

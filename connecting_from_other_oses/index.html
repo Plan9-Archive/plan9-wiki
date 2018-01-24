@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Connecting from other OSes (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Connecting from other OSes</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+Connecting
+to
+Plan
+9
+consists
+of
+either
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cpu"><i>cpu</i>(1)</a>'ing
+to
+it,
+which
+is
+like
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ssh"><i>ssh</i>(1)</a>
+of
+other
+OSes,
+but
+more
+advanced.
+The
+second
+way
+is
+to
+import
+files
+from
+Plan
+9
+using
+9P.
+<a name="DRAWTERM" /><h3>DRAWTERM</h3>
+
+<p class='para'>
+<a href="../drawterm">drawterm(8)</a>
+is
+a
+program
+that
+non-Plan
+9
+systems
+users
+can
+use
+to
+establish
+graphical
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cpu"><i>cpu</i>(1)</a>
+connections
+with
+Plan
+9
+CPU
+servers.
+Just
+as
+a
+real
+Plan
+9
+terminal
+does,
+drawterm
+serves
+its
+local
+name
+space
+as
+well
+as
+some
+devices
+(the
+keyboard,
+mouse,
+and
+screen)
+to
+a
+remote
+CPU
+server,
+which
+mounts
+this
+name
+space
+on
+/mnt/term
+and
+starts
+a
+shell.
+Typically,
+either
+explicitly
+or
+via
+the
+profile,
+one
+uses
+the
+shell
+to
+start
+<a href="http://plan9.bell-labs.com/magic/man2html/1/rio"><i>rio</i>(1)</a>.
+</p>
+
+<p class='para'>
+Xfree86
+drivers
+for
+some
+video
+cards
+assume
+that
+masks
+(stipples)
+have
+height
+equal
+to
+a
+multiple
+of
+8.
+This
+causes
+drawterm
+to
+display
+blanks
+instead
+of
+glyphs
+with
+some
+fonts.
+Try
+the
+-b
+argument
+to
+drawterm
+if
+you
+see
+this
+problem.
+</p>
+
+<p class='para'>
+The
+sourcecode
+and
+precompiled
+binaries
+for
+various
+OS's
+can
+be
+downloaded
+from
+<a href="http://swtch.com/drawterm/">http://swtch.com/drawterm/</a>
+</p>
+
+<a name="V9FS" /><h3>V9FS</h3>
+
+<p class='para'>
+See
+<a href="../v9fs">v9fs</a>
+for
+further
+details.
+</p>
+
+<a name="9PFUSE" /><h3>9PFUSE</h3>
+
+<p class='para'>
+9pfuse
+provides
+a
+userspace
+fuse
+driver
+for
+mounting
+9p
+filesystems.
+It
+is
+available
+in
+many
+unix-related
+operating
+systems.
+A
+typical
+command
+to
+mount
+a
+fs
+via
+9pfuse:
+</p>
+
+<pre>
+9pfuse 192.168.1.199:20000 /home/linda/9pimport
+</pre>
+
+<p class='para'>
+For
+authentication
+and
+support
+for
+protocols
+like
+import
+<a href="http://swtch.com/plan9port">plan9port</a>
+provides
+versions
+of
+<a href="http://plan9.bell-labs.com/magic/man2html/4/factotum"><i>factotum</i>(4)</a>
+and
+other
+utilities.
+</p>
+
+<a name="HUBFS" /><h3>HUBFS</h3>
+
+<p class='para'>
+<a href="../hubfs">hubfs</a>
+is
+a
+9p
+fs
+which
+can
+be
+used
+in
+combination
+with
+9pfuse
+or
+other
+ways
+of
+accessing
+9p.
+It
+provides
+functionality
+like
+screen/tmux
+to
+allow
+persistent
+shells
+from
+both
+Plan
+9
+and
+another
+operating
+system
+to
+be
+shared
+back
+and
+forth.
+</p>
+
+<a name="9VX" /><h3>9VX</h3>
+
+<p class='para'>
+See
+<a href="../9vx">9vx</a>
+for
+details.
+In
+9vx
+you
+can
+use
+the
+standard
+utilities
+like
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cpu"><i>cpu</i>(1)</a>
+or
+<a href="http://plan9.bell-labs.com/magic/man2html/4/import"><i>import</i>(4)</a>
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Sat Mar  2 22:30:47 EST 2013</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

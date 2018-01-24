@@ -1,0 +1,572 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Using vncv (as of Mon Oct 22 05:26:14 EDT 2007)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Using vncv</h1>
+<h2><i>-as of Mon Oct 22 05:26:14 EDT 2007-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+Getting
+vncv
+working
+on
+Plan
+9
+usually
+alleviates
+the
+pain
+caused
+by
+reliance
+on
+specific
+applications
+from
+other
+operating
+systems.
+Sometimes
+it
+is
+proper
+to
+relearn
+a
+way
+of
+doing
+things
+-
+I
+wouldn't
+use
+this
+to
+get
+MS
+Word
+from
+a
+Windows
+machine
+when
+we
+have
+a
+perfectly
+good
+document
+formatting
+subsystem
+using
+the
+old
+reliable
+troff,
+but
+having
+a
+web
+browser
+that
+can
+keep
+up
+with
+the
+changing
+web-world
+sure
+is
+nice.
+<p class='para'>
+What
+I'm
+going
+to
+describe
+is
+the
+procedure
+for
+viewing
+linux
+X
+applications
+on
+the
+Plan
+9
+desktop.
+Other
+operating
+systems
+are
+supported
+but
+I
+have
+no
+use
+for
+them
+and
+as
+a
+result,
+no
+experience.
+</p>
+
+<p class='para'>
+Firstly,
+you'll
+want
+to
+download
+the
+vncserver
+from
+<a href="http://www.tightvnc.com/download.html">http://www.tightvnc.com/download.html</a>
+and
+install
+it
+in
+your
+system
+I
+copied
+the
+files
+to
+/usr/local/bin,
+you
+do
+what's
+best
+for
+your
+system.
+</p>
+
+<p class='para'>
+Secondly,
+on
+the
+linux
+machine
+you'll
+want
+to
+type
+(and
+should
+see
+something
+like):
+</p>
+
+<pre>
+$ vncserver -geometry 1024x768
+
+New 'X' desktop is linux:1
+
+Starting applications specified in /home/sah/.vnc/xstartup
+Log file is /home/sah/.vnc/linux:1.log
+</pre>
+
+<p class='para'>
+There
+are
+a
+multitude
+of
+settings
+for
+the
+vncserver,
+but
+just
+the
+above
+seems
+to
+work
+fine.
+The
+first
+time
+you
+start
+up
+the
+vncserver
+you'll
+be
+asked
+to
+specify
+a
+password
+to
+access
+the
+desktop.
+</p>
+
+<p class='para'>
+Log
+out
+of
+the
+linux
+box
+above
+and
+in
+the
+same
+terminal
+window,
+type:
+<pre>
+term% vncv linux:1
+</pre>
+
+</p>
+
+<p class='para'>
+provided
+linux
+is
+a
+system
+defined
+in
+your
+/lib/ndb/local.
+Otherwise,
+just
+use
+the
+ip
+address
+of
+the
+machine.
+</p>
+
+<p class='para'>
+The
+really
+nice
+thing
+about
+vnc
+is
+that
+updates
+are
+client-triggered
+so
+the
+server
+never
+goes
+down
+for
+lack
+of
+input.
+If
+you
+disconnect
+from
+it
+for
+days
+on
+end
+and
+then
+resume
+the
+connection
+with:
+<pre>
+term% vncv linux:1
+</pre>
+
+</p>
+
+<p class='para'>
+(staying
+with
+the
+above
+example),
+you
+get
+your
+exported
+desktop
+just
+as
+it
+was
+when
+you
+left
+it.
+</p>
+
+<p class='para'>
+Problems
+can
+happen
+on
+X11
+systems,
+when
+you
+want
+to
+use
+the
+clipboard
+between
+e.g.
+Firefox
+and
+Plan
+9,
+where
+Firefox
+uses
+a
+different
+clipboard
+buffer
+than
+the
+VNC
+server.
+The
+manual
+solution
+for
+this
+is
+to
+use
+<a href="http://plan9.bell-labs.com/magic/man2html/1/xcutsel"><i>xcutsel</i>(1)</a>
+on
+the
+non-Plan
+9
+system.
+You
+can
+find
+an
+automatic
+solution
+at
+<a href="http://www.nongnu.org/autocutsel/">http://www.nongnu.org/autocutsel/</a>,
+that
+gets
+the
+two
+clipboards
+into
+sync,
+on
+change.
+</p>
+
+<p class='para'>
+If
+you
+want
+your
+connection
+secured
+by
+TLS,
+you
+can
+use
+tlsclienttunnel
+(described
+in
+the
+<a href="http://plan9.bell-labs.com/magic/man2html/8/tlssrv"><i>tlssrv</i>(8)</a>
+man
+page)
+to
+encrypt
+and
+authenticate
+your
+connection.
+You
+need
+a
+tls
+tunnel
+application
+on
+the
+unix
+machine,
+e.g.
+stunnel
+(
+<a href="http://www.stunnel.org">http://www.stunnel.org</a>
+).
+Add
+a
+section
+to
+stunnel's
+config
+file
+like
+this:
+</p>
+
+<pre>
+[vnc]
+accept = 7777
+connect = 5901
+</pre>
+
+<p class='para'>
+Change
+the
+accept
+port
+to
+your
+preferences.
+Create
+a
+thumb
+file
+for
+your
+vnc
+server's
+fingerprint.
+We
+will
+fill
+it
+later.
+Now
+establish
+the
+connection
+with
+</p>
+
+<pre>
+tlsclienttunnel tcp!yourhost!7777 tcp!localhost!5901 vnc.thumb
+</pre>
+
+<p class='para'>
+You
+will
+get
+a
+response
+like
+this:
+</p>
+
+<pre>
+/bin/tlsclienttunnel: server certificate sha1hash not recognized
+</pre>
+
+<p class='para'>
+Snarf
+and
+paste
+the
+sha1hash
+to
+your
+thumb
+file:
+</p>
+
+<pre>
+echo 'x509 sha1=sha1hash' &gt; vnc.thumb
+</pre>
+
+<p class='para'>
+Now
+reestablish
+the
+tunnel
+with
+the
+tlsclient
+command
+above
+and
+connect
+to
+it
+securely
+with
+</p>
+
+<pre>
+vncv localhost:1
+</pre>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Mon Oct 22 05:26:14 EDT 2007</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

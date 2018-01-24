@@ -1,0 +1,177 @@
+Installation troubleshooting
+
+Please first read the [Installer Errata] to see if you have hit a
+known bug; then if after going thru this page you still have a
+problem you can reproduce, please add it to the list of known
+problems.
+
+The initial bootstrap of a new operating system on new hardware is
+often problematic. Here follow some suggestions that might help you
+clear some hurdles.
+
+First, check the [supported PC hardware] list to make sure the
+hardware you're running is supported.
+
+Your plan9.ini file must be an accurate description of the machine.
+The first line of defense is therefore to look at the plan9.ini file
+and edit it. The floppy is a DOS floppy, so you should be able to
+edit plan9.ini from a Windows machine or other system.
+
+9load(8) is the program that loads and starts the kernel. It needs to
+find and load the kernel, based on plan9.ini and the hardware it can
+discover. The last line 9load prints before loading the kernel is
+!   entry: 0x80100020
+
+If you don't see that line, then your problem is with 9load. In this
+case, you can turn on debugging by typing a control-R at any time
+while it's running. Even if the debugging output doesn't help you,
+what's printed might help others, so make notes.
+
+If there are problems during the boot of the CD, try some
+combinations of the boot parameters: sdXX!cdboot!9pcflop.gz, where:
+C0 is Primary Master, C1 is Primary Slave, D0 is Secondary Master and
+D1 is the Secondary Slave.
+
+On some Linux systems and running in vmware4, it seems 9load hangs at
+bootup, before it finds plan9.ini. When 9load starts running at
+physical address 0x10000, and later at 0x80010000, in order to find
+configuration information, it searches all units on devices fd and
+sdCn, in that order, for a file called plan9\plan9.ini or plan9.ini
+on a partition named dos or 9fat. Unfortunately, if you are running
+vmware 4 under GNU/Linux, and you have loaded the scsi-ide emulation
+layer in linux (maybe to use your CDRW), 9load will probably hang. In
+order to solve the problem, you need to use an iso image for you cd
+drive virtual device, making sure the iso image does not contain a
+dos partition. VMware comes with a linux.iso sample image
+(/usr/{whatever}/lib/vmware/isoimages/linux.iso), which can be used
+in this rare situations.
+
+The first line the kernel prints is the CPU identification. For
+example, you might see:
+!   cpu0: 40 MHz GenuineIntel 386SX
+
+If this (or a similar) line is printed, your problem is with the
+kernel rather than 9load. (If you see the entry: line above but not
+the cpu0: line, it could be either 9load or the kernel causing
+trouble.)
+
+If the kernel hangs after printing "kfs...version...time...",
+something in the startup scripts has failed. To see each command
+before it is executed, add the line "debug=1" to your plan9.ini.
+Also, while the kernel is hung, press the following: Ctl-t, Ctl-t, p.
+This will print a process listing. Look for the few lines with the
+largest numbers in the first column, and note their names (the names
+look like kfs, ipconfig, genrandom). That will help determine which
+program is hanging.
+
+If the kernel reboots before you get a chance to read what is on the
+screen, you might try attaching a serial console and adding the line
+"console=0" or "console=1" to send kernel output to DOS's COM1 or
+COM2 as well as the screen. The serial console will run at 9600 baud,
+8-bits, no parity, and 1 stop bit.
+
+VIDEO PROBLEMS
+
+If the kernel gets running but the VGA doesn't turn on, you may need
+to play with the screen settings.
+
+If the screen goes black and you see nothing, aux/vga (see vga(8))
+thinks it recognizes your video card, but either the monitor settings
+being used are incorrect or aux/vga doesn't really know everything it
+needs to program your card. In this case you might try a smaller
+screen resolution, starting at 640x480x8 and working up. A 640x480
+screen is perfectly adequate for the installation. If you are using
+an LCD, you should use the exact size of the LCD; aux/vga sometimes
+has problems stretching smaller resolutions on LCDs.
+
+If the kernel doesn't switch into VGA mode but continues to run in
+CGA mode, along with a complaint along the lines of "no frame buffer"
+and a shell prompt (%), the system doesn't recognize your video card
+at all.
+
+Aux/vga will have left a hex dump of your VGA BIOS memory on the
+screen VDA cards are identified by matching text in their bios with
+the list of know strings in /lib/vgadb. If your card is not
+identified it may only be because it has different text in its bios
+(E.G. a different copyright message), or it may be wholy unsupported
+(see [Supported PC hardware]).
+
+Look through the strings in the hex dump for a text string which
+describes your card, write this down together with the address it
+starts at. Now create a RAM /tmp file system and edit /lib/vgadb
+using the venerable ed(1) editor. Search for a similar entry, and
+append your new one after it.
+
+! ramfs
+! ed /lib/vgadb
+! 28683
+! /Stealth/
+! 			0xC0045="Stealth 64 Vers. 1.05"
+! a
+! 			0xC0045="Stealth 64 Vers. 2.03"
+! .
+! w
+! 28712
+! q
+
+You will now be able to restart the install process by typing
+
+! aux/vga -l $resolution^'x'^$depth
+! rio -i /bin/inst/gui
+
+If your Card is not supported but you can find out the exact chip
+type -- such as by looking in the hardware manual, the Display
+Properties in Windows 95, 98, or NT, or the configuration information
+used by a Unix-like system -- see if /lib/vgadb supports it. You can
+then add an entry for that device as above, however adding an BIOS
+string to a random chip type type is unlikely to be successfull.
+
+If you have other video cards, it can't hurt to try a different one.
+
+Before invoking aux/vga to start the VGA, the floppy boot script
+writes the output of "aux/vga -vip" to the file vgainfo.txt in the
+root directory of the floppy disk. It also writes the output of "pci"
+to the file pci.txt. Both are useful for debugging unrecognized cards.
+
+The boot disk uses the vgadb file from the root directory of the
+floppy disk as /lib/vgadb, to make it possible to edit on other
+systems. Note that vgadb now identifies cards both using BIOS strings
+and using PCI identifiers, the latter being the preferred method of
+identification since it is more general.
+
+Sometimes it suffices to add some information to /lib/vgadb; if you
+find this to be true, please let us know so we can update our master
+database.
+
+The Installer can run in text mode if your video card is not
+detected, but for reference here is an old guide of how to do a
+manual install in text mode:
+
+ *	[http://www.darkuncle.net/plan9/without_rio.txt] (mirror)
+ *	[http://www.proweb.co.uk/~matt/plan9/without_rio.txt] (mirror).
+
+MEMORY PROBLEMS
+
+If your system prints "no physical memory" during the installation
+but you have at least 32MB of memory, then perhaps your BIOS is not
+reporting it in a way that Plan 9 understands. Some BIOSes have an
+option to "report alternative memory". Try toggling it. (If that
+doesn't work, the *maxmem= entry in plan9.ini(8) will override
+anything the BIOS reports.)
+
+BOOT LOADER
+
+If you encounter troubles booting plan9 from lilo, see
+[troubleshooting plan9 & lilo].
+
+As a last resort, look in the [comp.os.plan9 archives |
+http://lists.cse.psu.edu/archives/9fans], ask in comp.os.plan9, or
+mail the Bell Labs Plan 9 trouble line 9trouble@plan9.bell-labs.com.
+
+If you mail 9trouble, please include the contents of plan9.ini(8),
+vgainfo.txt, and pci.txt from your boot floppy, as well as any
+hardware information gleaned from other sources.
+
+Finally, if you resolve a problem via some method not listed here,
+edit this page (see bottom) to tell the world about it!
+

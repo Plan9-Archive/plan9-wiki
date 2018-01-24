@@ -1,0 +1,88 @@
+Installing in parallels desktop on Mac OS X
+
+
+INTRODUCTION
+
+Parallels is a virtual-machine hypervisor that allows one to run
+multiple operating systems concurrently.
+
+Plan 9 now runs well on Parallels 4 and 5, including PXE booting of
+diskless emulated Plan 9 machines. It may be necessary to configure
+devices in all four standard IDE slots (first two controllers, master
+and slave devices) to avoid killing the virtual machine.
+
+The 3xxx build series for Parallels works flawlessly with Plan 9. As
+for the 4xxx build series (Parallels Version 3), Plan 9 frequently
+crashes and works unreliably. Try turning off VT-x acceleration in
+this case. Plan 9 works on the 5xxx build series without problems.
+
+INSTALLATION INSTRUCTIONS
+
+ *	Obtain the Plan 9 nightly CD image and attach it to Parallels as
+	the CDROM drive (don't bother burning it).
+ *	Change the boot order to boot the CDROM drive first then start the
+	VM.
+ *	Follow the normal installation rules for Plan 9
+ *	Parallels 3.0 will only boot from a CD attached as sdC1, but 9load
+	(the Plan 9 boot loader) will try to boot into sdD0. In that case,
+	you'll have to explicitly tell 9load where to find the cd image at
+	the 'boot from:' prompt:
+
+! 		sdC1!cdboot!9pccd.gz
+ *	I had trouble formatting the disk until I remade it without the
+	expanding option.
+
+CONFIGURATION SETTINGS IN PLAN 9
+
+In your plan9.ini file set the following:
+
+ *	mouseport=ps2intellimouse
+ *	monitor=vesa
+ *	*nomp=1
+ *	vgasize=1024x768x24
+
+The resolution actually depends on the resolution of your Mac. Look
+in the 'Displays' section of 'System Preferences' for a list of valid
+resolutions. I was able to get a resolution of 1440x852 working on my
+Macbook Pro 17" this way. For the maximum resolution of 1680x1050
+however, I had to add it to the custom video resolution list in the
+'Video' options of Parallels. All resolutions work with a depth of 24
+(32 never works for some reason). At 1680x1050, you can run Plan 9 in
+fullscreen! On a plain MacBook, vgasize=1280x800x32 works well for
+fullscreen.
+
+The CD-ROM, Ethernet and VESA video work out of the box. The only
+thing left to do is configure audio.
+
+CONFIGURING AUDIO SUPPORT
+
+You need to grab the AC'97 sound driver from aki's site on 9grid
+(down as of 20080920, any alternate download locations?):
+
+! cd /sys/src/9/pc
+! hget -o audio.h http://9grid.net/aki/src/9/pc/audio.h
+! hget -o audioac97.c http://9grid.net/aki/src/9/pc/audioac97.c
+! hget -o audioac97mix.c http://9grid.net/aki/src/9/pc/audioac97mix.c
+! hget -o ../port/devaudio.c http://9grid.net/aki/src/9/port/devaudio.c
+
+Now edit your pcf configuration and add the driver to the link
+section:
+
+! link
+! 		audioac97	audioac97mix
+
+and build the kernel:
+
+! mk 'CONF=pcf'
+
+Replace your old kernel with the new one:
+
+! 9fat:
+! cp 9pcf /n/9fat/
+
+You may want to add this line to your lib/profile:
+
+! bind -a '#A' /dev
+
+Get madplay from contrib on sources to play mp3s.
+

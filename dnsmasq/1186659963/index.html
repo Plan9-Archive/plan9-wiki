@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>DNSMASQ (as of Thu Aug  9 07:46:03 EDT 2007)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>DNSMASQ</h1>
+<h2><i>-as of Thu Aug  9 07:46:03 EDT 2007-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+<a href="http://thekelleys.org.uk/dnsmasq/doc.html">DNSMASQ</a>
+is
+a
+small
+combined
+DNS
+and
+DHCP
+server
+designed
+for
+NAT'ed
+networks.
+<p class='para'>
+To
+configure
+it
+to
+send
+file
+and
+auth
+servers
+to
+plan9
+machines,
+use
+a
+command
+line
+similar
+to
+the
+following.
+<pre>
+	dnsmasq -s some.domain \
+		--dhcp-option-force vendor:plan9,128,fsip \
+		--dhcp-option-force vendor:plan9,129,authip
+</pre>
+
+</p>
+
+<p class='para'>
+Here,
+fsip
+and
+authip
+are
+the
+IP
+addresses
+of
+your
+file-
+and
+auth-servers.
+It
+would
+make
+sense
+to
+put
+these
+in
+/etc/hosts
+on
+the
+computer
+running
+dnsmasq.
+</p>
+
+<p class='para'>
+It
+is
+necessary
+to
+'force'
+the
+options
+since
+ip/ipconfig
+doesn't
+actually
+request
+these.
+</p>
+
+<a name="SEE_ALSO" /><h3>SEE ALSO</h3>
+
+<p class='para'>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ipconfig"><i>ipconfig</i>(8)</a>,
+<a href="../../Network_configuration">Network
+configuration</a>
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Thu Aug  9 07:46:03 EDT 2007</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

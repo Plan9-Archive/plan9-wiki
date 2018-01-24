@@ -1,0 +1,30 @@
+zakame
+D1220278871
+Azakame
+#I've been following Plan 9 since early 2007, but its only now (Aug
+#2008) that I've begun to set up a full Plan 9 network for daily use.
+#
+#I'll use this page to document my experience and set up of my Plan 9
+#network. And maybe later on, as an index for stuff I'll be writing
+#for and on Plan 9. ;-)
+#
+#DEMO SETUP: PLAN 9 ON PARALLELS DESKTOP
+#
+#I've successfully set up a Plan 9 network on Parallels Desktop 3.0
+#(build 5608). It consists of 3 virtual machines:
+#
+# *	'cloud9': CPU/auth server, initially with hard disks, later moved
+#	to file server
+# *	'pretzel': fossil(4) file server with venti(8) storage
+# *	'knots': diskless terminal
+#
+#Installation began on cloud9 as a standalone terminal, on a
+#fossil(4)-only disk. After installation from CD, I logged in as
+#_adm_ to install the Philippines timezone:
+#
+#! 	% cat >/adm/timezone/Philippines
+#! 	PHT 28800 PHT 28800
+#! 	% cp /adm/timezone/Philippines /adm/timezone/local
+#
+#Once enabling the local timezone, I added my own user, and added
+#another disk for the venti(8) archival store.

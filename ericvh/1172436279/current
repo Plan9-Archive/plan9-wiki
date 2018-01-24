@@ -1,0 +1,24 @@
+ericvh
+D1172436279
+Aericvh
+#
+#WHO
+#
+#! Eric Van Hensbergen
+#! IBM Austin Research Lab
+#! (ericvh AT gmail DOT com)
+#
+#PROJECT STATUS
+#
+# *	[v9fs] - working in Linux 2.6.14 and on
+# *	9P based hypervisor resource sharing (aka PROSE, aka Libra)
+# *	[9p2000.u] - prototype intergrated into v9fs, see RFC off v9fs
+#	homepage
+# *	[v9srv] - linux kernel-mode server for 9P
+# *	[Blue Gene Port] - Inferno and Plan 9 on Blue Gene
+# *	[warren] - Plan 9 collaboration framework
+#
+#BLOG
+#
+# *	[Graverobber | http://graverobbers.blogspot.com] - Plan 9 blog
+#

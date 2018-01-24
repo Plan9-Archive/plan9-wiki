@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Drawterm (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Drawterm</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<a href="http://plan9.bell-labs.com/magic/man2html/8/Drawterm"><i>Drawterm</i>(8)</a>
+is
+not
+a
+Plan
+9
+program.
+It
+is
+a
+program
+that
+users
+of
+non-Plan
+9
+systems
+can
+use
+to
+establish
+graphical
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cpu"><i>cpu</i>(1)</a>
+connections
+with
+Plan
+9
+CPU
+servers.
+Just
+as
+a
+real
+Plan
+9
+terminal
+does,
+drawterm
+serves
+its
+local
+name
+space
+as
+well
+as
+some
+devices
+(the
+keyboard,
+mouse,
+and
+screen)
+to
+a
+remote
+CPU
+server,
+which
+mounts
+this
+name
+space
+on
+/mnt/term
+and
+starts
+a
+shell.
+Typically,
+either
+explicitly
+or
+via
+the
+profile,
+one
+uses
+the
+shell
+to
+start
+<a href="http://plan9.bell-labs.com/magic/man2html/1/rio"><i>rio</i>(1)</a>.
+<a name="DOWNLOAD" /><h3>DOWNLOAD</h3>
+
+<p class='para'>
+To
+get
+the
+latest
+source
+for
+drawterm
+from
+a
+system
+with
+Mercurial:
+</p>
+
+<pre>
+$ hg clone http://code.swtch.com/drawterm
+</pre>
+
+<p class='para'>
+In
+the
+Plan
+9
+distribution:
+<a href="http://plan9.bell-labs.com/sources/plan9/sys/src/cmd/unix/drawterm/">/sys/src/cmd/unix/drawterm/</a>
+(sometimes
+out
+of
+date)
+</p>
+
+<p class='para'>
+For
+more
+information
+and
+binaries
+for
+various
+systems
+see:
+<a href="http://swtch.com/drawterm/">http://swtch.com/drawterm/</a>
+</p>
+
+<a name="NOTES" /><h3>NOTES</h3>
+
+<p class='para'>
+When
+drawterm-linux
+starts
+you
+might
+well
+see
+an
+error
+message
+like
+this
+:
+cpu:
+failed
+to
+chdir
+to
+$dir
+where
+$dir
+is,
+in
+fact,
+pwd
+on
+your
+linux
+box.
+I
+haven't
+looked
+very
+far
+to
+find
+out
+where
+that
+happens
+because
+I
+added
+fn
+drawterm
+{@{cd
+/;
+drawterm-linux
+$*
+}}
+to
+$home/.rcrc
+and
+cd
+to
+the
+top
+of
+lib/profile
+to
+put
+me
+in
+$home
+on
+startup.
+</p>
+
+<p class='para'>
+To
+access
+a
+Plan
+9
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cpu"><i>cpu</i>(1)</a>
+server
+behind
+a
+packet
+filter,
+you
+need
+to
+allow
+access
+to
+the
+following
+ports:
+17010,
+17013
+and
+567
+(to
+the
+<a href="http://plan9.bell-labs.com/magic/man2html/8/auth"><i>auth</i>(8)</a>
+server).
+</p>
+
+<a name="SEE_ALSO" /><h3>SEE ALSO</h3>
+
+<p class='para'>
+<a href="../Drawterm_to_your_terminal">Drawterm
+to
+your
+terminal</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/8/drawterm"><i>drawterm</i>(8)</a>,
+<a href="http://swtch.com/drawterm/">http://swtch.com/drawterm/</a>
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Wed Feb  2 00:38:35 EST 2011</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

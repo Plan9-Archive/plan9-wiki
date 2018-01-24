@@ -1,0 +1,102 @@
+Replacing 9load
+
+! Date: Mon, 5 Dec 2005 15:47:14 -0500
+! From: Russ Cox <rsc@swtch.com>
+! To: 9fans <9fans@cse.psu.edu>
+! Subject: [9fans] replacing 9load
+
+For quite a few years, various of us have talked about replacing
+9load. When Jim and I replaced b.com with the combination of ld.com
+and 9load, we considered using a stock Plan 9 kernel instead. Sean
+Quinlan took a few steps toward making this possible: he added the
+configuration environment #ec, the Dev.shutdown routines, and
+/dev/reboot. With these, one can use the kernel as an impromptu boot
+loader already. I believe Ron Minnich does just that in some of his
+machines.
+
+There are a few things 9load does that the kernel depends on. The
+main one is loading plan9.ini from somewhere and leaving it in
+memory. A secondary one is setting up the APM BIOS interface, and in
+the original VESA code written for Inferno, 9load was responsible for
+setting up the VGA. With the new realmode code (or better, if someone
+would write it, VM86 code) in the kernel, the APM and VESA can be
+done by the kernel proper. That leaves plan9.ini.
+
+Plan9.ini serves two related but different purposes. The first is to
+give the kernel hints about hardware recognition. The second is to
+specify a few aspects of the software configuration. Ideally, it
+would be nice if plan9.ini could become optional.
+
+Hardware recognition was a much bigger problem in the old ISA days.
+Plan9.ini was, at the time, an excellent alternative to recompiling
+the kernel to hard-wire all the constants about your machine. Now
+that we have PCI and its device ids, you don't need to tell the
+kernel what hardware you have anymore. It knows, usually better than
+you.
+
+That leaves the software configuration: mouse, vga, serial console,
+kernel location, root file system location, boot menu, etc. The mouse
+and vga could possibly be auto-detected, and the new vga resize code
+(if it works) makes it possible to correct a bad guess about the
+user's desired screen size.
+
+The other options in plan9.ini -- the serial console, the kernel and
+root file system, the boot menu -- can't just be guessed. Jim has
+been playing with loading plan9.ini via PXE/TFTP, which is great for
+a real single-file-server Plan 9 setup, though it won't satisfy the
+single-machine users. I don't expect this part of plan9.ini to go
+away, though one could make 9load do without it in the general case
+(scan the local 9fats for files named 9pc*, for example).
+
+When I put the new mmu code into the kernels, I didn't feel like
+putting it into 9load too. Instead I wrote a small binary that turns
+a gzipped kernel into a 9load binary that the PBS bootstrap could
+load into memory. You run
+
+! cat load 9pcload.gz >9load
+
+to produce a 9load from a kernel. I have put this in
+/n/sources/contrib/rsc/load.
+
+This new program means that you can build yourself a special pcload
+kernel with some 9load-like user-level program installed as
+/boot/boot instead of the usual boot. It would find plan9.ini,
+present any prompts if needed, find and load a kernel, and then
+/dev/reboot into it. You could put dossrv, ext2srv, fossil, venti,
+kfs, factotum, mount, tftp, ftpfs, hget, etc., into the root file
+system, to load kernels off of any conceivable medium.
+
+While a new 9load using the real kernel could be great, it's not very
+high on my or Jim's to do list, since the current 9load suffices, and
+we're more interested in what happens once the kernel is in memory
+than the mundane and now all-too-familiar details of the x86 boot
+process.
+
+I encourage those of you grumbling for a new 9load to attack one of
+the following problems:
+
+ *	write vm86 code for the kernel to replace the realmode code. vm86
+	code should be safer and more reliable and will make the vesa and
+	apm code run on more machines.
+
+ *	write a mouse auto-detector: scan the usb, try ps2, scan the
+	serial ports. this should be almost trivial.
+
+ *	write a vga size auto-detector: try aux/vga -m vesa -p and fetch
+	and parse the edid information from the monitor. aux/vga does most
+	of this already.
+
+ *	write a user-level program to be the `9load' in a 9pcload kernel.
+	the program should have generic "get me a plan9.ini" and "get me a
+	kernel" interfaces, like the current 9load, so that many boot
+	methods can be plugged in.
+
+Ironically, once this is all done we'll have moved full circle to
+where Plan 9 was many years ago, when the hobbit boot loader was just
+a Plan 9 kernel with a different load address and a special boot
+program that let you set environment variables, examine memory,
+attach to file servers, run programs that were downloaded, and load
+and boot a kernel.
+
+Russ
+

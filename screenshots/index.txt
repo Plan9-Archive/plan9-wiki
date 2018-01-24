@@ -1,0 +1,19 @@
+Screenshots
+
+ *	[Plan 9 Screenshot |
+	http://plan9.bell-labs.com/plan9/screenshot.html]
+ *	[Interpolate.gif |
+	http://plan9.bell-labs.com/plan9/img/mirtchov/interpolate.gif]
+ *	[Plan 9-graphics.png |
+	http://plan9.bell-labs.com/plan9/img/mirtchov/plan9-graphics.png]
+ *	[Plan 9-nice.png |
+	http://plan9.bell-labs.com/plan9/img/mirtchov/plan9-nice.png]
+ *	[Plan 9-normal.png |
+	http://plan9.bell-labs.com/plan9/img/mirtchov/plan9-normal.png]
+ *	[Plan 9-scr.png |
+	http://plan9.bell-labs.com/plan9/img/mirtchov/plan9-scr.png]
+ *	[Plan 9-t23.gif |
+	http://plan9.bell-labs.com/plan9/img/mirtchov/plan9-t23.gif]
+ *	[Stupid Linux Tricks--VNC on Plan 9, running drawterm on Linux |
+	http://csplan9.rit.edu/nested.png]
+

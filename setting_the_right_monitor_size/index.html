@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Setting the right monitor size (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Setting the right monitor size</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+Many
+people
+have
+trouble
+configuring
+their
+monitors
+to
+the
+right
+size
+after
+the
+installation.
+The
+file
+/lib/vgadb
+contains
+definitions
+for
+the
+most
+common
+display
+sizes
+and
+some
+peculiar
+hardware
+that
+Bell
+Labs
+or
+other
+9fans
+have
+used.
+Once
+you've
+found
+the
+desirable
+size,
+set
+monitor=
+to
+that
+name
+in
+<a href="http://plan9.bell-labs.com/magic/man2html/8/plan9.ini"><i>plan9.ini</i>(8)</a>.
+If
+you
+can't
+find
+an
+appropriate
+monitor
+entry,
+you
+can
+add
+your
+own
+using
+the
+instructions
+in
+<a href="../Adding_a_monitor_to_vgadb">Adding
+a
+monitor
+to
+vgadb</a>.
+If
+your
+plan9.ini
+file
+isn't
+located
+in
+/n/9fat/plan9.ini,
+type
+<pre>
+	9fat: 
+</pre>
+
+<p class='para'>
+For
+example,
+this
+entry
+is
+being
+typed
+on
+a
+T30
+laptop
+with
+1400x1050
+display.
+The
+plan9.ini
+on
+this
+machine
+has
+the
+following
+entry:
+</p>
+
+<pre>
+	monitor=t23
+</pre>
+
+<p class='para'>
+You
+can
+also
+change
+the
+resolution
+afterwards
+with
+aux/vga.
+Have
+a
+look
+at
+<a href="http://plan9.bell-labs.com/magic/man2html/8/vga"><i>vga</i>(8)</a>
+for
+all
+details.
+In
+short:
+</p>
+
+<pre>
+	aux/vga -m vesa -l 1280x1024x16
+</pre>
+
+<p class='para'>
+or
+</p>
+
+<pre>
+	aux/vga -m vga -l
+</pre>
+
+<p class='para'>
+to
+reset
+the
+display
+to
+a
+known
+state.
+</p>
+
+<p class='para'>
+Here's
+here
+is
+a
+list
+of
+some
+possible
+names
+for
+your
+display,
+for
+a
+complete
+list
+see
+/lib/vgadb:
+</p>
+
+<pre>
+vga=640x480				# 60Hz, 31.5KHz
+vga=800x600				# 60Hz, 37.9KHz
+
+svga=640x480
+svga=800x600
+
+cinema=1280x768				# VAIO (pcg tr1mp in vmware).
+cinema=1152x768				# Titanium 550 (in virtual pc)
+
+xga=1024x768
+lcd=xga
+multisync=1024x768
+multisync=1024x768i
+multisync=1152x900
+multisync=1280x1024
+multisync=1280x1024i
+multisync=1376x1024
+
+multisync65=multisync
+multisync65=1024x768			# 60Hz, 48.4KHz
+
+multisync75=multisync
+
+multisync110=multisync			# Multisync monitors with video bandwidth up to 110MHz.
+
+multisync135=multisync			# Multisync monitors with video bandwidth up to 135MHz.
+
+t23=1400x1050				# IBM Thinkpad
+t23=1280x1024
+t23=1024x768
+
+versa6xxx=1024x768			# NEC Versa 6030X/6200MX Laptop.
+versa6xxx=800x600
+versa6xxx=640x480
+
+445x=1280x1024				# Nokia Multigraph 445X
+445x=1600x1200				
+445x=640x480					
+
+p815=1800x1350				# Viewsonic P815
+p815=1792x1350				# 70Hz, xx.xKHz
+p815=1600x1200				# 75.4Hz, 93.5KHz
+p815=1024x768
+
+sgi1600sw=1600x1024			# SGI 1600SW Flat Panel
+sgi1600sw=800x512
+</pre>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Sun May 13 02:39:20 EDT 2012</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

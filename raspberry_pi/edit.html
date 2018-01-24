@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Raspberry Pi (Editing Fri Mar 29 15:17:06 EDT 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Raspberry Pi</b></font> (Editing Fri Mar 29 15:17:06 EDT 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Raspberry Pi">
+<input type="hidden" name="version" value="1364584626">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+Plan 9 runs on the various Raspberry Pi models. The port is stable
+and performs reasonably, but there is more work to be done.
+
+TODO
+
+The Raspberry Pi contains a lot of interesting bits that we aren't
+yet doing anything with. Here's a (more or less complete) list of
+things we'd like to see done, with some info on each.
+
+The best starting point for an [overview of the Pi's hardware
+capabilities | http://elinux.org/RPi_Low-level_peripherals] is on
+their wiki.
+
+ *	[GPIO |
+	http://elinux.org/RPi_Low-level_peripherals#General_Purpose_Input.2FOutput_.28GPIO.29]
+
+Bakul Shah has been working on a GPIO driver for the Pi.
+
+ *	I²C
+ *	I²S
+ *	audio
+ *	pwm
+ *	spi
+
+ *	[DSI | http://www.mipi.org/specifications/display-interface] &
+	[CSI-2 | http://www.mipi.org/specifications/camera-interface]
+
+These are display and camera interfaces, located at S2 and S5 on the
+Pi, respectively. These are not widely supported on the various
+systems which run on the Pi, and compatible hardware is not very
+common. Compatible displays can be found in some smartphones.
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>Plumbing examples (Editing Fri Apr 17 13:39:23 EDT 2009 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Plumbing examples</b></font> (Editing Fri Apr 17 13:39:23 EDT 2009 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Plumbing examples">
+<input type="hidden" name="version" value="1239989963">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+In addition to its more conventional functions, the plumber can also
+provide easy shortcuts for common functions.
+
+The next few examples assume a program called 'web', which takes a
+URL to open as an argument. Given that, the following plumbing rule
+will turn the string 'MR:1234' into a Bugzilla search for bug 1234:
+! 	# MRs open Bugzilla via web.
+! 	type is text
+! 	data matches 'MR:([0-9]+)'
+! 	plumb to web
+! 	plumb start web http://bugzilla.mozilla.org/show_bug.cgi?id=$1
+(obviously, you should substitute "bugzilla.mozilla.org" with the
+Bugzilla install you're interested in). If you have multiple issue
+tracking systems to deal with, just give each a unique tag:
+! 	# RT tickets open RT via web.
+! 	type is text
+! 	data matches 'RT:([0-9]+)'
+! 	plumb to web
+! 	plumb start web http://rt.example.com/Ticket/Display.html?id=$1
+Now plumbing 'RT:23' will bring up issue #23 in that RT3
+installation. This extends to any sort of query, of course. Make
+'RFC:2325' bring up over-engineered coffee-making instructions:
+! 	# RFC's from one of the nicer-looking repositories.
+! 	type is text
+! 	data matches 'RFC:([0-9]+)'
+! 	plumb to web
+! 	plumb start web http://rfc.sunsite.dk/rfc/rfc$1.html
+
+From our friends over at Acme-SAC, the following will search for
+books by ISBN.
+! 	type is text
+! 	data matches 'ISBN:([0-9]+)[ \-]?([0-9]+)[ \-]?([0-9]+)[ \-]?([0-9X]+)([ \-]?([0-9]+))?'
+! 	plumb to web
+! 	plumb start web http://lookupbyisbn.com//search.aspx?page=1&key=$1$2$3$4$6
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Adding a monitor to vgadb (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Adding a monitor to vgadb <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Fri Jan 11 17:27:09 EST 2008</a>, john
+</div><hr />If
+none
+of
+the
+monitors
+in
+/lib/vgadb
+fit
+your
+needs,
+you
+can
+create
+your
+own
+entry.
+Here,
+I'll
+go
+through
+the
+steps
+I
+used
+to
+make
+an
+entry
+for
+my
+Samsung
+SyncMaster
+240T
+monitor.
+This
+assumes
+that
+you
+can
+boot
+Linux
+and
+get
+X
+running
+at
+a
+mode
+you
+like.
+I
+had
+mine
+running
+at
+1920x1200
+under
+X.
+<p class='para'>
+Run
+xvidtune
+and
+collect
+the
+data
+it
+shows.
+Here's
+what
+I
+got:
+</p>
+
+<pre>
+Vendor: SAMSUNG, Model: SYNCMASTER 240T(DIGITAL)
+Num hsync: 1, Num vsync: 1
+hsync range 0:  29.00 -  81.00
+vsync range 0:  39.00 -  85.00
+HSyncStart: 2048 
+HSyncEnd: 2256
+HTotal: 2592
+VSyncStart: 1201
+VSyncEnd: 1204
+VTotal: 1242
+Pixel clock: 193.15 MHz
+H-Sync: 74.52 kHz
+V-Sync: 60.00 Hz
+</pre>
+
+<p class='para'>
+Using
+these
+values
+and
+the
+comments
+in
+vgadb,
+I
+came
+up
+with
+the
+following
+entry:
+</p>
+
+<pre>
+sm240t=1920x1200
+	clock=193.15
+	shb=2048 ehb=2256 ht=2592
+	vrs=1201 vre=1204 vt=1242
+</pre>
+
+<p class='para'>
+Look
+at
+those
+numbers.
+You'll
+see
+that
+"clock"
+corresponds
+to
+the
+"pixel
+clock"
+value
+from
+xvidtune;
+shb,
+ehb
+and
+ht
+correspond
+to
+HSyncStart,
+HSyncEnd,
+and
+HTotal,
+respectively;
+vrs,
+vre
+and
+vt
+to
+VSyncStart,
+VSyncEnd,
+and
+VTotal.
+</p>
+
+<p class='para'>
+Once
+I
+had
+this
+entry
+added
+to
+/lib/vgadb,
+all
+that
+remained
+was
+to
+edit
+plan9.ini
+to
+say
+"monitor=sm240t"
+and
+"vgasize=1920x1200x32".
+This
+method
+should
+be
+applicable
+to
+most
+monitors.
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Fri Jan 11 17:27:09 EST 2008</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

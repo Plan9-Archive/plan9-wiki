@@ -1,0 +1,50 @@
+Replace language for wikifs
+
+The wikifs(4) in both Plan 9 and Inferno understand a very small set
+of cues when generating HTML. That set can be limiting. It should be
+replaced with something better, like Markdown.
+
+Markdown engines in C already exist, and have been ported to Plan 9
+via APE. For proper integration this should likely be turned into a
+native parser, but that should be a relatively easy task.
+
+Doing this for the Inferno wikifs would be a bit more work, as no
+Markdown implementation exists in Limbo today (although there are
+similar things).
+
+These two together should make a good summer-sized project. Any extra
+time could be spent converting the existing pages (or, even better,
+writing a conversion program).
+
+It is not particularly important that the language understood by
+wikifs be markdown, per se, but it would be very nice if it was one
+of the widely understood similar alternatives (rather than a new
+creation). It is more important that the language understood by the
+Plan 9 and Inferno wikifs implementaitons be the same (or, at the
+very minimum, one a proper subset of the other).
+
+LINKS
+
+The original writeup on [Markdown |
+http://daringfireball.net/projects/markdown/], including the initial
+perl implementation.
+
+[Discount | http://www.pell.portland.or.us/~orc/Code/markdown/], a
+Markdown implementation with Plan 9 support (via APE) in the mainline
+tree.
+
+[textmangle | https://bitbucket.org/mjl/textmangle], a Limbo
+implementation of a markdown-like library (with moderately different
+syntax).
+
+[Pandoc |
+http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown] and
+[MultiMarkdown | http://fletcherpenney.net/multimarkdown/] are two
+possible extensions worth considering. There are lots of others.
+
+[Textile | http://en.wikipedia.org/wiki/Textile_(markup_language)]
+and [reStructuredText |
+http://en.wikipedia.org/wiki/ReStructuredText] are alternatives to
+Markdown which might be suitable, although neither is in as
+widespread use.
+

@@ -1,0 +1,34 @@
+Setting up a Inferno mirror
+D1130924832
+AChrissi (84.19.223.135)
+#To setup a mirror of the files for the [Inferno |
+#http://www.vitanuova.com/inferno/net_download4T.html] operating
+#system.
+#
+#WHAT YOU NEED
+#
+# *	http://www.9grid.de/mirrorinferno
+#
+#PREPARATION
+#
+#! hget http://www.9grid.de/mirrorinferno > /rc/bin/mirrorinferno;
+#! chmod 775 /rc/bin/mirrorinferno;
+#
+#Change now the line:
+#
+#! cd /usr/web/inferno
+#
+#to the directory where you want to mirror Inferno.
+#
+#MIRRORING INFERNO
+#
+#! /rc/bin/mirrorinferno;
+#
+#THE CRONJOB
+#
+#! # This example assumes "bootes" being able to access the directory where you mirror Inferno.
+#! # The cronjob will be done every night at 0:00 on the computer.
+#! echo '0 0 * * * local mirrorinferno' >> /cron/bootes/cron
+#
+#Have fun.
+#

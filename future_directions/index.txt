@@ -1,0 +1,17 @@
+Future directions
+
+Ideas, posts and articles about future Plan 9 development:
+
+ *	Kernel as a 9P MUX and removal of #:
+	[http://marc.theaimsgroup.com/?l=9fans&m=111558872619443&w=2] (TODO:
+	import selection of parts of that thread into a page here)
+ *	[detaching devices in kernel |
+	http://groups.google.com/group/comp.os.plan9/msg/8d847c80107e3f34]
+
+------------------------------------------------------ 
+Note: This page is meant as a guide and reference for the Plan 9
+community by collecting ideas and plans from the original Plan 9
+authors and developers. Also if you add any items, please include
+reference to relevant emails or papers describing them. For
+wishlists, new ideas and suggestions, please use the [TODO].
+

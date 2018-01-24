@@ -1,0 +1,79 @@
+Setting the right monitor size
+
+Many people have trouble configuring their monitors to the right size
+after the installation. The file /lib/vgadb contains definitions for
+the most common display sizes and some peculiar hardware that Bell
+Labs or other 9fans have used. Once you've found the desirable size,
+set monitor= to that name in plan9.ini(8). If you can't find an
+appropriate monitor entry, you can add your own using the
+instructions in [Adding a monitor to vgadb]. If your plan9.ini file
+isn't located in /n/9fat/plan9.ini, type
+
+! 	9fat: 
+
+For example, this entry is being typed on a T30 laptop with 1400x1050
+display. The plan9.ini on this machine has the following entry:
+
+! 	monitor=t23
+
+You can also change the resolution afterwards with aux/vga. Have a
+look at vga(8) for all details. In short:
+
+! 	aux/vga -m vesa -l 1280x1024x16
+
+or
+
+! 	aux/vga -m vga -l
+
+to reset the display to a known state.
+
+Here's here is a list of some possible names for your display, for a
+complete list see /lib/vgadb:
+
+! vga=640x480				# 60Hz, 31.5KHz
+! vga=800x600				# 60Hz, 37.9KHz
+! 
+! svga=640x480
+! svga=800x600
+! 
+! cinema=1280x768				# VAIO (pcg tr1mp in vmware).
+! cinema=1152x768				# Titanium 550 (in virtual pc)
+! 
+! xga=1024x768
+! lcd=xga
+! multisync=1024x768
+! multisync=1024x768i
+! multisync=1152x900
+! multisync=1280x1024
+! multisync=1280x1024i
+! multisync=1376x1024
+! 
+! multisync65=multisync
+! multisync65=1024x768			# 60Hz, 48.4KHz
+! 
+! multisync75=multisync
+! 
+! multisync110=multisync			# Multisync monitors with video bandwidth up to 110MHz.
+! 
+! multisync135=multisync			# Multisync monitors with video bandwidth up to 135MHz.
+! 
+! t23=1400x1050				# IBM Thinkpad
+! t23=1280x1024
+! t23=1024x768
+! 
+! versa6xxx=1024x768			# NEC Versa 6030X/6200MX Laptop.
+! versa6xxx=800x600
+! versa6xxx=640x480
+! 
+! 445x=1280x1024				# Nokia Multigraph 445X
+! 445x=1600x1200				
+! 445x=640x480					
+! 
+! p815=1800x1350				# Viewsonic P815
+! p815=1792x1350				# 70Hz, xx.xKHz
+! p815=1600x1200				# 75.4Hz, 93.5KHz
+! p815=1024x768
+! 
+! sgi1600sw=1600x1024			# SGI 1600SW Flat Panel
+! sgi1600sw=800x512
+

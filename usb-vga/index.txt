@@ -1,0 +1,16 @@
+usb-vga
+
+
+PROJECT STATEMENT
+
+A variety of low-cost "embedded" machines support Ethernet and USB
+but have no video output (e.g., Kuro Box, NSLU2, Soekris). Meanwhile,
+there are a variety of USB VGA adaptors in the $80 range (e.g.,
+Tritton). The project would entail writing a /dev/draw driver for one
+of these devices (your proposal should include evidence that there is
+enough publicly available information on your selected device that
+you will be able to write the driver).
+
+Note that on Plan 9 a USB device driver is typically a user-space
+program (i.e., this project will not require kernel development).
+

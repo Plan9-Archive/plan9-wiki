@@ -1,0 +1,99 @@
+<html>
+<head>
+<title>Connecting from other OSes (Editing Sat Mar  2 22:30:47 EST 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Connecting from other OSes</b></font> (Editing Sat Mar  2 22:30:47 EST 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Connecting from other OSes">
+<input type="hidden" name="version" value="1362281447">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+Connecting to Plan 9 consists of either cpu(1)'ing to it, which is
+like ssh(1) of other OSes, but more advanced. The second way is to
+import files from Plan 9 using 9P.
+
+DRAWTERM
+
+[drawterm(8) | ../drawterm] is a program that non-Plan 9 systems
+users can use to establish graphical cpu(1) connections with Plan 9
+CPU servers. Just as a real Plan 9 terminal does, drawterm serves its
+local name space as well as some devices (the keyboard, mouse, and
+screen) to a remote CPU server, which mounts this name space on
+/mnt/term and starts a shell. Typically, either explicitly or via the
+profile, one uses the shell to start rio(1).
+
+Xfree86 drivers for some video cards assume that masks (stipples)
+have height equal to a multiple of 8. This causes drawterm to display
+blanks instead of glyphs with some fonts. Try the -b argument to
+drawterm if you see this problem.
+
+The sourcecode and precompiled binaries for various OS's can be
+downloaded from [http://swtch.com/drawterm/]
+
+V9FS
+
+See [v9fs] for further details.
+
+9PFUSE
+
+9pfuse provides a userspace fuse driver for mounting 9p filesystems.
+It is available in many unix-related operating systems. A typical
+command to mount a fs via 9pfuse:
+
+! 9pfuse 192.168.1.199:20000 /home/linda/9pimport
+
+For authentication and support for protocols like import [plan9port |
+http://swtch.com/plan9port] provides versions of factotum(4) and
+other utilities.
+
+HUBFS
+
+[hubfs] is a 9p fs which can be used in combination with 9pfuse or
+other ways of accessing 9p. It provides functionality like
+screen/tmux to allow persistent shells from both Plan 9 and another
+operating system to be shared back and forth.
+
+9VX
+
+See [9vx] for details. In 9vx you can use the standard utilities like
+cpu(1) or import(4)
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

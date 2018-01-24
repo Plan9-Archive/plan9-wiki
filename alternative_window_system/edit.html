@@ -1,0 +1,121 @@
+<html>
+<head>
+<title>Alternative window system (Editing Wed Feb 12 17:48:14 EST 2014 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Alternative window system</b></font> (Editing Wed Feb 12 17:48:14 EST 2014 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Alternative window system">
+<input type="hidden" name="version" value="1392245294">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+The graphics system in Plan 9 is very different than folks familiar
+with other systems are used to. The graphics rendering is handled by
+the draw(3) device driver, while the control of those windows is
+managed by another program, rio(1).
+
+------------------------------------------------------ 
+Rio provides a very clean, minimal interface, with very little window
+decoration and only two very small menus. It does, however, embody a
+very particular set of ideas about how to deal with windows, with no
+real configurability. For some users, or in some circumstances, this
+isn't ideal. Here are a few ideas for alternatives.
+
+ *	More "traditional"
+
+For some, rio represents a barrier to entry--complaints that it is
+hard to use or ugly have frequently appeared. It would be nice to
+have an alternative window manager for those people who don't like
+rio, perhaps something with more traditional title bars,
+minimize/maximize/close buttons, etc.
+
+ *	Grid-style window layout
+
+Rio is based on the common model of overlapping windows. Plan 9 also
+has acme(1), which could be thought of as a text-only windowing
+system, which is more of a heirarchical grid. While acme itself
+doesn't handle graphical programs, it's inspired (directly or
+indirectly) various X11 window manager with a tabular view of
+graphical windows, such as dwm and wmii. It would be interesting to
+bring those ideas home to Plan 9 in the form of a rio replacement.
+Done on its own, this would likely be a relatively easy and isolated
+set of internal changes in rio.
+
+ *	More keyboard-driven
+
+Some users are very much allergic to mouse-driven interfaces, for
+whatever reason. It wouldn't be hard to modify rio to interpret some
+keyboard input. Basic window operations like new and hide would be
+trivial; more interesting would be a clever model for placement and
+resizing. This could be combined with one (or more?) of the above
+ideas (dwm, from the X11 world, offers a particularly interesting
+combination of this with a grid-based layout).
+
+ *	Different physical interface
+
+Rio is built assuming a system with a keyboard and 3-button mouse.
+That is increasingly not a great assumption. Genuine 3-button mice
+have been uncommon for a long time; we generally get two real buttons
+and a scroll wheel. Then there's the gaming mice with some higher
+number of buttons. There are other, more esoteric input devices, like
+the Shuttle Xpress/Pro. Rio either ignores these or pushes them into
+the 3-button mouse model, with only the smallest concessions. It
+would be interesting to explore what else could be done here with the
+variety of optinos available. This could be a very small set of
+extensions, up through something much more ambitious.
+
+Then, of course, there's touchscreens, including multi-touch devices.
+Pushing those into a 3-button mouse model gets really painful, and
+seriously limits the effectiveness of Plan 9 in those environments.
+An alternative really is called for here. This would involve a lot
+more careful thought and planning up front to determin the most
+effective model, and then some work on how to get access to the
+inputs, before addressing things in the rio replacement itself.
+
+------------------------------------------------------ 
+Contrib on sources contains a number of smaller hacks that folks have
+done to rio to push the boundaries a little. It's worth taking a look
+before getting started on something new. See the [contrib index]
+itself.
+
+We'll shortly add a summary of some of the more interesting
+modifications below.
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

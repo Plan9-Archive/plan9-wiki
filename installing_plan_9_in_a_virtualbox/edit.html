@@ -1,0 +1,151 @@
+<html>
+<head>
+<title>Installing Plan 9 in a VirtualBox (Editing Mon Mar 11 14:32:25 EDT 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Installing Plan 9 in a VirtualBox</b></font> (Editing Mon Mar 11 14:32:25 EDT 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Installing Plan 9 in a VirtualBox">
+<input type="hidden" name="version" value="1363026745">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+NOTE: VirtualBox is not a very good choice. Behavior changes
+dramatically from release to release, with some working out of the
+box, some needing just the right settings, and some not working at
+all. You are highly encouraged to pick a different VM. VMware, qemu
+(with or without kqemu), kvm, and xen are all known to work better.
+
+See also: [installing plan 9 on qemu], [installing in xen],
+[installing in xen 3.0].
+
+Below are a few reports of an installation that worked. For people
+who are attached to VirtualBox for one reason or another, it might be
+useful to produce a table of "Plan 9 release date / VBox version /
+host OS version" tuples with a brief description of the results or
+configuration needed. Submissions from users are hereby solicited.
+
+------------------------------------------------------ 
+From Richard Miller on 9fans, 2013-03-11:
+
+! Bell Labs Plan 9 and networking works well in virtualbox 3.1.8 using
+! Am79C973 virtual ethernet adapter in bridged mode, chipset PIIX3
+! selected and "Enable IO APIC" turned off.  (Maybe not the only usable
+! settings but these work for me.)
+------------------------------------------------------ 
+Under Virtual Box 3.0, selecting the ICH6 chipset rather than PIIX3
+or PIIX4, and deselecting all disks allows 9pccpu to run. AMD79C970
+Ethernet PXE boots reliably but the Intel Ethernet emulations don't.
+
+------------------------------------------------------ 
+I used a VirtualBox-4.1.10 for my installation on a Gentoo Linux
+host, to get a first look into plan9.
+
+The basic installation works out of the box, simply creating a
+VirtualBox System of type "Other", choosing a tiny splitter of memory
+(512M) and a little disk to hold the system (2G), which I decided to
+reside as a fixed size image.
+
+(Maybe I will do a video on howto setup that VirtualBox image, later).
+------------------------------------------------------ 
+
+ODDS AND ENDS
+
+Actually setting up a plan9 from the latest iso from the [Download |
+http://plan9.bell-labs.com/wiki/plan9/download/] Page was quite
+simple.
+
+ *	You have to choose an IDE Controller (which is the default) with
+	the VDI (VirtualBox Disk Image) as
+! IDE Controller
+!    IDE Primary Master:                  plan 9.vdi (Normal, 2,00 GB)
+ *	And you use the unpacked and downloaded ISO Image as Secondary
+	Master
+!    IDE Secondary Master (CD/DVD):       plan9.iso (277,21 MB)
+
+ *	I leave it to you to figure out and continue the installation
+	process, after booting the System and choosing to Install the Plan9
+	System, as most things just work as default or are documented
+	somewhere else ... until
+
+ *	This one: It took me over a day of sweat, blood and tears to get
+	the network running. Actually the PCNet adapters don't seem to work
+	at all. I found just this one Network setting to be good:
+! Adapter 1: Intel PRO/1000 MT Server (Bridged adapter, eth0)
+
+where the `MT Server' version is absolutely essential, as the MT
+Desktop version does not work!
+
+ *	After using ipconfig(8) the dhcp of my router box gave me a valid
+	IP in the local network and provided the plan9 client system with
+	valid DNS Servers in
+! cat /net/ndb
+! ip=192.168.122.6 ipmask=255.255.255.0 ipgw=192.168.122.254
+! 	sys=gnot
+! 	dns=192.168.1.3
+! 	dns=192.168.1.9
+
+ *	I made that settings boot save by uncommenting the dedicated
+	(ip/ipconfig) lines in
+! /bin/termrc
+
+That's it folks. Let the games begin!
+
+------------------------------------------------------ 
+TO SETUP A CUSTOM VIDEO MODE
+
+VirtualBox provides a vesa display emulation to control video modes
+of the guest. You might observe, that your (modern) monitors
+resolution, i.e. 1680x1050x32 or 1920x1080x32, as in my case, are not
+supported.
+
+These are not originally vesa modes, which is a quite old standard.
+
+Luckily you are able to tune your host system to provide extended
+vesa modes for the guest. The method is described in the [VirtualBox
+manual | http://www.virtualbox.org/manual/ch09.html], in the section
+“Custom Vesa Resolutions”.
+
+All you have to do is to set your custom modes as extradata options:
+
+! VirtualBox setextradata "VM name" "CustomVideoMode1" "1920x1080x32"
+! VirtualBox setextradata "VM name" "CustomVideoMode2" "1680x1050x32"
+! VirtualBox setextradata "VM name" "CustomVideoMode3" "960x1080x32"
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

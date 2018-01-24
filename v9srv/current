@@ -1,0 +1,8 @@
+v9srv
+D1114995599
+Aericvh (70.112.173.183)
+#This is really just a code-name for my plan of incorperating a 9P
+#server and srv(3)-like features into the Linux v9fs driver. This
+#will allow for more efficient gateways and server operations. I'll
+#post design notes and such off this wiki node as things develop.
+#

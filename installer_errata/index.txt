@@ -1,0 +1,32 @@
+Installer Errata
+
+This page lists known issues with Plan 9 installer:
+
+Open issues:
+
+ *	9load wont detect your IDE CD-ROM reader device if it's not set as
+	Primary or Secondary Master. Workaround: set your cd-rom as
+	Secondary Master.
+
+ *	Currently there is no way to use a usb mouse during install, but
+	it's possible to install without using the mouse.
+
+Resolved issues as of 11/04/2005:
+ *	If using the text mode installer, page will complain about missing
+	$wsys. You can ignore that error message. FIXED by 20h.
+
+ *	Kfs broken: one can select kfs, but it doesn't work. Please use
+	fossil instead, kfs is not supported and probably will be removed
+	soon. FIXED: kfs support has been removed.
+
+ *	Currently the installer is broken due to missing fcp command used
+	by replica, 20h's patch to add venti installation includes a fix for
+	this. Workaround: you can bind(1) /bin/cp on top of /bin/fcp. FIXED:
+	fcp has been added to the install floppy.
+
+ *	If your MBR is not empty(eg., you have installed lilo before) the
+	installer will not ask you install the Plan 9 MBR, you are expected
+	to manage to boot Plan 9 from your existing boot loader or install
+	the mbr by hand. FIXED: You are now asked if you want to install it
+	when choosing "plan9" as bootmethod.
+

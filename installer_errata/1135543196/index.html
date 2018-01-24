@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Installer Errata (as of Sun Dec 25 15:39:56 EST 2005)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Installer Errata</h1>
+<h2><i>-as of Sun Dec 25 15:39:56 EST 2005-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+This
+page
+lists
+known
+issues
+with
+Plan
+9
+installer:
+<p class='para'>
+Open
+issues:
+</p>
+
+<ul>
+
+<li>
+9load
+wont
+detect
+your
+IDE
+CD-ROM
+reader
+device
+if
+it's
+not
+set
+as
+Primary
+or
+Secondary
+Master.
+Workaround:
+set
+your
+cd-rom
+as
+Secondary
+Master.
+</li>
+</ul>
+
+<ul>
+
+<li>
+Currently
+there
+is
+no
+way
+to
+use
+a
+usb
+mouse
+during
+install,
+but
+it's
+possible
+to
+install
+without
+using
+the
+mouse.
+</li>
+</ul>
+
+<p class='para'>
+Resolved
+issues
+as
+of
+11/04/2005:
+<ul>
+
+<li>
+If
+using
+the
+text
+mode
+installer,
+page
+will
+complain
+about
+missing
+$wsys.
+You
+can
+ignore
+that
+error
+message.
+FIXED
+by
+20h.
+</li>
+</ul>
+
+</p>
+
+<ul>
+
+<li>
+Kfs
+broken:
+one
+can
+select
+kfs,
+but
+it
+doesn't
+work.
+Please
+use
+fossil
+instead,
+kfs
+is
+not
+supported
+and
+probably
+will
+be
+removed
+soon.
+FIXED:
+kfs
+support
+has
+been
+removed.
+</li>
+</ul>
+
+<ul>
+
+<li>
+Currently
+the
+installer
+is
+broken
+due
+to
+missing
+fcp
+command
+used
+by
+replica,
+20h's
+patch
+to
+add
+venti
+installation
+includes
+a
+fix
+for
+this.
+Workaround:
+you
+can
+<a href="http://plan9.bell-labs.com/magic/man2html/1/bind"><i>bind</i>(1)</a>
+/bin/cp
+on
+top
+of
+/bin/fcp.
+FIXED:
+fcp
+has
+been
+added
+to
+the
+install
+floppy.
+</li>
+</ul>
+
+<ul>
+
+<li>
+If
+your
+MBR
+is
+not
+empty(eg.,
+you
+have
+installed
+lilo
+before)
+the
+installer
+will
+not
+ask
+you
+install
+the
+Plan
+9
+MBR,
+you
+are
+expected
+to
+manage
+to
+boot
+Plan
+9
+from
+your
+existing
+boot
+loader
+or
+install
+the
+mbr
+by
+hand.
+FIXED:
+You
+are
+now
+asked
+if
+you
+want
+to
+install
+it
+when
+choosing
+"plan9"
+as
+bootmethod.
+</li>
+</ul>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Sun Dec 25 15:39:56 EST 2005</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

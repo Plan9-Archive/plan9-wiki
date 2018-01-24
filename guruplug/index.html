@@ -1,0 +1,679 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Guruplug (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Guruplug</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+This
+document
+is
+based
+on
+the
+notes
+I
+took
+and
+found
+around
+9fans
+and
+various
+Plan
+9
+related
+sites
+with
+respect
+to
+getting
+the
+Globalscale
+Guruplug
+platform
+booting
+Plan
+9.
+<a name="STEP_1_-_SET_UP_A_CPU/FS/AUTH_SERVER" /><h3>STEP 1 - SET UP A CPU/FS/AUTH SERVER</h3>
+
+<p class='para'>
+Directions
+for
+how
+to
+do
+this
+are
+listed
+in
+the
+<a href="../Configuring_a_standalone_CPU_server">Configuring
+a
+standalone
+CPU
+server</a>
+section
+of
+this
+wiki.
+</p>
+
+<p class='para'>
+You
+may
+already
+have
+one
+of
+these
+running,
+but
+I've
+found
+that
+in
+some
+cases,
+when
+trying
+to
+compile
+for
+ARM,
+certain
+packages
+may
+be
+installed
+that
+do
+not
+work
+very
+well.
+They
+have
+to
+be
+added
+to
+the
+BUGGERED
+list
+in
+/sys/src/cmd/mkfile.
+</p>
+
+<p class='para'>
+Example:
+</p>
+
+<pre>
+	BUGGERED=unix|postscript|upas
+</pre>
+
+<p class='para'>
+Note
+that
+upas
+is
+not
+malfunctioning,
+nor
+is
+it
+true
+to
+say
+that
+it
+would
+not
+compile
+on
+my
+system.
+I
+just
+did
+not
+have
+upas
+privileges
+and
+could
+not
+complete
+the
+upas
+installation.
+Since
+I
+was
+not
+concerned
+with
+email,
+I
+skipped
+it
+by
+placing
+it
+on
+the
+BUGGERED
+list.
+</p>
+
+<p class='para'>
+It
+is
+possible
+to
+turn
+off
+permissions
+checking
+or
+the
+user
+you're
+logged
+in
+as
+to
+the
+upas
+group
+if
+needed,
+but
+that's
+beyond
+the
+scope
+of
+this
+wiki
+page.
+</p>
+
+<a name="STEP_2_-_BUILD_YOUR_ARM_TOOLCHAIN" /><h3>STEP 2 - BUILD YOUR ARM TOOLCHAIN</h3>
+
+<p class='para'>
+Follow
+Geoff's
+directions
+from
+the
+9fans
+posting
+here:
+<a href="http://9fans.net/archive/2009/11/225">sheevaplug
+port
+available</a>
+</p>
+
+<p class='para'>
+A
+slight
+modification
+of
+those
+instructions
+is
+below:
+</p>
+
+<pre>
+     cd /sys/src/cmd
+      for(i in ?c ?a ?l) {
+              if(! ~ $i cc rc) @{
+                      cd $i
+                      mk clean
+                      objtype=$cputype mk install
+                      mk clean
+		}
+	}
+</pre>
+
+<a name="STEP_3_-_POPULATE_YOUR_ARM_TREE" /><h3>STEP 3 - POPULATE YOUR ARM TREE</h3>
+
+<pre>
+	cd /sys/src
+	objtype=arm mk install
+</pre>
+
+<p class='para'>
+If
+you
+fail
+to
+install
+something
+in
+this
+step
+you
+can
+try
+to
+add
+names
+to
+the
+BUGGERED
+list
+as
+above
+and
+retry
+the
+mk
+install.
+</p>
+
+<a name="STEP_4_-_COPY_NVRAM_FROM_YOUR_CPU_SERVER_FOR_THE_GURUPLUG_IMAGE" /><h3>STEP 4 - COPY NVRAM FROM YOUR CPU SERVER FOR THE GURUPLUG IMAGE</h3>
+
+<p class='para'>
+Part
+of
+setting
+up
+a
+CPU
+server
+is
+setting
+up
+the
+nvram
+of
+your
+machine.
+You
+should
+have
+an
+"nvram"
+partition
+on
+your
+boot
+disk
+if
+you
+followed
+the
+standard
+wiki
+CPU
+setup
+instructions.
+</p>
+
+<p class='para'>
+Copy
+this
+file
+into
+/sys/src/9/kw
+</p>
+
+<pre>
+	dd -if /dev/sdC0/nvram -of /sys/src/9/kw/nvram
+</pre>
+
+<p class='para'>
+Now
+when
+you
+compile
+your
+kernel,
+you'll
+have
+a
+valid
+nvram
+file.
+</p>
+
+<a name="STEP_5_-_COMPILE_THE_KW_KERNEL" /><h3>STEP 5 - COMPILE THE KW KERNEL</h3>
+
+<pre>
+	cd /sys/src/9/kw
+	mk 'CONF=plug' install
+</pre>
+
+<p class='para'>
+After
+this
+step
+you
+now
+have
+all
+the
+pieces
+you
+need
+to
+run
+Plan
+9
+on
+an
+ARM
+system.
+</p>
+
+<a name="STEP_6_-_CONFIGURE_PXE_TO_BOOT_YOUR_GURUPLUG" /><h3>STEP 6 - CONFIGURE PXE TO BOOT YOUR GURUPLUG</h3>
+
+<p class='para'>
+In
+/lib/ndb/local
+you'll
+need
+an
+entry
+like
+the
+following
+</p>
+
+<pre>
+	ip=192.168.1.77 sys=bunnyplug dom=bunnyplug.homework.net
+		bootf=/arm/9plug
+		gw=192.168.1.1
+		dns=192.168.1.1
+		fs=&lt;YOUR-FS-SERVER&gt;
+		auth=&lt;YOUR-AUTH-SERVER&gt;
+</pre>
+
+<p class='para'>
+I'm
+using
+a
+vmware
+plan
+9
+CPU
+AUTH
+and
+FS
+server
+so
+I
+just
+use
+the
+same
+IP
+address
+for
+the
+fs
+and
+auth
+items.
+</p>
+
+<p class='para'>
+PXE
+needs
+to
+be
+configured
+as
+well.
+In
+/cfg/pxe
+you
+should
+see
+a
+file
+"example-kw".
+You
+may
+copy
+this
+to
+/cfg/pxe/&lt;your-guruplug-mac-address&gt;
+</p>
+
+<p class='para'>
+This
+same
+filename
+will
+be
+specified
+as
+a
+parameter
+in
+the
+u-boot
+loader
+of
+your
+guruplug.
+</p>
+
+<a name="STEP_7_-_ENSURE_FOSSIL_IS_LISTENING" /><h3>STEP 7 - ENSURE FOSSIL IS LISTENING</h3>
+
+<p class='para'>
+NOTE:
+this
+step
+will
+make
+fossil
+listen
+on
+port
+564
+without
+encryption!
+</p>
+
+<pre>
+	fossil/conf /dev/sdC0/fossil &gt; flproto
+	cat &gt;&gt; flproto &lt;&lt; EOF
+	listen tcp!*!564
+	EOF
+	fossil/conf -w /dev/sdC0/fossil flproto
+</pre>
+
+<a name="STEP_8_-_READ_MAN_PAGE_AND_SET_UP_THE_GURU_PLUG_FOR_PXE" /><h3>STEP 8 - READ MAN PAGE AND SET UP THE GURU PLUG FOR PXE</h3>
+
+<p class='para'>
+The
+<a href="http://plan9.bell-labs.com/magic/man2html/8/booting"><i>booting</i>(8)</a>
+manpage
+has
+instructions
+for
+the
+Marvell
+Kirkwood
+CPU
+Server
+kernel.
+</p>
+
+<p class='para'>
+I
+recommend
+that
+you
+backup
+your
+Guruplug's
+default
+bootcmd
+environment
+variable
+parameters
+before
+setting
+these,
+or
+just
+skipping
+the
+saveenv
+step
+that
+overwrites
+the
+defaults.
+</p>
+
+<p class='para'>
+In
+case
+you
+clobberred
+your
+u-boot
+settings,
+I'm
+listing
+my
+defaults
+in
+case
+they
+would
+work
+for
+you
+to
+get
+back
+into
+Linux
+</p>
+
+<pre>
+	bootcmd=${x_bootcmd_ethernet}; ${x_bootcmd_usb}; ${x_bootcmd_kernel}; setenv bootargs ${x_bootargs} ${x_bootargs_root}; bootm 0x6400000;
+</pre>
+
+<p class='para'>
+I
+don't
+want
+to
+commit
+my
+only
+Guruplug
+to
+Plan
+9
+just
+yet
+so
+I
+just
+enter
+the
+following
+manually
+(cut
+and
+paste)
+each
+time
+I
+want
+to
+boot
+Plan
+9.
+<pre>
+	setenv bootcmd 'dhcp 0x800000; tftp 0x1000 /cfg/pxe/&lt;MAC&gt;; go 0x800000'
+	boot
+</pre>
+
+</p>
+
+<a name="THANKS" /><h3>THANKS</h3>
+
+<p class='para'>
+Thanks
+to
+the
+Geoff
+Collyer,
+the
+folks
+behind
+<a href="http://code.google.com/p/inferno-kirkwood/">Inferno-kirkwood</a>,
+David
+du
+Colombier,
+and
+Skip
+Tavakkolian
+for
+their
+excellent
+work
+and
+notes
+on
+getting
+this
+platform
+documented.
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Tue Apr 12 10:24:54 EDT 2011</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

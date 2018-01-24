@@ -1,0 +1,340 @@
+Configuring a Standalone CPU Server
+D1388694202
+Astevie
+#When configuring a Plan 9 network, the first machine to set up is a
+#standalone CPU and authentication server. After you have this, you
+#can go on to configure a file server and then boot terminals and
+#other cpu servers from it.
+#
+#(Note that the same machine can act as both auth/cpu server and file
+#server.)
+#
+#Start by installing the distribution as though creating a standalone
+#terminal. Reboot the system, and log in as any user that is in group
+#sys. To add a user to group sys see [adding a new user]. The user
+#needs to be part of group sys in order to be able to edit the
+#required system files. In the default installation, the user glenda
+#will do.
+#
+#EDIT CPURC, CPURC.LOCAL
+#
+#The first step is to edit /rc/bin/cpurc*. To add machine-specific
+#customisations,
+#
+#! cd /cfg; mkdir $sysname; dircp example $sysname
+#
+#and edit the files in /cfg/$sysname. You will find that
+#/rc/bin/cpurc already contains most of the needed instructions but
+#most of them have been commented out. See cpurc(8) for details.
+#
+#Note that cpurc for a specific $sysname host is executed right after
+#the prompt setup in the /rc/bin/cpurc file that will execute on a
+#CPU server once it is booted. The rest of /rc/bin/cpurc will execute
+#after your customized cpurc is finished. This allows you to keep the
+#common bits of CPU server setup common and any specifics in separate
+#files per $sysname. Note that system-specific scripts are also run
+#at the end of the cpurc. The sequence is: /rc/bin/cpurc >
+#/cfg/$sysname/cpurc > /rc/bin/cpurc > /cfg/$sysname/cpustart.
+#
+#Individual $sysname bindings can be set in either plan9.ini in your
+#9fat partition (more about that below), or in /lib/ndb/local by the
+#particular machine's ethernet mac address.
+#
+#At the end of /rc/bin/cpurc.local, you may wish to bind any devices
+#you'll need. 'cat /dev/drivers' will list the available devices. In
+#this case we have m (mouse), i (draw), S (sd - disk), and t (uart -
+#serial); if you get errors about /dev/realmode, include P in this
+#list:
+#
+#! for (i in m i S t)
+#! 	bind -a '#'^$i /dev >/dev/null >[2=1]
+#
+#Uncomment the invocation of ip/ipconfig in /cfg/$sysname/cpurc,
+#specifying the appropriate numbers where necessary:
+#
+#! ip/ipconfig -g <gateway-addr> ether /net/ether0 <ip-addr> <ip-mask>
+#
+#For other network configurations see [network configuration].
+#
+#Uncomment the two lines indicated if you wish to be able to boot
+#other systems from this server. Note that on home networks running
+#an additional dhcp server may not be desirable.
+#
+#! #ip/dhcpd
+#! #ip/tftpd
+#
+#Uncomment the two lines indicated in /rc/bin/cpurc to enable the
+#authentication functions:
+#
+#! # auth/keyfs -wp -m /mnt/keys /adm/keys >/dev/null >[2=1]
+#! # auth/cron >>/sys/log/cron >[2=1] &
+#
+#Add these lines to /cfg/$sysname/cpustart, the auth services should
+#be run after auth/keyfs
+#
+#! aux/listen -q -t /rc/bin/service.auth -d /rc/bin/service tcp
+#
+#and run the commands
+#
+#! mv /rc/bin/service.auth/authsrv.tcp567 /rc/bin/service.auth/tcp567
+#! mv /rc/bin/service/tcp567 /rc/bin/service/!tcp567
+#
+#to enable the auth services.
+#
+#The file names indicate the port and protocol, and the file itself
+#contains the commands for starting a service. The authsrv. and !
+#prefixes indicate disabled services; adding or removing the prefix
+#disables or enables the service. The original /rc/bin/service/il566
+#and /rc/bin/service/tcp567 services were proxy calls for the
+#authentication services to be used by terminals. We don't need these
+#on the authentication server, but you may on other cpu servers.
+#
+#Note: To export a fossil to other systems, add the following line to
+#your fossil configuration using fossil/conf, or enter it via con
+#/srv/fscons for a temporary listener. See [setting up fossil].
+#
+#! listen tcp!*!564
+#
+#Optionally, you may add logic from /rc/bin/termrc to
+#/cfg/$sysname/cpustart to start rio on the server. In most cases,
+#the next three lines will suffice:
+#
+#! aux/mouse $mouseport
+#! aux/vga -l $vgasize
+#! exec rio
+#
+#ADD A HOSTOWNER USER
+#
+#You can decide what name to give your cpu server owner. This is the
+#user that all the cpu servers run as. We'll name the user 'bootes';
+#it is recommended that you also choose 'bootes' as it will appear in
+#the instructions frequently.
+#
+#Connect to the fossil console and add a user using the uname command
+#explained in the fossilcons(8) man page, by convention the owner of
+#cpu and fileservers is called 'bootes'
+#
+#! con /srv/fscons
+#! prompt: uname bootes bootes
+#! prompt: uname adm +bootes
+#! prompt: uname sys +bootes
+#! prompt: fsys main
+#! main: create /active/cron/bootes bootes bootes d775
+#! main: create /active/sys/log/cron bootes bootes a664
+#
+#Then set up keyfs and provide a password for this machine:
+#! auth/keyfs
+#
+#NETWORK DATABASE
+#
+#Edit the contents of /lib/ndb to fit your network, as described in
+#[Network configuration]. You may want to check that the following
+#attributes are in the database:
+#
+# *	auth=authserver - recommended
+# *	proto=il - (outdated unless you are using the il protocol)
+# *	cpu=authserver - if you wish 'authserver' to act as a CPU server
+# *	fs=authserver - if you wish to serve files from 'authserver'
+# *	ntp=ntpserver - if you wish to use NTP for timesync
+# *	bootf=/386/9boot - if you wish to boot terminals using the PXE
+#	Boot Loader
+#
+#It's a good idea to check that you got your network config right by
+#trying:
+#
+#! ndb/ipquery ip <your-ip-address> auth
+#! ndb/ipquery ip <your-ip-address> cpu
+#! ndb/ipquery ip <your-ip-address> ntp
+#
+#A simple example for a combined cpu/auth server, the 192.168.1.100
+#machine, could be:
+#
+#! ipnet=mynet ip=192.168.1.0 ipmask=255.255.255.0
+#! 	auth=bouncer
+#! 	cpu=cycles
+#! 	dns=lookup
+#! 	dnsdom=9fans.net
+#! 
+#! authdom=9fans.net auth=bouncer
+#! 
+#! ip=192.168.1.100 sys=bouncer dom=bouncer.9fans.net
+#! ip=192.168.1.101 sys=cycles dom=cycles.9fans.net
+#! ip=192.168.1.102 sys=lookup dom=lookup.9fans.net
+#
+#If you're not setting up a whole network and just want drawterm
+#access to the combined cpu and auth server you're configuring,
+#addding the single line
+#
+#! authdom=some.domain auth=cycles ip=your.ip sysname=cycles
+#
+#to /lib/ndb/local will suffice if you also add the line
+#
+#! sysname=cycles
+#
+#to plan9.ini. The authdom and sysname can be chosen arbitrarily.
+#This same entry should be added to the ndb of other machines which
+#wish to dial and auth to this machine's services.
+#
+#Note the authdom, it needs to be the same as configured in the nvram
+#content described later on.
+#
+#Add the following two lines to /lib/ndb/auth to say that the cpu
+#server owner is allowed to become any other user (given the
+#appropriate credentials):
+#
+#! hostid=bootes
+#! 	uid=!sys uid=!adm uid=*
+#
+#INSTALL A STANDALONE CPU/AUTH KERNEL
+#
+#You need to use a cpu/auth kernel, which is not hard to compile:
+#
+#! cd /sys/src/9/pc
+#! mk 'CONF=pccpuf'
+#
+#See [compiling kernels] for further details. Once it is built,
+#install the kernel to your 9fat:
+#
+#! 9fat:
+#! cp /sys/src/9/pc/9pccpuf /n/9fat
+#
+#And edit /n/9fat/plan9.ini to say
+#
+#! bootfile=sdXX!9fat!9pccpuf
+#
+#where sdXX is the disk with the 9fat partition, eg., sdC0.
+#
+#it is recommended to include a menu in plan9.ini which will give you
+#a choice of which kernel to boot. This is particularly useful if
+#things don't go quite as planned, such as your CPU kernel not having
+#all the drivers you needed.
+#
+#See 9load(8) for more information.
+#
+#Here is an example:
+#
+#! [menu]
+#! menuitem=4e, Plan 9 Fourth Edition
+#
+#! [4e]
+#! bootfile=sdC0!9fat!9pcf
+#! bootfile=sdC0!9fat!9pccpuf
+#
+#by having a 9pcf in there I know I can boot into my other kernel in
+#case something goes wrong.
+#
+#NVRAM DISK PARTITION
+#
+#To support the security features of the authentication server, a
+#section of disk is required to simulate non-volatile ram (NVRAM).
+#
+#This partition should have been created by the installer, check for
+#/dev/sdC0/nvram (or whatever is correct for your disk drive.)
+#
+#If this is missing you can create a sub-partition inside the Plan 9
+#partition using disk/prep. The sub-partition should be called
+#'nvram', eg:
+#
+#! disk/prep /dev/sdC0/plan9
+#
+#Adjust the above command to refer to your plan9 disk partition. Then
+#you can delete the 'swap' sub-partition, and replace it with a swap
+#partition that is 1 sector smaller than the original. In the free
+#space, create a partition called 'nvram'. It only needs to be 1
+#sector in size. Again, this should not be needed usually as the
+#installer should have created the partition for you.
+#
+#Now you need to invalidate the nvram contents so that the checksum
+#won't be correct when you next boot. This will force the cpu server
+#to ask you for authentication information.
+#
+#! echo blahblahblah >/dev/sdC0/nvram
+#
+#REBOOT
+#
+#Reboot the machine. When it comes up, it should load the new kernel
+#(or ask you to select a kernel if you created a boot menu) and then
+#complain about the nvram checksum being incorrect.
+#
+#It will ask for an authid, authdom, secstore key, and password. The
+#authid is the host owner name, usually 'bootes'. The authdom is a
+#non-empty domain (e.g. moscvax.edu) of your choosing (for
+#debugging), and the secstore key and password should be secret
+#password of 8 characters or greater in length. Remember the
+#password, you will need it again later when creating the 'bootes'
+#user.
+#
+#AUTHENTICATION SERVER CONFIGURATION
+#
+#Firstly, you must set the password for bootes using auth(8) and the
+#password you just entered during bootup:
+#
+#! auth/changeuser bootes
+#
+#Assign the password. You can ignore the Inferno/POP secret if you
+#won't need it, it may be the same as the Plan 9 password. The other
+#fields are optional.
+#
+#After this you can use auth/changeuser to create accounts for other
+#users that will be allowed in the server. Remember to add them also
+#the the file server; for details see [adding a new user]
+#
+#ADDITIONAL STEPS
+#
+#If you want to set up a Plan 9 file server, and boot your CPU/auth
+#server from it, read also the page on [installing a Plan 9 file
+#server]. (Note: this page is archaic. Any machine may act as a file
+#server simply by setting the fossil configuration to listen on the
+#standard 9fs service port.) We strongly recommend this, since it
+#makes system administration easier. In particular, if you use the
+#disk at the cpu server as a backup partition for your file server,
+#you will stay calm after disasters.
+#
+#You probably want to set up email for your users, see [mail
+#configuration].
+#
+#If you wish to make use of netkey(1) authentication in addition to
+#p9sk1, you will need to also create entries in the securenet(8)
+#database.
+#
+#! auth/keyfs -m /mnt/netkeys /adm/netkeys
+#! auth/changeuser -n bootes
+#
+#Create passwords for bootes and other users and then add another
+#line to cpurc adjacent to the other invocation of keyfs. This is an
+#addition, not a replacement.
+#
+#! auth/keyfs -wp -m /mnt/netkeys /adm/netkeys >/dev/null >[2=1]
+#
+#SECSTORE
+#
+#Users can make use of server side encrypted storage with secstore(1)
+#I've added auth/secstored to my /cfg/$sysname/cpurc
+#
+#Users are added via secuser, see secstore(8)
+#
+#NOTES
+#
+# *	A netkey binary is available from
+#	[ftp://plan9.bell-labs.com/netkey/] .
+# *	If you want to access the cpu server from the internet and have a
+#	firewall, open up ports 567 for auth(8), 17010 for cpu(1) and port
+#	17007 for import(4). Port 17013 is used to serve the pre 9p2000 cpu
+#	protocol, so is probably uneccessary in most environments. Secstore
+#	is on port 5356.
+#
+#SEE ALSO
+#
+#[Drawterm] - Used to log in into your CPU/Auth server from non-Plan
+#9 systems.
+#
+#The cpurc used at Bell labs: [http://9fans.net/archive/2005/08/53]
+#
+#/n/sources/contrib/maht/rc/make_cpuauth - "CPU/Auth Warlock", an
+#interactive script for configuring a cpu/auth server. See [sources
+#repository] for connecting to sources, or
+#[http://plan9.bell-labs.com/sources/contrib/maht/rc/make_cpuauth]
+#depending on how far through network setup you are.
+#
+#(does Maht's script work for anyone? It just failed for me)
+#

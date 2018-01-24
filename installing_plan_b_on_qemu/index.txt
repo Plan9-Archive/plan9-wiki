@@ -1,0 +1,62 @@
+Installing Plan B on Qemu
+
+John Floren, 2007-06-19
+------------------------------------------------------ 
+This document describes my experiences installing Plan B on Qemu,
+specifically under Windows Vista. Note that, while this will let you
+run omero and other Plan B applications, not everything seems to be
+perfect. Most notably, /who and /mail are a little incorrect.
+
+1) Install a standalone Plan 9 terminal under Qemu. Just use fossil,
+no need for venti.
+
+2) From your new terminal, download the Plan B tarball from
+http://lsub.org/ls/export/planb4e.tgz using hget. Save it to $home.
+
+3) Run "con /srv/fscons" and type "srv instfs", then hit ^\ and type
+q to quit.
+
+4) "mount -c /srv/instfs /n/inst" We do this because you can't
+uncompress things directly into /
+
+5) "cd /n/inst && tar xzvf $home/planb4e.tgz"
+
+6) In my case, the omero that was included in the tarball wanted
+special fonts that I didn't have, so I recompiled it from source,
+which can use Plan 9 fonts. Do the following: 9fs sources mkdir
+$home/omero cp /n/sources/contrib/nemo/sys/src/cmd/omero/*
+$home/omero/ cd $home/omero mk cp 8.out /bin/omero
+
+6) Okay, here's where I'm not quite sure about the procedure. You
+need to specify where your root comes from, but it's unclear where
+the config file goes. I created /lib/ndb/vol/vols with the following
+line: /srv/vfossil main/active / / To be safe, I copied that file to
+/lib/ndb/vol/volumes, /lib/ndb/volumes/vols, and
+/lib/ndb/volumes/volumes. Only one of these files is correct, but I'm
+not certain which it is--haven't bothered to test.
+
+7) Run "cd $home/tmp && fossil/conf /dev/sdC0/fossil > fossil.conf"
+to get a copy of your current fossil config.
+
+8) Edit the fossil.conf file to look similar to mine: fsys main
+config /dev/sdC0/fossil fsys main open -AWP -V -c 1500 srv bfs srv
+vfossil fsys main srv -p cons srv fossil and write the new configure
+file with the command "fossil/conf -w /dev/sdC0/fossil
+$home/tmp/fossil.conf"
+
+9) Run "9fat:" and edit /n/9fat/plan9.ini to look similar to mine
+(you may need to change some options): bootfile=sdC0!9fat!9pcf
+bootargs=local!#S/sdC0/fossil bootdisk=local!#S/sdC0/fossil
+init=/386/bin/bns planb=yes sysname=zaphod #change this to match your
+config fs=127.0.0.1 auth=127.0.0.1
+ *	nomp=1
+ *	nodumpstack=1 partition=new dmamode=ask mouseport=ps1 monitor=xga
+	vgasize=1280x1024x8
+
+10) Go ahead and reboot, selecting root from local and user "glenda".
+You should get a standard rio screen, but if you sweep out a window
+and run "omero", everything should work properly.
+
+That's all I know! If any of these instructions don't work properly,
+contact me at slawmaster AT gmail.com.
+

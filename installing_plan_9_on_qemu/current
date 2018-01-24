@@ -1,0 +1,148 @@
+Installing Plan 9 on Qemu
+D1361180171
+Amycroftiv
+#Plan 9 installs easily under current versions of Qemu and KVM. Here
+#are some detailed instructions. See [plan9 on qemu on windows] for
+#installing on Windows with TAP networking.
+#
+#INSTALLATION
+#
+#First install qemu. Optionally, you can install kqemu also. This
+#will give a significant speed advantage. To use KVM, replace calls
+#to qemu by calls to kvm.
+#
+#Create a disk image, 2Gbytes should be plenty for a testing install.
+#
+#! qemu-img create -f qcow2 Plan9.qcow2.img 2G
+#
+#If you are creating a vm for long-term use and not simply
+#exploration or testing, you probably want a larger image size and to
+#use the .raw format. Install the image. You probably want to do a
+#simple fossil only install rather than a venti+fossil one---read the
+#papers to discover what the difference is.
+#
+#During the install, remember that the default hard drive file is at
+#/dev/sdC0 and the cdrom is at /dev/sdD0. The distribution is located
+#at /dev/sdD0/data in the / directory. You will be installing to
+#/dev/sdC0/plan9 after the partition is created and you want to use
+#the plan 9 mbr and plan9 bootup. The install may proceed slowly
+#depending on host os and qemu version and the availability of DMA
+#for disk access. (Is this still true? Installing under kvm was not
+#that slow for me recently. --rob)
+#
+#! qemu -hda Plan9.qcow2.img -cdrom plan9.iso -boot d
+#
+#During the install you will be prompted for your monitor type.
+#Recent qemu versions work with the default setting of xga, using
+#-vga std. For older versions, you may need to ---enter:
+#
+#! vesa
+#
+#Once you have finished the installation you can boot this image with
+#just:
+#
+#! qemu Plan9.qcow2.img;
+#
+#Once booted you can list the available VESA VGA modes:
+#
+#! aux/vga -m vesa -p 
+#
+#Before exiting qemu, halt the plan9 filesystem so it can sync its
+#disks:
+#
+#! echo 'fsys main sync' >>/srv/fscons
+#! sleep 5
+#! echo 'fsys main halt' >>/srv/fscons
+#
+#( The standard fshalt script as of 2013 seems to be broken in Qemu.
+#When fshalt changes vga mode to text, many versions of Qemu
+#experience bugs. )
+#
+#PRE-INSTALLED QEMU IMAGES
+#
+#The following images are default installs prepared under qemu-0.9.1,
+#using a plan9.iso from January, 2011:
+#
+#[fossil | http://plan9.stanleylieber.com/qemu/fossil.qcow2.img.bz2]
+#
+#[fossil+venti |
+#http://plan9.stanleylieber.com/qemu/fossil+venti.qcow2.img.bz2]
+#
+#NETWORKING
+#
+#Basic networking (without requiring root access) can be enabled with:
+#
+#! qemu -hda Plan9.qcow2.img -net nic -net user
+#
+#By default, the guest system (Plan 9) will be able to access the
+#host system with IP address 10.0.2.2. See qemu(1) for more details.
+#
+#If you are running a (standalone) CPU server, you need to open up
+#some ports for the host system:
+#
+#! qemu -hda Plan9.qcow2.img -net nic \
+#!     -net user,hostfwd=tcp:127.0.0.1:17567-:567,hostfwd=tcp:127.0.0.1:17010-:17010
+#
+#This enables the host system to drawterm into localhost. Note that
+#qemu listens on port 17567 instead of 567 (auth server) because 567
+#is a privileged port on Unix.
+#
+#HARD DRIVE FILE PERFORMANCE
+#
+#For better disk performance than the -hda parameter, try specifying
+#drives like this:
+#
+#! qemu -drive file=plan9.raw,media=disk,index=0,cache=writeback
+#
+#Writeback caching is slightly less safe but offers considerably
+#better performance, as tested in current linux distros. (2013).
+#
+#I would also recommend using .raw format images rather than .qcow.
+#The smaller size of qcows is entirely short-term; long term they
+#grow without limit for every disk operation. .raw format is more
+#portable and will not grow beyond the given size.
+#
+#DEALING WITH PRIVILEGED PORTS
+#
+#Traditional unix reserves ports 1-1024 to root which is
+#inconvenient. To provide access to these ports and avoid running vms
+#as root, make use of the os-level port redirection in your host os.
+#Here is an example for linux using iptables to redirect the most
+#important Plan 9 specific ports, 9p port 564 and authsrv port 567:
+#
+#! iptables -t nat -A PREROUTING -p tcp --dport 567 -j REDIRECT --to-port 2567
+#! iptables -t nat -A OUTPUT -o lo -p tcp --dport 567 -j REDIRECT --to-port 2567
+#! iptables -t nat -A PREROUTING -p tcp --dport 564 -j REDIRECT --to-port 2564
+#! iptables -t nat -A OUTPUT -o lo -p tcp --dport 564 -j REDIRECT --to-port 2564
+#
+#This is combined with qemu port redirection which takes the
+#redirected port from the host and sends it to the normal Plan 9 port
+#inside qemu. An example qemu command line for a combined
+#cpu/file/auth server to be used after the iptables redirections
+#above:
+#
+#! qemu [...] -net nic -net user,hostfwd=tcp::17007-:17007,hostfwd=tcp::17010-:17010,hostfwd=tcp::2564-:564,hostfwd=tcp::2567-:567
+#
+#NETWORK TROUBLESHOOTING
+#
+#Some versions of Qemu have a bug in the Qemu dns server. If you
+#experience dns failures in qemu when using dhcp, trying adding a
+#line like
+#
+#! DNSSERVER=8.8.8.8  # google public dns
+#
+#to your termrc or cpurc. When setting up Qemus to provide cpu access
+#or other services, it is often important to check the network
+#environment on the host box. Commands in the host os such as:
+#
+#! netstat -tnlp  # numeric listing of all programs listening on tcp ports
+#
+#are helpful to verify that the qemu is listening on the right
+#service ports and other programs are not competing for access. Some
+#other things to remember are the question of the ip Qemu provides to
+#the machine (10.0.2.15) in its standard nat mode and that dialing
+#loopback vs numeric ips on the host and guest may interact in
+#unexpected ways. Some users prefer to configure virtual bridges or
+#vlan interfaces to provide VMs with independent ips. This is highly
+#os and distribution specific; find a guide that works for your setup.
+#

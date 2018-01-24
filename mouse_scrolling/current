@@ -1,0 +1,12 @@
+Mouse Scrolling
+D1197492073
+Aglenda
+#To enable mouse scrolling:
+#
+#! echo intellimouse > /dev/mousectl
+#
+#or set mouseport=ps2intellimouse in plan9.ini(8).
+#
+#See mouse(3) and [this message |
+#http://9fans.net/archive/2004/10/250] for further detail.
+#

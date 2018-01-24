@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Setting up a Inferno mirror (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Setting up a Inferno mirror <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Wed Nov  2 04:47:12 EST 2005</a>, Chrissi (84.19.223.135)
+</div><hr />To
+setup
+a
+mirror
+of
+the
+files
+for
+the
+<a href="http://www.vitanuova.com/inferno/net_download4T.html">Inferno</a>
+operating
+system.
+<a name="WHAT_YOU_NEED" /><h3>WHAT YOU NEED</h3>
+
+<ul>
+
+<li>
+http://www.9grid.de/mirrorinferno
+</li>
+</ul>
+
+<a name="PREPARATION" /><h3>PREPARATION</h3>
+
+<pre>
+hget http://www.9grid.de/mirrorinferno &gt; /rc/bin/mirrorinferno;
+chmod 775 /rc/bin/mirrorinferno;
+</pre>
+
+<p class='para'>
+Change
+now
+the
+line:
+</p>
+
+<pre>
+cd /usr/web/inferno
+</pre>
+
+<p class='para'>
+to
+the
+directory
+where
+you
+want
+to
+mirror
+Inferno.
+</p>
+
+<a name="MIRRORING_INFERNO" /><h3>MIRRORING INFERNO</h3>
+
+<pre>
+/rc/bin/mirrorinferno;
+</pre>
+
+<a name="THE_CRONJOB" /><h3>THE CRONJOB</h3>
+
+<pre>
+# This example assumes "bootes" being able to access the directory where you mirror Inferno.
+# The cronjob will be done every night at 0:00 on the computer.
+echo '0 0 * * * local mirrorinferno' &gt;&gt; /cron/bootes/cron
+</pre>
+
+<p class='para'>
+Have
+fun.
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Wed Nov  2 04:47:12 EST 2005</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

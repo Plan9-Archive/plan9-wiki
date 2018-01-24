@@ -1,0 +1,26 @@
+Dialup modem config
+D1117094697
+Anoselasd (80.239.96.162)
+#To to configure a dialup connection to an isp, or other server,
+#first edit /lib/ndb/local and add an entry specifying the telephone
+#number for the isp, eg:
+#
+#! sys=MYISP
+#! 	telco=01234,555,1234
+#
+#The the following script can be used to start a ppp session. If the
+#modem is connected to the first serial port (COM1 on a pc) then eia1
+#below should be changed to eia0.
+#
+#This script assumes factotum and ndb/cs is already running.
+#
+#! #!/bin/rc
+#! #
+#
+#! if (! test -e /srv/telco )
+#! 	telco /dev/eia1
+#! if (! ip/ppp -f -P -b 57600 -k 'server=MYISP user=USERNAME'  -p telco!MYISP )
+#! 	exit 1
+#! ndb/dns -r
+#! aux/timesync -n
+#

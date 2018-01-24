@@ -1,0 +1,76 @@
+Recommended readings
+D1327563158
+Aabc
+#
+#BEFORE INSTALLING THE SYSTEM
+#
+# *	[Plan 9 from Bell Labs |
+#	http://plan9.bell-labs.com/sys/doc/9.html] - The main paper.
+#
+# *	[The Use of Name Spaces in Plan 9 |
+#	http://plan9.bell-labs.com/sys/doc/names.html]
+#
+# *	[The Organization of Networks in Plan 9 |
+#	http://plan9.bell-labs.com/sys/doc/net.html]
+#
+# *	[README | http://doc.cat-v.org/plan_9/2nd_edition/README] - by
+#	Brian Kernighan
+#
+#JUST AFTER INSTALLING THE SYSTEM
+#
+# *	intro(1) - introduction to Plan 9 man page
+#
+# *	[Introduction to Operating Abstractions using Plan 9 from Bell
+#	Labs | http://plan9.escet.urjc.es/who/nemo/9.intro.pdf]
+#
+# *	['Using The System' wiki pages |
+#	http://plan9.bell-labs.com/wiki/plan9/Documentation/#USING_THE_SYSTEM]
+#
+# *	[UNIX_to_Plan_9_command_translation]
+#
+# *	[Tip_o'_the_day]
+#
+# *	[FAQ]
+#
+# *	[The Unix Programming Environment |
+#	http://cm.bell-labs.com/cm/cs/upe/index.html] by Brian W. Kernighan
+#	and Rob Pike. ISBN 0-13-937681-X (paperback), 0-13-937699-2
+#	(hardback)
+#
+#FOR DEVELOPERS
+#
+# *	[How to Use the Plan 9 C Compiler |
+#	http://plan9.bell-labs.com/sys/doc/comp.html] - Introduction to the
+#	Plan 9 developement environment, not only the compilers, but the
+#	libraries, build(mk(1)) and debugging(acid(1)) tools. A must read
+#	for developers new to Plan 9.
+#
+# *	[Resources about threaded programming in the Bell Labs CSP style
+#	| http://swtch.com/~rsc/thread/] by Russ S. Cox.
+#
+# *	[The Ubiquitous File Server in Plan 9 (2005) |
+#	http://www.9con.org/rml/servers.pdf] by C. H. Forsyth.
+#
+# *	[Distributed Computing With Plan 9 |
+#	http://www.cs.unibo.it/ersads/tutorials/mullender.ps] by Sape
+#	Mullender and Dave Presotto.
+#
+# *	Notes on the Plan 9 kernel source: [PDF |
+#	http://plan9.escet.urjc.es/usr/nemo/9.pdf], [PDF A4 GZ |
+#	http://plan9.escet.urjc.es/usr/nemo/9.pdf.gz]¸ [ASCII plain text |
+#	http://plan9.escet.urjc.es/usr/nemo/9.txt.gz]; and the
+#	corresponding [kernel source snapshot |
+#	http://plan9.escet.urjc.es/plan9jun.tgz].
+#
+# *	[Communicating Sequential Processes (CSP) |
+#	http://www.usingcsp.com/cspbook.pdf] by Tony Hoare - CSP is the
+#	concurrency model used in Inferno and thread(2) - For more
+#	information see [http://www.usingcsp.com]
+#
+#SEE ALSO
+#
+#[Papers], [/sys/doc/* | http://plan9.bell-labs.com/sys/doc/], [doc
+#archive Plan 9 section | http://doc.cat-v.org/plan_9/].
+#
+#plan_9/].
+#

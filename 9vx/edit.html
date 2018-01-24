@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>9VX (Editing Wed Feb 16 13:52:07 EST 2011 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>9VX</b></font> (Editing Wed Feb 16 13:52:07 EST 2011 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="9VX">
+<input type="hidden" name="version" value="1297882327">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+9vx is essentially a port of the Plan 9 kernel to the [vx32 |
+http://pdos.csail.mit.edu/~baford/vm/] user-mode virtualization
+environment. A special kernel device (#Z) provides access to the
+local file system, similar to Inferno's #U.
+
+9vx was originally written by [rsc | Russ Cox]. A version of it is
+included in the vx32 distribution. Users can run that version against
+a full Plan 9 tree to get a very good emulation of Plan 9.
+
+Note that since the entire system runs as the invoking user, some
+things aren't quite right. For example, all file access is done as
+the invoking user, not the Plan 9 user. Networking is also provided
+by a stripped-down IP stack that passes through to the host OS's IP
+stack, but only tcp and udp.
+
+There are extensions to 9vx to provide it a raw ethernet device
+(which it may then run a real Plan 9 IP stack above) and allow direct
+access to raw disk devices, which allow it to use a real fossil (and
+optionally venti) partition, instead of #Z. Search 9fans; Brian
+Stuart did the later; dho and/or quanstro did the networking. When
+you find good links, come back and put them here!
+
+For more information, see [Russ's original 9vx page |
+http://swtch.com/9vx/].
+
+PATCHES
+
+Several users have modified and extended 9vx to their needs. See the
+patches for their details.
+
+ *	[yiyus's 9vx | https://bitbucket.org/yiyus/vx32]
+ *	[rminnich's 9vx | https://bitbucket.org/rminnich/vx32]
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

@@ -1,0 +1,611 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>thm 2005-06-23 Log (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+thm 2005-06-23 Log <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Thu Jun 23 17:47:24 EDT 2005</a>, ericvh (192.35.232.241)
+</div><hr />
+<pre>
+(14:31:40) *The topic for #plan9dev is: Plan 9 Town Hall Meeting - 6/23 20:00 GMT*
+</pre>
+
+<pre>
+(14:31:52) *newsham:* morning eric.
+(14:31:58) *ericvh:* hello
+(14:32:35) *Captain-Willard:* yo ericvh
+(14:32:54) *ericvh:* Cap'n.
+(14:33:00) *__20h__:* hi Eric
+(14:33:32) *ericvh:* howdy everybody.
+(14:33:43) *ericvh:* early crowd, huh?
+(14:34:02) *ericvh:* _20h_ - guess your car was fast enough?
+(14:34:28) *newsham:* heh, I said the same thing :)
+(14:35:33) *noselasd9:* And we learned __20h__s car does atleast 240km/h.
+(14:35:51) *dho [/~dodell@ext-unused-110.ixsystems.net/] entered the room.*
+(14:36:04) *Captain-Willard:* yo d
+(14:36:07) *dho:* Yo.
+(14:46:23) *miller [/~chatzilla@hamnavoe.gotadsl.co.uk/] entered the room.*
+(14:47:50) *quintile
+(14:48:24) *miller is now known as rmiller*
+(14:50:39) *cross [/cross@fubar.cshack.net/] entered the room.*
+(14:51:02) *ericvh:* Solidifying AGENDA in wiki. Anybody else have anything they want to add to it?
+(14:52:45) ****uriel* notes that concurrent edits of the same wiki page are a _bad_ idea
+(14:53:09) *ericvh:* which is why I was asking people over IRC...
+(14:53:22) *ericvh:* meaning, I expected responses via IRC, not via editing wiki.
+(14:53:36) *Oksel [/mechiel@cal005302.student.utwente.nl/] entered the room.*
+(14:54:09) *uriel:* ericvh: ah, sorry, I understood "in wiki"...
+(14:54:30) *ericvh:* should have been more explicit.
+(14:54:33) *ericvh:* sorry.
+(14:54:45) *lucho_ [/~lucho@pcp09875681pcs.ewndsr01.nj.comcast.net/] entered the room.*
+(14:55:28) *rmiller left the room.*
+(14:56:03) *blstuart [/~blstuart@e02.proxy.fedex.com/] entered the room.*
+(14:56:41) *rmiller [/~miller@hamnavoe.gotadsl.co.uk/] entered the room.*
+(14:56:52) *nashi [/none@angband.tip9ug.jp/] entered the room.*
+(14:57:18) *ericvh:* anyone volunteer to keep notes?
+(14:58:12) *newsh [/{vrztd+Afe@malasada.lava.net/] entered the room.*
+(14:58:16) *newsham left the room.*
+(14:58:32) *bakul:* hi! re agenda: how about text based installation
+(14:58:48) *cross:* Doesn't Plan 9 have text based installation?
+(14:58:49) *ericvh:* Okay bakul: we'll tag that on the end if there is time.
+(14:58:51) *newsh:* I'll make notes from the log when we're done.
+(14:58:57) *ericvh:* thanks newsh
+(14:59:05) *newsh:* email them to you when we're done?
+(14:59:21) *ericvh:* or just email them to 9fans and post them to the wiki.
+(14:59:29) *newsh:* ok. will do.
+(15:00:48) *hyperion [/~ircII@2002:5063:d67d:0:0:0:0:0/] entered the room.*
+(15:00:51) *hyperion:* hi
+(15:01:00) *ericvh has changed the topic to: Plan 9 Town Hall Meeting: Topic: Documentation*
+(15:01:18) *ericvh:* Okay lets get started, who wants to talk about Documentation (vt3? uriel?)
+(15:01:31) *uriel:* vt3_ is not around I fear
+(15:01:50) *ericvh:* okay uriel, then you go ahead...
+(15:02:06) *uriel:* what do people think of the current docs?
+(15:02:19) *uriel:* what could use improvement and such?
+(15:02:49) *newsh:* pie in the sky? compiler and kernel documentation :)
+(15:02:50) *__20h__:* Yes, tell the user to do a "man intro", instead of "man man".
+(15:02:59) *cross:* The current documentation is excellent. The issue is that no one is maintaining it, so as the system evolves, the documentation is left behind.
+(15:03:03) *uriel:* also I was wondering if the right place for new docs is the wiki, or other people prefered to write them elsewhere(vt3 said he had problems puting things on the wiki, but I think he was just doing it wrong)
+(15:03:29) *uriel:* newsh: I'm trying to convince boyd to write acomentary on the compiler ;)
+(15:03:44) *cross:* A wiki is not a substitute for troff. I prefer that/sys/doc be the focus of documentation efforts, with offloading onto the wiki, not the other way around.
+(15:03:50) *newsh:* uriel: ahh, great, if he is, let me know.. i've been taking down sketch notes as I read the code.
+(15:03:58) *uriel:* cross: yes, that is part of the problem
+(15:04:06) *uriel:* cross: but a wiki is easier to maintain than troff
+(15:04:07) *ericvh:* I think the opposite makes sense - start in the wiki then formalize into /sys/doc and /sys/man
+(15:04:37) *uriel:* newsh: talk with him, he was not very convince and could use being pushed a bit ;)
+(15:04:39) *cross:* If you want to use the wiki to do collaborative work across the internet, fine, but don't make it the central repository of documentation.
+(15:04:40) *dho:* how about wiki2troff?
+(15:04:48) *newsh:* I agree.. wiki is good for quick, and timely doc, but better to move to long term docs in more formal documentation
+(15:04:50) *uriel:* dho: yes
+(15:04:51) *hyperion:* current manpages have high quality and i find that important. you don't find that on the wiki
+(15:05:05) *dho:* and consequently troff2wiki
+(15:05:14) *uriel:* dho: troff2foo is tricky
+(15:05:18) *ericvh:* We need a method for annotation in the wiki so that we know what has to migrate, etc.
+(15:05:21) *uriel:* dho: troff2html has many problems
+(15:05:26) *dho:* uriel: *nods*
+(15:05:27) *ericvh:* I suppose just some sort of footnote would make sense.
+(15:05:39) *__20h__:* Some introductions on how documentations should be written, to find new users that could work on it?
+(15:05:39) *dho:* last time i used it, it worked pretty decently though.
+(15:05:51) *uriel:* dho: I have been trying to fix the html versions of the papers, it's a embarrasing mess
+(15:05:55) *dho:* But indeed, updating documentation may be in order.
+(15:06:25) *newsh:* in particular, which information on the wiki is not in the man pages that should be?
+(15:06:31) *uriel:* this brings me to an specific question: I got a (mostly) fixed html version of the papers, what do I do with them?
+(15:06:46) *ericvh:* Also- I think the man pages in general are great, but sometimes there's lots of "hidden things" that you don't find because few folks read the man pages from cover to cover. The tips and tricks stuff was helpful here, as is tutorial like introductions. There seems to be plenty of that in the wiki for configuration, but not for other stuff.
+(15:07:03) *ericvh:* Like writing file systems, applications using plumbing, etc. etc.
+(15:07:39) *uriel:* ericvh: yes, it would be nice to go thru 9fans archives and pick interesting bits and put them in the wiki, like the video driver writing intro
+(15:07:42) *ericvh:* uriel: put them on sources.
+(15:07:49) *musasabi:* A thing which might be a lacking is a good introduction to the P9 features and workflow for people accustomed to modern *nix.
+(15:07:55) *ericvh:* if jmk and russ don't want to merge them at least they'll be available.
+(15:07:56) *uriel:* ericvh: ok, I will ask for a sources dir, I hope russ dosen't ignore me this time :(
+(15:08:07) *dho:* ask sape
+(15:08:20) *musasabi:* There is good documentation on invidual components but how to combine them and why they are significant is not as apparent.
+(15:08:26) *uriel:* ericvh: the problem is that the papers are in the Plan 9 web site, and they are an embarrasement(the .ps versions also have problems, like missing '$' in the rc paper...)
+(15:08:41) *ericvh:* nothing we can do on that sight but try via patch(1).
+(15:08:49) *cross:* *sigh* this is all sort of in the wrong direction. Plan 9 is growing up; there used to be a `Plan 9 way' of doing things, and that's being eroded. It's a shame, but there it is. That's just a general comment, though.
+(15:08:53) *f2f [/~lalala@d205-206-233-27.abhsia.telus.net/] entered the room.*
+(15:08:54) *dho:* Speaking of sources, sorry for my bitrot; I've been terribly busy here at work and in a weird living and stressful situation in general.
+(15:08:55) *newsh:* combining components doesnt sound like a good candidate for a man page, but perhaps a paper (ie /sys/doc).
+(15:09:01) *ericvh:* If they don't accept we just need to arrange to host them ourselves.
+(15:09:02) *uriel:* musasabi: there was one, russ deleted it because the tar -z debacle
+(15:09:38) *ericvh:* newsh: agreed.
+(15:09:57) *ericvh:* In general, v9fs is giving Plan 9 some media opportunity - maybe folks could get journal papers out on such things...
+(15:10:04) ****ericvh* notes 1 minute warning on topic
+(15:10:21) *uriel:* ericvh: one problem is that the .html/.ps versions of the papers are generated by mk, the fixes are done by hand... :/
+(15:10:43) *ericvh:* yeah, that's hard unless you can coax roff into generating better code (or fix the converter)
+(15:10:47) *cross:* The general solution would be to fix troff2html.
+(15:10:47) *newsh:* uriel: how difficult would it be to fix the generation?
+(15:11:01) *uriel:* ok, one last note, I think there is a good candidate of something that should move from /sys/doc to wiki: the ports page
+(15:11:09) *uriel:* newsh: I can't do it
+(15:11:31) *uriel:* newsh: and fixing without breaking something else would be very difficult to make sure
+(15:11:34) *newsh:* uriel: do you have a rough sense though? if you handed it off to some super wiz bang pr grammer.. would it be hard or easy?
+(15:11:36) *ericvh has changed the topic to: Plan 9 Town Hall Meeting: Topic: Plan 9/Inferno integration*
+(15:11:48) *gdiaz:* avoid html anyway, everyone has acrobat plubing in their browsers :-?
+(15:11:55) *uriel:* newsh: dunno, troff2html seems quite fundamentally broken, it's a hard problem
+(15:12:03) *ericvh:* it may be, but that's no reason not to fix it.
+(15:12:07) *ericvh:* Let's move on...
+(15:12:11) *Captain-Willard:* nah stick to html
+(15:12:11) *uriel:* ok..
+(15:12:14) *ericvh:* uriel, I think this was your topic as well.
+(15:12:22) *ericvh:* Do we have any Vita/Inferno crowd here?
+(15:12:26) *uriel:* I'm curious of someone is still workin on native dis
+(15:12:38) *lucho_:* f2f ;P
+(15:12:51) *uriel:* and I wanted to float the idea of merging Inferno into the default Plan 9 distro
+(15:12:58) *uriel:* I think 20h is merging it into dtLinux
+(15:13:13) *Captain-Willard:* dis is native on froggie
+(15:13:17) *uriel:* would be nice to have isos with Plan 9 + inferno(I thin VN ships or used to ship such isos)
+(15:13:31) *__20h__:* dtLinux 2.6 will have p9p and Inferno inside.
+(15:13:34) *uriel:* Captain-Willard: 'froggie'?
+(15:13:35) *lucho_:* i didn't do anything new for dis, AFAIK nobody else did it either
+(15:14:02) *uriel:* lucho_: is there any interest, if no one is working on it, why? not worth it?
+(15:14:21) *lucho_:* uriel, oh it is worth it, i just don't have time to work on it right now
+(15:14:39) *uriel:* also there is the question about auth and code-sharing(specially kencc), but I guess that is hard to answer without VN people around
+(15:14:44) *lucho_:* f2f promised to fix Tk to work correctly in dis, so that's my excuse :)
+(15:14:48) *uriel:* lucho_: ok, I see
+(15:15:12) *uriel:* still, do people thin it's worth to integrate Inferno into the Plan 9 distro?
+(15:15:20) *uriel:* s/thin/think/
+(15:15:28) *hyperion:* why would it be?
+(15:15:35) *lucho_:* inferno the way it currently is? the VN version?
+(15:15:42) *hyperion:* inferno is easy to download and install
+(15:15:47) *uriel:* lucho_: yea, that would be low hanging fruit
+(15:16:08) *uriel:* hyperion: yes, but think of distributing it at conferences and such, but I guess we can build our own iso for those purposes
+(15:16:09) *lucho_:* i think having native dis would be much more useful. especially for writing GUI apps
+(15:16:19) *uriel:* lucho_: yes, certainly
+(15:16:20) *newsh:* I really dont know much about inferno, but it strikes me as odd that inferno and plan9 have similar protocols but different auth mechanisms.
+(15:16:25) *uriel:* anyone knows the status of auth compat?
+(15:16:25) *newsh:* can we unify those?
+(15:16:34) *lucho_:* obviously nobody wants to write them in C, may be it would be easier in Limbo
+(15:16:39) *cross:* We were thinking about this four years ago.
+(15:16:41) *uriel:* newsh: unifiation wont happen, too different
+(15:16:42) *newsh:* its inferno that has auth mechanisms not in plan9, correct?
+(15:16:54) *cross:* Dis would become another architecture that Plan 9 supported via a simulator, ala vi.
+(15:16:55) *ericvh:* Inferno has more.
+(15:16:58) *f2f:* inferno knows PKI
+(15:17:01) *uriel:* newsh: but inferno is suposed to eventually support p9 auth, it would be nice if p9 supported inferno auth too
+(15:17:02) *cross:* E.g, emu is vi.
+(15:17:09) *ericvh:* From the look of things, the auth mechanisms are now MITPL'd...
+(15:17:27) *uriel:* distributed PKI at that
+(15:17:29) *newsh:* why cant we put the inferno auth mechanisms into plan9 (if this is a long discussion I can take it up after the meeting)
+(15:17:32) *ericvh:* (well, the C code backing many of the built-in modules anyways)
+(15:17:57) *ericvh:* I think its a good idea to integrate Inferno auth mechanisms into Plan 9 (and p9p and v9fs).
+(15:18:07) *cross:* There's no reason you can't teach Plan 9 factotum about Inferno public key authentication.
+(15:18:17) *lucho_:* i.e. integrating them in factotum :)
+(15:18:20) *uriel:* newsh: that would fix x-dom-auth too, I would like to see it done
+(15:18:38) *ericvh:* We all think its a good idea, but is anyone willing to lead up the effort.
+(15:18:40) *ericvh:* ?
+(15:18:51) *newsh:* so can we talk some of the grid people into going that route instead of customizing their cross domain auth? :)
+(15:19:08) *uriel:* newsh: oh, yet another x-dom auth option! =)
+(15:19:10) *cross:* Can we get Russ to work with someone from VN? How's Inferno's factotum coming along? is it out yet?
+(15:19:21) *newsh:* this is the type of project I would like to put on my plate, but unfortnately i have lots of other important things on it already :\
+(15:19:26) *quintile:* I think Charles has done some more work on auth for inferno recently...
+(15:19:33) *cross:* Cross domain auth should fall naturally out of the native authentication mechansim.
+(15:19:37) *uriel:* cross: I think brucee has his own factota for ozInferno too... will be interesting to see what comes out of that
+(15:19:54) *uriel:* quintile: I think he worked on p9 auth for inferno mostly, not the other way around
+(15:20:04) *cross:* Hey Boyd, is Bruce still in France?
+(15:20:21) *uriel:* back in oz AFAIK(so ozInferno should come out soon? :))
+(15:20:21) ****ericvh* notes 1 minute warning
+(15:20:41) *uriel:* ok, we can make it an entry in the TODO to add inferno auth to Plan9/factotum
+(15:20:48) *cross:* Note on authentication: I'd like to see a Plan 9 Kerberos KDC.
+(15:20:53) *__20h__:* Running behind the Inferno?
+(15:21:08) *uriel:* lets leave auth discusion for later
+(15:21:09) *ericvh:* cross: ACK - I'd like to see that too.
+(15:21:23) *lucho_:* so if there any interest for native dis port?
+(15:21:25) *quintile:* Charles was singing the praises of spki and I beleive working on that for inferno.
+(15:21:36) *lucho_:* is anybody going to use Limbo for development on Plan9 if possible?
+(15:21:36) *quintile:* sorry, typing slowly.
+(15:21:37) *uriel:* lucho_: I'm very interested :)
+(15:21:44) *ericvh has changed the topic to: Plan 9 Town Hall Meeting: Ports to new architectures and kernel work*
+(15:21:51) *Captain-Willard:* spki sounds cool
+(15:21:58) *dho:* spki is interesting.
+(15:22:06) *uriel:* quintile: inferno has had spki for some time AFAIK
+(15:22:19) *ericvh:* okay, lets punt further discussion on the auth issues to the mailing list, I think it would be great community project to work on.
+(15:22:33) *dho:* uriel: charles was still developing it at twente9con
+(15:22:35) *newsh:* re ports: I havent done any new sparc work in recent months. I am currently working on work in xen 3.0 with ron.
+(15:22:42) *uriel:* kuroneko is not around I fear :(
+(15:22:51) *uriel:* newsh: great
+(15:23:14) *uriel:* anyone knows about the various overlaping work kuro had with jmk?
+(15:23:17) *newsh:* I dont really have much to say about it yet, its still early on.
+(15:23:20) *uriel:* I don't think they ever sorted it out :(
+(15:23:26) *ericvh:* ppc64 work looks like it might be moving ahead, but I'm not directly involved yet so I can't say for certain.
+(15:23:40) *uriel:* ericvh: I thought that was classified info ;P
+(15:23:48) *cross:* With Apple dumping the PPC, what is the goal of ppc64 stuff?
+(15:23:56) *uriel:* ericvh: careful the thought police don't see you talking about it ;P
+(15:23:57) *ericvh:* I've put a machine on the net for folks to use if they want to test compiler output and what not. Its a G5 running a ppc64 linux kernel and can run ppc64 and ppc32 binaries.
+(15:24:02) *cross:* I mean, where do you intend to get 64 bit powerpc machines to run it on?
+(15:24:03) *newsh:* will the ppc64 work be relevant to mac ppc hardware?
+(15:24:03) *uriel:* cross: for cell mostly
+(15:24:06) *ericvh:* cross: PS/3 and Xbox 360
+(15:24:22) *cross:* Okay, good.
+(15:24:29) *ericvh:* newsh: somewhat, but it'll likely be more focused on IBM hardware since I think it'll be easier to structure around hypervisors.
+(15:24:41) *newsh:* mac ppc dying might be a mixed blessins -- there will be cheap ppc macs next year.
+(15:24:49) *newsh:* would be nice to be able to pick some up for plan9 work :)
+(15:25:08) *uriel:* newsh: dunno, you think they will be cheap? /me isn't sure, well we will see
+(15:25:12) *newsh:* ericvh: is the kernel work going to be hypervisor based?
+(15:25:29) *ericvh:* IBM should be releasing its full system simulator (for ppc64) any day now (for real, I mean it) - it should make a port easier.
+(15:25:47) *newsh:* yeah, I find OS work in a simulator to be tons easier.
+(15:25:48) *ericvh:* The simulator will support ppc970 (GP/UL) and rhype (IBM Research Hypervisor).
+(15:25:57) *gdiaz:* here you cab buy a dual 1.8 PowerMac for about 1400euro
+(15:26:01) *ericvh:* newsh: if I work on it, it will be (hypervisor based)
+(15:26:24) *ericvh:* The Cell simulator is due out later this summer.
+(15:26:33) *ericvh:* Cell guys have started dumping kernel patches to LKML already.
+(15:26:54) *ericvh:* IBM Full System Simulator and Cell Simulator should be free binary releases (via Alphaworks)
+(15:27:13) *newsh:* btw, whats the gist of the cell? lots of simd cores? If one was running p9 on such a machien what would you use them for?
+(15:27:21) *ericvh:* I may put a preview release of the FSS on the public G5 (its actually already there, but not fully set up).
+(15:27:24) ****uriel* read some on their fs interfaces to the cell units, so fs based interface is workable
+(15:27:38) *uriel:* (their design sucks though, but we can do much better ;P))
+(15:28:00) *ericvh:* newsh: central core is ppc64 like a ppc970 - thats where plan 9 would run. What to run on the SIMD cores is an open question (Dis like froggie?)
+(15:28:36) *ericvh:* if anyone wants accounts on the public G5 to do Plan 9 or Inferno ppc/ppc64 work, please email me and we'll set you up with an account.
+(15:28:41) *uriel:* ericvh: well, the lunix fs interface to the SIMD's seemed like a good fit for distributing over 9p(well, not exactly that design, but something sane unlike it)
+(15:28:50) *ericvh:* (or kencc work)
+(15:29:00) *newsh:* has anyone heard anything about sparc progress?
+(15:29:06) *ericvh:* uriel: the thought has occured to me.
+(15:29:21) *cross:* I thought Sun was dumping SPARC for AMD64 or something?
+(15:29:37) *newsh:* i mean .. people working on plan9 for sparc (like kuro).
+(15:29:41) *uriel:* cross: I hope so :)
+(15:29:56) *cross:* I thought that you were point on that, Tim?
+(15:30:05) *uriel:* newsh: dunno what kuro is up to lately, he was quite frustrated trying to work kernel issues out with jmk :(
+(15:30:05) ****ericvh* notes 1 minute warning
+(15:30:13) *newsh:* cross: its best not to compete with 4004/8008 based technology aparently (ask sun and apple :)
+(15:30:26) *cross:* so it would seem.
+(15:30:31) *cross:* How unfortunate.
+(15:30:36) *cross:* Oh well, there it is....
+(15:31:02) *ericvh has changed the topic to: Plan 9 Town Hall Meeting: Tech Transfer Projects (p9p, dtLinux, v9fs)*
+(15:31:07) *ericvh:* ok...moving on.
+(15:31:15) *ericvh:* Russ couldn't be here but gave me a quick status update on p9p
+(15:31:38) *ericvh:* Work on p9p continues, but nothing big planned.
+(15:31:47) *uriel:* what about venti?
+(15:31:50) *ericvh:* Venti working and available from same CVS as p9p, but different module.
+(15:32:09) *ericvh:* Jmk and Russ are putting together hardware to test the new venti at the Labs. Once they are satisfied it'll go into p9p and Plan 9 mainline.
+(15:32:25) *lucho_:* ericvh, i can confirm that venti is working, i use it :)
+(15:32:26) *ericvh:* There's also been some work on p9p drawterm replacement, but Russ hasn't had time for it lately.
+(15:32:46) *uriel:* oh, /me thinks limbo-drawterm is the way to go
+(15:32:47) *newsh:* re drawterm: yay.
+(15:32:48) *ericvh:* Needs to write a synthetic for draw/cons,etc. and not on the top of the list.
+(15:32:49) *cross:* Is that an extension of the dt2k stuff?
+(15:32:51) *__20h__:* I try to complete dtLinux 2.6 till Dijon. Got some free time now. It will be with - as mentioned above - p9p, Inferno and v9fs. No other changes are planned.
+(15:33:12) *newsh:* "to write a synthetic" ?
+(15:33:21) *ericvh:* dt2k has windows support apparently, so there isthought about dropping 9P1 drawterm completely. I've also gotton drawterm working on ppc-linux.
+(15:33:39) *cross:* I'd like to see 9P1 drawterm go away.
+(15:33:40) *ericvh:* synthetic file system for the devs.
+(15:33:55) *ericvh:* is limbo drawterm widely available?
+(15:33:56) *uriel:* who is in charge of dt2k dev? russ? f2f is suposed to be maintaining dt9p1
+(15:34:10) *ericvh:* f2f is I think.
+(15:34:12) *uriel:* where are the latest sources of dt2k?
+(15:34:19) *__20h__:* I'm against p9p as only ,,Drawterm''. With Drawterm you have one client application to access Plan 9, but with p9p you have 100Mb of binaries lying around.
+(15:34:19) *ericvh:* Calgary.
+(15:34:31) *uriel:* ericvh: limb-dt is just an idea, it should be trivial to do once auth is fixed up
+(15:34:47) *newsh:* 20h: it shouldnt be too hard to take a specific app out and provide binaries (or sources), no?
+(15:34:50) *ericvh:* well, thought there were rumors that Hogan had one before his demise...
+(15:34:55) *Captain-Willard:* i agree with __20h__
+(15:34:58) *cross:* I thought Forsyth had something working.
+(15:35:01) *cross:* Or maybe it was Rog etc.
+(15:35:19) *uriel:* ericvh: :(
+(15:35:22) *__20h__:* newsham, that's work that has to be done and history shows that there are not many volunteers.
+(15:35:27) *hyperion:* what's wrong with VNC?
+(15:35:37) *ericvh:* no problem with multiple choices in my book. VNC doesn't buy you everything drawterm does.
+(15:35:46) *newsh:* 20h: for something that important I think it would get done. just my opinion.
+(15:35:52) *uriel:* breakup and packaing of p9p anyone?
+(15:36:03) *cross:* Plan9ports is philosophically different than drawterm. The two aren't comparible. If, however, plan9ports includes a drawterm-like widget, then awesome.
+(15:36:03) *__20h__:* newsham, I'm not optimist in this case.
+(15:36:08) *ericvh:* v9fs front: we're in the -mm kernel for now. Not looking like we'll be going mainline for 2.6.13, but there seems to be general interest and support (but not alot of vocal support).
+(15:36:09) *lucho_:* uriel, why?
+(15:36:15) *uriel:* lucho_: p9p is too monolithic
+(15:36:23) *uriel:* lucho_: also needs to be packaged for distros..
+(15:36:30) *ericvh:* p9p breakup: I talked to russ about this, he wasn't opposed, but didn't want things to get too granular either. There's lots of interdependency.
+(15:36:42) *cross:* No.
+(15:36:45) *uriel:* ericvh: a lib-framework would be nice
+(15:36:45) *cross:* Don't break it up.
+(15:37:12) *uriel:* cross: people want the libs without the rest, we need a base to build unix apps without requiring all of p9p
+(15:37:13) *__20h__:* I won't support p9p. As windowmanager and shell it's nice, but nothing else.
+(15:37:30) *ericvh:* I played with packaging it for gentoo and submited ebuilds. Tried RPMs, but didn't submit them anywhere (didn't really have red hat system to try them on)
+(15:37:38) *f2f:* dt2k is anyone's guess. brucee apparently did work on it, skip and geoff too, so did rsc
+(15:37:46) *newsh:* I dont think buliding the whole shebang is that hard, disk is cheap. if people want easier to install modules, i think providng pre-built binaries woudl be better.
+(15:37:48) *cross:* rm -fr $PLAN9/bin if you don't want the rest.
+(15:38:01) *uriel:* f2f: where is the latest code?
+(15:38:08) *f2f:* ucalgary
+(15:38:11) *uriel:* cross: there is much more than that
+(15:38:13) *f2f:* dt2k.tgz
+(15:38:16) *cross:* No, there isn't.
+(15:38:27) *uriel:* cross: fonts?
+(15:38:30) *lucho_:* __20h__, it is useful for writing synthetic file systems for v9fs for example
+(15:38:35) *f2f:* http://pages.cpsc.ucalgary.ca/~mirtchov/p9/dt2k.tgz
+(15:38:35) *cross:* And show me how breaking something like this up has ever led to a decrease in complexity.
+(15:38:39) *uriel:* lucho_: exactly
+(15:38:40) *cross:* My point is that it doesn't have to be complex.
+(15:38:48) *uriel:* f2f: ok, just wondering if that was the latest bits
+(15:38:49) *ericvh:* Current drawterm info should probably be more prominent on the wiki/9grids.
+(15:38:55) *__20h__:* Yeah, the "Plan 9 way" is lost.
+(15:39:01) *__20h__:* We add bloat for having a little effect.
+(15:39:06) *cross:* Yeah.
+(15:39:06) *f2f:* i can't guarantee that it's the latest. it's the latest i've seen for sure
+(15:39:07) *uriel:* ericvh: a wiki drawterm page has been long overdue
+(15:39:19) ****ericvh* notes one minute warning
+(15:39:20) *lucho_:* __20h__, how exactly are we adding bloat?
+(15:39:30) *uriel:* ericvh: many topics have been mixed here..
+(15:39:37) *ericvh:* monolithic packaging has, to be fair, always been the Plan 9 way.
+(15:39:40) *__20h__:* lucho_, by adding p9p.
+(15:39:51) *cross:* *If* we start breaking things up for the sake of breaking them up to make them easier to `package', then we add complexity for little return.
+(15:39:59) *ericvh:* Inferno was packaged that way, Plan 9 was packaged that way...always.
+(15:39:59) *__20h__:* Modules is work - it should work and use not much space, after extracting the *.tgz.
+(15:40:01) *uriel:* ericvh: true, what hapent to the gentoo packages then? they accepted them?
+(15:40:03) *cross:* The whole point of Plan 9 was to reduce complexity by rethinking the way things are done.
+(15:40:09) *__20h__:* Not after searching for the module that is somewhere on the Web.
+(15:40:14) *lucho_:* __20h__, we are adding bloat to already bloated system. at some point we can create linux distribution that has only p9p in it :)
+(15:40:14) *uriel:* cross: lunix people will never use it if we don't break it up
+(15:40:19) *ericvh:* gentoo packages lost in their bugtracker. Need gentoo developer to step up and validate them..no one has. u9fs is in there too.
+(15:40:23) *ericvh:* Wouldn't be hard to add drawterm
+(15:40:27) *newsh:* lucho: dtlinux? :)
+(15:40:37) *cross:* I don't really care, uriel.
+(15:40:38) *lucho_:* newsh, yes :)
+(15:40:39) *uriel:* lucho_: ;)
+(15:40:45) *cross:* If they don't use it, then it's their loss.
+(15:40:55) *cross:* Since when does Plan 9 need to cowtow to the rest of the world?
+(15:40:57) *uriel:* cross: no, it's our loss, but that is another argument
+(15:41:03) *uriel:* cross: p9p is not Plan 9
+(15:41:17) *ericvh:* okay, lets move on.
+(15:41:21) *uriel:* plan9$ du -hs .
+(15:41:21) *uriel:* 180M
+(15:41:32) *uriel:* cross: I can't tell lunix app devs to depend on that
+(15:41:35) *ericvh has changed the topic to: Plan 9 Town Hall Meeting: 9grid and cross-domain auth*
+(15:41:50) *f2f:* PKI!
+(15:42:04) *hyperion:* specifically?
+(15:42:04) *cross:* Hey Andrey, send me a picture of your wife.
+(15:42:09) *ericvh:* actually is 51M when you get rid of the source
+(15:42:11) *cross:* :-)
+(15:42:14) *ericvh:* and clean up a bit.
+(15:42:18) *uriel:* party!
+(15:42:20) *__20h__:* The development status is easy: We have two proposals for doing the "Multidomauth".
+(15:42:24) *f2f:* cross, i've put it up on goatse :P
+(15:42:26) *argaldo [/~argaldo@cm100163.red.mundo-r.com/] entered the room.*
+(15:42:34) *newsh:* 20h: is one of those proposals using inferno's auth?
+(15:42:36) *__20h__:* Deeper ways of restricting the gridusers are in discussion.
+(15:42:39) *cross:* Deviate from the Plan 9 way and you've just recreated Linux. What's the point?
+(15:42:45) *__20h__:* No, noone suggested Inferno Auth.
+(15:42:47) *cross:* Oo, send me the url...
+(15:42:57) *ceh [/~ceh@194-17-47-235.customer.telia.com/] entered the room.*
+(15:43:13) *ericvh:* Where are you on deploying it 20h?
+(15:43:29) *__20h__:* My home CPUserver does distributed Auth for 9grid.de.
+(15:43:40) *newsh:* earlier some people hinted that inferno's auth is pki based and would be suitable for cross domain.
+(15:43:43) *__20h__:* It's more experimental.
+(15:43:49) *uriel:* __20h__: many people has suggested inferno auth(and other things, of course)
+(15:43:50) *newsh:* should we be looking back at that as a possible alternative?
+(15:43:51) *__20h__:* newsham, if you do the work, yes.
+(15:43:58) *__20h__:* uriel, if you do the work, yes.
+(15:44:20) *uriel:* I think that there have been about 8 proposals for x-dom auth so far..
+(15:44:29) *__20h__:* And two are developed.
+(15:44:34) *__20h__:* Or two work.
+(15:44:44) *newsh:* the other being? tip9ug?
+(15:44:48) *__20h__:* Yes.
+(15:44:51) *__20h__:* Nashi is here.
+(15:44:52) *nashi:* i guess so.
+(15:44:59) *ericvh:* I'd like to host cross-domain-auth for test purposes, but I also want to keep sources for auth, so I'm kinda hosed. I could deploy a second blade, but I'd have to use different port numbers because they'd be behind the same NAT.
+(15:45:14) *ericvh:* Nashi where are you guys on deploying/testing your cross-auth?
+(15:45:14) *quintile:* What do we hope to achieve from multi domain auth?
+(15:45:28) ****uriel* is planning to donate a box to 20h so he can do x-dom-auth without having to use 9grid.de for testing
+(15:45:45) *nashi:* you can login to isengard.tip9ug.jp with sources account or tip9ug account.
+(15:45:46) *uriel:* dho: BTW, I'm planning to donate him the epia board I gave you.. :)
+(15:45:57) *quintile:* is security an issue? do we care?
+(15:46:02) *__20h__:* uriel, I don't need hardware.
+(15:46:09) *__20h__:* I need rack cases.
+(15:46:25) *ericvh:* nashi, do you have sources available (should I just look at the wiki or tip9ug?)
+(15:46:38) *dho:* uriel: rats, I was planning on putting p9 on it and seeing if i could port a raid driver and store my mp3s on it :P
+(15:46:40) *ericvh:* It'd be nice to see wiki pages for both approaches and some sort of comparison.
+(15:46:55) *uriel:* dho: you got it to the US?
+(15:46:58) *newsh:* I agree.. I would also like to see in wiki an explanation of what the goal is
+(15:46:59) *dho:* uriel: yes
+(15:47:05) *uriel:* dho: nevermind then :)
+(15:47:11) *dho:* uriel: gave margriet my athlon system
+(15:47:17) *nashi:* ericvh: i have such page but it's in japanaese. :)
+(15:47:20) *__20h__:* The goal is to have resources all around the world available.
+(15:47:26) *argaldo left the room.*
+(15:47:36) *nashi:* 20h: yes.
+(15:47:46) ****ericvh* just cpu'd to isengard.
+(15:47:47) *newsh:* 20h: sure, but I am betting you have more design restrictions than that. otherwise you'd just let everyone log in with account "rms" and no password.
+(15:47:56) *ericvh:* nashi - can we con someone to do a translation?
+(15:47:59) *uriel:* the ultimate goal is kind of clear, but it seems that people has different constrains for that goal
+(15:48:02) *nashi:* anyway, my patch to facotutm is at http://www.tip9ug.jp/who/nashi/9grid/p9sk1.c
+(15:48:28) *quintile:* but do we care who uses them / abuses them? Plan9 is very secure, do we value this feature?
+(15:48:31) *__20h__:* Translating the user to user@authdom &lt;mailto:user@authdom&gt; is just one problem and solved.
+(15:48:37) *nashi:* ericvh: and i'm there too.
+(15:48:39) *nashi:* see ps.
+(15:49:31) *ericvh:* quintile: we are working on parts of the solution, not claiming end-game (yet)
+(15:49:43) *uriel:* my qestion, can get get some coordination of all the people interested in x-dom-auth?
+(15:49:54) *newsh:* quintile: my plan9 is even more secure when i dont allow people to log in :)
+(15:50:05) *uriel:* (evne if people works on different solutions, it would be nice if there was some understanding of what everyone is working on to avoid duplication or repating mistakes)
+(15:50:17) *ericvh:* hence the need for a wiki
+(15:50:23) ****ericvh* missed the 1 minute warning
+(15:50:55) *nashi:* okay. i will translate my 9grid summary page and put it somewhere in the BL wiki.
+(15:51:02) *uriel:* nashi: thanks
+(15:51:10) *ericvh:* nashi, _20h_ can you guys write-up/post summaries to the wiki? It'd be nice for a third-party that knew something about security (not me - maybe quintile) to do a comparison of the trade-offs and vunerabilities as well.
+(15:51:15) *nashi:* or other 9grid.^(de us) is more suitable for that?
+(15:51:17) *quintile:* Ok, I feel strongly about this (in case you hadn't noticed) anyone in a position to set up an archived maillist for a discussion between the interested parties?
+(15:51:19) *uriel:* nashi: there is a x-dom-auth page already with presottos info, put it there(or near)
+(15:51:36) *ericvh:* quintile: go for it, or just use 9fans.
+(15:51:51) *newsh:* quintile: I would find the discussion interesting.. I vote 9fans.
+(15:51:54) *uriel:* quintile: lets not setup another list, it will die off fast
+(15:52:07) *ericvh has changed the topic to: Plan 9 Town Hall Meeting: text based install*
+(15:52:13) *quintile:* Ok, 9fans it is.
+(15:52:13) *nashi:* uriel thx for the note.
+(15:52:17) *ericvh:* bakul - your topic
+(15:52:36) *__20h__:* If graphics don't work, then you're in the textinstall.
+(15:52:37) ****uriel* blinks, I thought there was a text based intall working just fine
+(15:53:13) *ericvh:* dissent? anyone?
+(15:53:16) *newsh:* hmm, bakul's client is idle.
+(15:53:18) *ericvh:* bueller?
+(15:53:20) *ericvh:* bueller?
+(15:53:21) *hyperion:* even if graphics works, it's pretty much text-based ;)
+(15:53:37) *uriel:* yea, the graphical and text based installs are equvalent
+(15:53:49) *ericvh:* Okay, if bakul isn't around, lets defer this to the mailing list, sounds more like a FAQ issue or something.
+(15:53:56) *Captain-Willard:* NTFS boot?
+(15:54:00) *uriel:* heh
+(15:54:06) *ericvh has changed the topic to: Plan 9 Town Hall Meeting: vesa support*
+(15:54:07) *uriel:* Captain-Willard: good luck with that, you gonna need it
+(15:54:09) *quintile:* I assumed text based install was history as vesa seems to wok everywhre (or am I missing somthing?)
+(15:54:11) *ericvh:* uriel - what do you want on this?
+(15:54:15) ****musasabi* thinks there should be something other than ed in the text install.
+(15:54:20) *uriel:* ericvh: I want to know the status
+(15:54:21) *newsh:* uriel: reading ntfs isnt hard.
+(15:54:26) *musasabi:* but to vesa.
+(15:54:27) *lucho_:* quintile, you are missing xen :)
+(15:54:29) *uriel:* when will it go into the main iso
+(15:54:40) *__20h__:* Ask Russ, uriel.
+(15:54:46) *ericvh:* don't think anyone here can answer that.
+(15:54:51) *quintile:* lucho_: ah, yes.
+(15:55:01) *uriel:* well, 20h says he will only support vesa
+(15:55:13) *hyperion:* vesa didn't work on my geforce2
+(15:55:14) *uriel:* what people think? I would like to have an iso that supports both native and vesa as fallback
+(15:55:20) *hyperion:* the 9grid.de iso's vesa at least
+(15:55:21) *uriel:* 20h thinks only VESA is better..
+(15:55:39) *ericvh:* VESA is important as an option on installs, wouldn't be bad to see it as a bootarg or something.
+(15:55:40) *Captain-Willard:* works on my vaio
+(15:56:00) *ericvh:* maybe a floppy with vesa plan9.ini pointing to the CD for the rest.
+(15:56:02) *uriel:* ericvh: yes, that is what I think will be best(still automatic fallback replacing the text mode or some such would be nice too)
+(15:56:10) *quintile:* 20h: is /386/9pc on ddr.9grid.de a vesa kernel?
+(15:56:13) *gdiaz:* works on three different intel cards and in radeon igp too
+(15:56:20) *__20h__:* No, quintile.
+(15:56:23) *uriel:* 20h wants to remove native drivers to save space in the installer *sigh*
+(15:56:43) *quintile:* 20h: ok.
+(15:56:48) *newsh:* would vesa work on all cards that native drivers work on?
+(15:56:51) *uriel:* gdiaz: the thing is that it doesn't work everywhere, and it works sub-optimally where tehre are native drivers
+(15:56:57) *newsh:* if so, what would be the disadvantage of using vesa for everything?
+(15:57:10) *__20h__:* quintile, look at /usr/bootes/vesa/386
+(15:57:11) *Captain-Willard:* works on radeon 9200's
+(15:57:11) *uriel:* newsh: refresh rate and resolutions are more limited
+(15:57:26) *newsh:* seems like device drivers are the biggest thorn in the side of a project like plan9
+(15:57:28) *ericvh:* still, may not be bad for LiveCDs and ISOs -- it'll have a higher chance of working than native drivers.
+(15:57:32) *newsh:* if we could get rid of some I'm all for it.
+(15:57:37) *ericvh:* Once people install their system they can do whatever they want.
+(15:58:02) *uriel:* ericvh: well, why can't we have native by default and fallback to vesa? just curious
+(15:58:09) *uriel:* ericvh: that is how most other systems work
+(15:58:14) *ericvh:* as long as that works smoothly then nothing.
+(15:58:27) *newsh:* at any rate, it seems like this decision is not really ours :)
+(15:58:29) *ericvh:* (of course it could mean longer download times on that ISO)
+(15:58:33) *__20h__:* uriel, if you do the work, then everything is possible.
+(15:58:35) *bakul:* oops! i had to go away for a few minutes.... back now...
+(15:58:53) *ericvh:* okay bakul: everyone says your crazy and text-based install just works.
+(15:59:05) *ericvh:* or is it just ed that you don't like?
+(15:59:16) *ericvh has changed the topic to: Plan 9 Town Hall Meeting: Text Based Install*
+(15:59:17) *bakul:* possible! i am a newbie so don't know what i am talking about :)
+(15:59:33) *newsh:* is editing a file even part of the install process? I dont remember editing anything.
+(15:59:37) *ericvh:* General consensus is that if graphics install fails you should get dumped into text install.
+(15:59:43) *uriel:* newsh: nope AFAIK
+(15:59:49) *ericvh:* newsh: depends on what you are installing --
+(15:59:51) *bakul:* what i want is a way to have precanned install scripts....
+(16:00:06) *uriel:* bakul: uh? that is what the install is
+(16:00:08) *ericvh:* I think it would be nice to have precanned cpu-server install so that I can install a system and drawterm to it.
+(16:00:15) *newsh:* bakul: you could write precanned installers fairly easily.
+(16:00:17) *bakul:* i guess one can give that as an option...?
+(16:00:20) *ericvh:* (this would be usefull for Xen too)
+(16:00:27) *uriel:* ericvh: ah, you mean automated-install?
+(16:00:30) *uriel:* ericvh: that would be nice
+(16:00:35) *ericvh:* yeah. a cpu-server kickstart...
+(16:00:38) *newsh:* yes, a cpu server install would be very helpful.
+(16:00:46) ****uriel* nods
+(16:01:01) *bakul:* yes, *automating* would be very nice.
+(16:01:01) *ericvh:* Should be easy enough to write a script which automates the steps in the wiki - anyone want to take a shot at it?
+(16:01:06) *newsh:* i dont think it woudl be very hard to use the current installer to install a cpu server.
+(16:01:22) *newsh:* though perhaps this is best done as a post-install step.
+(16:01:34) *newsh:* how about a shell script that converts your terminal into a cpu server?
+(16:01:39) *lucho_:* as long as you know how exactly to partition the disks ...
+(16:01:51) *ericvh:* yeah, the disk thing is the tricky bit there.
+(16:01:58) *ericvh:* maybe best left as a post-install or post-install option.
+(16:02:03) *newsh:* lucho: the installer already makes an nvram partition, correct? isnt that theonly requirement?
+(16:02:11) *ericvh:* (give an options besides finish like make this node a cpufs server, etc.)
+(16:02:19) *uriel:* yes, some automated disk partitioning would be nice(also would keep new people from having to decide a fossil/venti ratio)
+(16:02:33) *lucho_:* newsh, but the installer doesn't automatically partition the disk
+(16:02:37) *ericvh:* auotmated venti setup is already in there now.
+(16:02:46) *newsh:* I thought it did.
+(16:02:57) *uriel:* ericvh: yes, I know, I mean deciding the ratio of pace for fossil/venti
+(16:02:59) *__20h__:* The installer only askes for the disks - the rest is automatic.
+(16:03:05) *hyperion:* uriel: it's done
+(16:03:11) ****ericvh* notes we are over time
+(16:03:28) *bakul:* another issue is newbies dn't know what some options mean so that just slows things down.. just give me an automated way to get something up and running!!!!
+(16:03:38) *lucho_:* __20h__ and how does it know how big plan9 partition to create or which of the already existing to use?&gt;
+(16:03:39) *ericvh:* okay, if someone could take a crack at cpuserver setup script I think it would be valuable to add to the distribution.
+(16:03:43) *__20h__:* You can do everything in the Installer, after the distribution is on the disk.
+(16:03:57) *ericvh:* Who wants to moderate next month? We've had a .eu and a .us, is it .jp's turn?
+(16:03:57) *uriel:* hyperion: ops, should test the installer more offten, sorry
+(16:03:57) *__20h__:* lucho_, predefined defaults.
+(16:04:07) *__20h__:* And if one exists, then it will use this one.
+(16:04:21) *lucho_:* and what are the defaults?
+(16:04:39) *__20h__:* Look at disk/prep
+(16:04:42) *uriel:* ericvh: another item to add to TODO wiki page: automated cpuserver setup script
+(16:04:43) *You are now known as Plan9*
+(16:04:56) *Plan9:* oops
+(16:04:58) *Plan9:* wrong command
+(16:05:01) *You are now known as ericvh*
+(16:05:02) *newsh:* bakul: I think automated installs are a good idea for experienced users installing on many machines -- in which case you could easily wrap your own.. but a bad choice for a new user
+(16:05:08) *ericvh has changed the topic to: Plan9 Town Hall Meeting: Chaos*
+(16:05:14) *hyperion:* :D
+(16:05:45) *uriel:* ericvh: I'd rather you moderate, you have done a very good job this time
+(16:05:46) *bakul:* newsh: offline i'd like to discuss this.... via email...
+(16:05:55) *newsh:* sure.
+(16:05:57) *hyperion:* xen may be not viable in the long term, btw
+(16:06:01) *hyperion:* just relating to chaos
+(16:06:06) *ericvh:* I just like the idea of passing the job around, keep things balanced.
+(16:06:08) *hyperion:* they seem to rely on linux more and more
+(16:06:08) *uriel:* hyperion: why?
+(16:06:13) *nashi:* then, we must grab vt3 for moderating.
+(16:06:28) *ericvh:* I'm all for it...teach him to miss a meeting ;)
+(16:06:29) *hyperion:* uriel: look at their roadmap for 3.0
+(16:06:29) *Captain-Willard:* bad idea
+(16:06:30) *uriel:* ericvh: lets stick to what works, if someone shows up that is interested let him do it
+(16:06:42) *Captain-Willard:* vt3 is too busy
+(16:06:46) *uriel:* hyperion: ? newsh and ron are working on 3.0 port
+(16:07:14) *newsh:* ericvh: are you putting the irc log on the wiki? I have a log, but it doesnt have timestamps.
+(16:07:14) *hyperion:* yea
+(16:07:21) ****uriel* thinks ericvh has a good valance of not too much of a jerk, and not too soft :)
+(16:07:25) *nashi:* Capt: yep...
+(16:07:32) *hyperion:* uriel: so have you looked at that page?
+(16:07:41) *uriel:* hyperion: no
+(16:07:46) *lucho_:* bye
+(16:07:47) *ericvh:* Lemme see..I forgot to start the logging, but I think I'm able to save.
+(16:07:47) *lucho_ left the room (quit: "ircII EPIC4-1.0.1 -- Are we there yet?").*
+(16:07:50) *hyperion:* then please do
+(16:07:51) *hyperion:* bye
+(16:07:52) *dho:* I have logs with timestamps
+(16:07:52) *Captain-Willard:* nashi: karoushi
+(16:07:56) *dho:* They're PDT
+(16:08:04) *newsh:* dho: I dont think the timezone matters.
+</pre>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Thu Jun 23 17:47:24 EDT 2005</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

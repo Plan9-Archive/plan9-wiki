@@ -1,0 +1,576 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>WinCE FTP (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+WinCE FTP <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Sun May 25 06:11:10 EDT 2003</a>, jygdiy@citiz.net (61.169.122.193)
+<br /><i>jyg</i>
+</div><hr />This
+page
+describes
+how
+to
+FTP
+files
+from
+a
+Plan
+9
+terminal
+to
+an
+an
+ipaq
+running
+WinCE.
+You
+can
+use
+FTP
+rather
+than
+ActiveSync
+to
+download
+the
+linux
+"osloader"
+to
+your
+ipaq.
+If
+you
+do
+not
+have
+a
+Windows
+machine
+to
+run
+ActiveSync,
+then
+these
+instructions
+are
+for
+you.
+<p class='para'>
+Attribution:
+This
+is
+based
+on
+a
+similar
+process
+for
+linux
+outlined
+at
+<a href="http://www.handhelds.org/minihowto/wince-link/index.html">http://www.handhelds.org/minihowto/wince-link/index.html</a>.
+</p>
+
+<p class='para'>
+You
+need
+the
+WinCE
+Internet
+Explorer,
+a
+serial
+cradle,
+and
+a
+Plan
+9
+terminal
+with
+a
+serial
+device.
+The
+idea
+is
+to
+run
+an
+FTP
+server
+on
+the
+terminal,
+establish
+a
+PPP
+connection
+to
+the
+ipaq,
+and
+use
+WinCE's
+IE
+to
+download
+files.
+</p>
+
+<a name="CUSTOMIZE_PPP" /><h3>CUSTOMIZE PPP</h3>
+
+<p class='para'>
+Customize
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ppp"><i>ppp</i>(8)</a>
+to
+skip
+authentication
+when
+run
+as
+a
+server.
+This
+is
+necessary
+because
+it
+is
+not
+evident
+how
+to
+set
+a
+WinCE
+user
+and
+secret
+for
+CHAP.
+Here
+is
+a
+patch
+to
+the
+February
+21,
+2003
+version
+of
+ppp.c
+that
+disables
+authentication
+when
+given
+an
+empty
+secret
+(with
+-s
+''):
+</p>
+
+<pre>
+	/sys/src/cmd/ip/ppp/ppp.c:16 a ppp.c:17
+	&gt; static	int	skipchap = 0;
+	/sys/src/cmd/ip/ppp/ppp.c:253 c ppp.c:254
+	&lt; 		if(server)
+	---
+	&gt; 		if(server &amp;&amp; !skipchap)
+	/sys/src/cmd/ip/ppp/ppp.c:2617 a ppp.c:2619,2622
+	&gt; 		if (strlen(secret) == 0) {
+	&gt; 			secret = nil;
+	&gt; 			skipchap = 1;
+	&gt; 		}
+</pre>
+
+<a name="ON_THE_TERMINAL" /><h3>ON THE TERMINAL</h3>
+
+<p class='para'>
+Run
+an
+FTP
+server
+and
+your
+custom
+PPP
+server
+on
+the
+terminal.
+The
+following
+examples
+illustrate
+what
+you
+might
+send
+to
+an
+interactive
+<a href="http://plan9.bell-labs.com/magic/man2html/1/rc"><i>rc</i>(1)</a>.
+</p>
+
+<ul>
+
+<li>
+Choose
+an
+unused
+IP
+address
+for
+the
+bitsy.
+You
+also
+need
+your
+terminal's
+IP
+address.
+</li>
+</ul>
+
+<pre>
+	bitsyip=192.168.1.22
+	termip=`{ndb/query sys $sysname ip}
+</pre>
+
+<ul>
+
+<li>
+Create
+a
+directory
+to
+hold
+configuration
+files
+and
+your
+FTP
+server's
+root
+directory.
+</li>
+</ul>
+
+<pre>
+	root=/usr/$user/tmp/bitsy
+	mkdir $root
+</pre>
+
+<ul>
+
+<li>
+Create
+an
+FTP
+root
+directory
+and
+<a href="http://plan9.bell-labs.com/magic/man2html/6/namespace"><i>namespace</i>(6)</a>
+file.
+</li>
+</ul>
+
+<pre>
+	mkdir $root/ftp
+	echo 'mount #s/boot' / &gt; $root/namespace.ftp
+	echo 'bind '$root'/ftp /' &gt;&gt; $root/namespace.ftp
+</pre>
+
+<ul>
+
+<li>
+Use
+listen1
+(in
+<a href="http://plan9.bell-labs.com/magic/man2html/8/listen"><i>listen</i>(8)</a>)
+and
+ftpd
+(in
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ipserv"><i>ipserv</i>(8)</a>)
+to
+run
+your
+FTP
+server:
+</li>
+</ul>
+
+<pre>
+	aux/listen1 -tv tcp!*!ftp /bin/ip/ftpd -An $root/namespace.ftp &amp;
+</pre>
+
+<ul>
+
+<li>
+Create
+a
+chat
+file
+for
+dealing
+with
+WinCE's
+pre-PPP
+text.
+</li>
+</ul>
+
+<pre>
+	echo ''''' CLIENT' &gt; $root/chat
+	echo 'CLIENTSERVER ''''' &gt;&gt; $root/chat
+</pre>
+
+<ul>
+
+<li>
+Run
+your
+modified
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ppp"><i>ppp</i>(8)</a>
+server;
+this
+example
+assumes
+the
+ipaq
+is
+connected
+to
+/dev/eia0
+and
+your
+custom
+binary
+is
+called
+"myppp".
+</li>
+</ul>
+
+<pre>
+	myppp -p /dev/eia0 -b 115200 -f -s '' -S -uM $root/chat $termip $bitsyip
+</pre>
+
+<p class='para'>
+You
+can
+test
+your
+FTP
+server
+in
+another
+window
+with
+"ftpfs
+$sysname".
+After
+logging
+in
+as
+none,
+you
+should
+see
+the
+contents
+of
+$root/ftp
+under
+/n/ftp.
+</p>
+
+<a name="ON_THE_IPAQ" /><h3>ON THE IPAQ</h3>
+
+<p class='para'>
+Configure
+WinCE
+to
+talk
+to
+the
+terminal
+and
+establish
+a
+PPP
+connection.
+The
+following
+worked
+with
+WinCE
+3.0.9348
+(Build
+9616).
+See
+<a href="http://www.handhelds.org/minihowto/wince-link/index.html">http://www.handhelds.org/minihowto/wince-link/index.html</a>
+for
+alternative
+instructions.
+</p>
+
+<ul>
+
+<li>
+In
+Start,
+Settings,
+Connections,
+PC,
+create
+a
+new
+connection
+called
+9
+with
+PPP,
+the
+$bitsyip
+IP
+address,
+115200
+baud,
+eight
+data
+bits,
+no
+parity,
+one
+stop
+bit,
+hardware
+flow
+control,
+and
+autosync
+turned
+off.
+</li>
+</ul>
+
+<ul>
+
+<li>
+Run
+Start,
+Programs,
+Connections,
+9.
+</li>
+</ul>
+
+<p class='para'>
+You
+can
+test
+the
+connection
+with
+"ip/ping
+$bitsyip"
+on
+your
+terminal.
+</p>
+
+<a name="USING_THE_CONNECTION" /><h3>USING THE CONNECTION</h3>
+
+<p class='para'>
+Put
+the
+files
+you
+want
+to
+download
+in
+$root/ftp
+on
+the
+terminal.
+Open
+IE
+on
+the
+bitsy,
+turn
+on
+the
+address
+bar,
+if
+necessary,
+and
+enter
+</p>
+
+<pre>
+	ftp://$termip/
+</pre>
+
+<p class='para'>
+where
+$termip
+is
+your
+terminal's
+IP
+address.
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Sun May 25 06:11:10 EDT 2003</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

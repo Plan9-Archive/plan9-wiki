@@ -1,0 +1,15 @@
+Write missing man pages
+
+TODO: look through all commands and check if they have manual pages.
+You can do this by running
+
+! cd /sys/man; mk check
+
+For now, just add missing pages you find to the list below (and of
+course, write manual pages for them).
+
+ *	mm(6)
+ *	lots of other things in [/sys/lib/tmac/ |
+	/sources/plan9/sys/lib/tmac] ([tmac] explains what the files seem to
+	be for)
+

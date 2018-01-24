@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>OAuth (Editing Fri Mar 29 15:32:30 EDT 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>OAuth</b></font> (Editing Fri Mar 29 15:32:30 EDT 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="OAuth">
+<input type="hidden" name="version" value="1364585550">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+[OAuth | http://oauth.net] 2.0 is a very common method for users to
+provide authorization to web services. To facilitate writing Plan 9
+and Inferno clients for many of these services, it would be nice to
+teach factotum(4) how to speak OAuth. There are some design
+considerations that need to be thought through; the models don't map
+directly.
+
+In particular, the most common mode of using OAuth depends on some
+browser infrastructure. Is one of the browser options native (or
+roughly so) to Plan 9 up to the task? How reliably? Is the structure
+of the OAuth landing page standardized?
+
+The first step would be to teach factotum to speak the part of the
+protocol that happens after the final hash is acquired. It would be
+inconvienent, but users could get that hash through the browser
+manually themselve, then hand it to factotum.
+
+The next step would probably be an extension/replacement for
+auth/fgui which would look for OAuth requests from factotum and
+handle launching a browser (or redirecting an existing one via the
+plumber) and handing the results back to factotum.
+
+While it isn't OAuth, [flickrfs |
+https://bitbucket.org/bedo/flickrfs] has support for Flickr's
+pre-OAuth authentication method, which has some similarities.
+Interested students might look to it for reference or inspiration,
+particularly for the first half of the problem (as described above).
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

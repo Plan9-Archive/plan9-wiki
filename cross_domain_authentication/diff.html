@@ -1,0 +1,486 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Cross domain authentication (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Cross domain authentication <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Tue Jul  5 18:59:44 EDT 2005</a>, steve (81.96.207.141)
+</div><hr />Cross
+domain
+authentication
+has
+been
+implemented
+in
+two
+different
+forms
+recently
+(Jul
+2005),
+however
+there
+is
+still
+discussion
+about
+the
+"best"
+solution.
+<a name="IMPLEMENTATION_2" /><h3>IMPLEMENTATION 2</h3>
+
+<p class='para'>
+Central
+authentication
+server
+<a href="http://groups-beta.google.com/group/comp.os.plan9/msg/4625ee53672ef106?dmode=source&hl=en">http://groups-beta.google.com/group/comp.os.plan9/msg/4625ee53672ef106?dmode=source&amp;hl=en</a>
+</p>
+
+<a name="IMPLEMENTATION_1" /><h3>IMPLEMENTATION 1</h3>
+
+<p class='para'>
+Distributed
+authentication
+<a href="http://groups-beta.google.com/group/comp.os.plan9/msg/3c379056e750c514?dmode=source&hl=en">http://groups-beta.google.com/group/comp.os.plan9/msg/3c379056e750c514?dmode=source&amp;hl=en</a>
+</p>
+
+<a name="A_EARLIER,_SIMILAR_PROPOSAL" /><h3>A EARLIER, SIMILAR PROPOSAL</h3>
+
+<p class='para'>
+(Taken
+from
+a
+post
+by
+David
+Presotto
+to
+the
+9grid
+list:
+<a href="http://nwn.definitive.org/pipermail/9grid/2004-September/000269.html">http://nwn.definitive.org/pipermail/9grid/2004-September/000269.html</a>)
+</p>
+
+<p class='para'>
+In
+the
+current
+scheme,
+when
+a
+user
+authenticates,
+he/she
+gets
+a
+list
+of
+domains
+that
+the
+server
+will
+accept
+and
+picks
+one
+to
+use
+(i.e.
+one
+he
+has
+a
+key
+for).
+That
+should
+provide
+the
+second
+part
+of
+the
+name,
+i.e.,
+if
+I'm
+presotto
+authenticating
+via
+the
+domain
+bignose.com
+then
+I
+should
+be
+presotto@bignose.com.
+Tacking
+on
+the
+@bignose.com
+is
+currently
+missing.
+</p>
+
+<p class='para'>
+That
+of
+course
+leaves
+the
+server
+to
+map
+the
+domain
+bignose.com
+to
+an
+auth
+server
+that
+it
+trusts
+(i.e.
+has
+a
+key
+for
+and
+trusts
+others
+to
+authenticate
+via).
+Currently
+that's
+done
+via
+the
+lib/ndb
+entry
+</p>
+
+<pre>
+	authdom=bignose.com auth=1.2.3.4
+</pre>
+
+<p class='para'>
+So
+we
+have
+a
+way
+to
+trust
+other
+authentication
+domains
+but
+not
+yet
+a
+way
+to
+tag
+the
+resulting
+name.
+However,
+that's
+like
+1
+line
+of
+code
+in
+factotum.
+</p>
+
+<p class='para'>
+However,
+this
+requires
+that
+there
+be
+a
+shared
+key
+twixt
+each
+server
+and
+each
+domain
+that
+it
+trusts.
+I'll
+leave
+it
+up
+to
+you
+if
+that's
+too
+much.
+</p>
+
+<p class='para'>
+If
+the
+server
+is
+a
+cpu
+server,
+then
+the
+caller
+can
+export
+its
+factotum
+to
+its
+process
+on
+that
+cpu
+server
+so
+that
+it
+can
+authenticate
+further.
+Is
+this
+a
+good
+idea?
+Would
+we
+be
+letting
+too
+much
+access
+to
+the
+factotum?
+Might
+we
+want
+the
+user
+to
+start
+a
+second
+less
+capable
+factotum
+for
+9net
+access?
+</p>
+
+<p class='para'>
+The
+client
+coming
+into
+the
+cpu
+server
+will
+need
+at
+least
+readonly
+access
+to
+binaries
+and
+to
+enough
+directory
+structure
+to
+set
+up
+a
+name
+space
+on
+that
+machine.
+I
+already
+had
+to
+make
+that
+work
+for
+the
+deep
+lens
+survey
+stuff.
+I
+made
+ken's
+group
+'noworld'
+access
+work
+for
+that.
+If
+we
+put
+each
+9net
+user
+in
+the
+'noworld'
+group,
+then
+we
+can
+point
+him
+to
+a
+file
+server
+and
+he
+can
+only
+get
+at
+files
+that
+are
+accessible
+by
+his
+uid
+or
+by
+the
+'noworld'
+group.
+You
+could
+even
+give
+him
+some
+write
+access
+if
+you
+wanted
+to.
+It
+keeps
+such
+users
+from
+accessing
+anything
+that
+was
+accidentally
+made
+world
+readable
+or
+writable.
+It
+does
+mean
+that
+you
+have
+to
+change
+the
+file
+server
+so
+that
+anyone
+coming
+in
+as
+a@b
+is
+just
+treated
+as
+a
+'noworld'
+group
+user.
+</p>
+
+<p class='para'>
+My
+2
+cents.
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Tue Jul  5 18:59:44 EDT 2005</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

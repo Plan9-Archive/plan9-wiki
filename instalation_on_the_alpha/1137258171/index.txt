@@ -1,0 +1,13 @@
+Instalation on the Alpha
+
+Plan9 runs on the DEC Alpha PC164, it is also believed to run on the
+LX164 and with some small modifications on the 500au. Only network
+boot is supported at present.
+
+For more information see:
+
+[General and PC164 |
+http://groups.google.com/group/comp.os.plan9/msg/a2d44306b0e52c83]
+[500au |
+http://groups.google.com/group/comp.os.plan9/msg/af19766a4019be59]
+

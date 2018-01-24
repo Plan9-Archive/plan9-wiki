@@ -1,0 +1,44 @@
+IRC
+
+
+GSOC
+
+We have a channel set up specifically for students (and other
+community members) working with us on Summer of Code projects. Please
+join us on [#plan9-gsoc | irc://irc.freenode.org/#plan9-gsoc].
+
+IRC.FREENODE.ORG.
+
+ *	#plan9 - For discussions about Plan 9. [link |
+	irc://irc.freenode.org/#plan9]
+
+ *	#inferno - For discussion about Inferno and Limbo.
+
+ *	#plan9-gsoc - For discussions specific to Plan 9's involvement in
+	Google's Summer of Code.
+
+ *	#cat-v - For [werc | http://werc.cat-v.org] and other [cat-v.org
+	projects | http://cat-v.org].
+
+EFNET
+
+ *	#plan9 on EFnet is *not* a good place to talk about Plan 9.
+
+------------------------------------------------------ 
+IRC CLIENTS
+
+ *	[irc7 | http://pages.cpsc.ucalgary.ca/~mirtchov/p9/irc/] -
+	/n/sources/contrib/andrey/irc7.tgz
+ *	[ircc |
+	http://plan9.bell-labs.com/sources/contrib/zwansch/ircc.tgz] -
+	/n/sources/contrib/zwansch/ircc.tgz
+ *	[ircrc | http://plan9.bell-labs.com/sources/contrib/fgb/rc/ircrc]
+	- /n/sources/contrib/fgb/rc/ircrc
+
+------------------------------------------------------ 
+LOGS
+
+There have been various logs of the IRC channels over time. The most
+comprehensive were maintained by [tip9ug] but were lost in late 2010
+to a catastrophic hardware failure.
+

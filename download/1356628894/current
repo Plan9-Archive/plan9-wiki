@@ -1,0 +1,72 @@
+Download
+D1356628894
+Amiller
+#
+#PLAN 9 FROM BELL LABS
+#
+#The official Plan 9 sources can be found on the Plan 9 distribution
+#site at [http://plan9.bell-labs.com/plan9/]. From there one can
+#download an install floppy or a CD image.
+#
+#The CD image is built every night from the latest sources and also
+#works as a `live CD' that can be booted as a working Plan 9 system
+#on an x86-based computer. The direct link to the CD image is:
+#
+# *	[http://plan9.bell-labs.com/plan9/download/plan9.iso.bz2]
+#
+#ISO checksums: [http://plan9.bell-labs.com/plan9checksums.txt]
+#
+#A compressed image of a bootable SD card for the Raspberry Pi is
+#available from this link:
+#
+# *	[http://plan9.bell-labs.com/sources/contrib/miller/9pi.img.gz]
+#
+#MIRRORS
+#
+#The CD image is also available from the following mirrors:
+#
+# *	[http://www.tip9ug.jp/mirror/plan9.iso.bz2] - Japan - [Tokyo
+#	Inferno/Plan 9 Users Group | http://www.tip9ug.jp]
+#
+#A torrent for a [QEMU | http://www.qemu.org] disk image is available
+#from the [FreeOsZoo site |
+#http://www.oszoo.org/wiki/index.php/Category:Plan9_images]. This
+#image was updated on January 7, 2007.
+#
+#SHRINK WRAPPED PLAN 9
+#
+#A shrink wrapped release of plan9 is available [directly |
+#http://www.vitanuova.com/plan9/index.html] from Vita Nuova. This
+#package containins a CD of the Plan 9 and Inferno distributions, and
+#Plan 9 manuals and papers in the form of high quality typeset books.
+#
+#INFERNO
+#
+#Inferno is an Open Source network operating system intended for
+#embedded applications and distributed systems created by the same
+#people that developed Plan 9 using many of the same ideas and
+#technologies.
+#
+#It is now developed and maintained by [Vita Nuova |
+#http://www.vitanuova.com/inferno/].
+#
+#It can run either 'hosted' inside another os (eg., *BSD, Linux, Plan
+#9, Windows) or on the bare hardware.
+#
+#Download page: [http://www.vitanuova.com/inferno/net_download4T.html]
+#
+#PLAN B
+#
+#Plan B is a derivative of Plan 9 developed by F. J. Ballesteros and
+#his students. While the original version was based on the third
+#edition Plan 9 kernels, the Plan B team has moved Plan B into user
+#space so it can be run on current Plan 9 systems.
+#
+#[http://plan9.escet.urjc.es/ls/planb.html]
+#
+#SEE ALSO
+#
+# *	[Mirrors]
+# *	[Sources repository]
+# *	[Software for Plan 9]
+#

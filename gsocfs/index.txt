@@ -1,0 +1,31 @@
+gsocfs
+
+
+OVERVIEW
+
+The general idea is that it would be nice to have a Plan 9/Inferno
+native mechanism to help use track google summer of code activities
+before, during, and after the summer. The main motivation for this
+was some of the crazy stuff that went on last year using the google
+voting interface, it would give us more control over preventing such
+things. So, the general idea is to have a synthetic file server which
+exports both file system and web-appropriate hierarchies which
+facilitate summer-of-code activities. The idea being that you could
+interact with them as easily under ACME as under a web-browser. This
+is really an instantiation of what I've been calling
+service-oriented-file-systems.
+
+POTENTIAL MILESTONES
+
+ *	synethtic file system and web interface
+ *	posting project ideas
+ *	voting for projects
+ *	registering student interest in projects
+ *	project milestone tracking
+ *	project blogs and wikis
+ *	post-summer project success metrics (subjective and objective)
+ *	(stretch) syndication points for community monitoring
+ *	(stretch) potential integration with SCM
+ *	(stretch) potential integration with some form of chat
+ *	(stretch) potential integration with name space sharing
+

@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Informal Wiki Setup (as of Thu Apr  7 10:17:10 EDT 2005)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Informal Wiki Setup</h1>
+<h2><i>-as of Thu Apr  7 10:17:10 EDT 2005-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+Basic
+Plan
+9
+wiki
+instructions
+for
+the
+novice:
+or
+notes
+on
+how
+to
+actually
+get
+a
+wiki
+going
+on
+your
+own
+Plan
+9
+machine.
+<p class='para'>
+You
+can
+replace
+the
+'/sys/lib'
+with
+'$home/lib'
+in
+the
+following
+configuration
+if
+you
+don't
+have
+write
+access
+or
+don't
+want
+to
+run
+wikifs
+as
+bootes
+on
+a
+cpu
+server.
+</p>
+
+<a name="CREATE_SAMPLE_WIKI_DIRECTORIES" /><h3>CREATE SAMPLE WIKI DIRECTORIES</h3>
+
+<pre>
+mkdir /sys/lib/wiki.sample
+{cd /sys/lib/wiki &amp;&amp; tar cp .}|{cd /sys/lib/wiki.sample &amp;&amp; tar xT}
+mkdir -p /usr/web/wiki/sample
+</pre>
+
+<a name="DOWNLOAD_MISSING_FILES" /><h3>DOWNLOAD MISSING FILES</h3>
+
+<ul>
+
+<li>
+create.html
+from
+plan9
+wiki
+</li>
+</ul>
+
+<pre>
+cd /usr/web/wiki/sample 
+hget -o create.html http://plan9.bell-labs.com/wiki/plan9/create.html
+</pre>
+
+<p class='para'>
+Other
+files
+are
+missing,
+but
+that's
+the
+most
+important
+one
+for
+starting
+everything.
+</p>
+
+<a name="MODIFY_FILES" /><h3>MODIFY FILES</h3>
+
+<p class='para'>
+See
+<a href="http://plan9.bell-labs.com/magic/man2html/8/httpd"><i>httpd</i>(8)</a>
+--
+(more
+documentation
+on
+setting
+up
+httpd
+would
+be
+nice)
+</p>
+
+<p class='para'>
+You'll
+need
+to
+edit
+/lib/namespace.httpd
+in
+at
+least
+the
+following
+way:
+</p>
+
+<p class='para'>
+find
+the
+current
+wiki
+reference
+in
+/lib/namespace.httpd
+<pre>
+# mount -b #s/wiki.plan9 /usr/web/wiki/plan9
+mount -b #s/wiki.sample /usr/web/wiki/sample
+</pre>
+
+</p>
+
+<p class='para'>
+modify
+create.html
+for
+your
+liking
+--
+bellow
+is
+a
+diff
+on
+changes
+for
+the
+sample
+<pre>
+cpu% diff create.html /sys/lib/wiki.sample/create.html
+3c3
+&lt; &lt;title&gt;Plan 9 Wiki: Create a new page&lt;/title&gt;
+---
+&gt; &lt;title&gt;Plan 9 Sample Wiki: Create a new page&lt;/title&gt;
+23, 24c23, 24
+&lt; &lt;input type="hidden" name="service" value="plan9"&gt;
+&lt; &lt;input type="hidden" name="base" value="/wiki/plan9"&gt;
+---
+&gt; &lt;input type="hidden" name="service" value="sample"&gt;
+&gt; &lt;input type="hidden" name="base" value="/wiki/sample"&gt;
+44d43
+&lt; &lt;/html&gt;
+45a45
+&gt; &lt;/html&gt;
+</pre>
+
+</p>
+
+<p class='para'>
+Make
+similar
+edits
+to
+/sys/lib/wiki.sample/edit.html
+</p>
+
+<a name="START_HTTPD" /><h3>START HTTPD</h3>
+
+<pre>
+wikifs -p 666 -s wiki.sample -a tcp!*!wiki /sys/lib/wiki.sample
+ip/httpd/httpd
+</pre>
+
+<a name="CONNECT_TO_YOUR_NEW_WIKI_SERVER" /><h3>CONNECT TO YOUR NEW WIKI SERVER</h3>
+
+<p class='para'>
+You
+can
+now
+access
+your
+new
+site
+using
+<a href="../../Acme_wiki_instructions">Acme
+wiki
+instructions</a>
+or
+a
+web
+browser
+with
+a
+url
+similar
+to
+the
+following:
+</p>
+
+<p class='para'>
+http://localhost/wiki/sample/plan_9_wiki/
+</p>
+
+<p class='para'>
+Additional
+details
+about
+resetting
+your
+base
+configuration
+still
+need
+to
+be
+addressed.
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Thu Apr  7 10:17:10 EDT 2005</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

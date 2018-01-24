@@ -1,0 +1,38 @@
+Setting the right keyboard map
+
+To change the default ASCII keyboard map to your local one (e.g
+German) use
+
+! % kbmap
+
+Select your preferred keyboard map from one of the entries in the
+list with mouse button three (right button) and then exit with the q
+key.
+
+Alternatively you could also drop the following in your 9term:
+! % cat /sys/lib/kbmap/de > /dev/kbmap
+
+To make this setting durable for $user edit /usr/$user/lib/profile
+and add the above mentioned line before(!) the switch where rio is
+executed. It should look something like this:
+
+! bind -a $home/bin/rc /bin
+! bind -a $home/bin/$cputype /bin
+! bind -c $home/tmp /tmp
+! font = /lib/font/bit/pelm/euro.9.font
+! switch($service){
+! case terminal
+! 	plumber
+! 	upas/fs
+! 	echo -n accelerated > '#m/mousectl'
+! 	echo -n 'res 3' > '#m/mousectl'
+! 	prompt=('term% ' '	')
+! 	fn term%{ $* }
+! 	cat /sys/lib/kbmap/de > /dev/kbmap
+! 	exec rio
+! (rest of the file...)
+
+Instead of the German "de" layout you could also use the French
+"azerty" or whatever else.
+
+(Todo: How to make that setting global in /rc/bin/termrc)

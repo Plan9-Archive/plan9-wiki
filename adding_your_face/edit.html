@@ -1,0 +1,102 @@
+<html>
+<head>
+<title>Adding your face (Editing Wed Feb  6 12:35:59 EST 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Adding your face</b></font> (Editing Wed Feb  6 12:35:59 EST 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Adding your face">
+<input type="hidden" name="version" value="1360172159">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+face(6) files are low resolution images that symbolize a person or
+group of people, for example a user, a company, a network provider,
+or a country.
+
+These files are read by the faces(1) command which uses them to
+display in its window, a small image for each user's mail box message.
+
+face files are usually created by rescaling either a gif or jpg image.
+
+! jpg -c myface.jpg  | iconv -c m8 | resample -x 48 -y 48 > myface.1
+
+If the image contains more than just your face or if the exposure is
+non-optimal, Russ Cox has written a tool which allows you to trim and
+adjust your image, though this only writes black and white images.
+
+Mug insists for its input to be at least 100x100 pixels and the line
+below adds a white border around the image which is useful - giving
+you room to maneuver when editing.
+
+! jpg -c myface.jpg |  resample -x 100  |  crop -b 255 255 255 -i -30 |  mug > face.1
+
+The manual page is mug(1).
+
+Once you have created your face, install it in
+/lib/face/48x48x8/f/face.1 (your directory path may vary) and edit
+/lib/face/.machines and /lib/face/48x48x8/.dict as appropriate (see
+faces(1)).
+
+[9srv.net] maintains a public faces database. If you do not have a
+9srv account, you can execute
+! cd /lib/face && con -l tcp!9srv.net!50001 | gunzip | tar -x
+which will create a README file, a "people" directory, and a
+"domains" directory. This will not overwrite anything in the standard
+distribution or changes you've made to .machinelist or any of the
+48x48xn directories. The README file contains more examples for
+generating faces. If your email address consists of only the
+characters [a-zA-Z0-9.@], you can add your face to the list by
+sending a correctly-generated face(6) file as an email attachment to
+add at face dot 9srv dot net. Submissions for folks with other email
+addresses, as well as for additional domains, will be handled
+manually; email a at 9srv dot net.
+
+SEE ALSO
+
+[Face the Nation by Rob Pike and David L. Presotto |
+http://doc.cat-v.org/bell_labs/face_the_nation/].
+
+There is a database of faces (picons in their terminology) at
+Indinana University. This includes the Usenix Face saver project
+archives, many company logos, and other misc images.
+[http://ftp.cs.indiana.edu/pub/faces/picons/ |
+http://ftp.cs.indiana.edu/pub/faces/picons/]
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

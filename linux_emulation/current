@@ -1,0 +1,155 @@
+Linux emulation
+D1335047570
+Asl
+#Linuxemu is a program that can execute Linux/i386 ELF binaries on
+#Plan9. It was started by Russ Cox and development was continued by
+#cinap_lenrek. Please contact cinap_lenrek AT gmx DOT de with bug
+#reports or improvements.
+#
+#SOURCE
+#
+#[/n/sources/contrib/cinap_lenrek/linuxemu3.tgz |
+#http://plan9.bell-labs.com/sources/contrib/cinap_lenrek/linuxemu3.tgz]
+#
+#[http://9hal.ath.cx/usr/cinap_lenrek/linuxemu3.tgz |
+#http://9hal.ath.cx/usr/cinap_lenrek/linuxemu3.tgz]
+#
+#DOCUMENTATION
+#
+#Documentation is provided in the doc directory:
+#
+#! 	doc/linuxemu.txt
+#! 	doc/todo.txt
+#
+#INSTALLATION
+#
+#! 	tar xzf linuxemu3.tgz
+#! 	cd linuxemu3
+#! 	mk
+#! 	mk install
+#
+#BOOTSTRAP
+#
+#You need a Linux rootfilesystem packed in a tarball. Go! Get some
+#Linux rootfs:
+#
+#[http://9hal.ath.cx/usr/cinap_lenrek/mroot-linuxemu.tbz |
+#http://9hal.ath.cx/usr/cinap_lenrek/mroot-linuxemu.tbz]
+#
+#[http://plan9.stanleylieber.com/linuxemu/mroot.tgz |
+#http://plan9.stanleylieber.com/linuxemu/mroot.tgz]
+#
+#The -linuxemu version contains no symlinks and can be extracted with
+#plain plan9 tools bunzip/tar.
+#
+#The mroot.tgz version contains the same Debian Sarge base as
+#-linuxemu, but with several additional packages pre-installed:
+#
+#! 	9base
+#! 	dmenu-4.1.1
+#! 	dwm-5.8.2
+#! 	gcc 3.3.5
+#! 	linux-kernel-headers
+#! 	mercurial 0.9.4
+#! 	opera 10.11
+#! 	python 2.3.5
+#! 	xlib-dev
+#
+#and more. View its [setup |
+#http://plan9.stanleylieber.com/linuxemu/setup] file for more details.
+#
+#You can create your own with debootstrap on Debian Linux, or help
+#write an installer that unpacks and installs Slackware on Plan 9...
+#In any case, linuxemu is not hardwired to any Linux distribution!
+#
+#RUNNING
+#
+#Use the provided "linux" script to chroot into your Linux rootfs.
+#The "linux" script is neccesary because for Linux programs to run,
+#shared libraries from your rootfs have to appear at /lib and
+#/usr/lib, while configuration files are expected to be in /etc. The
+#script will build a private namespace and bind the Linux rootfs over
+#the Plan 9 root. the original Plan 9 namespace is mounted at /9.
+#
+#! 	linux -r ./mroot /bin/bash -i
+#
+#If the -r option is omitted, the Linux rootfs defaults to
+#/sys/lib/linux. you may put your Linux rootfs there or add a bind to
+#your $home/lib/profile.
+#
+#In the Linux rootfs, /etc/resolv.conf should be changed to match
+#your network nameserver. In addition, /etc/apt/sources.list should
+#be updated to a working Debian mirror. (Sarge packages can still be
+#accessed at deb http://archive.debian.org/debian-archive/debian
+#sarge main)
+#
+#EXAMPLES
+#
+#Linux X11 programs may be used in conjunction with the Plan 9 [equis
+#| http://www.plan9.bell-labs.com/wiki/plan9/X11_installation] X11
+#contrib package. For example, to run the Opera web browser under
+#your Linux rootfs, start equis in a rio window, chroot into your
+#LInux rootfs and:
+#
+#! 	dwm &
+#! 	opera &
+#
+#Opera should (eventually) appear in the equis window. A window
+#manager (this example uses dwm) is recommended so that X11 programs
+#work properly.
+#
+#DEBUGGING
+#
+#If linuxemu crashes, use acid to figure out whats going on:
+#
+#! 	mk acid
+#! 	acid -l linuxemu.acid <pid>
+#
+#Then you can issue the following commands:
+#
+#! 	ustk()				dump a (userspace) stacktrace for the current thread
+#! 	umem(Current())			dump the memory mappings
+#! 	ufds(Current())			dump the filedescriptor table
+#! 	utrace(Current())		dump the internal tracebuffer (enabled by -d option)
+#
+#Use xasm()/xcasm() for disassembly for Linux code.
+#
+#You can also enable full trace logging:
+#
+#! 	linux -r ./mroot -dd /bin/bash -i >[2]/tmp/linuxemu.log
+#
+#This slows linuxemu down. In case of race conditions, it often
+#happens that the bug disapears when doing full trace logging!
+#
+#NPTL
+#
+#If you get one of these errors:
+#
+#! 	cannot set up thread-local storage: cannot set up LDT for thread-local storage
+#
+#This is glibc/libpthread complaining! The problem is the following:
+#glibc on i386 decided at some point to use the extra segment
+#registers GS and FS as an indirection pointer for thread local
+#storage. The operating system kernel therfore must have a mechanism
+#to let userspace change descriptor table entries and swap them
+#in/out on context switch.
+#
+#To make it work here are several options:
+#
+#1) Recompile and link the program with a pre NPTL version of glibc.
+#
+#2) On some distributions, a non-tls version of libc/libpthread is
+#available. in the -linuxemu fsroot, the NPTL version is in /lib/tls,
+#the older version is in /lib. By renaming /lib/tls to
+#/lib/_tls_disabled_ the loader will use the non-tls version.
+#
+#3) Cinap made a kernel patch that adds support for per process
+#descriptors to Plan 9:
+#
+#[http://plan9.bell-labs.com/sources/contrib/cinap_lenrek/segdescpatch | /n/sources/contrib/cinap_lenrek/segdescpatch]
+#
+#[http://9hal.ath.cx/usr/cinap_lenrek/segdescpatch.tgz |
+#http://9hal.ath.cx/usr/cinap_lenrek/segdescpatch.tgz]
+#
+#The above patch adds the files gdt and ldt to devarch (#P).
+#

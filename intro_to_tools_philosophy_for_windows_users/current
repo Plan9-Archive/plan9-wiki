@@ -1,0 +1,29 @@
+Intro to tools philosophy for windows users
+D1079574269
+Anpe (66.26.59.232)
+#Coming from the windows world people tend to get used to big
+#programs that do everything, using word or excel makes you feel like
+#your program should do everything, a word processor should format,
+#spell check and print your files; a spreadsheet should do all the
+#sorting, mathematical functions and graphing.
+#
+#Plan 9 and its Unix ancestors don't work like this. Programs in Plan
+#9 are meant to have one use and one use only. Plan 9 doesn't have
+#word processors, instead you write the text using a text
+#editor(liked ed(1), acme(1) or sam(1)), format it with fmt(1) and if
+#you want to turn it into a form that's document quality insert ms(6)
+#macros.
+#
+#excel requires a bit more understanding, spreadsheets are
+#represented as flat files, you can manipulate these files,
+#summations, equations etc. with a programming language called awk(1)
+#which specializes in manipulating structured text. Once manipulated
+#you can graph data with a graphing program called graph(1)
+#manipulation on fields isneed to use graph(1) if you want to write
+#to the screen or grap(1) if you want to make troff graphs to include
+#in your documents.
+#
+#But if you were just limited to mimicing the functionality of
+#windows Plan 9 would only be a cumbersome equivalent. The real joy
+#of Plan 9 is the ability of each of these programs to interact with
+#each other, since everything is flat text

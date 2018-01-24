@@ -1,0 +1,14 @@
+ajft
+
+ *	Email: ajft+plan9@ajft.org
+ *	Www: [http://ajft.org]
+------------------------------------------------------ 
+
+An interested dabbler in plan9. I've made some minor edits in the
+wiki, the [what's new] script picked up my name and added a link to
+here, so I thought I'd better create "here" for it.
+
+2006-Nov-23 My home network consists of one Linux and one plan9
+auth/cpu server behind a NATing ADSL modem, configured so that I can
+[drawterm] in from outside, the learning continues...
+

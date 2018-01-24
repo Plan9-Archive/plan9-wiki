@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Snip (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Snip <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Mon Feb 18 01:50:04 EST 2013</a>, a
+</div><hr />Snip
+is
+a
+public
+snippet
+publishing
+service
+using
+9p.
+You
+can
+publish
+arbitrary
+files
+and
+get
+a
+list
+of
+what's
+available
+for
+viewing.
+A
+common
+usage
+is
+to
+publish
+your
+snarf
+buffer,
+but
+this
+is
+no
+longer
+the
+default;
+use
+'snip
+/dev/snarf'
+instead.
+<p class='para'>
+The
+snipserv
+is
+any
+unauthenticated
+9p
+connection.
+At
+the
+time
+of
+writing,
+the
+default
+server
+is
+simply
+using
+<a href="http://plan9.bell-labs.com/magic/man2html/4/ramfs"><i>ramfs</i>(4)</a>,
+exposing
+it
+via
+<a href="http://plan9.bell-labs.com/magic/man2html/8/listen"><i>listen</i>(8)</a>.
+At
+startup,
+the
+cpu
+server
+runs
+<pre>
+auth/none ramfs -S snipserv
+</pre>
+from
+cfg/hostname/cpustart
+and
+has
+a
+/rc/bin/service/tcp17037
+like
+<pre>
+#!/bin/rc
+echo `{date -n}  $* `{cat $3^/remote} &gt; /sys/log/pubsrv
+exec exportfs -S /srv/pubsrv
+</pre>
+The
+logging
+line
+is
+optional
+and
+particularly
+redundant
+if
+your
+local
+<a href="http://plan9.bell-labs.com/magic/man2html/8/listen"><i>listen</i>(8)</a>
+instance
+is
+logging
+affirmative
+connections.
+</p>
+
+<p class='para'>
+This
+is
+only
+an
+example;
+the
+snipserv
+at
+9srv.net
+will
+shortly
+be
+replaced
+with
+something
+which,
+at
+a
+minimum,
+has
+a
+persistent
+backing
+store
+so
+snippets
+survive
+server
+reboots.
+</p>
+
+<p class='para'>
+As
+an
+alternative
+way
+of
+getting
+at
+snippets
+(especially
+on
+hypothetical
+other
+servers),
+I've
+added
+the
+following
+to
+my
+local
+9fs:
+<pre>
+# snippet services
+case *!snip
+	srv -cnmq tcp!^`{echo $1 | sed 's/snip$/17037/'} $1 /n/$1
+</pre>
+See
+/n/sources/contrib/anothy/bin/rc/9fs
+for
+my
+complete
+9fs.
+</p>
+
+<p class='para'>
+The
+snip
+program
+has,
+to
+date,
+had
+less
+than
+one
+hour
+cumulative
+development
+time
+put
+into
+it.
+Partly,
+that's
+a
+testament
+to
+the
+ease
+of
+doing
+things
+with
+9p
+and
+rc,
+but
+mostly
+it's
+a
+warning
+about
+reliability.
+</p>
+
+<p class='para'>
+The
+draft
+man
+page
+for
+snip
+follows.
+</p>
+
+<a name="NAME" /><h3>NAME</h3>
+
+<p class='para'>
+snip
+-
+publish
+snippets
+</p>
+
+<a name="SYNOPSIS" /><h3>SYNOPSIS</h3>
+
+<p class='para'>
+snip
+<a href="../file...">file...</a>
+</p>
+
+<a name="DESCRIPTION" /><h3>DESCRIPTION</h3>
+
+<p class='para'>
+Snip
+is
+a
+public
+snippet
+publishing
+service
+using
+9p.
+It
+can
+be
+used
+to
+quickly
+publish
+arbitrary
+files
+to
+a
+unique
+and
+publicly
+accessible
+location,
+or
+to
+obtain
+a
+list
+of
+already-published
+snippets
+availabe
+for
+reading.
+</p>
+
+<p class='para'>
+Invoked
+with
+one
+or
+more
+arguments,
+snip
+will
+connect
+to
+an
+unauthenticated
+9p
+service
+on
+the
+server
+named
+by
+the
+environment
+variable
+$snipserv
+(or
+9srv.net
+if
+unset)
+on
+port
+17037
+and
+copy
+each
+file
+to
+a
+uniqe
+name
+on
+the
+server,
+reporting
+the
+name.
+</p>
+
+<p class='para'>
+Invoked
+without
+arguments,
+snip
+will
+connect
+to
+a
+server
+as
+above
+and
+will
+list
+the
+snippets
+available
+on
+that
+server.
+</p>
+
+<p class='para'>
+To
+ease
+retrieval,
+in
+either
+case
+snip
+leaves
+snipserv
+mounted
+in
+the
+current
+namespace.
+</p>
+
+<a name="SOURCE" /><h3>SOURCE</h3>
+
+<p class='para'>
+/n/sources/contrib/anothy/bin/rc/snip
+</p>
+
+<a name="SEE_ALSO" /><h3>SEE ALSO</h3>
+
+<p class='para'>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cat"><i>cat</i>(1)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cp"><i>cp</i>(1)</a>
+</p>
+
+<a name="AUTHOR" /><h3>AUTHOR</h3>
+
+<p class='para'>
+Anthony
+Sorace
+(anthony@strand1.com)
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Mon Feb 18 01:50:04 EST 2013</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

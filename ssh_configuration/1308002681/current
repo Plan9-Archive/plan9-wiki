@@ -1,0 +1,21 @@
+SSH Configuration
+D1308002681
+Aglenda
+#Plan9's ssh client supports only the SSH v1 protocol, If you simply
+#must have the V2 protocol, a port of OpenSSH exists (see [Contrib
+#index]), or you can volunteer to finish the native SSH v2 client -
+#work on which has stalled.
+#
+#If SSH v1 is ok you can use auth/raskeygen to create a key for
+#yourself.
+#
+#Assuming the remote system is called unix:
+#
+#! auth/rsagen -t 'service=sshserve owner=*' > key
+#! auth/rsa2ssh key | ssh unix 'cat >>.ssh/authorized_keys'
+#! cat key >/mnt/factotum/ctl
+#
+#You may now want to use ipso(1) to install the key in your secstore.
+#
+#For more information see rsa(8)
+#

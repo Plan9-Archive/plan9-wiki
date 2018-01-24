@@ -1,0 +1,34 @@
+Radeon Drivers
+
+Much of the following is historical; the Radeon drivers are now
+(1/2010) part of the distribution.
+------------------------------------------------------ 
+
+Unofficial drivers for ATI Radeon (789)xxx on CRT display works
+courtesy of Philippe Anel's. There are reports that it works on TFT
+displays on some IBM T30 thinkpads.
+
+The homepage for the drivers is
+[http://web.archive.org/web/20041030113126/http://mapage.noos.fr/philippe.anel/plan9rxxx.html]
+
+For using the Radeon in Plan 9, you need to compile the Radeon driver
+of Philippe Anel into the kernel. For my Radeon, I used:
+
+[http://web.archive.org/web/20041030113126/http://mapage.noos.fr/philippe.anel/radeon_howto.txt]
+
+with the driver posted on 22 March 2004:
+
+[http://web.archive.org/web/20041030113126/http://mapage.noos.fr/philippe.anel/radeon.tbz]
+
+and the vgadb extension from:
+
+[http://web.archive.org/web/20041030113126/http://mapage.noos.fr/philippe.anel/radeon_vgadb]
+
+NOTE: The original host for the drivers is down, the links now point
+to the archive.org mirror, I also mirrored them in
+/n/sources/contrib/uriel/mirror/philippe.anel/radeon/
+
+An updated (July 2009) version of the driver that builds against
+recent Plan 9 kernels is available at
+[http://endeavour.zapto.org/src/radeon].
+

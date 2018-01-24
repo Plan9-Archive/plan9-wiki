@@ -1,0 +1,13 @@
+Collaborative Environments
+
+Plan 9 provides a great infrastructure for sharing resources
+including interfaces to interactive applications (such as windows in
+rio and ACME). Developing a more complete interface to these sharing
+facilities would promote their use in daily activites. Combining
+these extensions with [Cross domain authentication] may allow greater
+collaboration between the now widely distributed developer community.
+
+There are a number of topics and ideas in this area amounting to how
+to share, when to share, levels of trust, levels of respect, etc.
+I'll do my best to fill out this page with my ideas as time permits.
+

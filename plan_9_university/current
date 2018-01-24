@@ -1,0 +1,77 @@
+Plan 9 University
+D1224779751
+Aericvh
+#
+#GOAL
+#
+#Basic idea is to create a series of short (~10 minutes) well-edited
+#tutorial introductions to Plan 9 as well as short talks on
+#underlying philosophy and design principles. The idea is to follow
+#the example of the (better) Google Code YouTube videos and provide a
+#path for folks to learn a bit more about Plan 9. The idea is to mix
+#lecture, screen videos, and discussion to hopefully encourage more
+#of an interactive experience.
+#
+#CONCEPTS
+#
+# *	Overview - General overview of the system and concepts
+# *	File Servers - The use of synthetic file servers in Plan 9
+# *	Namespace - The use of Namespaces in Plan 9
+# *	Networks - The Organization of Networks in Plan 9
+#
+#GETTING STARTED
+#
+# *	Installation - installing and starting Plan 9
+# *	Window Manager
+# *	Basic Enviornment
+# *	SAM
+# *	ACME
+# *	Configuring a stand-alone system
+# *	Configuring a stand-alone cpu server
+#
+#USING PLAN 9
+#
+# *	RC shell
+# *	Plumbing
+# *	Network operations
+# *	Staying up to date
+# *	Setting up and using Venti
+# *	Authentication
+#
+#APPLICATION PROGRAMMING
+#
+# *	Hello World
+# *	mkfiles
+# *	Plan 9 C Compiler
+# *	Debugging with Acid
+# *	Multithreaded
+# *	Graphics
+# *	Contributing code back
+# *	Using Patch
+#
+#PROGRAMING CONCEPTS
+#
+# *	Constructing services as file systems
+#
+#FILE SYSTEMS PROGRAMMING
+#
+# *	Overview
+# *	Flat Synthetic File Servers
+# *	Hierarchical Synthetic File Servers
+# *	Dynamic Synethetic File Servers (ramfs)
+# *	Clone File Servers
+#
+#KERNEL PROGRAMMING
+#
+# *	Overview of kernel source tree and build environment
+# *	Writing a simple character device driver
+# *	Writing a network driver
+# *	Writing a graphics driver
+#
+#OTHER SYSTEMS
+#
+# *	Drawterm
+# *	Plan 9 Ports
+# *	9VX
+# *	Inferno (probably needs its own similar set of topics)
+#

@@ -1,0 +1,141 @@
+9P2010 Operations
+D1307032084
+Aericvh
+#This is the definitive listing of operation code reservations for
+#the 9P2010 protocol. Please do not remove reservations unless you
+#were the person who put them here. Reservations should be of the
+#form:
+#
+#### - name - family - name - date
+#
+#where ### is the numeric identifier, name is a short name, family is
+#the family of extensions this operation belongs to, name is the
+#person making the reservation, and date is the original date the
+#operation was reserved.
+#
+#Please do your best to keep families of operations spaced as
+#sparsely as possible to enable growth where desired.
+#
+#------------------------------------------------------ 
+#! 000 - Tsyncfs         - Linux  - ericvh - 091808
+#! 001 - Rsyncfs         - Linux  - ericvh - 091808
+#! 002 - Tlauth          - Linux  - ericvh - 091808
+#! 003 - Rlauth          - Linux  - ericvh - 091808
+#! 004 - Tlattach        - Linux  - ericvh - 091808
+#! 005 - Rlattach        - Linux  - ericvh - 091808
+#! 006 - Tlerror         - Linux  - ericvh - 091808
+#! 007 - Rlerror         - Linux  - ericvh - 091808
+#! 008 - Tstatfs         - Linux  - ericvh - 091808
+#! 009 - Rstatfs         - Linux  - ericvh - 091808
+#! 010 - Twalk           - Linux  - ericvh - 091808
+#! 011 - Rwalk           - Linux  - ericvh - 091808
+#! 012 - Tlopen          - Linux  - ericvh - 091808
+#! 013 - Rlopen          - Linux  - ericvh - 091808
+#! 014 - Tlcreate        - Linux  - ericvh - 091808
+#! 015 - Rlcreate        - Linux  - ericvh - 091808
+#! 016 - Tsymlink        - Linux  - ericvh - 091808
+#! 017 - Rsymlink        - Linux  - ericvh - 091808
+#! 018 - Tmknod          - Linux  - ericvh - 091808
+#! 019 - Rmknod          - Linux  - ericvh - 091808
+#! 020 - Trename         - Linux  - ericvh - 091808
+#! 021 - Rrename         - Linux  - ericvh - 091808
+#! 022 - Treadlink       - Linux  - ericvh - 091808
+#! 023 - Rreadlink       - Linux  - ericvh - 091808
+#! 024 - Tgetattr        - Linux  - ericvh - 091808
+#! 025 - Rgetattr        - Linux  - ericvh - 091808
+#! 026 - Tsetattr        - Linux  - ericvh - 091808
+#! 027 - Rsetattr        - Linux  - ericvh - 091808
+#! 028 - Tperm           - Linux  - ericvh - 091808
+#! 029 - Rperm           - Linux  - ericvh - 091808
+#! 030 - Tsetxattr       - Linux  - ericvh - 091808
+#! 031 - Rsetxattr       - Linux  - ericvh - 091808
+#! 032 - Tgetxattr       - Linux  - ericvh - 091808
+#! 033 - Rgetxattr       - Linux  - ericvh - 091808
+#! 034 - Tlistxattr      - Linux  - ericvh - 091808
+#! 035 - Rlistxattr      - Linux  - ericvh - 091808
+#! 036 - Tremovexattr    - Linux  - ericvh - 091808
+#! 037 - Tremovexattr    - Linux  - ericvh - 091808
+#! 038 - Tllseek         - Linux  - ericvh - 091808
+#! 039 - Rllseek         - Linux  - ericvh - 091808
+#! 040 - Treaddir        - Linux  - ericvh - 091808
+#! 041 - Rreaddir        - Linux  - ericvh - 091808
+#! 042 - Tpoll           - Linux  - ericvh - 091808
+#! 043 - Tpoll           - Linux  - ericvh - 091808
+#! 044 - Tioctl          - Linux  - ericvh - 091808
+#! 045 - Rioctl          - Linux  - ericvh - 091808
+#! 046 - Tmmap           - Linux  - ericvh - 091808
+#! 047 - Rmmap           - Linux  - ericvh - 091808
+#! 048 - Tlflush         - Linux  - ericvh - 091808
+#! 049 - Rlflush         - Linux  - ericvh - 091808
+#! 050 - Tfsync          - Linux  - ericvh - 091808
+#! 051 - Rfsync          - Linux  - ericvh - 091808
+#! 052 - Tlock           - Linux  - ericvh - 091808
+#! 053 - Rlock           - Linux  - ericvh - 091808
+#! 054 - Tflock          - Linux  - ericvh - 091808
+#! 055 - Rflock          - Linux  - ericvh - 091808
+#! 056 - Tcheckflags     - Linux  - ericvh - 091808
+#! 057 - Rcheckflags     - Linux  - ericvh - 091808
+#! 058 - Tdirnotify      - Linux  - ericvh - 091808
+#! 059 - Rdirnotify      - Linux  - ericvh - 091808
+#! 060 - Ttruncrange     - Linux  - ericvh - 081808
+#! 061 - Rtruncrange     - Linux  - ericvh - 081808
+#! 062 - Tquotaread      - Linux  - ericvh - 081808
+#! 063 - Tquotaread      - Linux  - ericvh - 081808
+#! 064 - Tquotawrite     - Linux  - ericvh - 081808
+#! 065 - Rquotawrite     - Linux  - ericvh - 081808
+#! 066 - Tlockfs         - Linux  - ericvh - 091808
+#! 067 - Rlockfs         - Linux  - ericvh - 091808
+#! 068 - Tunlockfs       - Linux  - ericvh - 091808
+#! 069 - Runlockfs       - Linux  - ericvh - 091808
+#! 070 - Tlink           - Linux  - ericvh - 081808
+#! 071 - Rlink           - Linux  - ericvh - 081808
+#! 072 - Tmkdir          - Linux  - ericvh - 081808
+#! 073 - Rmkdir          - Linux  - ericvh - 081808
+#! 074 - Trenameat       - Linux  - ericvh - 081808
+#! 075 - Rrenameat       - Linux  - ericvh - 081808
+#! 076 - Tunlinkat       - Linux  - ericvh - 081808
+#! 077 - Runlinkat       - Linux  - ericvh - 081808
+#! 078 - RESERVED        - Linux  - ericvh - 081808
+#! 079 - RESERVED        - Linux  - ericvh - 081808
+#! 100 - Tversion        - 9P2000 - ericvh - 091808
+#! 101 - Rversion        - 9P2000 - ericvh - 091808
+#! 102 - Tauth           - 9P2000 - ericvh - 091808
+#! 103 - Rauth           - 9P2000 - ericvh - 091808
+#! 104 - Tattach         - 9P2000 - ericvh - 091808
+#! 105 - Rattach         - 9P2000 - ericvh - 091808
+#! 106 - Terror          - 9P2000 - ericvh - 091808
+#! 107 - Rerror          - 9P2000 - ericvh - 091808
+#! 108 - Tflush          - 9P2000 - ericvh - 091808
+#! 109 - Rflush          - 9P2000 - ericvh - 091808
+#! 110 - Twalk           - 9P2000 - ericvh - 091808
+#! 111 - Rwalk           - 9P2000 - ericvh - 091808
+#! 112 - Topen           - 9P2000 - ericvh - 091808
+#! 113 - Ropen           - 9P2000 - ericvh - 091808
+#! 114 - Tcreate         - 9P2000 - ericvh - 091808
+#! 115 - Rcreate         - 9P2000 - ericvh - 091808
+#! 116 - Tread           - 9P2000 - ericvh - 091808
+#! 117 - Rread           - 9P2000 - ericvh - 091808
+#! 118 - Twrite          - 9P2000 - ericvh - 091808
+#! 119 - Rwrite          - 9P2000 - ericvh - 091808
+#! 120 - Tclunk          - 9P2000 - ericvh - 091808
+#! 121 - Rclunk          - 9P2000 - ericvh - 091808
+#! 122 - Tremove         - 9P2000 - ericvh - 091808
+#! 123 - Rremove         - 9P2000 - ericvh - 091808
+#! 124 - Tstat           - 9P2000 - ericvh - 091808
+#! 125 - Rstat           - 9P2000 - ericvh - 091808
+#! 126 - Twstat          - 9P2000 - ericvh - 091808
+#! 127 - Rwstat          - 9P2000 - ericvh - 091808
+#! 128 - RESERVED        - 9P2010 - ericvh - 091808
+#! 129 - RESERVED        - 9P2010 - ericvh - 091808
+#! 130 - RESERVED        - 9P2010 - ericvh - 091808
+#! 131 - RESERVED        - 9P2010 - ericvh - 091808
+#! 204 - OTattach	- OP	 - ericvh - 102408
+#! 205 - ORattach	- OP	 - ericvh - 102408
+#! 206 - OTget		- OP	 - ericvh - 102408
+#! 207 - ORget		- OP	 - ericvh - 102408
+#! 208 - OTput		- OP	 - ericvh - 102408
+#! 209 - ORput		- OP	 - ericvh - 102408
+#! 210 - OTremove	- OP	 - ericvh - 102408
+#! 211 - ORremove	- OP	 - ericvh - 102408
+#------------------------------------------------------ 
+#

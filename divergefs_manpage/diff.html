@@ -1,0 +1,749 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>divergefs manpage (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+divergefs manpage <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Tue Aug  2 21:22:17 EDT 2005</a>, chaokul (128.2.186.33)
+</div><hr />
+<a name="DIVERGEFS(4)" /><h3>DIVERGEFS(4)</h3>
+
+<a name="NAME" /><h3>NAME</h3>
+
+<p class='para'>
+divergefs
+-
+diverge
+file
+system
+</p>
+
+<a name="SYNOPSIS" /><h3>SYNOPSIS</h3>
+
+<pre>
+divergefs -f rulefile [ -h holefile ] [ -d debuglevel ] mountpoint
+</pre>
+
+<pre>
+divergefs -p defaultpath [ -f rulefile ] [ -h holefile ] [-d debuglevel ] mountpoint
+</pre>
+
+<a name="DESCRIPTION" /><h3>DESCRIPTION</h3>
+
+<p class='para'>
+Divergefs
+is
+a
+user
+level
+file
+server
+that
+allows
+combining
+arbitrary
+number
+of
+directories
+on
+top
+of
+the
+mount
+point
+based
+on
+user
+specified
+rules
+from
+rulefile.
+It
+can
+be
+used
+but
+not
+limited
+to:
+modify
+files
+on
+read-only
+media,
+speed
+up
+compilation
+where
+source
+code
+is
+on
+remote
+machine.
+</p>
+
+<a name="OPTIONS" /><h3>OPTIONS</h3>
+
+<p class='para'>
+-f
+Sets
+the
+user
+configuration
+file
+which
+defines
+what
+and
+how
+the
+directories
+will
+be
+combined
+together.
+</p>
+
+<p class='para'>
+-h
+Specifies
+the
+file
+to
+store
+file
+or
+directory
+names
+that
+were
+removed
+during
+the
+mounted
+session.
+If
+holefile
+exists,
+it
+will
+be
+used
+to
+initialize
+the
+file
+system,
+and
+any
+file
+matching
+the
+filenames
+after
+mount
+will
+be
+masked
+out.
+(default
+/tmp/holes
+or
+defaultpath/holes
+if
+using
+default
+path
+invocation).
+</p>
+
+<p class='para'>
+-d
+Allows
+the
+user
+to
+specify
+the
+amount
+of
+debugging
+mes-
+sages
+to
+be
+outputted
+ranging
+from
+1-5.
+(default
+3)
+</p>
+
+<p class='para'>
+-p
+Specifies
+a
+default
+path
+where
+the
+holefile
+will
+be
+defaultpath/holes.
+If
+rulefile
+is
+not
+specified,
+a
+default
+rule
+file
+will
+be
+written
+to
+defaultpath/rules
+with
+content
+of:
+defaultpath/files
+all&lt;&gt;
+which
+means
+that
+defaultpath/files
+will
+be
+combined
+on
+top
+of
+mountpoint.
+defaultpath
+and
+defaultpath/files
+will
+be
+automatically
+created
+if
+they
+do
+not
+exist.
+(default
+/tmp).
+</p>
+
+<a name="EXAMPLES" /><h3>EXAMPLES</h3>
+
+<p class='para'>
+The
+easiest
+way
+to
+use
+divergefs
+is
+to
+invoke
+it
+only
+with
+a
+default
+path
+argument
+and
+the
+mountpoint:
+</p>
+
+<p class='para'>
+divergefs
+-p
+/tmp
+/sys/src
+</p>
+
+<p class='para'>
+or
+just:
+</p>
+
+<p class='para'>
+divergefs
+/sys/src
+</p>
+
+<p class='para'>
+in
+which
+case
+the
+default
+path
+will
+be
+/tmp.
+If
+divergefs
+is
+invoked
+with
+default
+path,
+it
+will
+automatically
+output
+a
+rule
+file
+at
+/tmp/rules
+which
+you
+can
+later
+modify
+to
+suit
+different
+needs.
+</p>
+
+<p class='para'>
+Default
+path
+is
+easy
+to
+use
+but
+is
+limited
+to
+layering
+one
+directory
+on
+top
+of
+the
+target
+mountpoint
+if
+you
+use
+the
+supplied
+default
+rule
+file.
+For
+More
+advanced
+usage,
+you
+will
+want
+to
+write
+your
+own
+config
+file.
+The
+following
+is
+an
+example:
+</p>
+
+<p class='para'>
+divergefs.rc
+</p>
+
+<p class='para'>
+/tmp/bin
+mode&lt;x&gt;
+#
+redirect
+executables
+to
+/tmp/bin
+</p>
+
+<p class='para'>
+/tmp
+ext&lt;8&gt;
+#
+redirect
+any
+files
+with
+extension
+8
+to
+/tmp
+</p>
+
+<p class='para'>
+Mount
+command:
+</p>
+
+<p class='para'>
+divergefs
+-f
+divergefs.rc
+mnt
+</p>
+
+<p class='para'>
+After
+mounting,
+writing
+to
+./mnt/*/*.8
+will
+be
+redirected
+to
+/tmp/*/*.8
+while
+writing
+to
+executables
+will
+be
+redirected
+to
+/tmp/bin.
+</p>
+
+<p class='para'>
+It
+is
+suggested
+that
+you
+supply
+your
+own
+holefile
+argument
+so
+that
+holefile
+from
+a
+different
+session
+won't
+be
+used,
+and
+it
+won't
+be
+overwritten
+accidentally.
+Note:
+this
+only
+applies
+if
+you
+are
+not
+using
+the
+default
+path
+invocation.
+</p>
+
+<a name="SYNTAX" /><h3>SYNTAX</h3>
+
+<p class='para'>
+config_file
+=
+(rule
+'\n')*
+</p>
+
+<p class='para'>
+rule
+=
+path
+complex_rule
+</p>
+
+<p class='para'>
+path
+=
+absolute_path
+|
+relative_path
+</p>
+
+<p class='para'>
+complex_rule
+=
+simple_rule
+(("||"
+|
+"&amp;&amp;")
+complex_rule)?
+</p>
+
+<p class='para'>
+simple_rule
+=
+concrete_rule
+'&lt;'
+setting
+'&gt;'
+|
+'('
+complex_rule
+')'
+</p>
+
+<p class='para'>
+Concrete
+rules
+and
+corresponding
+setting
+syntax
+are
+described
+in
+the
+next
+section.
+Note:
+relative_path
+is
+rela-
+tive
+to
+the
+current
+path
+at
+the
+time
+of
+invocation.
+</p>
+
+<a name="RULES" /><h3>RULES</h3>
+
+<p class='para'>
+all&lt;&gt;
+Matches
+anything.
+Note:
+the
+setting
+field
+must
+be
+empty.
+</p>
+
+<p class='para'>
+mode&lt;setting&gt;
+setting
+=
+'A'
+|
+'L'
+|
+'f'
+|
+'d'
+|
+'r'
+|
+'w'
+|
+'x'
+|
+'e'
+Matches
+file
+with
+the
+given
+mode.
+Each
+mode
+can
+only
+have
+one
+character
+in
+the
+setting
+field.
+Please
+refer
+to
+<a href="http://plan9.bell-labs.com/magic/man2html/1/test"><i>test</i>(1)</a>
+for
+details
+on
+the
+meaning
+of
+each
+charac-
+ter.
+</p>
+
+<p class='para'>
+ext&lt;setting&gt;
+setting
+=
+file
+extension
+</p>
+
+<p class='para'>
+fregex&lt;setting&gt;
+setting
+=
+regular
+expression,
+refer
+to
+<a href="http://plan9.bell-labs.com/magic/man2html/2/regexp"><i>regexp</i>(2)</a>
+for
+details.
+matches
+any
+file
+name
+that
+satisfies
+the
+reg-
+ular
+expression
+given.
+</p>
+
+<p class='para'>
+dregex&lt;setting&gt;
+setting
+=
+regular
+expression,
+refer
+to
+<a href="http://plan9.bell-labs.com/magic/man2html/2/regexp"><i>regexp</i>(2)</a>
+for
+details.
+matches
+any
+directory
+name
+that
+satisfies
+the
+regular
+expression
+given.
+</p>
+
+<p class='para'>
+regex&lt;setting&gt;
+setting
+=
+regular
+expression,
+refer
+to
+<a href="http://plan9.bell-labs.com/magic/man2html/2/regexp"><i>regexp</i>(2)</a>
+for
+details.
+matches
+any
+name
+that
+satisfies
+the
+regular
+expression
+given.
+</p>
+
+<a name="SOURCE" /><h3>SOURCE</h3>
+
+<a name="SEE_ALSO" /><h3>SEE ALSO</h3>
+
+<a name="BUGS" /><h3>BUGS</h3>
+
+<p class='para'>
+Renaming
+read-only
+directory
+will
+result
+in
+error.
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Tue Aug  2 21:22:17 EDT 2005</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

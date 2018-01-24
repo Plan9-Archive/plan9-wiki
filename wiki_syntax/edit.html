@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Wiki Syntax (Editing Thu Dec 22 17:50:24 EST 2005 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Wiki Syntax</b></font> (Editing Thu Dec 22 17:50:24 EST 2005 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Wiki Syntax">
+<input type="hidden" name="version" value="1135291824">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+Plan 9 wiki documents are written using a simple markup notation.
+Text is free format with the following exceptions.
+
+BLANK LINE FOR NEW PARAGRAPH
+
+ *	A blank line begins a new paragraph.
+ *	If a paragraph contains only capital letters, it is a section
+	heading.
+ *	If a line begins with a *, it begins a new item in a bulleted list.
+ *	If a line begins with a !, it is formatted in typewriter font and
+	uninterpreted. This is useful for typescripts and program listings.
+ *	A link is denoted by putting text in square brackets. The text can
+	be "name of local link" or "url" or "text | url". Local link names
+	are not case sensitive.
+ *	Plan 9 manual page references are automatically made into links,
+	as in man(1).
+ *	To insert a separation line enter five or more ----- in a single
+	line.
+
+That's all. Note in particular that arbitrary HTML tags are not
+valid, so as to make the pages friendly to those using the Acme
+client rather than a web browser.
+
+------------------------------------------------------ 
+EXAMPLE
+
+If you're looking at this page in Acme, this _is_ the example. If you
+want to play around with the syntax, try the [sandbox]. Just try it!
+Enjoy.
+
+TIPS
+
+ *	When using '!' to preformat lines, use spaces instead of tabs
+	because tabs are interpreted differently in different web browsers;
+	also use a fixed font in acme to get the proper layout.
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

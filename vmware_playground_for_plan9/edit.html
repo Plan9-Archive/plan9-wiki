@@ -1,0 +1,473 @@
+<html>
+<head>
+<title>Vmware playground for plan9 (Editing Thu Jan 19 14:36:36 EST 2006 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Vmware playground for plan9</b></font> (Editing Thu Jan 19 14:36:36 EST 2006 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Vmware playground for plan9">
+<input type="hidden" name="version" value="1137699396">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+
+0 - WHAT WILL YOU GET
+
+ *	a standalone fs/auth/fileserver
+ *	a couple of cpu servers booted from network
+ *	a couple of terminal booted from network or a drawterm :)
+
+With that i will practice distributed programming with plan9 using
+one computer connected to internet.
+
+It would be better if you try to install a terminal and play a bit
+with it, to get used to use the plan9 environment properly.
+
+And even better if you have a couple of supported machines to see the
+real thing :=)
+
+1 - INSTALL YOUR VMWARE_LIKE SOFTWARE
+
+The following considerations must be done prior to select a virtual
+machine software:
+
+ *	Boot from PXE support
+ *	Multiple concurrent instances
+ *	Supportfor bridget network with the host
+
+I choosed vmware 4.5.2 as its support all of the above and it is
+supported by Plan9 graphics system.
+
+The vmware 5.0 machine can be used but the install process must be
+done using text only, so if you're not proficent with ed, you better
+choose 4.5.2.
+
+qemu can be used as well but i know nothing about it, so may be
+someone wants to make this brief more complete.
+
+2 - INSTALLING THE FIRST VIRTUAL MACHINE
+
+ *	Task: configfs
+
+Here we select fossil+venti as we first will set up a standalone
+plan9 auth/cpu/file server.
+
+Later we split that in different machines
+
+I suggest you to use the default partition layout and default slices
+layout.
+
+ *	Follow the in screen instructions and finish the installation.
+
+You should be able to do it without more indications as the
+installation program is intuitive enough.
+
+3 - BOOT AND INITIAL SET UP
+
+ *	Log in as glenda
+
+At this moment fossil will start the first snapshot to venti so disk
+will be crazy for a little while.
+
+Take a coffe in the mean while, and later follow with the
+configuration instructions.
+
+ *	Add glenda to sys and adm groups
+
+! 	% con /srv/fscons 
+! 	prompt: fsys main 
+! 	main: uname sys +glenda 
+! 	main: uname adm + glenda
+
+ *	Configure minimal NDB
+
+! ipnet=devel.net ip=192.168.1.1 ipmask=255.255.255.0 
+! 	ipgw=192.168.1.1
+! 	dns=130.206.1.3 
+! 	fs=kenshin 
+! 	auth=kenshin 
+! 	authdom=lloth.net
+! 
+! sys=kenshin ip=192.168.1.200 ether=000c29a15062
+! 	dom=kenshin.devel.net 
+! 	bootf=/386/9pccpuf 
+! 	proto=il
+
+ *	Set up the internet connection through your gateway
+
+! 	% ip/ipconfig -g 192.168.1.1 ether /net/ether0 192.168.1.200 255.255.255.0 
+! 	% echo refresh > /net/cs 
+! 	% echo refresh > /net/dns 
+! 	% ip/ping www.google.com
+
+If you can't reach google look through the wiki and 9fans archives to
+configure your network.
+
+ *	Update your plan9 installation from sources
+
+! 	% pull -v
+
+ *	Compile the cpu/auth/fileserver standalone kernel and install it
+
+! 	% cd /sys/src/9/pc 
+! 	% mk 'CONF=pccpuf' install 
+! 	% 9fat: 
+! 	% cp 9pccpuf.gz /n/9fat/ 
+! 	% acme /n/9fat/plan9.ini set the bootfile to 9pccpuf.gz
+
+ *	Set up boot process for a cpu
+
+! 	% acme /rc/bin/cpurc
+
+Put the ip/ipconfig line to boot with network configured before the
+ndb/cs line and uncomment the lines marked as needed for booting
+other systems and for auth servers
+
+ *	Add bootes user and add it to the groups sys and adm and remove
+	user glenda
+
+ *	Initialize nvram storage
+! 	% echo blah > /dev/sdC0/nvram
+
+ *	Set up your timezone
+! 	% cp /adm/timezone/CET /adm/timezone/local
+
+ *	Edit /lib/ndb/auth and uncomment the lines
+
+! 	% con /srv/fscons 
+! 	prompt: fsys main 
+! 	main: uname bootes bootes 
+! 	main: uname sys +bootes 
+! 	main: uname adm +bootes 
+! 	main: uname sys -glenda
+! 	main: uname adm -glenda
+
+4. FIRST BOOT
+
+ *	Set up the nvram
+! 	authid: bootes 
+! 	authdom: devel.net 
+! 	secstore: 	invent_a_secstore_password 
+! 	password: invent_a_bootes_password
+
+ *	Initialize user
+! 	% /sys/lib/newuser 
+This will not bring you to rio
+! 	% auth/changeuser bootes 
+Put the same password you invented in the last step, you can enter
+the other data as you want
+
+ *	First Drawterm
+! 	c:\> drawterm-windows -a 192.168.1.200 -c 192.168.1.200 
+! 	user[none]: bootes 
+! 	password: you know what to put here :)
+
+This will give you a rio environment.
+
+5. Set up the multiboot environment
+
+ *	Set up the /cfg directory
+! 	% con /srv/fscons 
+! 	prompt: fsys main
+! 	main: create /active/cfg sys sys d775 
+! 	main: % mkdir /cfg/pxe 
+! 	% mkdir /cfg/kenshin
+
+ *	Set up multiboot cpurc as jmk posted on 9fans (save the old one):
+
+------------------------------------------------------ 
+! 	#!/bin/rc
+! 	boottime=`{date}
+! 	boottime=$"boottime
+! 	
+! 	# parallelism for mk
+! 	NPROC=`{wc -l /dev/sysstat}
+! 	NPROC=`{echo $NPROC|sed 's/ .*//'}
+! 	
+! 	# get rid of need for dirs in /n
+! 	mntgen -s slashn && chmod 666 /srv/slashn
+! 	
+! 	# cs sets /dev/sysname
+! 	ndb/cs
+! 	sysname=`{cat /dev/sysname}
+! 	prompt=($sysname^'# ' ' ')
+! 	
+! 	# site specific startup
+! 	if(test -e /rc/bin/cpurc.local)
+! 	       . /rc/bin/cpurc.local
+! 	
+! 	# cpu specific startup
+! 	if(test -e /cfg/$sysname/cpurc)
+! 	       . /cfg/$sysname/cpurc
+! 	
+! 	# if we're not a server, start a dns resolver
+! 	if(! test -e /srv/dns)
+! 	       ndb/dns -r
+! 	
+! 	# reboot if we lose the file server
+! 	aux/reboot
+! 	
+! 	# turn on dong's tcp port hog defense
+! 	if( test -e /net/tcp/clone)
+! 	       echo -n tcpporthogdefense on > /net/tcp/0/ctl
+! 	
+! 	# keep other bootes processes from creating capabilities
+! 	rm '#¤/caphash' > /dev/null >[2=1]
+! 	
+! 	# start up internet if we don't already have an address
+! 	if(! grep u /net/ipselftab | grep -sv 127.0.0.1)
+! 	       ip/ipconfig
+! 	if(! grep -s 127.0.0.1 /net/ipselftab)
+! 	       ip/ipconfig loopback /dev/null 127.1
+! 	
+! 	# start listeners if it hasn't already been done (dicey check)
+! 	if(! netstat -n | grep -s 'tcp.*Listen.* (7|9|21|22|23|25|110|113|565|993|17007|17009|17010) .*')
+! 	       aux/listen -q tcp
+! 	if(! netstat -n | grep -v 17008 | grep -s il.*Listen)
+! 	       aux/listen -q il
+! 	
+! 	if(! ps|grep -s timesync)
+! 	       aux/timesync -s /net -nl -d /sys/log/timesync.d oncore achille
+! 	
+! 	# cpu specific startup
+! 	if(test -e /cfg/$sysname/cpustart)
+! 	       . /cfg/$sysname/cpustart
+! 	
+! 	exit 0
+------------------------------------------------------ 
+
+ *	Now use the old cpurc to generate what we need for the standalone
+	server /cfg/kenshin/cpurc
+
+------------------------------------------------------ 
+! 	#!/bin/rc
+! 
+! 	ip/ipconfig -g 192.168.1.1 ether /net/ether0 192.168.1.200 255.255.255.0
+! 
+! 	ndb/dns -r
+! 
+! 	prompt=($sysname^'# ' ' ')
+! 
+! 	aux/timesync hora.rediris.es
+! 
+! 	ip/dhcpd ip/tftpd
+! 
+! 	auth/keyfs -wp -m /mnt/keys /adm/keys >/dev/null >[2=1] 
+! 	auth/cron >>/sys/log/cron >[2=1] &
+! 
+! 	aux/listen -q -t /rc/bin/service.auth -d /rc/bin/service il
+! 	aux/listen -q -t /rc/bin/service.auth -d /rc/bin/service tcp
+
+------------------------------------------------------ 
+ *	Make fossil listen for network connections. Generate a flproto
+	file like:
+
+! 	cpu% cat flproto 
+! 	fsys main config /dev/sdC0/fossil 
+! 	fsys main open -c 3000 
+! 	fsys main snaptime -s 60 -a 0500 -t 2880 
+! 	listen tcp!*!564 
+! 	cpu% cat flproto | fossil/conf -w /dev/sdC0/fossil
+
+6. Test the new cpurc files, so reboot the machine
+
+If something fails, i hope the error message would be enought to let
+you fix the problem :)
+
+7. Now create other virtual machine.
+
+ *	This one will need only a very small disk to store nvram. Will be
+	enough with 1Kb but vmware will only let you choose 0.1GB, that is
+	100Mb.
+
+8. Add a new machine
+
+ *	Set up the NDB
+
+------------------------------------------------------ 
+! sys=ant ip=192.168.1.201 ether=000c29a15062 
+! 	dom=ant.lloth.net
+! 	bootf=/386/9pxeload 
+! 	proto=il
+------------------------------------------------------ 
+
+You will need to put the mac of the virtual machine so check it on
+your virtual machine ( in vmware set up to boot from network and copy
+the mac address )
+
+ *	Set up the /cfg entry
+
+Create a file ith the mac address as name
+! 	% acme /cfg/pxe/mac
+
+That file must contain a plan9.ini file
+------------------------------------------------------ 
+! 	bootfile=ether0!/386/9pccpu 
+! 	bootargs=tcp!192.168.1.200!564
+! 
+! 	*nomp=1
+! 	 *nodumpstack=1 
+! 	partition=new
+------------------------------------------------------ 
+
+- Create the cpurc for this machine under /cfg/ant/cpurc
+
+------------------------------------------------------ 
+! 	#!/bin/rc
+! 
+! 	prompt=($sysname^'# ' ' ')
+! 
+! 	aux/timesync hora.rediris.es
+! 
+! 	aux/listen -q -t /rc/bin/service.auth -d /rc/bin/service il
+! 	aux/listen -q -t /rc/bin/service.auth -d /rc/bin/service tcp
+------------------------------------------------------ 
+9. Boot the new cpu machine
+
+ *	It will ask you for the nvram data, but this time you haven't
+	created the partition, so it will fail to store it.
+
+ *	Create the nvram partition as follows:
+
+! 	% disk/mbr /dev/sdC0/data 
+! 	% disk/fdisk /dev/sdC0/data 
+! 	>>> a p0 start
+! 	cylinder: 0 
+! 	end [0..208] 208 
+! 	>>> w 
+! 	>>> q 
+! 	% disk/prep /dev/sdC0/plan9
+! 	>>> a 9fat 
+! 	start sector: 0 
+! 	end [0..209715] 200000 
+! 	>>> a nvram start
+! 	sector: 200000 
+! 	end [200000..209715] 209715 
+! 	>>> w
+! 	>>> q 
+! 	% disk/fdisk -p /dev/sdC0/data > /dev/sdC0/ctl
+
+ *	Reboot the cpu server and put the hostid info again
+
+Now we got the first machine booted from network up and running
+
+10. Testing auth
+
+cpu% cpu -h ant -c rc
+! Adding key: dom=lloth.net proto=p9sk1
+! user[bootes]: bootes 
+! password:
+! 
+! 	cpu% cat /dev/sysname 
+! 	antcpu%
+
+ *	We can log to the cpu server and run tasks there
+
+Now that we have two machines, we can configure our prompt to show us
+where we are. Put this on /usr/bootes/lib/profile
+
+! 	fn cd { builtin cd $1;awd; prompt=(`{cat /dev/sysname}^' '^`{pwd}^'%' ' ') }
+! 
+! 	cpu% fn cd { builtin cd $1;awd; prompt=(`{cat /dev/sysname}^' '^`{pwd}^'% ' ' ') } 
+! 	cpu% cd 
+! 	kenshin /usr/bootes% acme lib/profile
+! 	kenshin /usr/bootes% cpu -h ant -c rc 
+! 	ant /usr/bootes% 
+! 	ant /usr/bootes% 
+! 	ant /usr/bootes%
+
+Usually the path is too fancy.
+
+11. Clone a machine and start up a new cpu server
+
+vmware 5 will let you clone machines, so i upgraded to it. I will not
+explain how to clone vmware machines as may be you just used other
+virtualization software (or even the real hardware)
+
+To start up a new server, when we have the machine ready, and its MAC
+address written somewhere is:
+
+ *	Set up the NDB file with the new machine
+ *	Set up the /cfg environment for that machine
+! 		/cfg/pxe/mac file
+! 		/cfg/system_name/cpurc
+ *	and boot it from the network
+
+I created 5 machines with 64MB of ram each one.
+
+As terminal i will use drawterm, as i upgraded to vmware 5, and vga
+is not supported and there are problems with cut&paste. . .
+
+12. Adding users to the playground
+
+In the console of kenshin our main file server/auth/cpu we can add
+users as described in the wiki.
+
+! 	% auth/changeuser gdiaz 
+! 	% con/srv/fscons 
+! 	prompt: fsys main 
+! 	main: uname gdiaz gdiaz 
+! 	%
+
+Now i can drawterm with the new user
+
+And make my first distributed application with plan9 :)
+
+------------------------------------------------------ 
+! 	#!/bin/rc
+! 	
+! 	servers=(kenshin ant shrek niki connor kirk)
+! 	timezones=(CET EDT Canada_Pacific Japan US_Hawaii Singapore)
+! 	
+! 	minx=0
+! 	miny=0
+! 	maxx=100
+! 	maxy=100
+! 	i=1
+! 	for (s in $servers) {
+! 			echo  vars: $timezones($i), $i, $minx , $maxx
+! 			script=''''^'cat /adm/timezone/'^$timezones($i)^' > /env/timezone; clock'^''''
+! 			window -r $minx $miny $maxx $maxy cpu -h $s -c $script
+! 			i = `{ echo $i+1 | bc }
+! 			minx = `{echo $i^'*100'  | bc }
+! 			maxx = `{echo $minx^'+'^100 | bc }		
+! 	}
+------------------------------------------------------ 
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

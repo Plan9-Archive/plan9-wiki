@@ -1,0 +1,2575 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Man pages review (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Man pages review</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+This
+page
+is
+part
+of
+the
+<a href="../Plan_9_Documentation_Task_Force">Plan
+9
+Documentation
+Task
+Force</a>
+<p class='para'>
+The
+plan
+is
+to
+review
+every
+man
+page
+(see
+list
+below)
+for
+errors
+and
+disagreements
+with
+current
+implementations
+of
+what
+they
+document.
+Quite
+often
+options
+have
+been
+added
+over
+time
+without
+updating
+the
+manual
+page.
+Also
+check
+if
+the
+information
+printed
+by
+usage()
+functions
+is
+accurate.
+</p>
+
+<p class='para'>
+Getting
+the
+documentation
+accurate
+again
+is
+the
+primary
+goal.
+Do
+not
+produce
+large
+diffs
+for
+simple
+rewording
+(you
+might
+unnecessarily
+remove
+the
+original
+authors
+style).
+</p>
+
+<p class='para'>
+Some
+scripts
+related
+to
+manual
+page
+checking
+can
+be
+found
+in
+/sys/lib/man.
+Checkman.awk
+is
+the
+most
+useful
+one
+(XXX
+should
+merge
+plan9ports
+version
+back
+into
+plan9).
+Make
+sure
+you
+have
+read
+<a href="http://plan9.bell-labs.com/magic/man2html/6/man"><i>man</i>(6)</a>.
+Finally,
+you
+should
+check
+if
+there
+is
+a
+plan9port
+version
+of
+the
+manual
+page
+and
+keep
+them
+in
+sync
+(the
+plan9ports
+may
+be
+more
+up
+to
+date).
+</p>
+
+<a name="PROCEDURE:" /><h3>PROCEDURE:</h3>
+
+<ul>
+
+<li>
+Select
+a
+man
+page
+from
+the
+list.
+</li>
+
+<li>
+Read
+it
+carefully
+looking
+for
+any
+writing
+errors,
+inconsistencies
+or
+serious
+ambiguities.
+</li>
+
+<li>
+Review
+relevant
+source:
+for
+commands
+check
+at
+least
+that
+options
+are
+in
+the
+code
+and
+seem
+to
+do
+what
+is
+documented
+and
+that
+also
+the
+usage
+message
+is
+correct;
+for
+libraries
+check
+at
+least
+that
+function
+definitions
+match
+the
+man
+page.
+</li>
+
+<li>
+Test:
+actually
+test
+that
+every
+option
+behaves
+as
+documented;
+for
+libraries
+write
+test
+cases
+and
+make
+sure
+they
+run
+properly.
+</li>
+
+<li>
+If
+no
+errors
+or
+problems
+are
+found
+update
+the
+man
+page
+entry
+with
+"VERIFIED",
+date
+and
+your
+name.
+</li>
+
+<li>
+If
+any
+errors
+are
+found,
+submit
+a
+fix
+as
+described
+below.
+</li>
+
+<li>
+If
+you
+are
+unsure
+about
+something
+(eg.,
+if
+implementation
+and
+documentation
+don't
+agree
+and
+it's
+not
+clear
+which
+is
+right),
+email
+9fans
+about
+it
+and
+add
+to
+the
+entry:
+"CLARIFY",
+the
+subject
+of
+your
+email
+in
+parenthesis,
+date
+and
+name.
+</li>
+</ul>
+
+<a name="SUBMITING_MAN_PAGE_FIXES" /><h3>SUBMITING MAN PAGE FIXES</h3>
+
+<ul>
+
+<li>
+Make
+the
+neccesary
+changes
+</li>
+
+<li>
+Check
+that
+they
+look
+properly
+with
+<a href="http://plan9.bell-labs.com/magic/man2html/1/man"><i>man</i>(1)</a>,
+also
+check
+with
+man
+-P
+(to
+see
+it
+in
+<a href="http://plan9.bell-labs.com/magic/man2html/1/page"><i>page</i>(1)</a>)
+</li>
+
+<li>
+use
+Russ's
+dist/checkman.awk
+from
+<a href="../plan9port">plan9port</a>
+against
+the
+updated
+man
+page
+</li>
+
+<li>
+See
+if
+plan9ports
+have
+the
+same
+manual
+page
+and
+keep
+them
+in
+sync.
+</li>
+
+<li>
+submit
+the
+change
+using
+<a href="http://plan9.bell-labs.com/magic/man2html/1/patch"><i>patch</i>(1)</a>
+and
+a
+name
+for
+the
+form:
+doc-man-N-NAME-NOTE,
+where
+N
+is
+the
+section,
+NAME
+the
+man
+page
+name
+and
+NOTE
+something
+descriptive
+about
+the
+change.
+</li>
+
+<li>
+update
+the
+corresponding
+list
+entry
+with:
+"PATCH(patch-name)"
+followed
+by
+date
+and
+your
+name.
+</li>
+
+<li>
+Once
+the
+patch
+has
+been
+accepted,
+update
+the
+entry
+to
+VERIFIED
+</li>
+
+<li>
+If
+the
+patch
+is
+rejected
+and
+you
+have
+to
+submit
+a
+new
+version,
+use
+the
+same
+name
+with
+an
+extra
+-N
+in
+the
+name
+denoting
+the
+"version"
+of
+the
+patch.
+</li>
+</ul>
+
+<p class='para'>
+(Probably
+we
+should
+document
+clearly
+how
+to
+write
+test
+cases
+for
+libraries
+and
+maybe
+commands
+and
+file
+systems
+so
+we
+can
+build
+a
+set
+of
+test
+cases
+that
+can
+be
+run
+easily,
+a
+testing
+framework
+for
+that
+will
+probably
+be
+needed,
+and
+a
+place
+to
+store
+it,
+probably
+in
+sources)
+</p>
+
+<a name="SECTION_1:_COMMANDS" /><h3>SECTION 1: COMMANDS</h3>
+
+<ul>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/0intro"><i>0intro</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/2a"><i>2a</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/2c"><i>2c</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/2l"><i>2l</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/acid"><i>acid</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/acme"><i>acme</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ap"><i>ap</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ar"><i>ar</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ascii"><i>ascii</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/awk"><i>awk</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/basename"><i>basename</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/bc"><i>bc</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/bind"><i>bind</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/bitsyload"><i>bitsyload</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/bundle"><i>bundle</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cal"><i>cal</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/calendar"><i>calendar</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cat"><i>cat</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cb"><i>cb</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/chgrp"><i>chgrp</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/chmod"><i>chmod</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cleanname"><i>cleanname</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cmp"><i>cmp</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/colors"><i>colors</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/comm"><i>comm</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/con"><i>con</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cp"><i>cp</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cpp"><i>cpp</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cpu"><i>cpu</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/crop"><i>crop</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/date"><i>date</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/db"><i>db</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/dc"><i>dc</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/dd"><i>dd</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/delkey"><i>delkey</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/deroff"><i>deroff</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/diff"><i>diff</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/doc2txt"><i>doc2txt</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/doctype"><i>doctype</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/du"><i>du</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/echo"><i>echo</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ed"><i>ed</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/emacs"><i>emacs</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/eqn"><i>eqn</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/expect"><i>expect</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/faces"><i>faces</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/factor"><i>factor</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/file"><i>file</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/filter"><i>filter</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/fmt"><i>fmt</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/fortune"><i>fortune</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/freq"><i>freq</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/games"><i>games</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/grap"><i>grap</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/graph"><i>graph</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/grep"><i>grep</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/gs"><i>gs</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/gview"><i>gview</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/gzip"><i>gzip</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/hget"><i>hget</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/history"><i>history</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/hoc"><i>hoc</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/idiff"><i>idiff</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/join"><i>join</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/jpg"><i>jpg</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/kbmap"><i>kbmap</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/kill"><i>kill</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ktrace"><i>ktrace</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/leak"><i>leak</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/lens"><i>lens</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/lex"><i>lex</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/look"><i>look</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/lp"><i>lp</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ls"><i>ls</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/mail"><i>mail</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/man"><i>man</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/marshal"><i>marshal</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/mc"><i>mc</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/mk"><i>mk</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/mkdir"><i>mkdir</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/mlmgr"><i>mlmgr</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ms2html"><i>ms2html</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/nedmail"><i>nedmail</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/netstat"><i>netstat</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/news"><i>news</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/nm"><i>nm</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ns"><i>ns</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/p"><i>p</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/page"><i>page</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/passwd"><i>passwd</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/patch"><i>patch</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/pcc"><i>pcc</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/pic"><i>pic</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/pipefile"><i>pipefile</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/plot"><i>plot</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/plumb"><i>plumb</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/pr"><i>pr</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/prof"><i>prof</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/proof"><i>proof</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ps"><i>ps</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ps2pdf"><i>ps2pdf</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/pwd"><i>pwd</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/rc"><i>rc</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/replica"><i>replica</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/resample"><i>resample</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/rio"><i>rio</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/rm"><i>rm</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/rwd"><i>rwd</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/sam"><i>sam</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/secstore"><i>secstore</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/sed"><i>sed</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/seq"><i>seq</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/size"><i>size</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/sleep"><i>sleep</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/sort"><i>sort</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/spell"><i>spell</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/spin"><i>spin</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/split"><i>split</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/src"><i>src</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ssh"><i>ssh</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/stop"><i>stop</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/strings"><i>strings</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/strip"><i>strip</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/sum"><i>sum</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/syscall"><i>syscall</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/tail"><i>tail</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/tar"><i>tar</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/tbl"><i>tbl</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/tcs"><i>tcs</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/tee"><i>tee</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/tel"><i>tel</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/test"><i>test</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/thesaurus"><i>thesaurus</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/time"><i>time</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/touch"><i>touch</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/tr"><i>tr</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/trace"><i>trace</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/troff"><i>troff</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/troff2html"><i>troff2html</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/tweak"><i>tweak</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/uniq"><i>uniq</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/units"><i>units</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/uptime"><i>uptime</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/vac"><i>vac</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/vi"><i>vi</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/vnc"><i>vnc</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/vt"><i>vt</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/wc"><i>wc</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/who"><i>who</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/xd"><i>xd</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/yacc"><i>yacc</i>(1)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/yesterday"><i>yesterday</i>(1)</a>
+</li>
+</ul>
+
+<a name="SECTION_2:_SYSTEM_AND_LIBRARY_CALLS" /><h3>SECTION 2: SYSTEM AND LIBRARY CALLS</h3>
+
+<ul>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/0intro"><i>0intro</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/9p"><i>9p</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/9pcmdbuf"><i>9pcmdbuf</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/9pfid"><i>9pfid</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/9pfile"><i>9pfile</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/abort"><i>abort</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/abs"><i>abs</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/access"><i>access</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/addpt"><i>addpt</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/aes"><i>aes</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/allocimage"><i>allocimage</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/arg"><i>arg</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/arith3"><i>arith3</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/assert"><i>assert</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/atof"><i>atof</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/auth"><i>auth</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/authsrv"><i>authsrv</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/bin"><i>bin</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/bind"><i>bind</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/bio"><i>bio</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/blowfish"><i>blowfish</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/brk"><i>brk</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/cachechars"><i>cachechars</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/chdir"><i>chdir</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/cleanname"><i>cleanname</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/color"><i>color</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/complete"><i>complete</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/control"><i>control</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/cputime"><i>cputime</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/ctime"><i>ctime</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/ctype"><i>ctype</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/debugger"><i>debugger</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/des"><i>des</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/dial"><i>dial</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/dirread"><i>dirread</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/disk"><i>disk</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/draw"><i>draw</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/dsa"><i>dsa</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/dup"><i>dup</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/elgamal"><i>elgamal</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/encode"><i>encode</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/encrypt"><i>encrypt</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/errstr"><i>errstr</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/event"><i>event</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/exec"><i>exec</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/exits"><i>exits</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/exp"><i>exp</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/fauth"><i>fauth</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/fcall"><i>fcall</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/fd2path"><i>fd2path</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/fgetc"><i>fgetc</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/flate"><i>flate</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/floor"><i>floor</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/fmtinstall"><i>fmtinstall</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/fopen"><i>fopen</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/fork"><i>fork</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/fprintf"><i>fprintf</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/frame"><i>frame</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/frexp"><i>frexp</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/fscanf"><i>fscanf</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/fversion"><i>fversion</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/genrandom"><i>genrandom</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/getcallerpc"><i>getcallerpc</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/getenv"><i>getenv</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/getfcr"><i>getfcr</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/getfields"><i>getfields</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/getpid"><i>getpid</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/getuser"><i>getuser</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/getwd"><i>getwd</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/graphics"><i>graphics</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/html"><i>html</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/httpd"><i>httpd</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/hypot"><i>hypot</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/intmap"><i>intmap</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/ioproc"><i>ioproc</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/iounit"><i>iounit</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/ip"><i>ip</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/isalpharune"><i>isalpharune</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/keyboard"><i>keyboard</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/lock"><i>lock</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/mach"><i>mach</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/malloc"><i>malloc</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/matrix"><i>matrix</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/memdraw"><i>memdraw</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/memlayer"><i>memlayer</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/memory"><i>memory</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/mktemp"><i>mktemp</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/mouse"><i>mouse</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/mp"><i>mp</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/muldiv"><i>muldiv</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/nan"><i>nan</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/ndb"><i>ndb</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/notify"><i>notify</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/object"><i>object</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/open"><i>open</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/perror"><i>perror</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/pipe"><i>pipe</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/plumb"><i>plumb</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/pool"><i>pool</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/postnote"><i>postnote</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/prime"><i>prime</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/print"><i>print</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/privalloc"><i>privalloc</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/proto"><i>proto</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/pushssl"><i>pushssl</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/pushtls"><i>pushtls</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/qball"><i>qball</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/qsort"><i>qsort</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/quaternion"><i>quaternion</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/quote"><i>quote</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/rand"><i>rand</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/rc4"><i>rc4</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/read"><i>read</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/readcolmap"><i>readcolmap</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/readv"><i>readv</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/regexp"><i>regexp</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/remove"><i>remove</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/rendezvous"><i>rendezvous</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/rsa"><i>rsa</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/rune"><i>rune</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/runestrcat"><i>runestrcat</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/scribble"><i>scribble</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/scsi"><i>scsi</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/sechash"><i>sechash</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/seek"><i>seek</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/segattach"><i>segattach</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/segbrk"><i>segbrk</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/segflush"><i>segflush</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/setjmp"><i>setjmp</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/sin"><i>sin</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/sinh"><i>sinh</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/sleep"><i>sleep</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/stat"><i>stat</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/strcat"><i>strcat</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/string"><i>string</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/stringsize"><i>stringsize</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/subfont"><i>subfont</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/symbol"><i>symbol</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/thread"><i>thread</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/time"><i>time</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/tmpfile"><i>tmpfile</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/wait"><i>wait</i>(2)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/2/window"><i>window</i>(2)</a>
+</li>
+</ul>
+
+<a name="SECTION_3:_DEVICES" /><h3>SECTION 3: DEVICES</h3>
+
+<ul>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/0intro"><i>0intro</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/apm"><i>apm</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/arch"><i>arch</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/audio"><i>audio</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/cap"><i>cap</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/cons"><i>cons</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/draw"><i>draw</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/dup"><i>dup</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/env"><i>env</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/ether"><i>ether</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/floppy"><i>floppy</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/fs"><i>fs</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/i82365"><i>i82365</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/ip"><i>ip</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/kbmap"><i>kbmap</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/kprof"><i>kprof</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/loopback"><i>loopback</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/lpt"><i>lpt</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/mnt"><i>mnt</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/mouse"><i>mouse</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/pipe"><i>pipe</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/pnp"><i>pnp</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/proc"><i>proc</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/root"><i>root</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/rtc"><i>rtc</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/sd"><i>sd</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/segment"><i>segment</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/srv"><i>srv</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/ssl"><i>ssl</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/tls"><i>tls</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/uart"><i>uart</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/usb"><i>usb</i>(3)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/3/vga"><i>vga</i>(3)</a>
+</li>
+</ul>
+
+<a name="SECTION_4:_FILE_SERVERS" /><h3>SECTION 4: FILE SERVERS</h3>
+
+<ul>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/0intro"><i>0intro</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/acme"><i>acme</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/archfs"><i>archfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/cdfs"><i>cdfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/cfs"><i>cfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/consolefs"><i>consolefs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/dossrv"><i>dossrv</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/execnet"><i>execnet</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/exportfs"><i>exportfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/ext2srv"><i>ext2srv</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/factotum"><i>factotum</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/fossil"><i>fossil</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/fs"><i>fs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/ftpfs"><i>ftpfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/import"><i>import</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/iostats"><i>iostats</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/keyfs"><i>keyfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/kfs"><i>kfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/lnfs"><i>lnfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/mntgen"><i>mntgen</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/namespace"><i>namespace</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/nfs"><i>nfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/nntpfs"><i>nntpfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/paqfs"><i>paqfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/plumber"><i>plumber</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/ramfs"><i>ramfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/ratfs"><i>ratfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/rdbfs"><i>rdbfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/rio"><i>rio</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/sacfs"><i>sacfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/snap"><i>snap</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/srv"><i>srv</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/tapefs"><i>tapefs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/telco"><i>telco</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/u9fs"><i>u9fs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/upasfs"><i>upasfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/usb"><i>usb</i>(4)</a>
+-
+documented
+options
+for
+usbmouse,
+usbaudio
+still
+to
+go
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/usbd"><i>usbd</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/vacfs"><i>vacfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/webcookies"><i>webcookies</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/webfs"><i>webfs</i>(4)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/wikifs"><i>wikifs</i>(4)</a>
+</li>
+</ul>
+
+<a name="SECTION_5:_PLAN_9_FILE_PROTOCOL,_9P" /><h3>SECTION 5: PLAN 9 FILE PROTOCOL, 9P</h3>
+
+<ul>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/5/0intro"><i>0intro</i>(5)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/5/attach"><i>attach</i>(5)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/5/clunk"><i>clunk</i>(5)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/5/error"><i>error</i>(5)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/5/flush"><i>flush</i>(5)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/5/open"><i>open</i>(5)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/5/read"><i>read</i>(5)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/5/remove"><i>remove</i>(5)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/5/stat"><i>stat</i>(5)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/5/version"><i>version</i>(5)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/5/walk"><i>walk</i>(5)</a>
+</li>
+</ul>
+
+<a name="SECTION_6:_FILE_FORMATS,_MISC" /><h3>SECTION 6: FILE FORMATS, MISC</h3>
+
+<ul>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/0intro"><i>0intro</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/a.out"><i>a.out</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/ar"><i>ar</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/authsrv"><i>authsrv</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/color"><i>color</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/face"><i>face</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/font"><i>font</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/image"><i>image</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/keyboard"><i>keyboard</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/keys.who"><i>keys.who</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/man"><i>man</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/map"><i>map</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/mpictures"><i>mpictures</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/ms"><i>ms</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/namespace"><i>namespace</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/ndb"><i>ndb</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/plot"><i>plot</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/plumb"><i>plumb</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/regexp"><i>regexp</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/rewrite"><i>rewrite</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/smtpd"><i>smtpd</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/snap"><i>snap</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/thumbprint"><i>thumbprint</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/users"><i>users</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/utf"><i>utf</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/venti.conf"><i>venti.conf</i>(6)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/vgadb"><i>vgadb</i>(6)</a>
+</li>
+</ul>
+
+<a name="SECTION_7:_DATABASES" /><h3>SECTION 7: DATABASES</h3>
+
+<ul>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/7/0intro"><i>0intro</i>(7)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/7/astro"><i>astro</i>(7)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/7/dict"><i>dict</i>(7)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/7/juke"><i>juke</i>(7)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/7/map"><i>map</i>(7)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/7/playlistfs"><i>playlistfs</i>(7)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/7/scat"><i>scat</i>(7)</a>
+</li>
+</ul>
+
+<a name="SECTION_8:_SYSTEM_ADMINISTRATION" /><h3>SECTION 8: SYSTEM ADMINISTRATION</h3>
+
+<ul>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/0intro"><i>0intro</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/9load"><i>9load</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/9pcon"><i>9pcon</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/aan"><i>aan</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/aliasmail"><i>aliasmail</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/apm"><i>apm</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/auth"><i>auth</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/boot"><i>boot</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/booting"><i>booting</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/checkarenas"><i>checkarenas</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/cpurc"><i>cpurc</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/cron"><i>cron</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/dhcpd"><i>dhcpd</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/drawterm"><i>drawterm</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/fossilcons"><i>fossilcons</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/fs"><i>fs</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/fsconfig"><i>fsconfig</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/httpd"><i>httpd</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/init"><i>init</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ipconfig"><i>ipconfig</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ipserv"><i>ipserv</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/kfscmd"><i>kfscmd</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/listen"><i>listen</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/lp"><i>lp</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/mk9660"><i>mk9660</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/mkfs"><i>mkfs</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/mkpaqfs"><i>mkpaqfs</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/mksacfs"><i>mksacfs</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/mouse"><i>mouse</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/na"><i>na</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ndb"><i>ndb</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/nfsserver"><i>nfsserver</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/pcmcia"><i>pcmcia</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/pem"><i>pem</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ping"><i>ping</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/plan9.ini"><i>plan9.ini</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/pop3"><i>pop3</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ppp"><i>ppp</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/prep"><i>prep</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/qer"><i>qer</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/reboot"><i>reboot</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/replica"><i>replica</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/rsa"><i>rsa</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/scanmail"><i>scanmail</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/scuzz"><i>scuzz</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/secstore"><i>secstore</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/securenet"><i>securenet</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/send"><i>send</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/smtp"><i>smtp</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/snoopy"><i>snoopy</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/stats"><i>stats</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/stub"><i>stub</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/swap"><i>swap</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/timesync"><i>timesync</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/tlssrv"><i>tlssrv</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/trampoline"><i>trampoline</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/udpecho"><i>udpecho</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/update"><i>update</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/venti"><i>venti</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/ventiaux"><i>ventiaux</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/vga"><i>vga</i>(8)</a>
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/8/newuser"><i>newuser</i>(8)</a>
+changed
+to
+mention
+fossil
+instead
+of
+<a href="http://plan9.bell-labs.com/magic/man2html/8/fs"><i>fs</i>(8)</a>
+-mjl/31-03-2005
+</li>
+</ul>
+
+<p class='para'>
+This
+is
+the
+snipet
+used
+to
+generate
+the
+list
+of
+man
+pages:
+<pre>
+for ( i in ?) {
+	echo
+	echo SECTION $i
+	echo
+	cd $i 
+	ls|grep -v INDEX| sed -e 's/$/('^$i^')/' -e 's/^/ *	/'
+	cd ..
+}
+</pre>
+
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Fri Apr  1 22:04:58 EST 2005</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

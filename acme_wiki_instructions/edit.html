@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>Acme Wiki instructions (Editing Sat Nov 10 14:11:02 EST 2007 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Acme Wiki instructions</b></font> (Editing Sat Nov 10 14:11:02 EST 2007 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Acme Wiki instructions">
+<input type="hidden" name="version" value="1194721862">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+If you want to access this site using Acme, have a look at
+/acme/wiki/guide.
+
+You can execute the first line to import the wiki,
+
+! Local srv net!plan9.bell-labs.com!wiki wiki /mnt/wiki
+
+and the third line to bring up the browser - though if you don't use
+the latest version of acme you'll need to run a new instance of Acme
+because Local doesn't import into the current namespace
+
+! Wiki /mnt/wiki/
+
+The browser should be fairly intuitive given familiarity with acme.
+
+To follow wiki links, right-click page names inside square brackets:
+[sandbox].
+
+You can edit any wiki page, then click Put in the acme tag to save
+your changes to the server.
+
+To add a new wiki page, click New in the acme tag, then type the
+title in the first line of the resulting window, followed by a
+newline, then your content for the new page. Use [Wiki syntax] for
+formatting.
+
+You may need to add the following line to /lib/ndb/common to define
+the default wiki file service TCP port:
+
+! tcp=wiki port=17035
+
+though this is defined in the distributed /lib/ndb/common as of Sept.
+07.
+
+SEE ALSO
+
+acme(1), wikifs(4)
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

@@ -1,0 +1,333 @@
+Hubfs
+
+Hubfs is a 9p fs which can be used similarly to programs like tmux
+and GNU screen. Unlike those programs it allows shells from multiple
+machines to be shared to a single hub and enables free piping of data
+between processes on different machines. (Screen and tmux need an
+additional tool like ssh to connect multiple machines and have no
+ability to multiplex raw pipes.) Due to the use of 9p as the
+interface, hubfs brings shell inputs and outputs across a network of
+machines into the file namespace.
+
+Hubfs is found on the sources server in contrib/mycroftiv/hubfs1.1.
+It can also be installed using fgb's contrib with:
+
+! contrib/install mycroftiv/hubfs
+
+BASIC USE
+
+The "hub" command both creates and attaches to hubfs shells. To start
+a new hubfs just type
+
+! hub
+
+to create a new persistent shell. Hubfs uses /srv/hubfs as its
+default name. To connect to a running hubfs, the same
+
+! hub
+
+command will mount and attach to an existing /srv/hubfs. To connect
+to a hubfs shell on a remote machine, you need access to that
+machine's /srv. From a client who wishes to connect to an existing
+shell on the server:
+
+! import -a server /srv
+! hub
+
+By making the remote machine's /srv/hubfs visible in the namespace,
+the hub command will connect as usual.
+
+The first parameter to the "hub" command is the name of the hubfs. If
+you wish to use a name other than /srv/hubfs the command
+
+! hub name
+
+creates a new hubfs at /srv/name. Following this,
+
+! hub name
+
+will attach to the hubfs at /srv/name.
+
+LOCAL AND REMOTE SHELLS AND MOVING BETWEEN THEM
+
+The "hub" command creates a default shell named "io" to begin. When
+you are working within a connected shell, you can create new shells.
+These shells can be created on either the machine hosting the hubfs
+or on the client machine. In other words, you have the option of
+"sharing a shell back" to the hubfs server from your machine. On a
+grid of machines, each client will usually share a local shell back
+to the central hubfs. The following commands are issued from within a
+connected shell:
+
+! %remote name
+
+Creates and connects to a new shell running on the hubfs host.
+
+! %local name
+
+Creates and moves to a new shell on the local machine and shares that
+shell to hubfs.
+
+! %attach name
+
+Moves between existing shells attached to the hubfs. It is also
+possible to connect to existing subshells within a hubfs or create
+new ones directly from an external shell prompt.
+
+! hub srvname shellname
+
+Acts to attach to the given shellname within the hubfs at srvname, or
+create and attach shellname to that hubfs if an existing subshell of
+that name is not present.
+
+CONNECTING OTHER OPERATING SYSTEMS
+
+Hubfs is client agnostic. If a system can use 9p, it can mount hubfs
+and access shells within it, and even share shells back. Here is an
+example using plan9port and 9pfuse. These actions would usually be
+automated by small scripts.
+
+On the Plan 9 host:
+
+! hub -b unix
+! mount -c /srv/unix /n/unix
+! touch /n/unix/un0 /n/unix/un1 /n/unix/un2
+! aux/listen1 -tv tcp!*!8787 /bin/exportfs -r /n/unix
+
+To connect a client machine such a linux box running p9p:
+
+! mkdir hubfs
+! 9pfuse 'tcp!server.ip!8787' hubfs
+! rc -i <hubfs/un0 >>hubfs/un1 2>>hubfs/un2 &
+
+This shares a shell from the linux box back to the hubfs. At this
+point the listen command on the server can be terminated. The linux
+box can now be controlled from any plan 9 system which can mount the
+hubfs. To control the Plan 9 system from linux:
+
+! cat hubfs/io1 &
+! cat hubfs/io2 &
+! cat >>hubfs/io0
+
+And you are now attached to and controlling the initial Plan 9 hubfs
+shell. To attach to the shell on the linux machine from within a Plan
+9 system with access to the /srv/unix :
+
+! hub unix un
+
+Will connect to the shell running on the linux box.
+
+GENERAL PURPOSE HUBFS: MULTIPLEXED NETWORK PIPES
+
+The examples just shown illustrate that behind the scenes, hubfs
+itself simply multiplexes pipe-like files. This approach works for
+"screen-like" functionality in Plan 9, because there is no TTY layer
+to manage. Multiplexing access to a shell can be done efficiently
+simply by creating pipelike buffers for each file descriptor and
+allowing multiple readers and writers access to these files via 9p.
+
+This is actually a powerful general purpose mechanism which can be
+used for more than just shells. Any textual/bytestream application or
+data stream can be attached to hubfs to multiplex access and persist
+the data. This can be used to create grid processing pipelines using
+shell commands with no additional clustering layer. For instance,
+suppose there is a textual data stream and it is desired to search
+this data stream for a number of different terms, then create a new
+data stream that is the composite of all the chosen matches.
+
+! mount -c /srv/hubfs /n/hubfs
+! touch /n/hubfs/streamin /n/hubfs/streamout
+! cat /lib/words >>/n/hubfs/streamin
+
+Each processing node on the grid issues commands such as
+
+! import -a hubserver /srv
+! mount /srv/hubfs /n/hubfs
+! grep -b foo /n/hubfs/streamin >>/n/hubfs/streamout
+
+The next machine greps for "bar", the next machine greps for "baz",
+etc. The result of this is an automatic "fan out" of the greps for
+different terms to different processing nodes and then creation of an
+output data stream at "streamout" which consists of all matches found
+by all nodes.
+
+HUBFS FOR POWER USERS: FREEZE/MELT, DEVICE SAVING, TRICKS
+
+Hubfs has some features and related scripts which offer additional
+capabilities for users. The most notable is probably the ability to
+"freeze" the flow of data in the hubfiles and allow them to treated
+as random-access static files, then "melt" them to resume the active
+flow of data. This enables the following workflow:
+
+! mount /srv/hubfs /n/hubfs
+! echo freeze >/n/hubfs/ctl
+! tar czf hublog.tgz /n/hubfs
+! echo melt >/hubfs/ctl
+
+The result of this is that the buffer contents (the input/output
+history) of every file descriptor attached to the hubfs is saved as a
+tarball. If you look at this tarball, each file descriptor for each
+shell will have a file with its stream - so the io0 file contains the
+user input, the io1 file contains the standard output, and the io2
+file contains the standard error output.
+
+One standard use of this functionality would be to log irc channels
+where the irc programs are running inside hubfs. The author uses irc7
+and the irc client from contrib/andrey and periodically updates logs
+with a freeze/melt cycle of the hubfs containing 4 different irc
+channels.
+
+An issue users may notice is that programs such as "lc" which need to
+know the width of the window they are running within will not know
+about the width of the window a shell within hubfs is running. This
+issue can be dealt with by the use of "device saving" and "device
+retrieval" which has many applications.
+contrib/mycroftiv/rootlessnext/scripts contains the "savedevs" and
+"getdevs" scripts which can be used to connect a shell within hubfs
+to the active window to enable programs such as "lc" to run
+correctly, and also enable the use of some graphical programs,
+although they will not be multiplexed to other clients. Example
+usage, presuming a hubfs already exists and is accessible to be used:
+
+! savedevs myterm
+! hub
+! %io getdevs myterm
+
+and now the shell within the hubfs will be aware of the current
+window size and track its changes properly.
+
+An example of the kind of trick which hubfs enables with some
+practical and impractical uses:
+
+! grep -b FOO /n/myirc/plan9chan1 |while(echo `{read} >>/tmp/foolog) echo 'echo THERES ONE' >>/n/myirc/plan9chan0
+
+That command is used on hubs running an irc client. It monitors the
+channel for mentions of FOO, logs them to a file, and makes the user
+shout THERES ONE into the channel whenever FOO is uttered. A similar
+concept can be used to do things such as trigger auto-plumb of .png
+files to the plumber when directories containing them are ls.
+
+STDERR SYNCRHONIZATION
+
+The simplicity of multiplexing shells just by buffering and
+multiplexing their file descriptors provides many benefits, but does
+have a few unexpected consequences. One such is the lack of enforced
+synchronization between shell file descriptors. When a large amount
+of data is transmitted on stdout and a small amount on stderr, it is
+a natural consequence of the parallelism and independence of the
+client readers that the client will finish reading the messages from
+stderr before finishing reading the the messages sent from stdout.
+This is expected behavior but contrary to user expectation that the
+shell prompt will only appear after the output of a command has been
+completed. To address this, the user can set a delay on a given file
+descriptor in the hubshell client.
+
+! %err 300
+
+Will add 300 milliseconds of delay before printing messages from
+stderr on that shell. This usually improves the user experience when
+working with a remote machine over WAN. There is no negative
+consequence from these seemingly misplaced prompts, commands are
+received and sent normally regardless of the visual location of the
+prompt in the output stream as seen by the client on-screen. The lack
+of synchronization is client-side and the result of parallelized
+reads - the prompt or error messages are always printed at the normal
+time on the server end.
+
+PARANOID MODE
+
+Paranoid mode is a nonstandard mode of operation designed for the
+transmission of large continuous data streams. Hubfs is optimized for
+the type of data transmission typical of shell usage - bursts of
+data, where the size of a single burst is less than 500kb and often
+much smaller. It prioritizes interactivity and provides a semantics
+where writers are allows allowed to write without needing to wait for
+client readers to read data previously sent. This is different than
+conventional blocking write semantics on pipes.
+
+As a result, normal hubfs operation is often unsuited to a scenario
+where you are sending a continuous stream of data of a size of
+megabytes or more. The hazard is that writers will write data faster
+than remote readers can read it, and the writer will overwrite the
+portion of the buffer that the client has not yet read, resulting in
+corruption of the data stream and loss of data. "paranoid" mode is
+provided to avoid this. In the event it is desired to send a large
+continuous stream of data much larger than the hubfs static circular
+buffer of 700k, the command
+
+! echo fear >/n/hubfs/ctl
+
+puts hubfs into paranoid mode, where the speed of writes is gated by
+the ability of readers to catch up. This mode incurs a considerable
+performance penalty and cpu usage tax and is not needed for normal
+use by interactive shells.
+
+! echo calm >/n/hubfs/ctl
+
+returns hubfs to standard operation.
+
+GRIO AND OTHER RELATED TOOLS
+
+To make access to the persistent shells with hubfs as easy as
+possible, the modified rio(1) grio (found at
+sources/contrib/mycroftiv/grio) automatically creates
+/srv/riohubfs.$user and provides a new menu option, Hub, to sweep out
+a window in the same manner as New, but rather than creating a new
+rc(1), it connects to the existing hubfs session. The effect is that
+when you make a new window, you are 'back where you were before'. The
+standard New options remains as before.
+
+On a grid of machines, if the central cpu server hosts the main
+hubfs, and user includes
+
+! import -a cpuserver /srv &
+
+in their profile, then when grio is started, it will automatically
+make use of that pre-existing central hubfs. Assuming all nodes also
+use %local to share shells back to the central hubfs server, this
+gives the user persistent access to shells on machines on each node
+of their grid available directly from the creation of a new rio
+window.
+
+Hubfs and grio are independent parts of a larger toolkit of Plan 9
+namespace software found in sources/contrib/mycroftiv/rootlessnext
+and with full documentation and papers at [ANTS |
+http://ants.9gridchan.org].
+
+ARCHITECTURE AND INTERNALS
+
+Mostly unmentioned in this discussion has been the hubshell client,
+which is conventionally used for creating and moving between hubfs
+shells. Hubfs itself simply creates pipe-like files. It is not aware
+of what applications are being connected to the files, it simply
+provides buffers and answers read and write requests. Hubfs.c itself
+is deliberately simplistic and was evolved from the sample ramfs
+implementation in the distribution at /sys/src/lib9p/ramfs.c.
+
+Hubshell.c is the main client of hubfs. The %commands are intercepted
+and handled by hubshell, which knows how to create new rc(1) shells
+attached to hubfs and to move between them. In the standard mode of
+use, there are several chains-of-cats between the user and the shell.
+The input sent by the users (and output they read) is actually that
+of hubshell, which forks 3 cats to transfer data between itself and
+the hubfiles - and those hubfiles are essentially "buffered cats"
+connected to an rc.
+
+The hub wrapper script checks the namespace at /n/name or /srv/name
+for an available hubfs and creates a new hubfs if necessary, then
+starts a hubshell connected to the target.
+
+Internally, hubfs creates a statically sized buffer for each hubfile,
+then writers write data circularly from beginning to end and wrap
+around when they fill the buffer. Each hub maintains two "spindles"
+of 9p requests, one for reads and one for writes. Writes are always
+appended but the location of each reader needs to be tracked
+individually. Hubfs is usually single-process and single-threaded,
+but paranoid mode changes this and in paranoid mode hubfs uses rfork
+and qlocks to separate the flow of control handling write requests
+from that handling read requests.
+
+The pre-existing consolefs(4) in the standard distribution has a
+fairly similar architecture and is focused on management of connected
+serial consoles.
+

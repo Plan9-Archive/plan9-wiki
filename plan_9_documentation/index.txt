@@ -1,0 +1,53 @@
+Plan 9 Documentation
+
+ *	[Recommended Readings].
+ *	[Papers] - and other publications.
+ *	[Online Manual pages | http://plan9.bell-labs.com/sys/man/].
+ *	[FAQ] - Frequently Asked Questions.
+ *	[Books].
+
+INSTALLATION INSTRUCTIONS
+
+ *	[Installation instructions]
+ *	[Installation troubleshooting]
+ *	[Setting the right monitor size]
+ *	[Network configuration]
+ *	[Adding a new user]
+
+INSTALLATION IN SPECIAL ENVIRONMENTS
+
+ *	[Installing in Xen]
+ *	[vmware4] - how to run the Plan 9 vmware disk image under vmware4.
+ *	[Installation on Ipaq] ([Supported PDAs])
+
+USING THE SYSTEM
+
+ *	[Using rio] - An introduction to using the window system.
+ *	[Using acme] - Acme is a hybrid window system, editor, and shell.
+ *	[Using plumbing] - The plumber works behind the scenes to connect
+	various programs in interesting ways.
+ *	[Using troff] - Formatting text for printing on a typesetter.
+ *	[Using PQ] - The implicit relational database client and server.
+ *	[Using vncv] - Remote use of applications on other OSes.
+ *	[UNIX to Plan 9 command translation].
+ *	[Connecting to other OSes] - ssh, telnet, u9fs, SMB, NFS...
+ *	[Connecting from other OSes] - drawterm. (also see [v9fs]).
+ *	[Mouse vs. keyboard].
+ *	[Tip o' the day].
+
+CONFIGURING THE SYSTEM
+
+ *	[Staying up to date]
+ *	[Compiling kernels]
+ *	[Configuring a standalone CPU server]
+ *	[Installing a Plan 9 File Server]
+ *	[Dns configuration notes]
+ *	[Mail configuration]
+ *	[Adding your face]
+ *	[Printer configuration]
+ *	[SSH configuration]
+ *	[TeX configuration]
+ *	[Informal Wiki Setup]
+ *	[Dialup modem config]
+ *	[Drawterm to your terminal]
+

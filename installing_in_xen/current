@@ -1,0 +1,97 @@
+Installing in Xen
+D1154011457
+Amiller (213.208.117.150)
+#These instructions are for Xen 2.0. See [installing in xen 3.0] for
+#Xen 3.0 instructions.
+#
+#INSTALL XEN
+#
+# *	Grab xen and install it. The 2.0.5 release is known to work.
+# *	Start xend
+#! 	xend start
+# *	Configure xen's networking
+#! 	antispoof=no /etc/xen/scripts/network start
+#Note: I've had trouble with the antispoofing additions to the
+#iptables rules so I leave them out.
+# *	Enable forwarding
+#! 	linux$ echo 1 >/proc/sys/net/ipv4/ip_forward
+#
+#CREATE A PLAN9 DOMAIN
+#
+# *	setup your directory with your kernels and the plan9 install cd.
+#	You can get the 9xenf and 9xeninst kernels from /n/sources/xen. The
+#	install CD is available at the Plan9 website.
+#! 	 linux$ mkdir /usr/xen9
+#! 	 linux$ cd /usr/xen9
+#! 	 linux$ mv /somepath/9xeninst .
+#! 	 linux$ mv /somepath/9xenf .
+#! 	 linux$ mv /somepath/plan9.iso .
+#
+# *	create a disk image. Here we make a 1GB drive, but you can use
+#	any size you like:
+#! 	 linux$ dd if=/dev/zero of=plan9.img seek=$((1024 * 1024 * 1024 - 1)) bs=1 count=1
+#
+# *	create a xen config file for the plan9 installer. Here we use
+#	96MB of RAM, but you can use any amount you like:
+#! 	 linux$ cat > /etc/xen/plan9inst
+#! 	 kernel = "/usr/xen9/9xeninst"
+#! 	 builder = "plan9"
+#! 	 memory = 96
+#! 	 name = "plan9"
+#! 	 cpu = -1
+#! 	 nics = 1
+#! 	 vif = [ 'mac=aa:00:10:00:00:10, bridge=xen-br0' ]
+#! 	 disk = [ 'file:/usr/xen9/plan9.img,loop0,w',
+#! 	          'file:/usr/xen9/plan9.iso,loop1,r' ]
+#! 	 ip = "1.2.3.4/24"		# <- IP you will give to xen9
+#! 	 restart = 'never'
+#! 	 console = 999
+#! 	 
+#! 	 # This is the equivalent of plan9.ini:
+#! 	 extra="""
+#! 	 nobootprompt=local!/boot/bzroot
+#! 	 bootfile=sd01!cdboot!bootdisk.img
+#! 	 """
+#! 	 ^D
+#
+# *	boot the installer and run through the install process. You will
+#	be using the console which is a little clunky. (You could also quit
+#	the console (^]) and telnet or netcat to port 999 to reach the
+#	console, which works a little better). The cdrom is on sd01 and
+#	your disk is on sd00. When asked for the location of the archive
+#	simply enter "/" for the root of the cdrom. At the end of the
+#	install when it asks for a blank floppy simply reboot the machine:
+#! 	 linux$ xm create plan9inst -c
+#! 	 ...
+#! 	 % inst/textonly
+#! 	 ...
+#! 	 ^T^Tr      <- to reboot when you're done
+#
+# *	create a xen config file for plan9 and boot it. The new config
+#	should use the 9xenf kernel instead of the 9xeninst kernel. For the
+#	extra arguments specify either no arguments or a nobootprompt=local
+#	argument:
+#! 	 linux$ cat > /etc/xen/plan9
+#! 	 kernel = "/usr/xen9/9xenf"
+#! 	 builder = "plan9"
+#! 	 memory = 96
+#! 	 name = "plan9"
+#! 	 cpu = -1
+#! 	 nics = 1
+#! 	 vif = [ 'mac=aa:00:10:00:00:10, bridge=xen-br0' ]
+#! 	 disk = [ 'file:/usr/xen9/plan9.img,loop0,w' ]
+#! 	 ip = "1.2.3.4/24"		# <- IP you will give to xen9
+#! 	 restart = 'never'
+#! 	 console = 999
+#! 	 
+#! 	 # This is the equivalent of plan9.ini:
+#! 	 extra="""
+#! 	 nobootprompt=local
+#! 	 """
+#! 	 ^D
+#! 	 linux$ xm create plan9 -c
+#
+# *	you'll want to grab the xen bits from /n/sources/xen/9 and put
+#	them in /sys/src/9. To rebuild your kernel:
+#! 	 % cd /sys/src/9/xenpc && mk 'CONF=xenf'
+#

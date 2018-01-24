@@ -1,0 +1,558 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Installing in parallels desktop on Mac OS X (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Installing in parallels desktop on Mac OS X</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+
+<a name="INTRODUCTION" /><h3>INTRODUCTION</h3>
+
+<p class='para'>
+Parallels
+is
+a
+virtual-machine
+hypervisor
+that
+allows
+one
+to
+run
+multiple
+operating
+systems
+concurrently.
+</p>
+
+<p class='para'>
+Plan
+9
+now
+runs
+well
+on
+Parallels
+4
+and
+5,
+including
+PXE
+booting
+of
+diskless
+emulated
+Plan
+9
+machines.
+It
+may
+be
+necessary
+to
+configure
+devices
+in
+all
+four
+standard
+IDE
+slots
+(first
+two
+controllers,
+master
+and
+slave
+devices)
+to
+avoid
+killing
+the
+virtual
+machine.
+</p>
+
+<p class='para'>
+The
+3xxx
+build
+series
+for
+Parallels
+works
+flawlessly
+with
+Plan
+9.
+As
+for
+the
+4xxx
+build
+series
+(Parallels
+Version
+3),
+Plan
+9
+frequently
+crashes
+and
+works
+unreliably.
+Try
+turning
+off
+VT-x
+acceleration
+in
+this
+case.
+Plan
+9
+works
+on
+the
+5xxx
+build
+series
+without
+problems.
+</p>
+
+<a name="INSTALLATION_INSTRUCTIONS" /><h3>INSTALLATION INSTRUCTIONS</h3>
+
+<ul>
+
+<li>
+Obtain
+the
+Plan
+9
+nightly
+CD
+image
+and
+attach
+it
+to
+Parallels
+as
+the
+CDROM
+drive
+(don't
+bother
+burning
+it).
+</li>
+
+<li>
+Change
+the
+boot
+order
+to
+boot
+the
+CDROM
+drive
+first
+then
+start
+the
+VM.
+</li>
+
+<li>
+Follow
+the
+normal
+installation
+rules
+for
+Plan
+9
+</li>
+
+<li>
+Parallels
+3.0
+will
+only
+boot
+from
+a
+CD
+attached
+as
+sdC1,
+but
+9load
+(the
+Plan
+9
+boot
+loader)
+will
+try
+to
+boot
+into
+sdD0.
+In
+that
+case,
+you'll
+have
+to
+explicitly
+tell
+9load
+where
+to
+find
+the
+cd
+image
+at
+the
+'boot
+from:'
+prompt:
+</li>
+</ul>
+
+<pre>
+		sdC1!cdboot!9pccd.gz
+</pre>
+
+<ul>
+
+<li>
+I
+had
+trouble
+formatting
+the
+disk
+until
+I
+remade
+it
+without
+the
+expanding
+option.
+</li>
+</ul>
+
+<a name="CONFIGURATION_SETTINGS_IN_PLAN_9" /><h3>CONFIGURATION SETTINGS IN PLAN 9</h3>
+
+<p class='para'>
+In
+your
+plan9.ini
+file
+set
+the
+following:
+</p>
+
+<ul>
+
+<li>
+mouseport=ps2intellimouse
+</li>
+
+<li>
+monitor=vesa
+</li>
+
+<li>
+*nomp=1
+</li>
+
+<li>
+vgasize=1024x768x24
+</li>
+</ul>
+
+<p class='para'>
+The
+resolution
+actually
+depends
+on
+the
+resolution
+of
+your
+Mac.
+Look
+in
+the
+'Displays'
+section
+of
+'System
+Preferences'
+for
+a
+list
+of
+valid
+resolutions.
+I
+was
+able
+to
+get
+a
+resolution
+of
+1440x852
+working
+on
+my
+Macbook
+Pro
+17"
+this
+way.
+For
+the
+maximum
+resolution
+of
+1680x1050
+however,
+I
+had
+to
+add
+it
+to
+the
+custom
+video
+resolution
+list
+in
+the
+'Video'
+options
+of
+Parallels.
+All
+resolutions
+work
+with
+a
+depth
+of
+24
+(32
+never
+works
+for
+some
+reason).
+At
+1680x1050,
+you
+can
+run
+Plan
+9
+in
+fullscreen!
+On
+a
+plain
+MacBook,
+vgasize=1280x800x32
+works
+well
+for
+fullscreen.
+</p>
+
+<p class='para'>
+The
+CD-ROM,
+Ethernet
+and
+VESA
+video
+work
+out
+of
+the
+box.
+The
+only
+thing
+left
+to
+do
+is
+configure
+audio.
+</p>
+
+<a name="CONFIGURING_AUDIO_SUPPORT" /><h3>CONFIGURING AUDIO SUPPORT</h3>
+
+<p class='para'>
+You
+need
+to
+grab
+the
+AC'97
+sound
+driver
+from
+aki's
+site
+on
+9grid
+(down
+as
+of
+20080920,
+any
+alternate
+download
+locations?):
+</p>
+
+<pre>
+cd /sys/src/9/pc
+hget -o audio.h http://9grid.net/aki/src/9/pc/audio.h
+hget -o audioac97.c http://9grid.net/aki/src/9/pc/audioac97.c
+hget -o audioac97mix.c http://9grid.net/aki/src/9/pc/audioac97mix.c
+hget -o ../port/devaudio.c http://9grid.net/aki/src/9/port/devaudio.c
+</pre>
+
+<p class='para'>
+Now
+edit
+your
+pcf
+configuration
+and
+add
+the
+driver
+to
+the
+link
+section:
+</p>
+
+<pre>
+link
+		audioac97	audioac97mix
+</pre>
+
+<p class='para'>
+and
+build
+the
+kernel:
+</p>
+
+<pre>
+mk 'CONF=pcf'
+</pre>
+
+<p class='para'>
+Replace
+your
+old
+kernel
+with
+the
+new
+one:
+</p>
+
+<pre>
+9fat:
+cp 9pcf /n/9fat/
+</pre>
+
+<p class='para'>
+You
+may
+want
+to
+add
+this
+line
+to
+your
+lib/profile:
+</p>
+
+<pre>
+bind -a '#A' /dev
+</pre>
+
+<p class='para'>
+Get
+madplay
+from
+contrib
+on
+sources
+to
+play
+mp3s.
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Tue Aug 31 19:56:13 EDT 2010</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

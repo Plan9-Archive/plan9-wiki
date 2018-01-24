@@ -1,0 +1,367 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Contrib (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Contrib <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Wed Apr 22 12:21:40 EDT 2009</a>, a
+</div><hr />Sources/contrib
+is
+a
+directory
+in
+the
+<a href="../sources_repository">sources
+repository</a>
+where
+anyone
+can
+upload
+their
+Plan
+9
+related
+software.
+Things
+in
+sources/contrib
+are
+not
+"officially"
+part
+of
+the
+Plan
+9
+distribution,
+but
+are
+still
+very
+useful,
+they
+include
+ports
+of
+various
+Unix
+software,
+documentation,
+scripts,
+experimental
+patches,
+etc.
+<p class='para'>
+To
+get
+your
+own
+directory
+in
+sources/contrib
+to
+upload
+your
+own
+code
+see
+<a href="../how_to_contribute">how
+to
+contribute</a>.
+</p>
+
+<p class='para'>
+By
+convention,
+each
+contrib
+directory
+may
+have
+a
+README
+file,
+giving
+the
+name
+and
+contact
+information
+of
+the
+author,
+license
+terms,
+or
+other
+information,
+and
+an
+INDEX
+file,
+giving
+a
+brief
+description
+of
+the
+individual
+elements
+in
+that
+directory.
+</p>
+
+<p class='para'>
+The
+README
+and
+INDEX
+files
+are
+used
+to
+automatically
+generate
+the
+<a href="../Contrib_index">Contrib
+index</a>
+every
+morning.
+The
+README
+file
+is
+formatted
+for
+width
+and
+the
+first
+16
+lines
+printed;
+an
+INDEX
+file
+can
+contain
+entries
+of
+the
+form:
+<pre>
+package_name: Description here.
+</pre>
+
+</p>
+
+<p class='para'>
+Where
+'package_name'
+is
+a
+path
+to
+a
+file
+or
+directory
+relative
+to
+that
+directory.
+INDEX
+files
+in
+the
+first
+two
+levels
+of
+directories
+will
+be
+included
+in
+the
+wiki
+index;
+package_name
+can
+refer
+to
+files
+at
+any
+level.
+</p>
+
+<a name="FGB'S_CONTRIB" /><h3>FGB'S CONTRIB</h3>
+
+<p class='para'>
+Another
+option
+is
+to
+use
+Federico
+G.
+Benavento's
+contrib
+package
+management
+system.
+To
+install
+this
+system,
+issue
+</p>
+
+<pre>
+/n/sources/contrib/fgb/root/rc/bin/contrib/install fgb/contrib
+</pre>
+
+<p class='para'>
+The
+<a href="../Contrib_index">Contrib
+index</a>
+tells
+you
+the
+names
+of
+all
+users
+that
+have
+packages
+available
+under
+this
+system.
+You
+can
+list
+all
+the
+packages
+of
+a
+given
+user
+by
+stating
+</p>
+
+<pre>
+contrib/list user
+</pre>
+
+<p class='para'>
+or
+details
+of
+a
+specific
+package
+with
+</p>
+
+<pre>
+contrib/list user/package
+</pre>
+
+<p class='para'>
+To
+install
+a
+package,
+issue
+</p>
+
+<pre>
+contrib/install user/package
+</pre>
+
+<p class='para'>
+See
+<a href="http://plan9.bell-labs.com/magic/man2html/1/contrib"><i>contrib</i>(1)</a>
+after
+installation
+for
+details.
+</p>
+
+<a name="SEE_ALSO" /><h3>SEE ALSO</h3>
+
+<ul>
+
+<li>
+<a href="../Contrib_index">Contrib
+index</a>
+</li>
+
+<li>
+<a href="../Staying_up_to_date">Staying
+up
+to
+date</a>
+</li>
+
+<li>
+<a href="../How_to_contribute">How
+to
+contribute</a>
+</li>
+
+<li>
+<a href="../Sources_repository">Sources
+repository</a>
+</li>
+</ul>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Wed Apr 22 12:21:40 EDT 2009</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

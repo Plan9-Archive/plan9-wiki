@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Setting the right keyboard map (Editing Mon Dec 21 18:04:22 EST 2009 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>Setting the right keyboard map</b></font> (Editing Mon Dec 21 18:04:22 EST 2009 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="Setting the right keyboard map">
+<input type="hidden" name="version" value="1261436662">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+To change the default ASCII keyboard map to your local one (e.g
+German) use
+
+! % kbmap
+
+Select your preferred keyboard map from one of the entries in the
+list with mouse button three (right button) and then exit with the q
+key.
+
+Alternatively you could also drop the following in your 9term:
+! % cat /sys/lib/kbmap/de > /dev/kbmap
+
+To make this setting durable for $user edit /usr/$user/lib/profile
+and add the above mentioned line before(!) the switch where rio is
+executed. It should look something like this:
+
+! bind -a $home/bin/rc /bin
+! bind -a $home/bin/$cputype /bin
+! bind -c $home/tmp /tmp
+! font = /lib/font/bit/pelm/euro.9.font
+! switch($service){
+! case terminal
+! 	plumber
+! 	upas/fs
+! 	echo -n accelerated > '#m/mousectl'
+! 	echo -n 'res 3' > '#m/mousectl'
+! 	prompt=('term% ' '	')
+! 	fn term%{ $* }
+! 	cat /sys/lib/kbmap/de > /dev/kbmap
+! 	exec rio
+! (rest of the file...)
+
+Instead of the German "de" layout you could also use the French
+"azerty" or whatever else.
+
+(Todo: How to make that setting global in /rc/bin/termrc)
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

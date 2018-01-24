@@ -1,0 +1,665 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>thm 2005-09-24 Summary (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+thm 2005-09-24 Summary <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Thu May  6 15:05:24 EDT 2010</a>, uriel
+</div><hr />Original
+agenda:
+<ul>
+
+<li>
+New
+website/wiki
+-
+<a href="../uriel">uriel</a>
+</li>
+
+<li>
+9con.madrid
+-
+uriel/gorka?/annavaro?/nemo?
+</li>
+
+<li>
+Plan
+B
+status.
+Services,
+utilities,
+and
+ideas.
+-
+nemo
+</li>
+
+<li>
+Plans
+for
+our
+Plan
+B
+for
+Plan
+9
+(sorry,
+couldn't
+resist)
+-
+nemo
+</li>
+</ul>
+
+<a name="NEW_WEBSITE_/_WIKI_--_URIEL" /><h3>NEW WEBSITE / WIKI -- URIEL</h3>
+
+<ul>
+
+<li>
+<a href="../Uriel">Uriel</a>
+said,
+that
+the
+new
+design
+for
+the
+main
+Plan
+9
+website
+was
+started
+after
+the
+last
+THM.
+</li>
+
+<li>
+The
+link
+for
+the
+design
+he
+showed
+is:
+http://glendy.se.cat-v.org/who/uriel/p9site/
+</li>
+
+<li>
+One
+of
+the
+main
+ideas
+behind
+it
+is,
+that
+most
+of
+the
+links
+direct
+to
+the
+wiki,
+so
+people
+can
+change
+its
+content.
+</li>
+
+<li>
+What
+needs
+to
+be
+done
+is
+to
+fix
+the
+wiki,
+so
+its
+style
+looks
+more
+like
+the
+frontpage.
+</li>
+
+<li>
+<a href="../Uriel">Uriel</a>
+would
+like
+to
+get
+more
+papers
+into
+the
+"papers"
+page.
+</li>
+
+<li>
+Uriel
+asked,
+if
+the
+website
+should
+indicate,
+that
+there
+were
+changes
+in
+the
+"Fourth
+Edition"
+of
+Plan
+9,
+since
+its
+release.
+</li>
+
+<li>
+Nemo
+said,
+that
+it
+is
+still
+the
+"Fourth
+Edition"
+and
+the
+status
+could
+be
+indicated
+in
+the
+form
+"vX/X/X".
+</li>
+
+<li>
+Uriel
+said
+that
+sources
+was
+unreliable
+lately
+and
+so
+more
+mirrors
+of
+sources
+are
+needed.
+</li>
+
+<li>
+Nemo
+offered
+a
+fileserver,
+web
+and
+9fs
+access.
+</li>
+
+<li>
+Uriel
+told,
+that
+one
+idea
+behind
+the
+new
+website
+is
+to
+have
+everything
+in
+sources,
+so
+it
+can
+be
+mirrored.
+</li>
+
+<li>
+Uriel
+asked
+for
+help
+with
+the
+"News"
+wiki
+page,
+so
+events,
+like
+the
+Plan
+B
+release
+are
+written
+down
+there.
+</li>
+
+<li>
+News
+items
+are
+everything
+and
+if
+someone
+thinks,
+that
+it
+is
+not
+news,
+that
+he/she
+can
+edit
+the
+wiki
+page.
+</li>
+</ul>
+
+<a name="INFERNO_WIKI_AND_CHAOS_(NOT_PLANNED)" /><h3>INFERNO WIKI AND CHAOS (NOT PLANNED)</h3>
+
+<ul>
+
+<li>
+Uriel
+asked
+forsyth
+about
+the
+plan,
+to
+have
+a
+business
+oriented
+and
+hacker
+style
+website,
+on
+the
+Inferno
+mailinglist.
+</li>
+
+<li>
+Forsyth
+said,
+that
+the
+wiki,
+for
+which
+Caerwyn
+volunteered,
+should
+be
+the
+hacker
+style
+website.
+</li>
+
+<li>
+Uriel
+asked,
+if
+Inferno
+and
+Plan
+9
+things
+could
+be
+kept
+centralized.
+</li>
+
+<li>
+Forsyth
+said,
+that
+he
+does
+not
+disagree.
+</li>
+
+<li>
+Nemo
+asked
+for
+a
+central
+service
+register.
+</li>
+
+<li>
+Gdiaz
+said,
+that
+the
+9grid
+nodes
+could
+be
+used
+for
+that
+role.
+</li>
+
+<li>
+In
+the
+further
+discussion
+about
+the
+divergence
+of
+Plan
+9
+and
+Inferno
+drivers
+was
+a
+new
+model,
+like
+/sys/src/pc-drivers
+</li>
+
+<li>
+chaos
+</li>
+</ul>
+
+<a name="9CON.MADRID_--_URIEL" /><h3>9CON.MADRID -- URIEL</h3>
+
+<ul>
+
+<li>
+Uriel
+hopes
+to
+show
+up.
+</li>
+
+<li>
+Nemo
+said,
+that
+they
+want
+to
+poll
+the
+university
+to
+get
+support.
+</li>
+
+<li>
+Two
+options
+were
+given:
+december
+or
+may
+</li>
+
+<li>
+Uriel
+said,
+that
+many
+of
+the
+people
+are
+at
+CCC
+and
+so
+december
+would
+be
+overkill.
+</li>
+</ul>
+
+<a name="PLAN_B_--_NEMO" /><h3>PLAN B -- NEMO</h3>
+
+<pre>
+21:01 &lt;Nemo&gt; Well, we just wanted two things:
+21:01 &lt;Nemo&gt; - avoid static mounts and let the system adapt to FS availability
+21:02 &lt;Nemo&gt; - follow the "everything is a file" idea to the limit.
+21:02 &lt;Nemo&gt; For example, I was disappointed because in rio I couldnt
+21:02 &lt;Nemo&gt; use files to operate on widgets and the like.
+21:02 &lt;Nemo&gt; In the same way, I couldn't copy an mp3 file to somewhere to make it play.
+21:03 &lt;Nemo&gt; The same happen to other services. But most notably, the UI.
+21:03 &lt;Nemo&gt; What we do is to announce resources to the network, and then mount them using our
+21:04 &lt;Nemo&gt; volume stuff (dynamic mounts, really).
+21:04 &lt;Nemo&gt; For example, mount -U /what /what
+21:04 &lt;Nemo&gt; is what we use to get in /what
+21:04 &lt;Nemo&gt; the union of all file trees for information about things.
+21:04 &lt;Nemo&gt; A result is that you can ls /what to see what machines are around.
+21:05 &lt;Nemo&gt; The same for other resources. For example, we use du to locate
+21:05 &lt;Nemo&gt; things like button:Pause (pause buttons) in UIs found
+21:05 &lt;Nemo&gt; at /devs/*ui/ or any other place.
+21:05 &lt;Nemo&gt; Then we can 'echo press' &gt;/devs/....../button:Pause/ctl
+21:06 &lt;Nemo&gt; to press the button. I think this gives the idea.
+21:06 &lt;Nemo&gt; There are two things that are really useful: being able to import
+21:07 &lt;Nemo&gt; resources without having to mount them by hand, and 2, having a
+21:07 &lt;Nemo&gt; very detailed interface for services (having a file for the button).
+</pre>
+
+<ul>
+
+<li>
+Nemo
+said,
+that
+he
+wants
+to
+include
+these
+ideas
+into
+Plan
+9.
+</li>
+
+<li>
+He
+said,
+that
+he
+finished
+volfs
+for
+Plan
+9:
+</li>
+</ul>
+
+<pre>
+21:12 &lt;Nemo&gt; The daemon sends/listens for announces,
+21:13 &lt;Nemo&gt; file servers register with /srv/vols to let volfs know that there's anew service.
+21:13 &lt;Nemo&gt; (if you want to, of course)
+21:13 &lt;Nemo&gt; So, your volfs knows of several FSs
+21:13 &lt;Nemo&gt; that have a given name, and a set of constraints.
+21:13 &lt;Nemo&gt; For example, /usr/nemo!Unemo!Lhome!Cok
+21:14 &lt;Nemo&gt; which means, this thing is a file tree for "/usr/nemo"
+21:14 &lt;Nemo&gt; that is owned by nemo, located at home (whatever that might mean), and the
+21:14 &lt;Nemo&gt; latency of the connection from your machine to the FS seems to be good enough
+21:14 &lt;Nemo&gt; to page-in binaries.
+21:15 &lt;Nemo&gt; Well, the point is that volfs has the list of known volumes.
+21:15 &lt;Nemo&gt; Then, you mount volumes from it:
+21:15 &lt;Nemo&gt; mount /srv/vols /usr/nemo /usr/nemo!Cok
+21:15 &lt;Nemo&gt; which means, you mount at /usr/nemo
+21:15 &lt;Nemo&gt; the spec "/usr/nemo/!Cok".
+21:16 &lt;Nemo&gt; The daemon takes care of supplying a file tree that matches your request.
+</pre>
+
+<ul>
+
+<li>
+Gdiaz
+asked,
+if
+it
+does
+hot
+swap.
+</li>
+
+<li>
+Nemo
+answered,
+that
+it
+does
+something
+like
+this,
+as
+you
+request
+a
+"resource"
+and
+not
+hold
+just
+the
+fid.
+</li>
+
+<li>
+Nemo
+showed
+examples
+on
+the
+usage
+of
+volfs.
+(See
+the
+logs.)
+</li>
+</ul>
+
+<a name="AFTERSHOW" /><h3>AFTERSHOW</h3>
+
+<ul>
+
+<li>
+Uriel
+asked
+about
+kencc.
+</li>
+
+<li>
+Forsyth
+said,
+that
+he
+is
+working
+on
+the
+tarball.
+</li>
+</ul>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Thu May  6 15:05:24 EDT 2010</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

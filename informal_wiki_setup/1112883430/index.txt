@@ -1,0 +1,71 @@
+Informal Wiki Setup
+
+Basic Plan 9 wiki instructions for the novice: or notes on how to
+actually get a wiki going on your own Plan 9 machine.
+
+You can replace the '/sys/lib' with '$home/lib' in the following
+configuration if you don't have write access or don't want to run
+wikifs as bootes on a cpu server.
+
+CREATE SAMPLE WIKI DIRECTORIES
+
+! mkdir /sys/lib/wiki.sample
+! {cd /sys/lib/wiki && tar cp .}|{cd /sys/lib/wiki.sample && tar xT}
+! mkdir -p /usr/web/wiki/sample
+
+DOWNLOAD MISSING FILES
+
+ *	create.html from plan9 wiki
+
+! cd /usr/web/wiki/sample 
+! hget -o create.html http://plan9.bell-labs.com/wiki/plan9/create.html
+
+Other files are missing, but that's the most important one for
+starting everything.
+
+MODIFY FILES
+
+See httpd(8) -- (more documentation on setting up httpd would be nice)
+
+You'll need to edit /lib/namespace.httpd in at least the following
+way:
+
+find the current wiki reference in /lib/namespace.httpd
+! # mount -b #s/wiki.plan9 /usr/web/wiki/plan9
+! mount -b #s/wiki.sample /usr/web/wiki/sample
+
+modify create.html for your liking -- bellow is a diff on changes for
+the sample
+! cpu% diff create.html /sys/lib/wiki.sample/create.html
+! 3c3
+! < <title>Plan 9 Wiki: Create a new page</title>
+! ---
+! > <title>Plan 9 Sample Wiki: Create a new page</title>
+! 23, 24c23, 24
+! < <input type="hidden" name="service" value="plan9">
+! < <input type="hidden" name="base" value="/wiki/plan9">
+! ---
+! > <input type="hidden" name="service" value="sample">
+! > <input type="hidden" name="base" value="/wiki/sample">
+! 44d43
+! < </html>
+! 45a45
+! > </html>
+
+Make similar edits to /sys/lib/wiki.sample/edit.html
+
+START HTTPD
+
+! wikifs -p 666 -s wiki.sample -a tcp!*!wiki /sys/lib/wiki.sample
+! ip/httpd/httpd
+
+CONNECT TO YOUR NEW WIKI SERVER
+
+You can now access your new site using [Acme wiki instructions] or a
+web browser with a url similar to the following:
+
+http://localhost/wiki/sample/plan_9_wiki/
+
+Additional details about resetting your base configuration still need
+to be addressed.
+

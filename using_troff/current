@@ -1,0 +1,56 @@
+Using troff
+D1361603985
+Amycroftiv
+#Troff formats text for printing or display. The troff language is
+#not usually used directly but through some intermediary. Commonly
+#this involves embedding the tags defined by the ms(6) macros into
+#your text document.
+#
+#For example,
+#
+#! troff -ms file
+#
+#would output your text file with ms(6) macros as PostScript. Another
+#commonly used set of macros are for typesetting man(6) pages. To
+#view a typeset version of a manpage:
+#
+#! troff -man /sys/man/4/factotum | page
+#
+#RELATED TOOLS
+#
+#Various tools can be used in conjunction with troff to form a
+#toolset for word-processing, publishing, or as the back-end of such
+#an application.
+#
+# *	proof(1), page(1) - takes a troff file and displays an
+#	approximation of the page on the screen
+# *	dpost(1) - converts troff output to postscript
+# *	lp(1) - for printer output
+# *	spell(1) - for spell-checking
+# *	deroff(1), doctype(1) - for plain text output
+# *	troff2html(1) - for HTML output
+# *	tbl(1) - for formatting tables
+# *	eqn(1) - for typesetting mathematics (e.g. equations)
+# *	pic(1) - for drawing figures
+# *	grap(1) - for drawing graphs
+# *	ms(6) - macros for formatting manuscripts
+# *	mpictures(6) - picture inclusion macros
+# *	man(6) - macros for Plan 9 manpages
+# *	html2ms(1), ms2html(1) - for converting between HTML and ms(6)
+#	macros
+# *	fortune(1) - for generating editorial content
+# *	doc2txt(1) - for extracting printable strings from Word documents
+#
+#REFERENCES
+#
+# *	[A TROFF Tutorial |
+#	http://www.kohala.com/start/troff/v7man/trofftut/trofftut.ps] - A
+#	tutorial for new users (in PostScript format).
+# *	[Troff User's Manual |
+#	http://plan9.bell-labs.com/sys/doc/troff.html] - A user manual
+#	covering the Plan 9 edition of troff.
+# *	troff(1) - The man page.
+# *	[troff.org | http://troff.org] - A website devoted to troff.
+# *	[Publications that use troff | http://troff.org/pubs.html] -
+#	troff works.
+#

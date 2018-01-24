@@ -1,0 +1,106 @@
+Integration with other OSs
+D1259943569
+Aa
+#
+#UNIX, AND ITS COUSINS
+#
+#SSH can be used to gain command line access to Unices, though at
+#present only ssh V1 is supported by plan9. Version one of the
+#protocol is often disabled by default and must be explicitly enabled.
+#
+#Remote file access can be gained using nfs(4) or u9fs(4). U9fs can
+#be started from a network listner, e.g. inetd(8) or via srvssh over
+#an ssh link.
+#
+#To use inetd(1) Add this line to /etc/inetd.conf:
+#
+#! u9fs     stream  tcp     nowait  root   /usr/etc/u9fs   u9fs
+#
+#and this to /etc/services:
+#
+#! u9fs     564/tcp       9fs
+#
+#Note: the service is defined as u9fs rather than 9pfs as some inetd
+#implementations treat service names starting with a digit as numeric
+#port numbers.
+#
+#MAC OS X
+#
+#U9fs can be started via ssh using srvssh(4), or by launchd(8), (the
+#Mac OS X replacement for inetd(1) and /etc/rc[0-9].d/*). Launchd
+#needs a configuration file of the form:
+#
+#! <?xml version="1.0" encoding="UTF-8"?> 
+#! <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+#! <plist version="1.0"> 
+#! <dict> 
+#! 	<key>Label</key> 
+#! 	<string>com.bell-labs.plan9.u9fs</string> 
+#! 	<key>Program</key> 
+#! 	<string>/usr/bin/u9fs</string> 
+#! 	<key>ProgramArguments</key> 
+#! 	<array> 
+#! 		<string>u9fs</string> 
+#! 		<string>-l</string> 
+#! 		<string>/var/log/u9fs.log</string> 
+#! 		<string>-a</string> 
+#! 		<string>p9any</string> 
+#! 		<string>/opt/plan9</string>
+#! 	</array> 
+#! 	<key>Sockets</key> 
+#! 	<dict> 
+#! 		<key>Listeners</key> 
+#! 		<dict> 
+#! 			<key>SockServiceName</key> 
+#! 			<string>9pfs</string> 
+#! 		</dict> 
+#! 	</dict> 
+#! 	<key>inetdCompatibility</key> 
+#! 	<dict> 
+#! 		<key>Wait</key> 
+#! 		<false/> 
+#! 	</dict> 
+#! </dict> 
+#! </plist>
+#
+#To cause this to be run on system start, this should be installed as
+#/Library/LaunchDaemons/9pfs.plist. Installing instead in
+#/Library/LaunchAgents will cause it to be run only when a user is
+#logged in, while $HOME/Library/LaunchAgents will cause it to be run
+#only when that particular user is logged in.
+#
+#In order to start the listner it must first be ``loaded''
+#
+#! $ sudo launchctrl load /path/to/9pfs.plist
+#
+#If you are running the Mac OS X firewall you will need to add an
+#entry pass the 9pfs protocol in:
+#
+#! SystemPreferences->Sharing->Firewall
+#
+#The example 9pfs.plist above uses 9p authentication, described in
+#detail in u9fs(4), and serves only /opt/plan9.
+#
+#MICROSOFT WINDOWS
+#
+#[Cygwin | http://www.cygwin.com] provides a posix environment that
+#allows u9fs and ssh to be implemented as described in the Unix
+#section above.
+#
+#Alternatively a native Windows file protocol client is available as
+#the contrib(1) package steve/cifs. This has been tested with Windows
+#95, NT, 2k, and XP.
+#
+#Problems have been reported with Windows Vista which is believed to
+#be due to Vista requiring more complex authentication than cifs(1)
+#can provide. It has been suggested that fixing this is a simply a
+#matter of changing Vista's default configuration.
+#
+#The steve/9win package contains a preliminary command line client
+#and server. It provides slightly tighter integration than ssh,
+#however It should be replaced by a native cpu server for windows as
+#soon as possible.
+#
+#A client for historic NetWare servers is also available in the
+#package steve/ncpfs.
+#

@@ -1,0 +1,74 @@
+Snip
+
+Snip is a public snippet publishing service using 9p. You can publish
+arbitrary files and get a list of what's available for viewing. A
+common usage is to publish your snarf buffer, but this is no longer
+the default; use 'snip /dev/snarf' instead.
+
+The snipserv is any unauthenticated 9p connection. At the time of
+writing, the default server is simply using ramfs(4), exposing it via
+listen(8). At startup, the cpu server runs
+! auth/none ramfs -S snipserv
+from cfg/hostname/cpustart and has a /rc/bin/service/tcp17037 like
+! #!/bin/rc
+! echo `{date -n}  $* `{cat $3^/remote} > /sys/log/pubsrv
+! exec exportfs -S /srv/pubsrv
+The logging line is optional and particularly redundant if your local
+listen(8) instance is logging affirmative connections.
+
+This is only an example; the snipserv at 9srv.net will shortly be
+replaced with something which, at a minimum, has a persistent backing
+store so snippets survive server reboots.
+
+As an alternative way of getting at snippets (especially on
+hypothetical other servers), I've added the following to my local 9fs:
+! # snippet services
+! case *!snip
+! 	srv -cnmq tcp!^`{echo $1 | sed 's/snip$/17037/'} $1 /n/$1
+See /n/sources/contrib/anothy/bin/rc/9fs for my complete 9fs.
+
+The snip program has, to date, had less than one hour cumulative
+development time put into it. Partly, that's a testament to the ease
+of doing things with 9p and rc, but mostly it's a warning about
+reliability.
+
+The draft man page for snip follows.
+
+NAME
+
+snip - publish snippets
+
+SYNOPSIS
+
+snip [file...]
+
+DESCRIPTION
+
+Snip is a public snippet publishing service using 9p. It can be used
+to quickly publish arbitrary files to a unique and publicly
+accessible location, or to obtain a list of already-published
+snippets availabe for reading.
+
+Invoked with one or more arguments, snip will connect to an
+unauthenticated 9p service on the server named by the environment
+variable $snipserv (or 9srv.net if unset) on port 17037 and copy each
+file to a uniqe name on the server, reporting the name.
+
+Invoked without arguments, snip will connect to a server as above and
+will list the snippets available on that server.
+
+To ease retrieval, in either case snip leaves snipserv mounted in the
+current namespace.
+
+SOURCE
+
+/n/sources/contrib/anothy/bin/rc/snip
+
+SEE ALSO
+
+cat(1), cp(1)
+
+AUTHOR
+
+Anthony Sorace (anthony@strand1.com)
+

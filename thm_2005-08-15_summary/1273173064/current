@@ -1,0 +1,188 @@
+thm 2005-08-15 Summary
+D1273173064
+Auriel
+#Note: This summary only contains what I thought to be significant,
+#interesting and/or funny. -- Hyperion
+#
+#Original agenda:
+# *	Discusions, 'long winded design discussions' are not happening in
+#	9fans as hoped
+# *	Future of Plan 9
+# *	Unix/Linux version of auth server - tony_t
+# *	Plan B - nemo
+# *	[9P | http://9p.cat-v.org] Reliability Project Status -
+#	Gorka/[ericvh]
+# *	Jim Getty's SNAP vision - [ericvh]
+# *	Propaganda efforts and documentation issues - [uriel]
+# *	future 9con(s) - [uriel]
+# *	Installer plans/work(problems with lack of testing...)
+#
+#9P RELIABILITY PROJECT STATUS -- ERICVH
+#
+# *	Gorka has completed his initial port of Russ' recover application
+#	to the current distribution. It allows one to recover a session
+#	that is lost due to network error, server reboot, etc.
+# *	It also has some functionality to support failing over to
+#	alternate servers (assuming some sort of mirroring of resources) -
+#	but we haven't tested that much.
+# *	It works under both Plan 9 native and Plan 9 Ports. We are
+#	currently putting the finishing touches on a paper describing how
+#	it works and then we'll release to sources and p9p. Downside is it
+#	incurs about a 2x performance penalty on loopback under Plan 9 and
+#	8x penalty under p9p on Linux. This overhead is likely less visible
+#	on higher latency connections than loopback. The only way around
+#	the overhead would be to push the recovery code inside the kernel
+#	instead of providing it as a user application.
+# *	Axel asked if the paper discusses the resason of the performance
+#	penalty? Eric said it should and the reason is copy overhead. The
+#	extra overhead on p9p under Linux is inefficient threads.
+# *	Eric said it's actually an interposer for 9p. So instead of
+#! srv sources.cs.bell-labs.com
+#you
+#! recover sources.cs.bell-labs.com
+#! mount /srv/sources.cs.bell-labs.com
+# *	Uriel asked what was required for having a fallback server. Eric
+#	said that for static file systems it could be some sort of
+#	synchronous mirror - Plan B has some facilities for this, but we
+#	haven't tried using them yet.
+#
+#PROPAGANDA EFFORTS AND DOCUMENTATION ISSUES -- URIEL
+#
+# *	Would be good to have some input on what direction to take with
+#	the docs. So far I was trying to put as much stuff on the wiki as I
+#	can, so at least nothing is lost.
+# *	Vester added that openness on best practices would be good too.
+# *	Uriel would like to setup a mirror of all papers, ideally on
+#	sources. He also said that having a reliable sources web interface
+#	would be nice, not being sure if linking to 9grid.de from the main
+#	wiki is a great idea, mirrors are good, but not as reliable and
+#	uptodate as sources itself. If sources was exported over the web
+#	from it's main location it would be great.
+# *	Zimba asked if there were a list of who is responsible for what.
+#	Uriel explained that there isn't and that everyone is free to work
+#	on what they like, coordination has been traditionally thur 9fans,
+#	if you want to work on something, just do it, don't wait for anyone
+#	to give you 'permision'.
+#
+#JIM GETTY'S SNAP VISION -- ERICVH
+#
+# *	Jim Getty's is pushing his vision of the way the universe should
+#	look, particularly in the home network environment. If you look at
+#	his OLS paper http://google.com/search?q=getty's+snap, you'll see
+#	it looks somewhat familiar - very much like the Inferno/Plan 9
+#	vision, at least on the high level. Jim seemed to be very open to
+#	Plan 9 style ideas, so it may not be a bad carrier to push Plan 9
+#	ideas. Plan 9 technology seems to provide a lot more of what he
+#	wants than the alternatives he mentions in his paper(s). Getty's
+#	was pushing "lots of devices talking to eachother".
+# *	Charles Forsyth remarked: He is Jim Gettys, so that to get him
+#	interested you need to show him something he thinks he can't do or
+#	prove to him you can do it better.
+#
+#PLAN B -- GORKA
+#
+# *	We are probably packaging an image with everything for September.
+#	So people can look at it an maybe merge whatever they like into
+#	Plan 9. Our idea was to get the good ideas in it into sources. It
+#	is running on a modified version of the kernel, but there have been
+#	many strategy changes. The most changes which make it to sources,
+#	the less we have to maintain.
+#
+#FUTURE 9CONS -- URIEL
+#
+# *	Uriel would like to organize a 9con in Madrid this fall
+#	(Oct-Nov). He was talking with Anavarro, and counting on nemo and
+#	his students to do most of the work (;-)).
+# *	Gorka said he wanted to help with it. He could provide location.
+#	He wanted to actually organize it. But got into many things and
+#	couldn't. We may get money for bringing people willing to give
+#	conferences. But he needs time to do the paperwork for that.
+# *	Charles Forsyth was interested in coming.
+# *	20h said we will have a place in the hacking center, for Plan 9,
+#	on CCC (Chaos Computer Congress/Berlin by the Chaos Computer Club
+#	[http://www.ccc.de]). CCC will be on 26-31 December. For more info
+#	see [22C3]. Garbeam and uriel plan to give Plan 9 related talks.
+#
+#ANNOUNCE AND ADOPT AN OPEN SOURCE MODEL WITH AN OPEN CORE TEAM -- VT3
+#
+# *	Vester asked what do we want to do as a community?
+# *	Hyperion thought we'd all like to see such a model, but it
+#	depended on the Bell Labs developers.
+# *	Uriel warned that many people are happy with the status quo;
+#	Including Andrey, Eric, Axel, Gorka.
+# *	20h remarked we have a half open source model, as you can take
+#	out the distribution and publish it on your own and that noone
+#	complained about the differences of the 9grid.de .isos.
+# *	Charles said the best thing to show Plan9 is not-dead is to apply
+#	it more, esp. to do interesting things (or boring things in an
+#	interesting way). That's really why Linux surpassed BSD: hardly
+#	because it was better, but programmers wrote for Linux. And to be
+#	most accurate, universities supported it.
+# *	Axel wondered if it's about marketing. Vester and XTL agreed it
+#	is.
+# *	20h thought about having something like User Mode Linux for Plan
+#	9.
+# *	Vester suggested if we want to stand out from other OSes then add
+#	user auditing features. This is what corporations do to standard
+#	Windows and *ix machines.
+#
+#PLAN 9 PORT TO THE MAC MINI -- DAVID ECKHARDT (CMU)
+#
+# *	What the students have runs and has run on a mini. There are N
+#	pieces of 1-person-sized work. There is a relevance issue, though,
+#	given that G5's don't have BATs and that Apple is ditching PPC.
+#
+#INSTALLER PLANS/WORK -- URIEL
+#
+# *	Uriel thinks that there is need to unify the
+#	install/bootabe-system/floppy to make testing easier, right now
+#	there are four slightly different kernel images in one part or
+#	another of the install system, and depending which one you end up
+#	with some things work or not.
+# *	20h said one of the problem is that the kernel configuration
+#	specifies where to boot from.
+# *	Vester said network installs don't work correctly.
+#
+#AFTER-CHAOS
+#
+# *	Hyperion thought Plan 9 is "dead" as a research OS. He was very
+#	happy about Plan B becuase it had a lot of new ideas and research.
+#	Plan 9 had no such things lately.
+# *	XTL and fgb agreed to some extent.
+# *	Axel saw a link between what Hyperion said and Forsyth's remark
+#	about being able to do/show interesting things.
+# *	David Eckhardt thought a changelog on the web would increase
+#	sense of life; And asked if there is an easy way to partially
+#	automate it by periodically snarfing the descriptive text of
+#	submitted patches? Uriel has a script that generates notification
+#	emails when patches are accpeted, plog. He saw the problem is that
+#	not all changes go through patch(1).
+# *	20h pointed out that there is [http://www.tip9ug.jp/rlog/]
+# *	Vester flailed a dead rabbit: No organization, no infrastructure,
+#	no policies nor direction, then we'll be here again next year
+#	discussing the same things. Doing the same things and expecting
+#	different results is... Well, we need to resolve the internal
+#	issues.
+# *	Uriel thinks the issues won't be solved because there is deep
+#	disagreements on the very existence and importance of those issues,
+#	too many people just don't care. So the only way to change things
+#	is thru action, we have to try as many things as possible and see
+#	what works and what doesn't.
+# *	20h recommended to get good looking girls and a TV show for Plan
+#	9.
+# *	David asked if the "mux" M.S. thesis
+#	[http://pdos.csail.mit.edu/papers/plan9:jmhickey-meng.pdf] should
+#	be on the "papers" page. He was partway through and found it
+#	readable. It also is a "liveness" datum. Uriel noted that there is
+#	a new [Papers] wiki page that eventually should replace the
+#	unmaintained static papers page.
+#
+#PS
+#
+# *	20h's tip:
+#! htfilefs -m /tmp http://www.9grid.de/plan9/plan9.iso; 9660srv; mount /srv/9660 /n/cdrom /tmp/plan9.iso;
+#
+#UNIX/LINUX VERSION OF AUTH SERVER -- TONY_T
+#
+# *	Skipped becuase tony_t were absent
+#

@@ -1,0 +1,52 @@
+Connecting from other OSes
+
+Connecting to Plan 9 consists of either cpu(1)'ing to it, which is
+like ssh(1) of other OSes, but more advanced. The second way is to
+import files from Plan 9 using 9P.
+
+DRAWTERM
+
+[drawterm(8) | ../drawterm] is a program that non-Plan 9 systems
+users can use to establish graphical cpu(1) connections with Plan 9
+CPU servers. Just as a real Plan 9 terminal does, drawterm serves its
+local name space as well as some devices (the keyboard, mouse, and
+screen) to a remote CPU server, which mounts this name space on
+/mnt/term and starts a shell. Typically, either explicitly or via the
+profile, one uses the shell to start rio(1).
+
+Xfree86 drivers for some video cards assume that masks (stipples)
+have height equal to a multiple of 8. This causes drawterm to display
+blanks instead of glyphs with some fonts. Try the -b argument to
+drawterm if you see this problem.
+
+The sourcecode and precompiled binaries for various OS's can be
+downloaded from [http://swtch.com/drawterm/]
+
+V9FS
+
+See [v9fs] for further details.
+
+9PFUSE
+
+9pfuse provides a userspace fuse driver for mounting 9p filesystems.
+It is available in many unix-related operating systems. A typical
+command to mount a fs via 9pfuse:
+
+! 9pfuse 192.168.1.199:20000 /home/linda/9pimport
+
+For authentication and support for protocols like import [plan9port |
+http://swtch.com/plan9port] provides versions of factotum(4) and
+other utilities.
+
+HUBFS
+
+[hubfs] is a 9p fs which can be used in combination with 9pfuse or
+other ways of accessing 9p. It provides functionality like
+screen/tmux to allow persistent shells from both Plan 9 and another
+operating system to be shared back and forth.
+
+9VX
+
+See [9vx] for details. In 9vx you can use the standard utilities like
+cpu(1) or import(4)
+

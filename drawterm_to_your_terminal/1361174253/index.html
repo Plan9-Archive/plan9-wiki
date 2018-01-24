@@ -1,0 +1,472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Drawterm to your terminal (as of Mon Feb 18 02:57:33 EST 2013)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Drawterm to your terminal</h1>
+<h2><i>-as of Mon Feb 18 02:57:33 EST 2013-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+This
+memo
+describes
+how
+to
+setup
+your
+standalone
+terminal
+to
+accept
+<a href="../../drawterm">drawterm</a>
+and
+<a href="http://plan9.bell-labs.com/magic/man2html/1/cpu"><i>cpu</i>(1)</a>
+connections.
+<a name="INSTANT_CPU_SERVER_FROM_LIVE_CD" /><h3>INSTANT CPU SERVER FROM LIVE CD</h3>
+
+<p class='para'>
+This
+assumes
+DHCP
+internet
+service.
+Change
+the
+ip/ipconfig
+line
+if
+needed.
+</p>
+
+<pre>
+term% ip/ipconfig
+term% auth/factotum
+term% echo 'key proto=p9sk1 dom=livecd user=glenda !password=password' &gt;/mnt/factotum/ctl
+term% aux/listen1 -t tcp!*!17010 /bin/cpu -R &amp;
+</pre>
+
+<p class='para'>
+This
+shortcut
+works
+on
+any
+Plan
+9
+system
+that
+isn't
+already
+running
+a
+standard
+authserver
++
+keyfs.
+It
+works
+because
+starting
+listen1
+with
+the
+-t
+flag
+keeps
+the
+factotum
+available
+in
+the
+namespace
+of
+the
+cpu
+listener
+for
+direct
+authentication.
+Drawterm
+from
+another
+OS
+will
+connect
+as
+usual.
+CPU
+from
+Plan
+9
+requires
+an
+auth
+server
+to
+validate
+the
+key.
+</p>
+
+<p class='para'>
+(There
+seems
+to
+be
+a
+"direct
+auth"
+trick
+drawterm
+does
+that
+<a href="http://plan9.bell-labs.com/magic/man2html/1/CPU"><i>CPU</i>(1)</a>
+does
+not.
+It
+would
+be
+nice
+if
+<a href="http://plan9.bell-labs.com/magic/man2html/1/CPU"><i>CPU</i>(1)</a>
+also
+could
+connect
+without
+an
+authserver
+with
+this
+setup.)
+</p>
+
+<a name="SETTING_UP_WITH_KEYFS_AND_AUTHSRV" /><h3>SETTING UP WITH KEYFS AND AUTHSRV</h3>
+
+<p class='para'>
+<a href="http://plan9.bell-labs.com/magic/man2html/4/Keyfs"><i>Keyfs</i>(4)</a>
+is
+the
+process
+managing
+the
+users'
+key
+database.
+Create
+a
+new
+key
+database
+as
+$home/lib/keys.
+<pre>
+term% touch  $home/lib/keys
+</pre>
+
+</p>
+
+<p class='para'>
+Start
+<a href="http://plan9.bell-labs.com/magic/man2html/4/keyfs"><i>keyfs</i>(4)</a>.
+It
+will
+ask
+you
+the
+password
+which
+is
+used
+to
+encrypt
+the
+key
+database
+file
+($home/lib/keys).
+<pre>
+term% auth/keyfs  -p  $home/lib/keys
+Password: keyfilepassword
+0 keys read
+term%
+</pre>
+
+</p>
+
+<p class='para'>
+Add
+a
+user
+to
+the
+key
+database
+<pre>
+term% auth/changeuser  -p  glenda
+Password: loginpassword
+Confirm password: loginpassword
+assign Inferno/POP secret? (y/n) n
+Expiration date (YYYYMMDD or never)[return = never]:
+1 keys read
+Post id:
+User's full name:
+Department #:
+User's email address:
+Sponsor's email address:
+changeuser: can't open /adm/keys.who
+</pre>
+
+</p>
+
+<p class='para'>
+The
+last
+line
+is
+just
+a
+warning.
+You
+can
+ignore
+it.
+</p>
+
+<p class='para'>
+Now
+populate
+the
+<a href="http://plan9.bell-labs.com/magic/man2html/4/factotum"><i>factotum</i>(4)</a>
+with
+the
+hostowner
+information.
+<pre>
+term% echo 'key user=glenda dom=drawterm.test proto=p9sk1 !password=loginpassword' &gt; /mnt/factotum/ctl
+</pre>
+
+</p>
+
+<p class='para'>
+Start
+the
+authentication
+server
+on
+the
+"ticket"
+port.
+<pre>
+term% aux/listen1 -t 'tcp!*!ticket' /bin/auth/authsrv &amp;
+</pre>
+
+</p>
+
+<p class='para'>
+Start
+the
+cpu
+service
+listener
+on
+the
+"ncpu"
+port.
+<pre>
+term% service=cpu aux/listen1 'tcp!*!ncpu' /bin/cpu -R &amp;
+</pre>
+
+</p>
+
+<p class='para'>
+Then
+connect
+to
+your
+terminal
+using
+drawterm.
+<pre>
+$ drawterm  -a  ip.of.the.term  -c  ip.of.the.term
+</pre>
+
+</p>
+
+<p class='para'>
+Once
+you've
+finished
+the
+above
+sequence,
+the
+key
+database
+should
+be
+created
+correctly.
+So
+if
+you
+reboot
+your
+terminal,
+you
+don't
+need
+to
+repeat
+the
+whole
+thing
+again.
+In
+short,
+it
+should
+be
+enough
+to
+do
+the
+following:
+<pre>
+term% auth/keyfs -p $home/lib/keys # you can add this command to your profile
+Password: keyfilepassword
+1 keys read
+term% echo 'key user=glenda dom=drawterm.test proto=p9sk1 !password=loginpassword' &gt; /mnt/factotum/ctl
+term% aux/listen1 -t 'tcp!*!ticket' /bin/auth/authsrv &amp;
+term% service=cpu aux/listen1 'tcp!*!ncpu' /bin/cpu -R &amp;
+</pre>
+
+</p>
+
+<a name="ANCIENT_DRAWTERM_VERSIONS" /><h3>ANCIENT DRAWTERM VERSIONS</h3>
+
+<p class='para'>
+If
+you
+need
+access
+from
+really
+old
+versions
+of
+drawterm
+that
+don't
+support
+9p2000
+change
+the
+aux/listen1
+call
+to
+listen
+on
+port
+"cpu"
+and
+call
+cpu
+with
+the
+-O
+arg.
+Note
+that
+'-O'
+refers
+to
+the
+capital
+letter
+O
+and
+not
+a
+zero.
+</p>
+
+<pre>
+term% service=cpu aux/listen1 'tcp!*!cpu' /bin/cpu -O &amp;
+</pre>
+
+<a name="SEE_ALSO" /><h3>SEE ALSO</h3>
+
+<p class='para'>
+To
+setup
+a
+proper
+cpu/auth
+server
+see:
+<a href="../../Configuring_a_standalone_CPU_server">Configuring
+a
+standalone
+CPU
+server</a>.
+</p>
+
+<p class='para'>
+See
+the
+<a href="../../drawterm">drawterm</a>
+page
+for
+links
+to
+download
+source
+and
+binaries
+for
+various
+architectures.
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Mon Feb 18 02:57:33 EST 2013</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

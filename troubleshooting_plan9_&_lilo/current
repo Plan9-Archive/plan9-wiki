@@ -1,0 +1,31 @@
+Troubleshooting Plan9 & lilo
+D1026497457
+A (209.179.94.84)
+#If you're trying to boot plan9 from lilo and you get the following
+#message:
+#
+#! Loading <imagename>
+#! PBS...Bad format or I/O error
+#! Press a key to reboot
+#
+#... then this might help.
+#
+#Boot from your install floppy. When the system comes up, open a
+#shell window by using the right mouse button against the rio
+#backdrop. At the command prompt, type the mount line that is listed
+#in the "status" window below your install command interpreter
+#window. This will mount your hard disk at /n/kfs.
+#
+#Now, do the following:
+#
+#! term% cd /n/kfs/386
+#! term% /n/kfs/rc/bin/9fat:
+#! term% cp /n/9fat/plan9.ini .
+#! term% unmount /n/9fat
+#! term% disk/format -b ./pbslba -d -r 2 /dev/$DISK/9fat ./9load ./9pcdisk ./plan9.ini
+#
+#... where $DISK is your system media; mine is sdC0. The mount
+#command you gave before should give you a clue.
+#
+#Reboot.
+#

@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Replace language for wikifs (as of Fri Mar 29 15:52:28 EDT 2013)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Replace language for wikifs</h1>
+<h2><i>-as of Fri Mar 29 15:52:28 EDT 2013-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+The
+<a href="http://plan9.bell-labs.com/magic/man2html/4/wikifs"><i>wikifs</i>(4)</a>
+in
+both
+Plan
+9
+and
+Inferno
+understand
+a
+very
+small
+set
+of
+cues
+when
+generating
+HTML.
+That
+set
+can
+be
+limiting.
+It
+should
+be
+replaced
+with
+something
+better,
+like
+Markdown.
+<p class='para'>
+Markdown
+engines
+in
+C
+already
+exist,
+and
+have
+been
+ported
+to
+Plan
+9
+via
+APE.
+For
+proper
+integration
+this
+should
+likely
+be
+turned
+into
+a
+native
+parser,
+but
+that
+should
+be
+a
+relatively
+easy
+task.
+</p>
+
+<p class='para'>
+Doing
+this
+for
+the
+Inferno
+wikifs
+would
+be
+a
+bit
+more
+work,
+as
+no
+Markdown
+implementation
+exists
+in
+Limbo
+today
+(although
+there
+are
+similar
+things).
+</p>
+
+<p class='para'>
+These
+two
+together
+should
+make
+a
+good
+summer-sized
+project.
+Any
+extra
+time
+could
+be
+spent
+converting
+the
+existing
+pages
+(or,
+even
+better,
+writing
+a
+conversion
+program).
+</p>
+
+<p class='para'>
+It
+is
+not
+particularly
+important
+that
+the
+language
+understood
+by
+wikifs
+be
+markdown,
+per
+se,
+but
+it
+would
+be
+very
+nice
+if
+it
+was
+one
+of
+the
+widely
+understood
+similar
+alternatives
+(rather
+than
+a
+new
+creation).
+It
+is
+more
+important
+that
+the
+language
+understood
+by
+the
+Plan
+9
+and
+Inferno
+wikifs
+implementaitons
+be
+the
+same
+(or,
+at
+the
+very
+minimum,
+one
+a
+proper
+subset
+of
+the
+other).
+</p>
+
+<a name="LINKS" /><h3>LINKS</h3>
+
+<p class='para'>
+The
+original
+writeup
+on
+<a href="http://daringfireball.net/projects/markdown/">Markdown</a>,
+including
+the
+initial
+perl
+implementation.
+</p>
+
+<p class='para'>
+<a href="http://www.pell.portland.or.us/~orc/Code/markdown/">Discount</a>,
+a
+Markdown
+implementation
+with
+Plan
+9
+support
+(via
+APE)
+in
+the
+mainline
+tree.
+</p>
+
+<p class='para'>
+<a href="https://bitbucket.org/mjl/textmangle">textmangle</a>,
+a
+Limbo
+implementation
+of
+a
+markdown-like
+library
+(with
+moderately
+different
+syntax).
+</p>
+
+<p class='para'>
+<a href="http://johnmacfarlane.net/pandoc/README.html#pandocs-markdown">Pandoc</a>
+and
+<a href="http://fletcherpenney.net/multimarkdown/">MultiMarkdown</a>
+are
+two
+possible
+extensions
+worth
+considering.
+There
+are
+lots
+of
+others.
+</p>
+
+<p class='para'>
+<a href="http://en.wikipedia.org/wiki/Textile_(markup_language)">Textile</a>
+and
+<a href="http://en.wikipedia.org/wiki/ReStructuredText">reStructuredText</a>
+are
+alternatives
+to
+Markdown
+which
+might
+be
+suitable,
+although
+neither
+is
+in
+as
+widespread
+use.
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Fri Mar 29 15:52:28 EDT 2013</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

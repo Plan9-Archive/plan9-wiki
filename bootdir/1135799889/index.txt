@@ -1,0 +1,138 @@
+bootdir
+
+In Mid December 2002, a new feature was added to the system. It
+changes the previous #//boot to be a directory rather than a file,
+and allows what used to be a binary that had to be compiled to be a
+script instead.
+
+Russ Cox said something like this in
+[http://groups.google.com/groups?dq=&hl=en&lr=&ie=UTF-8&selm=606456fcdc17ce997666a1895d86f9ba%40plan9.bell-labs.com]
+
+There is a new kernel config file section called "bootdir" that lists
+the files to be placed in #//boot. There are no binaries in #/ itself
+anymore.
+
+A typical bootdir section might look like
+
+! 	bootdir
+! 		bootpcdisk.out boot
+! 		/386/bin/ip/ipconfig
+! 		/386/bin/auth/factotum
+! 		/386/bin/disk/kfs
+! 		/386/bin/cfs
+
+which says that /boot will contain four files: boot, ipconfig,
+factotum, kfs, and cfs, copied from the listed paths.
+
+The kernels have always special cased boot$CONF.out to get it listed
+as /boot. It is now /boot/boot, and no longer a special case.
+
+Now that everything is in /boot, initcode had to change for all the
+kernels; /boot/boot itself had to change to exec /boot/ipconfig
+(instead of /ipconfig), etc. Finally, auth_getkey changed. It looks
+for /factotum and then /boot/factotum, to deal with either type of
+kernel.
+
+The boot file /386/bin/ip/ipconfig (e.g.) turns into
+_386_bin_ip_ipconfig.root.s and then _386_bin_ip_ipconfig.root.8.
+It's a bit of an ugly name, but mk clean will get rid of them. You
+could imagine just using the last path element, but that might lead
+to weird build inconsistencies if kernels were using two different
+files with the same last element. One unfortunate consequence of the
+big name is that _386_bin_auth_factotum.root.s is too long for the
+current file servers to deal with. You could use lnfs to get around
+this, but I didn't want to require lnfs(4) for the kernel build, so
+we have a rule in portmkfile that copies factotum and ipconfig to
+factotum.hack and ipconfig.hack and then the bootdir section actually
+looks like:
+
+! 	bootdir
+! 		bootpcdisk.out boot
+! 		ipconfig.hack ipconfig
+! 		factotum.hack factotum
+! 		/386/bin/disk/kfs
+! 		/386/bin/cfs
+
+sadly. That will go away when we get long file names.
+
+The pc initcode is also changed. Whereas before it used to do
+
+! 	exec("/boot", ["boot", 0]);
+
+in hand-coded assembly (pc/initcode.s), it now does
+
+! 	open("#c/cons", OREAD);
+! 	open("#c/cons", OWRITE);
+! 	open("#c/cons", OWRITE);
+! 	bind("#c", "/dev", MAFTER);
+! 	bind("#ec", "/env", MAFTER);
+! 	bind("#e", "/env", MCREATE|MAFTER);
+! 	bind("#s", "/srv", MREPL|MCREATE);
+! 	execl("/boot/boot", "/boot/boot", 0);
+
+in C (port/initcode.c). The point is to set up enough of a namespace
+that /boot/boot can be a shell script. Eventually the other
+architectures should change too, though it's not urgent. If someone
+wants to do the bitsy, send me mail and I'll let you know what it
+took to get one of the old undistributed mips kernels changed over.
+(The compiler setup is similar.)
+
+As a much bigger example, I built a kernel called pcext the other
+night. It uses rx and trampoline to connect through a Plan 9 gateway
+machine to the root file server. It uses this bootdir:
+
+! 	bootdir
+! 		bootext boot
+! 		/386/bin/rc
+! 		/rc/lib/rcmain
+! 		/386/bin/bind
+! 		/386/bin/cat
+! 		/386/bin/cp
+! 		/386/bin/echo
+! 		/386/bin/mount
+! 		/386/bin/sleep
+! 		factotum.hack factotum
+! 		/386/bin/ip/ipconfig
+! 		/386/bin/cfs
+! 		/386/bin/aux/srvthru
+
+(and does require lnfs to build).
+
+Srvthru is the obvious program -- it connects to rx, authenticates,
+starts trampoline to the real file server, and then optionally pushes
+cfs onto the connection.
+
+The point is that bootext is a shell script, which makes it easier to
+tweak than when /boot was a binary building out of /sys/src/9/boot.
+
+! 	#!/boot/rc -m /boot/rcmain
+! 	
+! 	cd /boot
+! 	cp '#r/rtc' '#c/time'
+! 	bind -a /boot /bin
+! 	bind -a '#I' /net
+! 	bind -a '#l0' /net
+! 	bind -a '#S' /dev
+! 	bind '#p' /proc
+! 	bind '#d' /fd
+! 	bind -a /boot /
+! 	ipconfig
+! 	echo 'authdom=cs.bell-labs.com auth=204.178.31.3' >>/net/ndb
+! 	factotum -sfactotum -u -a 204.178.31.3
+! 	cargs=()
+! 	if(~ $#cfs 1 && ! ~ $cfs off)
+! 		cargs=(-c $cfs)
+! 	srvthru $cargs tcp!204.178.31.2!17009 il!emelie!9fs boot emelie
+! 	mount -c /srv/boot /root
+! 	bind -ac /root /
+! 	bind -c /root/mnt /mnt
+! 	mount -a '#s/factotum' /mnt
+! 	rootdir=/root
+! 	rootspec=''
+! 	/386/init -t
+! 	/boot/rc -m/boot/rcmain -i	# in case init fails
+
+It takes care of everything /boot traditionally does, using srvthru
+as the way to establish /srv/boot (and also /srv/emelie, just for
+kicks).
+

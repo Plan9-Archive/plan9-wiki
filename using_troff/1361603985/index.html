@@ -1,0 +1,385 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Using troff (as of Sat Feb 23 02:19:45 EST 2013)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>Using troff</h1>
+<h2><i>-as of Sat Feb 23 02:19:45 EST 2013-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+Troff
+formats
+text
+for
+printing
+or
+display.
+The
+troff
+language
+is
+not
+usually
+used
+directly
+but
+through
+some
+intermediary.
+Commonly
+this
+involves
+embedding
+the
+tags
+defined
+by
+the
+<a href="http://plan9.bell-labs.com/magic/man2html/6/ms"><i>ms</i>(6)</a>
+macros
+into
+your
+text
+document.
+<p class='para'>
+For
+example,
+</p>
+
+<pre>
+troff -ms file
+</pre>
+
+<p class='para'>
+would
+output
+your
+text
+file
+with
+<a href="http://plan9.bell-labs.com/magic/man2html/6/ms"><i>ms</i>(6)</a>
+macros
+as
+PostScript.
+Another
+commonly
+used
+set
+of
+macros
+are
+for
+typesetting
+<a href="http://plan9.bell-labs.com/magic/man2html/6/man"><i>man</i>(6)</a>
+pages.
+To
+view
+a
+typeset
+version
+of
+a
+manpage:
+</p>
+
+<pre>
+troff -man /sys/man/4/factotum | page
+</pre>
+
+<a name="RELATED_TOOLS" /><h3>RELATED TOOLS</h3>
+
+<p class='para'>
+Various
+tools
+can
+be
+used
+in
+conjunction
+with
+troff
+to
+form
+a
+toolset
+for
+word-processing,
+publishing,
+or
+as
+the
+back-end
+of
+such
+an
+application.
+</p>
+
+<ul>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/proof"><i>proof</i>(1)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/1/page"><i>page</i>(1)</a>
+-
+takes
+a
+troff
+file
+and
+displays
+an
+approximation
+of
+the
+page
+on
+the
+screen
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/dpost"><i>dpost</i>(1)</a>
+-
+converts
+troff
+output
+to
+postscript
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/lp"><i>lp</i>(1)</a>
+-
+for
+printer
+output
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/spell"><i>spell</i>(1)</a>
+-
+for
+spell-checking
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/deroff"><i>deroff</i>(1)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/1/doctype"><i>doctype</i>(1)</a>
+-
+for
+plain
+text
+output
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/troff2html"><i>troff2html</i>(1)</a>
+-
+for
+HTML
+output
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/tbl"><i>tbl</i>(1)</a>
+-
+for
+formatting
+tables
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/eqn"><i>eqn</i>(1)</a>
+-
+for
+typesetting
+mathematics
+(e.g.
+equations)
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/pic"><i>pic</i>(1)</a>
+-
+for
+drawing
+figures
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/grap"><i>grap</i>(1)</a>
+-
+for
+drawing
+graphs
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/ms"><i>ms</i>(6)</a>
+-
+macros
+for
+formatting
+manuscripts
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/mpictures"><i>mpictures</i>(6)</a>
+-
+picture
+inclusion
+macros
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/6/man"><i>man</i>(6)</a>
+-
+macros
+for
+Plan
+9
+manpages
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/html2ms"><i>html2ms</i>(1)</a>,
+<a href="http://plan9.bell-labs.com/magic/man2html/1/ms2html"><i>ms2html</i>(1)</a>
+-
+for
+converting
+between
+HTML
+and
+<a href="http://plan9.bell-labs.com/magic/man2html/6/ms"><i>ms</i>(6)</a>
+macros
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/fortune"><i>fortune</i>(1)</a>
+-
+for
+generating
+editorial
+content
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/doc2txt"><i>doc2txt</i>(1)</a>
+-
+for
+extracting
+printable
+strings
+from
+Word
+documents
+</li>
+</ul>
+
+<a name="REFERENCES" /><h3>REFERENCES</h3>
+
+<ul>
+
+<li>
+<a href="http://www.kohala.com/start/troff/v7man/trofftut/trofftut.ps">A
+TROFF
+Tutorial</a>
+-
+A
+tutorial
+for
+new
+users
+(in
+PostScript
+format).
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/sys/doc/troff.html">Troff
+User's
+Manual</a>
+-
+A
+user
+manual
+covering
+the
+Plan
+9
+edition
+of
+troff.
+</li>
+
+<li>
+<a href="http://plan9.bell-labs.com/magic/man2html/1/troff"><i>troff</i>(1)</a>
+-
+The
+man
+page.
+</li>
+
+<li>
+<a href="http://troff.org">troff.org</a>
+-
+A
+website
+devoted
+to
+troff.
+</li>
+
+<li>
+<a href="http://troff.org/pubs.html">Publications
+that
+use
+troff</a>
+-
+troff
+works.
+</li>
+</ul>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Sat Feb 23 02:19:45 EST 2013</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

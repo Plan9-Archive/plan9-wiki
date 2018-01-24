@@ -1,0 +1,19 @@
+svg support
+D1205170058
+Aericvh
+#Another idea that could apply to Inferno, Plan 9 or both would be a
+#library for native SVG support. Many (all?) of the primatives in
+#draw map to SVG primitives so this should be relatively
+#straightforward and open up nice GUI alternatives for both Plan 9
+#and Inferno.
+#
+#Milestones would be based off of particular primitives with stretch
+#milestones including support for various types of advanced fills,
+#and more complicated manipulation of the SVG objects
+#(transformations, rotations, etc.). A simple viewer would be
+#necessary to facilitate acceptance of the milestones.
+#
+#A far stretch would be an SVG editor.
+#
+#This would be a great project for someone to learn about Plan 9
+#graphics.

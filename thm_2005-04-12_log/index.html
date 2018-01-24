@@ -1,0 +1,1516 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>THM 2005-04-12 Log (Plan 9 wiki)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+THM 2005-04-12 Log</h1>
+
+<div class='body'> <!-- ***************************** -->
+
+
+<pre>
+rsc9      before we get into deeper things, could someone tell
+         me why native awk matters at all?
+
+uriel     rsc9: because non-native awk sucks
+         rsc9: I'm trying to do shell redirection from system(),
+         and it's just anoying as hell
+
+newsham   hey russ, I have a question for you about 9p/auth.
+         when you read the protocol from the remote I get "p9sk1@domain\0",
+         but it seems kenfs returns "v.2 p9sk1@..." . What does
+         that mean? Is this part of the negotiation documented
+         somewhere?
+
+Major-Wi  yeah, like system() uses ksh
+
+uriel     rsc9: it just doesn't work as expected
+
+rsc9      so system() uses ksh. any other problems?
+
+Major-Wi  i thought the plan 9 shell was rc?
+
+uriel     rsc9: return codes for system are also weird
+
+rsc9      "it just doesn't work as expected" isn't very specific.
+         okay, so system() is different. other things?
+
+Major-Wi  exits
+
+uriel     rsc9: using ksh to run stuff from awk in Plan 9 is
+         not what anyone would expect(and again, I haven't managed
+         to get even that to work properly... but maybe I was
+         doing something wrong)
+         Major-Willard: yes, exits is another one
+
+rsc9      okay, system and exits. more?
+
+noselasd  I think it boils down to people not liking APE. On
+         the other hand , it's easy to keep in sync with bwks
+         AWK :-)
+
+uriel     rsc9: I think I had another one, but now I forgot :)
+
+Major-Wi  it's not native
+
+newsham   if you used rc instead of ksh to run system(..) wouldnt
+         that require more work when porting non p9 code?
+
+uriel     newsham: if I want loonix I know where to find it
+
+newsham   uriel: system() is from unix, no?
+
+Major-Wi  well, on 9 you'd assume rc
+
+uriel     newsham: awk is not just part of ape, awk is a fundamental
+         tool of the system and should work as part of the system
+
+Major-Wi  yeah
+
+rsc9      e already change little pieces of awk rather than use
+         bwk's distribution as is. utf handling is one area.
+         i'm happy to hear that we should use our own system()
+         and exit() too.
+
+uriel     newsham: no, in awk you really need to get into the
+         shell to do many things, specially in "real" awk that
+         is rather limited in functionality(and I like it that
+         way)
+
+uriel     rsc9: I think I had some nasty problem with something
+         else, but I'm sorry I forgot what it was, I will let
+         you know when I remember... :/
+
+rsc9      detailing specific things are just way better than
+         "i made a native awk; let's use it".
+         otherwise we end up in the cadt model of system development.
+
+uriel     rsc9: ok, I agree
+
+Major-Wi  i believe it should ALL be native
+
+uriel     rsc9: I was just a bit frustrated as my understanding
+         is that awk was treated more as a "unix backwards compat"
+         thing rather than a first class Plan 9 member
+
+Major-Wi  is this lunix or 9?
+
+rsc9      awk is a kind of middle ground.
+
+uriel     Major-Willard: well, maybe we can get there some time,
+         let's start with somethin and we will see where we
+         get
+         rsc9: yes, I guess it has a bit of a dual role
+
+rsc9      boyd, you can be a purist all you want, but once you
+         port gs for the 100th time because they released a
+         new version, you get tired of it.
+
+Major-Wi  awk? doesn't that get used to mk the kernel?
+
+uriel     rsc9: still, i feel that there is no substitute for
+         it in Plan 9 world, but then I think Rob never was
+         a big awk fan, right? :)
+
+rsc9      awk is a plan 9 utility as much as sed is. most of
+         our awk programs don't use system() so that particular
+         part isn't as well done. but bwk's awk doesn't do utf
+         and the plan 9 one does. so there are accomodations.
+         okay, enough of awk.
+
+musasabi  Making more changes than necessary just makes updating
+         ports more pain - and that time could most probably
+         be spent on something better.
+
+rsc9      musasabi: exactly.
+         jmk is not writing a new installer. as far as i know,
+         no one is.
+
+uriel     still, awk is not such a big deal, specially if the
+         issues with calling external commands from it and exits
+         are fixed; I was just a bit frustrated the other day
+         trying to get my awk code to work, so I'm sorry if
+         I made so much fuss about it
+
+Major-Wi  rsc9: ken called me 'an enthusiast'
+
+uriel     rsc9: yes, that has been cleaned up, still _someone_
+         somehow came up with the idea that he was...
+         (thru some email that no one else has seen)
+         Major-Willard: I think that quite deffines you :)
+
+rsc9      well don't blame me for that. if you can track it down,
+         great, but he's not.
+
+uriel     rsc9: I don't blame anyone, and I'm sorry if it seemed
+         like it, I just think that if the process was a bit
+         more transparent that kind of misunderstandings would
+         not happen
+
+musasabi  What I think would be quite nice would be an easy way
+         to follow plan9 development - what is changed where
+         and why.
+
+rsc9      this is really what i wanted to talk about.
+
+uriel     yes :)
+
+Major-Wi  uriel: i'd pissed off some guy at USG and he asked
+         ken WTF?
+
+rsc9      as far as following what has happened, /dist/replica/plan9.log
+         is a great start.
+
+noselasd  Well, if someone thought someone was writing a new
+         installer, all it'd take was a post to 9fans :-)
+
+newsham   uriel: uh, you're suggesting that no one do work without
+         first declaring that they're starting?
+
+uriel     I got a list of items I would like to see happening
+         in the Plan 9 dev community :)
+
+rsc9      boyd: and ken said "he pisses everyone off; don't worry
+         about it."
+         (actually i have no idea)
+
+uriel     newsham: no
+         newsham: but it's hard for people that comes new to
+         know what is going on, or what is the dev model
+         who is in charge, and so on, patch is great, but it's
+         not clear who/when/what use it
+         it's no clear who decides if a patch goes in or not(it's
+         clear for us, but not for someone coming from outside
+         that has not follwed things for quite some time)
+
+newsham   uriel: I dont find it any better or worse than other
+         projects (eg. cygwin or freebsd)
+
+rsc9      to the extent that anyone is in charge, it's the people
+         who work for bell labs. but mainly it feels like more
+         of a collaboration.
+
+uriel     that has some advantages, of course, as sets a barrier
+         of entry, but I think right now that barrier is a bit
+         too arbitrary
+
+rsc9      jmk and i are the ones who apply patches.
+
+newsham   in most projects an "outsider" would come up with a
+         patch, send it to the person they think is most appropriate
+         and either they would add the patch or not.
+
+Major-Wi  ACTION thinks an applied patch should (auto) mail
+         9fans
+
+uriel     Major-Willard: not 9fans, but we need a commits list,
+         I'm going to hack it up soon
+
+rsc9      how about an applied patch appends an entry to a log
+         on sources.
+
+uriel     rsc9: it's easy to patch those things on top of patch,
+         but not all changes go thru patch
+
+newsham   uriel: see /n/sources/patch/applied
+
+__20h__   Boyd, you never joined the NetBSD-cvs ML.
+
+uriel     newsham: I know, as I said, I'm going to write an script
+         that generates emails from that
+
+rsc9      patch/list applied
+
+musasabi  rsc9: what do you mean by /dist/replica/plan9.log -
+         I can only find /dist/replica/client/plan9.log which
+         is not very helpful.. (sorry for the stupid question)
+
+rsc9      musasabi: that's what i meant.
+
+uriel     rsc9: that is not an issue, as I said, it works great,
+         the only problem is that not all chagnes go thru patch
+
+rsc9      but all changes do go into the plan9.log. if you look
+         at the changes and can't tell why they were made, then
+         it's fine to ask on 9fans.
+
+mjl-      musasabi: you can track all file changes with it, just
+         not the description
+
+uriel     rsc9: it would be nice if there was a single path,
+         and the comments are really helpful, not everyone wants
+         to look thru all diffs...
+         rsc9: also it's nice to see who did the changes, to
+         maybe comment/ask that person... but maybe that can
+         be done with sources now...
+
+rsc9      comments just aren't going to happen. i thought about
+         it for a while, but it's not the way the plan 9 guys
+         at bell labs work.
+         someone familiar with the source could certainly read
+         the diffs and maintain a changelog. uriel?
+
+uriel     rsc9: hehehe..
+         rsc9: well, then I guess I will try to hack something
+         that picks up the things from sources...
+
+noselasd  I would be *mad* if I had to add comment to every thing
+         I change in projects at work..
+
+rsc9      the fact of the matter is that if you care about why
+         things were changed, then you're already reading the
+         source.
+
+newsham   is it really needed though?
+
+uriel     rsc9: but it woud be nice to at least know who did
+         the change, I will look if that can be get from sources
+
+rsc9      ls -lm will show you who pushed it out to sources.
+
+noselasd  So I actually understand adding comments may not be
+         "doable" :.-)
+
+uriel     rsc9: not everyone does, I know many people that follows
+         the commits lists of various projets, and they don't
+         reall all the src, they just read mostly the comments
+         to know what is going on
+         (ask Oksel)
+
+__20h__   Comments? I don't even add such things into the code.
+
+mjl-      i'm oksel, but under plan9
+
+rsc9      so fine, then maybe someone maintaining a changelog
+         would be a good contribution, but it won't be any of
+         us.
+
+newsham   uriel: so if you read through the patch/applied and
+         miss out on 5 or 10% of the additions, are you missing
+         that much?
+
+uriel     __20h__: code should be slef documenting, changes are
+         different
+
+mjl-      anyway, users could easily make commit logs
+
+rsc9      the bulk of the changes come from patch anyway.
+
+musasabi  Usually when following a typical open source project
+         I just subscribe to the cvs list and get mails about
+         commits and look at the diff if the message indicates
+         it is something interesting. Of course one can allways
+         diff but that is not very nice to look "is this something
+         interesting".
+
+mjl-      once a simple mechanisme to comment on changes has
+         been mae
+
+newsham   if you're actively modifying code, you'll notice if
+         there's a replica/pull that affects code you're working
+         on and you'll know the code enough to dif
+         if you're just trying to get a feel for "whats going
+         on", its probably not that important if you miss an
+         item or two
+
+rsc9      okay, i think we've beat this changelog thing into
+         the ground.
+
+mjl-      yups
+
+noselasd  musasabi: But what is the usefulness of that ? It's
+         "nice to know" bot imo not significant..
+
+rsc9      i'd be happy to have someone maintain a changelog on
+         the side and email us if they want to know more about
+         a change that wasn't done through patch.
+
+uriel     noselasd9: it's more significant for people that are
+         just starting to get into the system
+
+rsc9      switching to patch acceptance criteria (and feel free
+         to add this to the wiki).
+         jmk or i apply patches. acceptance criteria aren't
+         well-defined, but basically i want to see:
+
+uriel     rsc9: yes, documenting that a bit would be very nice
+
+rsc9      1. an explanation of what the problem is
+
+noselasd  uriel: Ok - thatks a point.
+
+rsc9      2. a minimal set of fixes, with no gratuitous changes
+         3. the new code has to look like (style-wise) the old
+         code
+         4. if the external behavior changes, document the change
+
+m4dh4tt3  #2 meaning to include no whitespace or formatting changes,
+         yes?
+
+rsc9      #2 yes.
+
+m4dh4tt3  that makes sense
+         most other projects i know of have the same requirements
+
+rsc9      if i get patches that don't do those 4, then sometimes
+         i sorry them
+         with a note explaining what i'd like to see in a future
+         patch.
+
+musasabi  as a sidenote would patches adding commentation to
+         existing code be welcome?
+
+m4dh4tt3  gratuitous changes of that nature make it more difficult
+         for the reviewer to actually review the code
+
+uriel     yes, sounds very reasonable, just what we needed
+
+rsc9      but most of the time i just bring the patch up to snuff
+         myself, noting what i did, and then apply it.
+
+uriel     rsc9: do you want to make a wiki page about "how to
+         contribute"? or should someone else(me?) do it based
+         on what you said here?
+
+rsc9      o for example i edit almost all the man page changes
+         that get submitted for english and man page conventions.
+         i haven't edited the wiki in years. i'd prefer someone
+         else do it.
+
+uriel     rsc9: ok, I will do
+
+rsc9      my first letters of sentences are occasionally getting
+         chopped off due to an acme irc bug. y'all will have
+         to cope. ;-)
+
+uriel     heh, you should try irc7, seems very popular this days
+         :)
+
+Major-Wi  ACTION agrees with that despite #3, but learnt the
+         necessity for #3 while hacking the 7th Ed sh
+
+m4dh4tt3  thanks, uriel. i was going to jump in, but i don't
+         have a drawterm open ATM
+
+Major-Wi  yo m4
+
+rsc9      if you create a patch and then use patch/email to give
+         us your email address, you get email notification when
+         the patch is applied/sorried.
+
+__20h__   Irc7 only supports one channel.
+
+m4dh4tt3  rsc9: i think we can interpolate ;-)
+
+rsc9      any other patch questions?
+
+Major-Wi  deletions?
+
+uriel     rsc9: "saved"?
+
+m4dh4tt3  rsc9: thanks for providing those guidelines for the
+         community. from the patches i've submitted in the past
+         (before patch), i pretty much gathered all that, but
+         it's good for the rest of the community to know.
+
+newsham   20h: irc7 is f2f's server/client? if so, you can open
+         multiple windows in different channels, and you can
+         still use multiple channels in one window if you dont
+         bind the window to a channel
+
+rsc9      patch/note saved/whatever-is-there will tell you about
+         saved.
+
+uriel     rsc9: seems a bit weird and redundant, just reject
+         it and sugest put into sources dir
+
+rsc9      saved is for things that aren't going in just because
+         they don't fit in/feel like plan 9.
+
+uriel     rsc9: yes, but then why wasn't rio-bg saved? ;P
+
+rsc9      sorry is for things that have been rejected. the intent
+         is to clean up applied and sorry once in a while so
+         they don't grow without bound.
+
+newsham   btw, does patch/create work in acme? the first tiem
+         I tried it in acme I had issues but I dont know if
+         it was just the long delay that threw me off or the
+         bits that make it put the rio window into editing mode
+         (its been too long for me to recall exactly)
+
+musasabi  A simple "how to contribute a patch" example could
+         be nice in the wiki.
+
+uriel     rsc9: my point is, why not just let people maintain
+         external patches in their own dirs...
+
+rsc9      i actually thought rio-bg was the one i saved. i was
+         surprised earlier today when i noticed i hadn't.
+
+newsham   musa: there's an example in the man page, no?
+
+rsc9      patch/create assumes it can turn on hold mode. it probably
+         doesn't work well in win windows.
+
+uriel     rsc9: if the sources "private" dirs are organized a
+         bit better, I think that would be a much better place
+         for things that are not ready, or don't even fit into
+         the main distribution, but that some people might like
+         to keep around
+
+newsham   that would be good to note in the wiki too. (and maybe
+         the man page)
+
+uriel     yup, I have in my TODO list looking over patch/*; it
+         could use some polishing
+         BUGS? :)
+
+Major-Wi  deletions
+
+uriel     but should be easy to fix, I hope..
+
+rsc9      boyd: fix deletions and i'll apply the patch.
+
+uriel     what is "deletions"? sorry, I missed that
+
+__20h__   Patch doesn't support the deletion of files.
+
+uriel     ah, I see, yes
+
+musasabi  newsham: that does not say anything about adding/removing
+         files (or directories)
+
+mjl-      patching files into existence works
+
+rsc9      deletions are not very common so i'm not very worried.
+         adding files does work.
+         i moved some stuff into patch/save
+         saved
+         any other patch complaints?
+
+uriel     rsc9: I think nothing significant... I would say that
+         still would be nice if the labs would use it, even
+         without comments, but well..
+
+musasabi  an email notification to a list when something happens
+         could be nice, but by no means very important.
+
+__20h__   What if I want to patch a saved patch?
+
+uriel     (maybe a way to just have it apply automatically pathces
+         if you have the right perms
+         musasabi: I will do that
+
+__20h__   There's an typo in the rio-background.
+
+musasabi  uriel: thanks.
+
+rsc9      it can't automatically apply patches because of the
+         way we keep our internal source tree in sync with sources.
+
+uriel     musasabi: the only thing is that with the current system
+         I have to make something that checks both sources/replica
+         and patch... which is a bit anoying as they look qutie
+         different
+
+Major-Wi  nah auto-application is a bad idea
+
+rsc9      patching saved patches doesn't seem lke a very common
+         case.
+         you don't need the check patch. patch is for things
+         pending on sources.
+
+newsham   so the patch/email thing causes automatic notification?
+         What about mailing a mailing list as well? That might
+         be useful.
+
+uriel     rsc9: one thing, what about keeping public the list
+         of changes from your private tree to the public one?
+         (if that is possible)
+
+rsc9      what do you mean?
+
+Major-Wi  like i said, mail 9fans
+
+rsc9      mailing 9fans will drive away all the people who don't
+         care.
+
+newsham   major: i dont think everything should go to 9fans
+
+uriel     rsc9: jmk mentioned in his email that you guys get
+         an email every day with all the files that are different
+         in the distro and in your local tree.
+
+rsc9      e're talking pretty trivial stuff a lot of the time.
+
+newsham   but creating a new mailing list (ie. googlegroups.com)
+         is really easy these days
+
+Major-Wi  look we have 250 patches
+
+__20h__   Not googlegroups.com.
+
+uriel     rsc9: yes, but it's small things that make the whole
+         dev model ;)
+
+Major-Wi  that"s zip compared to the spam and other crapa
+
+__20h__   Google is the commercial NSA of the future.
+
+uriel     __20h__: I'm sure nashi can setup some lists in mordor
+
+rsc9      i don't want to make that list public. if we want the
+         change to go out, we'll push the file. seeing the file
+         list doesn't strike me as very interesting.
+
+Major-Wi  __20h__: :)
+
+newsham   20h: and patch/applied info is sensitive because?
+
+rsc9      i'd be happy to append the mails to a mailbox file
+         on sources. if people want to watch it and generate
+         auto emails from it then fine.
+
+uriel     rsc9: ok, I jsut thought it was interesting if someone
+         was working on something that had pending changes or
+         something, but well
+         newsham: good question
+         rsc9: sounds like a cool idea
+
+rsc9      uriel: that's not the way that list works. if something
+         has changed in our main tree, it almost always goes
+         out. people working on little projects keep it in their
+         own home directories for the most part.
+         the bulk of the files are config.
+
+__20h__   newsham, it's like who cares about privacy, because
+         they knew already everything?
+
+rsc9      the only two things sitting in the tree that are major
+         are software cursor support (waiting to finish vbe)
+         and usb storage (from /n/sources/rmiller, and he asked
+         us not to put it in the tree yet)
+
+uriel     rsc9: I see, that makes sense, then it would be nice
+         what interesting work might be lurking in the corners
+         of home dirs, but I guess that is harder ;)
+
+rsc9      that's things sitting in our internal tree that aren't
+         on sources.
+
+newsham   20h: i'm not sure what the issue would be with the
+         nsa (or any other govt organization) seeing any public
+         mailing list. its a public list.
+
+Major-Wi  deletions? how about the 0 mode 0 size file?
+
+uriel     rsc9: there is people outside the labs working in vbe(I
+         guess you know alreay)...
+
+__20h__   newsham, it's about Google -- but that's not the discussion.
+
+uriel     rsc9: and I know some people interested in hacking
+         usb storage
+
+rsc9      i saw some comment about andrey having special access
+         to insider info in the logs. that's not really true.
+         we'll talk to anyone who emails us. it's just that
+         a lot of people seem content to speculate on irc instead
+         of dashing off an email.
+
+newsham   irc rumors are more enticing than reality.
+
+musasabi  rsc9: well most newbies don't know who to send the
+         email ;)
+
+rsc9      they handed the vbe code to me to put into the tree,
+         and i'm still integrating it. i'm working on putting
+         it in aux/vga instead of 9load. if someone wants to
+         help, feel free to email me.
+
+uriel     rsc9: ok, sorry, that is my fault, but well, one doesn't
+         want to bother you guys too much with obvious questions...
+
+rsc9      musasabi: then it's up to you old-time irc hands to
+         point them in the right direction. or you email us
+         instead.
+
+uriel     rsc9: if a contact point was documented somewhere it
+         would be nice, can we put your email in the wiki as
+         "contact point"(maybe better 9fans)... which brings
+         us to plan9-dev list...
+
+rsc9      uriel: people who want to hack usb storage can look
+         in /n/sources/miller and then contact richard with
+         changes. he's heading that up.
+
+uriel     I understand that some people don't feel confortable
+         discusing serious stuff in 9fans due to all the noise,
+         but it seems that plan9-dev failed...
+
+rsc9      boyd: treating deletions as size 0 files (no need for
+         mode 0) sounds fine to me.
+
+Major-Wi  well, i like overkill
+
+uriel     rsc9: do you think a low-noise forum is needed for
+         dev discusion?
+
+rsc9      i'm glad plan9-dev failed. i don't like the dichotomy.
+         i refused to subscribe for quite a while, although
+         i wish i'd been there to help with designing 9p2000.u.
+         i think 9fans is a fine place for dev discussion. it
+         happens occasionally.
+
+Major-Wi  and it saw your can't read it and there's nothing in
+         it
+         it says
+
+uriel     rsc9: ok, I see, I guess people will have to put up
+         with 9fans then, the problem I see is that lots of
+         disucion seems to happen in private email instead..
+         :/
+         which leaves most people out of the loop
+
+rsc9      mode 0 files are a pain because you can't even open
+         them.
+
+Major-Wi  and /n/sources? how does one get a dir?
+
+uriel     Major-Willard: I was going to get there next
+
+rsc9      that will happen on a dev-only list too. the only reason
+         to have a dev-only list is that people on 9fans don't
+         want to see the dev chatter, which i very much doubt.
+
+uriel     ;)
+
+musasabi  btw would making a common readline function (basically
+         the readln function which is copy/pasted in many places
+         make sense? (just found myself copying the code and
+         I could submit a patch if such a thing would be wanted
+         and I knew the correct lib for it)
+
+uriel     rsc9: I thought it was the other way around, people
+         interested in dev wasn't interesed in 9fans noise,
+         so they used priv email instead,,, I guess I was wrong
+         again :)
+
+noselasd  9fans doesn't seem to be the most overloaded list.
+         Dev discussion there would fit fine, no ?
+
+Major-Wi  READLINE? are you MAD?
+
+rsc9      plan9-dev got created because of the ridiculous amounts
+         in spam back in july. that's solved.
+
+uriel     musasabi: over my dead body
++quintile
+
+__20h__   Boyd, there's no GNU inside. ;)
+
+musasabi  Major-Willard: not *nix readline.
+
+rsc9      you don't need readline unless you want to read a password.
+
+uriel     rsc9: good, then that is solved
+
+rsc9      if you're reading from a console, read() returns one
+         line at a time.
+
+noselasd  musasabi: mouse around :-)
+
+Major-Wi  i don't need readline() i have hold mode
+
+uriel     rsc9: souces dirs..
+         rsc9: I documented in the wiki that to get a sources
+         dir one should email you or rsc(I hope you don't mind
+         :))
+
+rsc9      the usual thing with sources dirs is to mail me or
+         jmk and we'll create it. boyd is an exception.
+
+uriel     rsc9: the thing is that there is no criteria to who
+         gets one dir and who dosn't
+         rsc9: that dosn't seem fair to me
+
+musasabi  rsc9: but I don't want to assume stdin is a console
+         - and the existing code seems read one char at a time
+         till it gets to the end of the line..
+
+uriel     (actually it seems plain stupid to me0
+
+rsc9      jmk wasn't feeling very kind when boyd asked.
+
+uriel     rsc9: well, are you feeling more kind today? :)
+
+Major-Wi  rsc9: should be a fortune "&lt;rsc9&gt; the usual thing with
+         sources dirs is to mail me or jmk and we'll create
+         it. boyd is an exception."
+
+rsc9      ;-)
+         i'll make boyd a directory but first i want to put
+         all the directories in a subdirectory
+         instead of the root.
+
+uriel     I personally would be upset if someone that has done
+         so much for Plan 9 was left out, I think it's just
+         _wrong_; boyd might be a difficult person, but that
+         is no excuse not to let him contribute
+
+rsc9      choices for names? /n/sources/users/foo? /n/sources/userstuff/foo?
+
+uriel     rsc9: contrib?
+
+rsc9      i'm not getting into a discussion about boyd.
+
+Major-Wi  usr
+
+rsc9      there's already a contrib.
+         usr is home directories which these aren't.
+
+__20h__   home :P
+
+Major-Wi  they sort of are
+
+rsc9      contrib is good.
+
+uriel     rsc9: yes, that needs to be cleaned up a bit, there
+         is "contrib", "extras" "cvs", ... and so on, quite
+         messy..
+
+mjl-      there already is a contrib... yeah
+
+quintile  community ?
+
+Major-Wi  no
+
+uriel     quintile: too long :)
+
+Major-Wi  contrib
+
+musasabi  users and contrib sound nice.
+
+Major-Wi  or wip
+
+uriel     vt3 and I volunter to keep an index of the stuff in
+         contrib then
+
+rsc9      great.
+
+uriel     rsc9: some guidelines for how to use sources dirs,
+         similar to the ones you gave for patch would be very
+         apreciated
+         (mostly to keep some order)
+
+__20h__   What's the 9grid dir for?
+
+uriel     (and I guess somethign like http://plan9.bell-labs.com/9grid/AUP.html
+         can be linked from the wiki)
+         __20h__: good question
+
+noselasd  Ick. did irc7 swallow a line of mine :-
+
+uriel     (and links into my next question, that is what is up
+         with *.grid.bell-labs.com.)
+
+rsc9      i don't know anything about grid. ask andrey.
+
+__20h__   Ok.
+
+rsc9      okay, i created stuff in /n/sources/contrib. please
+         move your fiels.
+
+uriel     rsc9: what about *.grid.bell-labs.com then? quintile
+         said it's still up and running, but there is no way
+         to get new accounts?
+
+rsc9      i don't know anything about grid. ask andrey.
+         i believe new accounts only go to people contributing
+         resources. but i know nothing. it's presotto and ron's
+         baby, and it's mostly stalled.
+
+uriel     ok, will do then, I thought he didn't know as he was
+         around when it was discused
+         well, I was asking because all the other 9grid.??-s
+         poping up over the wrold..
+
+rsc9      i don't know anything.
+
+uriel     OK, I will nag f2f when he is back :)
+         rsc9: about p9p and merging the docs..
+
+rsc9      about sources/contrib, it's for posting software for
+         plan 9 users. if you use up too much disk or post crap
+         we'll probably do something.
+
+uriel     Oksel: and I ahve looked at it, and it looks nasty..
+         the changes are too many and too hard to check which
+         ones should go and with ones are p9p specific..
+
+m4dh4tt3  rsc9: the perms on my dir in contrib are incorrect
+         :-)
+
+rsc9      fixed
+
+m4dh4tt3  thx
+
+Major-Wi  methinks one dir is missing
+
+uriel     my proposal is to merge both documentation, and have
+         an extra section for p9p specific pages, and an extra
+         section inside pages that are different documenting
+         the diferences for p9p
+
+rsc9      no.
+
+uriel     rsc9: ok, but I tell you, merging back and forth is
+         unpractical..
+
+rsc9      i don't want p9p to pollute the main distribution.
+         changes aren't frequent enough to merit that.
+
+uriel     I think that you will find it harder and harder to
+         keep them in sync...
+
+rsc9      if we can get them in sync to start, then keeping them
+         in sync is easy.
+
+uriel     well, if people wants to start working on the Plan
+         9 docs, how will you merge back? it goes both ways..
+         rsc9: it's hard for people that might have access to
+         one but not the other
+
+rsc9      i know when the last time i merged was, and occasionally
+         i run diff to see what's happened on sources in the
+         last (say) 3 months and then do it that way.
+         everyone has access to the dump on sources and to the
+         cvs history for p9p. both let you diff by date.
+         the trick is getting them up to date.
+         that is, in sync the first time.
+         regardless of what solution we decide on going forward,
+         that initial work needs to happen.
+
+uriel     rsc9: ok, we will try, but seems like a tedious and
+         futile task from our POV..
+
+rsc9      i don't see why it's hard to figure out, given some
+         diffs, whether they apply to plan 9.
+         the way i see it is this.
+         the goal is to bring the plan 9 man pages up to date.
+         i already identified some places
+         where they were out of date and fixed it in p9p when
+         i did the initial p9p man pages.
+         diffing p9p and plan 9 man pages just points out some
+         places where you need to update the plan 9 pages.
+         i'm not saying you should diff the pages that have
+         changed dramatically, like intro(1)
+
+uriel     yes, but some times it's hard to tell..
+
+mjl-      i've only looked at acid, and it's a bit of a problem
+         that i've never used it beyond lstk()
+         so a bit hard to know what applies to both now
+
+uriel     you have to actually look thru the diff to see which
+         changes are p9p only and which are p9...
+
+mjl-      since i also don't use the p9p version
+
+rsc9      acid is a tough one. i'd skip acid.
+
+mjl-      guess that's a problem of too little experience...
+         ok
+         will look further then. already have some scripts that
+         show diffs btw (if anyone wants them)
+
+rsc9      if you diff all the pages and make a big file with
+         all the diffs, you should be able to pick out the easy
+         ones.
+         once you do the easy ones, feel free to email me to
+         ask about the hard ones.
+
+uriel     rsc9: another advantage of keeping a single copy of
+         the docs is that the implementation differences are
+         clearly documented somewhere, that way they can be
+         keept track of, and hopefully be reduced to a minimun
+         over time
+
+rsc9      i agree with you in principle. eventually i'll probably
+         use cvs branches so that the p9p cvs is essentially
+         keeping track of the diffs between the two.
+         of course, it's naive to believe that all the implementation
+         differences expose themselves in documentation.
+
+uriel     ACTION would recomend using something other than cvs
+         to keep track of branches, but that is a detail ;)
+         rsc9: yes, but it's better to try to keep track of
+         them than just ignore them
+
+newsham   whats wrong with cvs branches?
+
+__20h__   dho did some sort of new "cvs" -- no code yet.
+
+rsc9      let's not talk about version control. more cadt crap.
+
+uriel     newsham: merging patches back and forth from on branch
+         to another is quite nasty
+         rsc9: yes :)
+
+rsc9      i'm not a power user so cvs is fine. and i know how
+         to use it, crappy though it is.
+
+mjl-      rsc9: that's what i was trying with acid too (looking
+         into the code)
+
+newsham   &lt;- likes CVS and their branch management (overall,
+         some complaints of course)
+
+rsc9      don't try to diff the acid code.
+
+mjl-      will do that when writing docs (which is why i come
+         up with these usage patches ;))
+
+newsham   20h: have you guys looked at larch/arch ?
+
+uriel     newsham: you are crazy ;P
+
+mjl-      arch... bazaar... yay
+
+noselasd  Oh - SCM fest. (/me brings the popcorn) ( *SIGH*)
+
+uriel     newsham: I have, lets leave it for antoher time
+
+rsc9      brb. have fun talking about version control.
+
+uriel     rsc9: no, no, we gave up already!
+
+mjl-      will go for a snack :)
+
+uriel     ^_^
+
+__20h__   newsham, It's not my idea. Replica and Patch is enough
+         for me.
+
+noselasd  Please. cvs vs whater. Insignificant.
+
+newsham   arch has some nice properties (and seems to be tool
+         oriented)
+
+noselasd  whatever*
+
+musasabi  arch is quite complex etc
+
+musasabi  point.
+         rsc9: So refactoring copy-paste code into common code
+         is generally not a desirable change?
+
+__20h__   And who implements metadata in 9p? :P
+
+uriel     newsham: we can argue over arch anothter time, lets
+         not scare rsc9 off ;)
+
+newsham   i have nothing to argue about..
+
+rsc9      back
+
+uriel     newsham: sorry, my english sucks, I mean "discus"
+
+rsc9      musasabi: don't understand the question
+         oh, if you're talking about readline, you should be
+         able to call read.
+         how often do you read passwords anyway?
+
+musasabi  rsc9: readline (readln and probably other names), e{malloc,free,realloc}
+         and probably others.
+
+__20h__   auth_proxy();
+
+uriel     you could use a gui app for reading pass...
+
+__20h__   Factotum does the password management.
+
+uriel     rsc9: it would be interesting to know more of what
+         are your plans for p9p
+         __20h__: yup
+
+mjl-      emalloc and stuff has already been discussed, read
+         the archives
+
+rsc9      i don't really have plans. as i need more software,
+         i convert it. but i'm at a stable point now.
+
+uriel     rsc9: I guess I was thinking more from the POV of bringing
+         both code-bases closer..
+
+__20h__   dtLinux - stable
+
+uriel     (I have heard rumours that the venti code in p9p is
+         more uptodate than in p9...)
+
+rsc9      one thing on the horizon is adding a c front end compiler
+         so that the sources look more the same.
+         the sources already look almost identical (acme is
+         the big exception but even those changes are simple
+         if tedious)
+
+newsham   c-&gt;c ?
+
+rsc9      yes
+
+musasabi  mjl-: actually I was the one proposing it in the archives
+         ;)
+
+rsc9      http://swtch.com/usr/local/plan9/src/cmd/venti
+
+uriel     yes, that is a problem, hopefully I will get charless
+         to fix up kencc some time this century and the OpenBSD
+         guys will take care of the porting
+
+rsc9      no no no. i am not putting a real compiler in. just
+         c-&gt;c.
+
+uriel     rsc9: just curious, why not?
+-pperez  
+
+musasabi  8c can be compiled on *nix, but the output is just
+         not very usable.
+
+--------- 5 mins
+
+rsc9      because porting a compiler requires making it work
+         with all the system libraries and the like. it's too
+         much work.
+         the p9p goal is to play well with unix.
+
+uriel     rsc9: I see your point, still I hope some day someone
+         does it
+
+quintile  rsc9: the new venti include auth?
+
+newsham   musasabi: wouldn't be that hard to fix it to emit useable
+         (ie. elf) binaries (some arches already have a linker
+         flag)
+
+rsc9      besides, who really wants to keep up with all the library
+         conventions on sunos.
+         emitting elf is easy. emitting useful debugging is
+         much harder.
+         i have an 8c that can create hello, world.
+
+Major-Wi  ELF -- yuk
+
+newsham   blah dwarf.
+
+uriel     rsc9: I'd be interested in seeing that(even if trivial)
+
+rsc9      i have yet to hear a good idea about how to do auth
+         in venti.
+
+uriel     rsc9: what about the venti rewrite
+         (which I found out about by reading the notes file
+         in rejected patches....)
+
+rsc9      i'm in the middle of rewriting venti. it's a lot faster,
+         perhaps a little buggier, and needs a bit of cleanup
+         before it will be ready for prime time.
+         any other projects people care about?
+
+newsham   wouldnt even a very limited amount of auth be significantly
+         better than no auth?
+
+uriel     rsc9: just curious, but don't you think that this kinds
+         of cases the Open Source mantra of "release early,
+         release often", could help?
+
+noselasd  What projects are there - (at the labs , if any) ?
+
+rsc9      newsham: let's postpone the venti auth. i can't do
+         multiple conversations.
+
+newsham   ok
+
+Major-Wi  i have a cool idea for venti, but it's an expensive
+         venture
+
+quintile  projects - cross domain auth between servers (for a
+         grid).
+
+Major-Wi  too complex
+
+rsc9      uriel: release early, release often only works if you
+         have time to keep up with the submitted changes. i'm
+         focusing on something other than venti.
+
+uriel     rsc9: ok, I thought it could help with testing, and
+         maybe someone could pick up if you dont' have the time
+         to maintain/finish it, but well..
+
+rsc9      the venti code is available if you want to hack on
+         it. it's in the same place as plan 9 ports. module
+         name is venti instead of plan9.
+
+uriel     quintile: I think that was discused at OSDI and rejected,
+         the current model seems good enough, otherwise I would
+         recomend you to talk with charles about the Inferno
+         auth model..
+
+newsham   uriel: so far nobody's really picked up ron's xen stuff
+         if you're looking for stuff to pick up...
+
+uriel     rsc9: ok, thanks
+         newsham: I know, I'm not saying that it will hapen,
+         I'm just saying that it costs nothing to give people
+         a chance
+
+quintile  uriel: yep, just interested in russ's opinion.
+
+rsc9      lucho helped me find some things. he emailed me.
+
+uriel     newsham: didn't kuroneko pick up your spark code?
+
+__20h__   Are there plans to have more than the PC-distribution?
+
+rsc9      as for venti auth, it's just not a priority.
+
+uriel     newsham: and didn't ericvh pick up v9fs even if after
+         some years?
+
+newsham   uriel: so far three people have approached me interested
+         in sparc v8 stuff. I dont really know what has become
+         of their work.. they may still be working on it.
+
+rsc9      calling it a pc distribution is a little misleading.
+         it's a full distribution, it just only installs on
+         pcs.
+
+uriel     newsham: the thing is that maybe you get something
+         useful out of it, maybe not, but the chance is worth
+         it, I think,
+         anyway, just to be anoying, what about 9load... ;P
+
+rsc9      what about it?
+
+uriel     is someone working on it?
+
+rsc9      as far as i know, not much is happening with 9load.
+
+uriel     I also have heard(from third hand) of a rewrite of
+         9load..
+
+rsc9      vbe support got contributed for 9load, though i plan
+         to move it out.
+         jmk is working on an amd64 port, which includes cleaning
+         up 9load some, but it's not a from-scratch rewrite.
+
+uriel     ok, I guess that leave us free to fix the anoying IDE
+         handling... :)
+
+rsc9      what annoying ide handling?
+
+uriel     rsc9: any chances we will get any of that cleaning
+         up?
+
+rsc9      any of what?
+
+uriel     rsc9: if you don't have your ide devices in the right
+         magic convination it wont work
+
+rsc9      huh?
+
+uriel     rsc9: 9load clean up...
+         rsc9: ever tries to install having your CD-ROM as secondary
+         master?
+
+m4dh4tt3  yeah
+
+rsc9      the 9load cleanup will come out when the amd64 port
+         is ready. i believe the changes to 9load are pretty
+         minimal so don't worry about it.
+
+uriel     rsc9: its' a very commonly reported problem
+
+m4dh4tt3  i do it all the time
+
+rsc9      does the kernel work in that situation?
+
+m4dh4tt3  sure does
+
+noselasd  uriel: works fine. You just need to type the magic
+         sdD1!... and so on :-)
+
+uriel     rsc9: it should, I would say... but IIRC it has also
+         some problems
+         noselasd9: nope
+
+rsc9      ide probing is black magic. the sdata there is supposed
+         to be similar to the sdata in the kernel (dma is yanked
+         out), so feel free to compare and fix.
+
+m4dh4tt3  all you have to do is specify a different drive to
+         load the kernel and the root fs
+
+noselasd  uriel: funny, cause I did that yesterday though..
+
+uriel     noselasd9: it doesn't work, and I have gone thru that
+         problem at least three different times, the people
+         at the 9con can tell you, we were a room packed with
+         plan9 users and no one could get it to work until we
+         changed the ide config
+
+newsham   m4d: isnt that because of the plan9.ini, not the 9load?
+
+rsc9      ide probing is black magic. some systems have buggy
+         bioses too.
+
+m4dh4tt3  newsham: iirc, yes
+
+uriel     rsc9: yes, that too :(
+
+rsc9      if you want to go after this bug and fix it, please
+         do. trust me -- it won't go away on its own.
+
+m4dh4tt3  ide probing is indeeed black magic. i've seen some
+         really bizarre stuff
+
+uriel     rsc9: ok, thanks
+         drawterm..
+         who maintains it? f2f says he doesn't, even if he does...
+
+rsc9      i hate drawterm. andrey is doing a good job maintaining
+         the 9p1 drawterm.
+
+uriel     I hate dt too, but it's a fact of life..
+
+rsc9      brucee is busy with other stuff though i think he might
+         have a good 9p2000 drawterm at some point.
+         dt2k is worth using, and if it didn't crash once in
+         a while i'd install it.
+         eventually i want to replace drawterm with a collection
+         of programs in plan9port.
+
+uriel     would be nice if f2f's changes were in the main distro,
+         and handled with patch, but f2f won't do it because
+         he says "I'm not the maintainer", so he basically maintains
+         a fork
+
+rsc9      but progress is slow. i do have ssl working though.
+
+uriel     rsc9: where is dt2k?
+         ACTION has never seen it, but I know f2f has got the
+         code for some ancient version of it somewhere..
+
+f2f       if you notice, uriel, the binaries have disappeared
+         from the main distro with a small note pointing to
+         ucalgary.
+
+uriel     f2f: ah, that is new, and I don't like it, but well...
+
+f2f       i think rsc just doesn't want that mess in p9
+
+uriel     would be nice to have it in sources at least
+         contrib/f2f?
+
+f2f       i'm fine with ucalgary until a better replacement comes.
+         this is where the dt2k code is too, at least the latest
+         version i have
+
+rsc9      andrey is in the drawterm group now.
+
+uriel     cool
+
+f2f       rsc, do you want me to merge the dt changes?
+
+rsc9      the 9p1 changes? yes.
+
+f2f       ok, will do
+
+rsc9      brucee is swamped with other work. he won't mind.
+
+uriel     ACTION would like to know more about dt2k and what
+         is going on with it :)
+
+f2f       but i'll keep the binaries on the web
+
+rsc9      dt2k works well enough that i use it every day to apply
+         patches.
+         it crashes occasionally (some x problem) and i restart
+         it.
+         i never got around to a windows port.
+         i don't believe it's the right approach so i am loathe
+         to spend time debugging it.
+         yes please keep binaries on the web.
+
+uriel     rsc9: I think I know many people that would apreciate
+         dt2k even without windoze port
+         (and I know others that might fix the windoze port)
+
+rsc9      google the 9fans archives for dt2k. i put it out there.
+
+uriel     ok, that is the latest version then?
+
+rsc9      sure.
+
+Major-Wi  drawterm is pretty solid
+
+uriel     ok, will do..
+
+f2f       http://pages.cpsc.ucalgary.ca/~mirtchov/p9/dt2k.tgz
+
+uriel     f2f: that is the latest version too?
+
+f2f       i got this from skip and made it compile cleanly under
+         X
+
+uriel     I see...
+
+f2f       that's the latest i've heard about
+
+rsc9      do you use it? does it crash?
+
+f2f       it crashes, yes. i don't use it because the alpha blending
+         is messed up (BGR vs RGB i believe)
+         and it's a bit slower
+
+axelB     (what about "replace drawterm with a collection of
+         programs in plan9port" and windows?)
+
+Major-Wi  BGR?
+
+rsc9      what about it?
+
+uriel     axelB: ah, fuck windows! (sorry, could not restis ;P)
+
+axelB     just wondering. p9p doesn't do windows, I thought
+
+noselasd  uriel: can you ever ? :)
+
+uriel     noselasd9: if you knew...
+
+rsc9      eventually plan9port will work on windows. don't care
+         enough right now. very happy with my mac.
+
+axelB     ok. fine
+
+__20h__   Cygwin?
+
+uriel     axelB: buy a mac mini, they are cheap ;)
+
+Major-Wi  err, p9p port to windows is a major, hideous task
+
+rsc9      it's not any more work than the original unix work.
+         i've done it before.
+
+m4dh4tt3  i miss the mac i had for my previous job
+
+uriel     I guess another issue is p9p integration with v9fs
+         and similar, but without eric or lucho around I think
+         better leave that for other time
+
+rsc9      my position is that p9p will not become dependent on
+         v9fs -- it needs to work on systems without v9fs --
+         but i'm perfectly happy if lucho and eric need hooks.
+
+uriel     rsc9: sounds reasonable..
+
+rsc9      we put one hook in already. auth_proxy tries to open
+         /mnt/factotum/* before switching to the p9p factotum
+         socket.
+
+musasabi  Is there a reason plan9 headers don't have #ifdef protection
+         agains multiple #includes ? (stdio.h mainly - some
+         headers have function prototypes with FILE* and making
+         sure stdio.h is included just once adds many trivial
+         (unnecessary) changes.
+
+uriel     musasabi: that is a well known one, use sane headers
+
+rsc9      don't include headers twice.
+
+uriel     exactly
+
+rsc9      if you're compiling legacy code, then use ape. the
+         ape stdio.h is protected.
+
+uriel     musasabi: feel free to add to the faq
+         rsc9: BTW, could you update the running version of
+         the wiki, I really need it to make the FAQ page useable..
+
+Major-Wi  Is there a reason plan9 headers don't have #ifdef protection
+         agains multiple #includes ? -- YES, YOU are 'sposed
+         to get that right
+
+musasabi  ACTION uses the "not my code" and "uriel will flame
+         me to death for APE" arguments.
+
+rsc9      google for "follow the simple rule" pike
+         if it's not your code, you should use ape.
+
+uriel     or fix it :)
+
+__20h__   Or delete it.
+
+Major-Wi  rm is a swell prgramm debugger
+
+musasabi  nontrivial socket code + APE was not very nice so I
+         am trying to live with 8c -p.
+
+uriel     rsc9: I got some changes to the templates of the wiki,
+         I haven't sent them because I have seen that the ones
+         in the distribution and the ones in the plan 9 wiki
+         are not in sync anyway...
+
+m4dh4tt3  when fixing it means re-writing it, the probability
+         that it will get done approaches zero
+
+rsc9      uriel: i think i restarted wikifs
+
+uriel     rsc9: let me check again...
+
+[...]
+
+rsc9      gotta go. forgot about another appt.
+</pre>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+<a href="history.html">History</a> -
+<a href="diff.html">Diff</a> - 
+<a href="#top">Top of this page</a> -
+<span class='last_mod'>Last modified Thu May 19 16:27:38 EDT 2005</span> 
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>
+	<!-- <a href="http://plan9.bell-labs.com/plan9dist/glenda.html"><img align="middle" src="http://plan9.bell-labs.com/plan9dist/img/9logo.jpg" alt="Glenda" /></a> -->

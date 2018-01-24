@@ -1,0 +1,197 @@
+<html>
+<head>
+<title>9p services using srv, listen, exportfs, import (Editing Sat Mar  2 10:07:53 EST 2013 version)</title>
+<META http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<!-- FFFFE9 is acme yellow; FFFFE9 is as close as
+ you can get to it before charon decides to use 
+ grey instead of map entry 254 -->
+<body bgcolor="#FFFFE9" link="#0000AA" alink="#0000AA" vlink="#0000AA">
+<center>
+<font size=+2><b>9p services using srv, listen, exportfs, import</b></font> (Editing Sat Mar  2 10:07:53 EST 2013 version)
+</center>
+<p>
+
+For information on editing, see the
+description of 
+<a href="../0">Plan 9 wiki syntax</a>.
+<p>
+<form action="/magic/wikipost" method="post">
+<table><tr><td valign=top>
+<input type="submit" name="x" value="Put"></td><td>
+<table>
+<tr><td align=right>(optional) Comment:</td><td><input type="text" name="comment" value="" cols=40></td></tr>
+<tr><td align=right>(optional) Email:</td><td><input type="text" name="author" value="" cols=40></td></tr>
+</table>
+<input type="hidden" name="title" value="9p services using srv, listen, exportfs, import">
+<input type="hidden" name="version" value="1362236873">
+<input type="hidden" name="service" value="plan9">
+<input type="hidden" name="base" value="/wiki/plan9">
+<p>
+<textarea name="text" wrap="virtual" cols="80" rows="25">
+
+INSTANT 9P CONNECTION BETWEEN TWO MACHINES
+
+The following should be used only on secure private networks or by
+machines with no private data. It provides a read-only public 9p
+service of the full namespace of the invoking user:
+
+! server% aux/listen1 -tv tcp!*!9999 /bin/exportfs -R -r /
+
+To dial and mount this service from another machine:
+
+! client% srv tcp!ip.of.server!9999 server /n/server
+
+The client machine will print "post..." and following this, the
+client may
+
+! client% ls /n/server
+
+and use other commands to work with the mounted filesystem. After
+this connection has been made, you may terminate the listener on the
+server machine. It is not needed once the mount has been made.
+
+STANDARD 9P SERVICES FROM FILE AND CPU SERVERS
+
+There are two main types of 9p service provided in a typical
+installation. Disk fileservers such as fossil(4) serve 9p on port
+564. This is used for tcp boot of other machines or general purpose
+disk storage. The Bell Labs "sources" server is an example. The
+commands srv(4) and the 9fs script connect to this type of 9p server.
+
+CPU servers serve 9p via exportfs(4) on port 17007 and clients
+connect by means of import(4). Exportfs enables serving arbitrary
+namespace, not simply on-disk file servers. The cpu(1) command makes
+use of exportfs to let the cpu server use the devices and filesystem
+of the client terminal. Cpu export/import traffic is encrypted by
+default. 9p file service on port 564 is not. The normal usage for
+import(4) requires specifying what portion of the cpu namespace to
+attach. An example:
+
+! client% import cpuserver /srv /n/cpusrv
+
+This selects only the /srv of the target cpuserver and mounts it to
+/n/cpusrv. Some of the most important targets for import are /srv and
+/proc. A grid of cpu servers running from a common file server and
+which all import /srv and /proc and certain /dev files from each
+other behaves very much like single large machine. This is the
+prototypical form of a "Plan 9 Grid" of machines.
+
+SERVICES ON DEMAND: USING AUX/LISTEN1 AND EXPORTFS
+
+In a standard configuration of installed machines, file servers
+listen on port 564 and cpus listen on port 17007. The file listener
+is the responsibility of the disk fs, but the cpu listener is started
+by the aux/listen(8) command which starts listeners for every service
+found in /rc/bin/service. The aux/listen1 command allows users to
+start individual service listeners on demand.
+
+Using this effectively requires understanding the additional options
+for exportfs. There is an important caveat - the -a flag for
+authentication of exportfs is in conflict with the -r and -S flags
+for specifying a root or /srv to mount. If you wish to use exportfs
+to provide secure non-root service exportfs publicly, additional
+measures such as the use of tlssrv(8) would be necessary.
+
+When exportfs is used with the flag -r to specify a root or -S to
+specify a /srv, it becomes compatible with the operation of srv(4)
+and mount(1). An exportfs done with these flags may be used via srv
+and mount of the address. Srv may not be used to attach to standard
+exportfs listeners running the full protocol.
+
+The example at the beginning of this page shows the basic formula for
+using exportfs and srv together in this manner. If you wish to use
+exportfs for authenticated connections, use import for the client,
+like this:
+
+! server% aux/listen1 -v tcp!*!9999 /bin/exportfs -a 
+! client% import tcp!server!9999 /remote/path /local/mountpoint
+
+Note the absence of the -t flag from this listen1 command.
+
+SRV IN DETAIL: MORE THAN JUST 9P
+
+The srv(4) command as used above is actually two commands in one. An
+initial srv to dial a connection and post a file descriptor in /srv,
+and a mount command to attach to that file descriptor as a 9p fs. If
+you use srv in this manner:
+
+! server% srv tcp!server!port srvname
+
+Then srv acts to dial server and post that network connection as a
+file descriptor in /srv. If that file descriptor is a 9p fs, it can
+be mounted. If it is not a 9p fs, it can still be interacted with. An
+example to show the principles:
+
+! server% aux/listen1 -tv tcp!*!9999 /bin/cat /lib/namespace 
+! client% srv tcp!server!9999 remotens 
+! client% cat /srv/remotens
+
+The output will be the output of the cat command on the server
+machine. In the case of a 9p service, you can separate the srv and
+the mount as follows:
+
+! client% srv tcp!server!564 server
+! client% mount /srv/server /n/server
+
+Note that the action of srv simply dials and places a file
+descriptor. If authentication is required, that occurs when the mount
+command is issued.
+
+LISTEN1 AND NAMESPACES: THE -T FLAG
+
+Most of the examples on this page use the -t flag for listen1. This
+means that the service listener is running as the invoking user.
+Without the -t flag, the listener runs as user "none". This is a
+significant difference because your user account has a different
+namespace than the "generic" namespace of "none". When you need to
+share a namespace that includes mounts and binds that are not part of
+the generic namespace, the -t flag is necessary.
+
+However, this does make the listener more vulnerable to malicious
+security threats. As user "none" a listener which is subverted can do
+much less harm than a user listening under the identity of the
+invoking user, especially if that user is the hostowner. Be aware of
+the difference between -t and listening as none. It is usually easier
+and more convenient to listen as your user account, but this is not
+recommended for public facing services or services which may be
+connected to by untrusted users.
+
+Also understand that some processes, such as the server side of
+cpu(1), may be able to change user identity even when the invoking
+listener is none.
+
+OTHER ISSUES
+
+This page does not address the configuration of ndb(8) and the
+configuration of factotum(4) and auth(8). It is crucial to have a
+correct /lib/ndb/local and correct authentication between grid nodes
+for standard use of these tools as described by the manpages and this
+article.
+
+Mounting and serving 9p can also be done with Inferno, plan9port, and
+many other libraries and tools. In general correctly implemented
+clients and servers should all be compatible, but in practice issues
+like support for the exportfs protocol may require adjustments and
+compromises. The initial author of this wiki page recommends u9fs,
+9pfuse, plan9port, and Inferno as the best supported non-plan9 9p
+clients and servers.
+
+</textarea><p>
+</td>
+</table>
+</form>
+
+<hr>
+<table width=100%><tr>
+<td valign=center align=left>
+</td><td valign=center align=right>
+<a href="../about.html">About the server</a>
+| 
+<a href="http://plan9.bell-labs.com/plan9"
+><img src="http://plan9.bell-labs.com/plan9/img/power36.gif"
+alt="Powered by Plan 9"></a>
+</td>
+</tr></table>
+</html>
+</body>

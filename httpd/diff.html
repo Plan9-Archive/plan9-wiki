@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>web_server (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+web_server <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Mon Oct 13 13:45:39 EDT 2008</a>, stevie
+</div><hr />The
+Plan
+9
+web
+server
+<a href="http://plan9.bell-labs.com/magic/man2html/8/httpd"><i>httpd</i>(8)</a>
+has
+some
+interesting
+features.
+It
+also
+kept
+me
+scratching
+my
+head
+all
+day
+getting
+it
+going
+so
+I
+thought
+I'd
+share
+a
+few
+things.
+<p class='para'>
+When
+the
+httpd
+runs
+it
+sets
+itself
+to
+user
+"none"
+and
+runs
+<a href="http://plan9.bell-labs.com/magic/man2html/2/newns"><i>newns</i>(2)</a>
+and
+then
+<a href="http://plan9.bell-labs.com/magic/man2html/2/addns"><i>addns</i>(2)</a>
+using
+the
+namespace
+provided
+on
+the
+command
+line
+(or
+/lib/namespace.httpd
+if
+you
+didn't
+give
+it
+a
+-n).
+This
+means
+that
+whatever
+you
+supply
+for
+the
+namespace
+file
+has
+to
+exist
+in
+the
+new
+namespace.
+ip/httpd/httpd
+-n
+/cfg/$sysname/namespace.httpd
+was
+my
+solution.
+</p>
+
+<p class='para'>
+While
+experimenting
+I
+had
+the
+problem
+of
+how
+to
+kill
+a
+process
+owned
+by
+none,
+here's
+how
+to
+do
+it
+:
+</p>
+
+<pre>
+p = `{ps | grep httpd}
+chmod 777 /proc/$p(2) ^/note &amp;&amp; echo kill &gt; /proc/$p(2) ^/note
+</pre>
+
+<p class='para'>
+I'm
+assuming
+only
+one
+program
+called
+httpd
+is
+running,
+of
+course.
+</p>
+
+<p class='para'>
+For
+extra
+fun
+ip/httpd/mirror
+was
+missing
+from
+my
+distribution
+(Sept
+07)
+and
+I
+didn't
+notice
+for
+ages.
+</p>
+
+<p class='para'>
+momo
+here
+is
+a
+Unix
+box
+running
+u9fs
+-a
+none
+and
+I'm
+using
+a
+terminal
+to
+play
+on
+so
+termrc
+it
+is
+</p>
+
+<p class='para'>
+cat
+/cfg/$sysname/termrc
+</p>
+
+<pre>
+fn start_httpd {
+	rfork
+	bind /n/momo/home/plan9/httpd /usr
+	bind /usr/httpd.rewrite /sys/lib/httpd.rewrite
+	ip/httpd/httpd -n /cfg/$sysname/namespace.httpd
+}
+
+9fs momo
+
+start_httpd &amp;
+</pre>
+
+<p class='para'>
+The
+folder
+/n/momo/home/plan9/httpd
+has
+in
+it
+:
+</p>
+
+<pre>
+bin/
+web/
+httpd.rewrite
+</pre>
+
+<p class='para'>
+cat
+/cfg/$sysname/namespace.httpd
+</p>
+
+<pre>
+mount /srv/momo /n/momo
+bind /n/momo/home/plan9/httpd/bin /bin/ip/httpd
+</pre>
+
+<p class='para'>
+So
+now
+my
+/magic/
+files
+are
+kept
+on
+momo
+so
+I
+don't
+pollute
+/bin/ip/httpd
+</p>
+
+<p class='para'>
+I
+also
+found
+a
+bug
+with
+vhosts
+and
+submitted
+a
+<a href="http://plan9.bell-labs.com/magic/man2html/1/patch"><i>patch</i>(1)</a>
+httpd-post-port
+because
+vhosts
+running
+on
+non-default
+port
+were
+impossible
+as
+the
+:port
+was
+being
+stripped
+when
+the
+vhosts
+were
+parsed
+but
+not
+when
+matching
+http
+requests.
+Leaving
+the
+:port
+on
+is
+the
+correct
+behaviour
+according
+to
+RFC
+2616
+14.23.
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Mon Oct 13 13:45:39 EDT 2008</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

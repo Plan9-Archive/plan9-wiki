@@ -1,0 +1,395 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>TeX Configuration (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+TeX Configuration <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Thu Feb 16 09:27:46 EST 2006</a>, uriel (82.182.149.46)
+</div><hr />The
+Plan
+9
+documentation
+is
+in
+troff;
+however,
+TeX
+has
+been
+compiled
+and
+brought
+up
+under
+the
+ANSI/POSIX
+Environment
+(APE).
+It
+is
+a
+separate
+package
+from
+the
+main
+distribution
+due
+to
+its
+size.
+<p class='para'>
+The
+TeX
+distribution
+can
+be
+found
+in
+/n/sources/extra/tex.iso.bz2
+</p>
+
+<p class='para'>
+This
+is
+a
+TeX
+distribution
+that
+uses
+the
+kpathsearch
+modifications;
+the
+main
+library
+tree
+is
+kept
+in
+/sys/lib/texmf.
+</p>
+
+<a name="DVIPS" /><h3>DVIPS</h3>
+
+<p class='para'>
+The
+Plan
+9
+TeX
+installation
+defines
+three
+dvips
+printer
+drivers
+(to
+use
+with
+dvips
+-Pdrivername):
+ps,
+psfonts,
+and
+bitmapfonts.
+The
+appropriate
+driver
+to
+use
+depends
+on
+the
+intended
+use
+of
+the
+output.
+</p>
+
+<ul>
+
+<li>
+The
+ps
+driver
+(the
+default)
+generates
+Postscript
+files
+with
+references
+to
+the
+Postscript
+versions
+of
+any
+TeX
+fonts.
+These
+fonts
+are
+kept
+in
+subdirectories
+of
+/sys/lib/postscript/font.
+The
+files
+are
+small,
+are
+generated
+quickly,
+and
+work
+well
+with
+<a href="http://plan9.bell-labs.com/magic/man2html/1/page"><i>page</i>(1)</a>
+and
+<a href="http://plan9.bell-labs.com/magic/man2html/8/lp"><i>lp</i>(8)</a>,
+but
+since
+the
+Postscript
+versions
+of
+the
+TeX
+fonts
+are
+not
+commonly
+installed
+elsewhere,
+they
+are
+not
+particularly
+good
+for
+giving
+to
+friends
+or
+posting
+on
+web
+pages.
+</li>
+
+<li>
+The
+psfonts
+driver
+generates
+Postscript
+files
+with
+reference
+to
+the
+Postscript
+versions
+of
+the
+TeX
+fonts,
+and
+also
+includes
+the
+fonts
+in
+the
+Postscript
+file.
+The
+files
+are
+fairly
+large,
+generated
+quickly,
+and
+are
+attractive
+when
+viewed
+in
+Postscript
+previewers
+or
+turned
+into
+PDF
+via
+Acrobat
+Distiller.
+</li>
+
+<li>
+The
+bitmapfonts
+driver
+is
+equivalent
+to
+the
+default
+on
+most
+dvips
+systems.
+Bitmap
+versions
+of
+the
+TeX
+fonts
+are
+included
+in
+the
+output
+files,
+making
+them
+larger
+than
+`ps'
+but
+smaller
+than
+`psfonts'
+files,
+slow
+to
+generate,
+and
+not
+particularly
+attractive
+when
+viewed
+on
+screen.
+</li>
+</ul>
+
+<a name="ADDING_SUPPORT_FOR_OTHER_LANGUAGES" /><h3>ADDING SUPPORT FOR OTHER LANGUAGES</h3>
+
+<p class='para'>
+To
+add
+hyphenation
+patterns
+for
+other
+languages,
+do
+the
+following.
+</p>
+
+<ul>
+
+<li>
+Uncomment
+the
+desired
+language
+patterns
+in
+/sys/lib/texmf/tex/generic/config/language.dat
+</li>
+</ul>
+
+<ul>
+
+<li>
+Make
+new
+TeX
+fmt
+files:
+</li>
+</ul>
+
+<pre>
+cd /sys/src/cmd/tex/web2c/tex
+rm *.fmt
+mk install-fmt
+</pre>
+
+<p class='para'>
+It
+gives
+errors
+saying
+that
+a
+file
+is
+too
+old.
+Go
+to
+the
+file
+and
+change
+the
+date
+from
+1999
+to
+200x.
+Repeat.
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Thu Feb 16 09:27:46 EST 2006</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

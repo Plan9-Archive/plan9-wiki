@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>OAuth (as of Fri Mar 29 15:32:30 EDT 2013)</title>
+</head>
+<body>
+<center>
+<h1><a name="top"></a>OAuth</h1>
+<h2><i>-as of Fri Mar 29 15:32:30 EDT 2013-</i></h2>
+<p />
+</center>
+
+<div class='body'> <!-- ***************************** -->
+
+<a href="http://oauth.net">OAuth</a>
+2.0
+is
+a
+very
+common
+method
+for
+users
+to
+provide
+authorization
+to
+web
+services.
+To
+facilitate
+writing
+Plan
+9
+and
+Inferno
+clients
+for
+many
+of
+these
+services,
+it
+would
+be
+nice
+to
+teach
+<a href="http://plan9.bell-labs.com/magic/man2html/4/factotum"><i>factotum</i>(4)</a>
+how
+to
+speak
+OAuth.
+There
+are
+some
+design
+considerations
+that
+need
+to
+be
+thought
+through;
+the
+models
+don't
+map
+directly.
+<p class='para'>
+In
+particular,
+the
+most
+common
+mode
+of
+using
+OAuth
+depends
+on
+some
+browser
+infrastructure.
+Is
+one
+of
+the
+browser
+options
+native
+(or
+roughly
+so)
+to
+Plan
+9
+up
+to
+the
+task?
+How
+reliably?
+Is
+the
+structure
+of
+the
+OAuth
+landing
+page
+standardized?
+</p>
+
+<p class='para'>
+The
+first
+step
+would
+be
+to
+teach
+factotum
+to
+speak
+the
+part
+of
+the
+protocol
+that
+happens
+after
+the
+final
+hash
+is
+acquired.
+It
+would
+be
+inconvienent,
+but
+users
+could
+get
+that
+hash
+through
+the
+browser
+manually
+themselve,
+then
+hand
+it
+to
+factotum.
+</p>
+
+<p class='para'>
+The
+next
+step
+would
+probably
+be
+an
+extension/replacement
+for
+auth/fgui
+which
+would
+look
+for
+OAuth
+requests
+from
+factotum
+and
+handle
+launching
+a
+browser
+(or
+redirecting
+an
+existing
+one
+via
+the
+plumber)
+and
+handing
+the
+results
+back
+to
+factotum.
+</p>
+
+<p class='para'>
+While
+it
+isn't
+OAuth,
+<a href="https://bitbucket.org/bedo/flickrfs">flickrfs</a>
+has
+support
+for
+Flickr's
+pre-OAuth
+authentication
+method,
+which
+has
+some
+similarities.
+Interested
+students
+might
+look
+to
+it
+for
+reference
+or
+inspiration,
+particularly
+for
+the
+first
+half
+of
+the
+problem
+(as
+described
+above).
+</p>
+
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../../Documentation/">Docs</a></li>
+	<li><a href="../../news/">News</a></li>
+	<li><a href="../../development/">Devel</a></li>
+	<li><a href="../../papers/">Papers</a></li>
+	<li><a href="../../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="../">Current Page</a> - 
+	<span class='last_mod'>Last modified Fri Mar 29 15:32:30 EDT 2013</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

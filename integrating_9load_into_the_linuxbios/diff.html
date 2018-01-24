@@ -1,0 +1,2361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="keywords" content="9p, 9p2000, research, Plan 9, Inferno, Unix, Open Source, Bell Labs" />
+	<meta name="description" content="Open source distributed operating system Plan 9 from Bell Labs." />
+	<link rel="stylesheet" href="/wiki-style.css" media="all" type="text/css" />
+	<title>Integrating 9load into the LinuxBIOS (Diff)</title>
+</head>
+<body>
+<h1><a name="top"></a>
+Integrating 9load into the LinuxBIOS <i>-Diff-</i></h1>
+
+<div class='body'> <!-- ***************************** -->
+
+<hr /><div class='diff_head'>
+<a href="index.html">Thu Apr 28 00:26:45 EDT 2005</a>, uriel (82.182.149.46)
+</div><hr />To
+make
+this
+sane
+we
+will
+show
+latest
+developments
+first.
+<p class='para'>
+5/5/2003
+What
+we're
+going
+to
+put
+in
+here
+now
+is
+the
+update
+of
+how
+the
+system
+works
+now.
+The
+base
+test
+hardware
+is
+the
+PCM-5923
+from
+Advantech.
+We
+built
+a
+standard
+LinuxBIOS
+for
+this
+board
+that
+uses
+Etherboot
+to
+load
+the
+9load
+image
+from
+Compact
+Flash.
+I
+can
+send
+you
+the
+flash
+ROMIMAGE
+on
+request
+so
+that
+rather
+than
+fool
+around
+with
+LinuxBIOS
+you
+can
+just
+use
+our
+image.
+</p>
+
+<p class='para'>
+We've
+had
+to
+make
+fixes
+to
+9load
+and
+we
+are
+now
+trying
+to
+back
+those
+changes
+out
+as
+much
+as
+possible
+to
+minimize
+9load
+variance.
+</p>
+
+<p class='para'>
+The
+parts
+you
+need
+to
+replicate
+our
+setup:
+</p>
+
+<ul>
+
+<li>
+<a href="http://www.advantech.com/products/Model_Detail.asp?model_id=1-D6M06&bu=Advantech PCM-5823">Advantech
+PCM-5823</a>
+</li>
+
+<li>
+Any
+kind
+of
+Compact
+Flash
+&gt;
+1
+MB
+in
+size
+</li>
+
+<li>
+Replacement
+flash
+part
+(SST
+28SF040
+is
+what
+we
+use)
+</li>
+
+<li>
+If
+you
+are
+building
+LinuxBIOS,
+a
+Linux
+box.
+If
+you
+are
+not,
+a
+way
+to
+reprogram
+the
+FLASH
+and
+a
+copy
+of
+our
+flash
+image.
+</li>
+</ul>
+
+<p class='para'>
+If
+you
+just
+the
+flash
+image
+from
+us,
+we
+can
+also
+send
+the
+working
+9load
+image
+(which
+you
+burn
+onto
+the
+CF)
+and
+a
+working
+Plan
+9
+kernel
+image
+which
+you
+tftp
+download.
+This
+kernel
+knows
+how
+to
+use
+CMOS
+for
+its
+nvram.
+</p>
+
+<p class='para'>
+Base
+document
+follows:
+</p>
+
+<p class='para'>
+LinuxBIOS
+can
+load
+lots
+of
+different
+"payloads",
+i.e.
+ELF
+images
+in
+FLASH.
+In
+this
+document
+we
+will
+go
+over
+how
+we
+got
+9load
+into
+FLASH,
+and
+thus
+made
+nodes
+that
+can
+boot
+as
+dedicated
+Plan
+9
+CPU
+nodes.
+</p>
+
+<p class='para'>
+NOTE:
+also
+check
+(http://www.acl.lanl.gov/plan9/flash/(broken
+link!))
+for
+additional
+information!
+</p>
+
+<p class='para'>
+This
+documentation
+pertains
+to
+the
+setup,
+configuration
+and
+means
+of
+getting
+Plan
+9
+booted
+with
+LinuxBIOS.
+It
+consists
+of
+the
+following
+parts:
+</p>
+
+<ul>
+
+<li>
+0.
+Preamble
+</li>
+
+<li>
+1.
+Development
+setup
+--
+getting
+started.
+file
+organization
+in
+Plan9
+and
+Linux
+</li>
+
+<li>
+2.
+Source
+code
+explanation
+--
+diffs
+with
+4th
+edition
+p9
+source
+with
+explanation
+</li>
+
+<li>
+3.
+Source
+code
+--
+tarred
+&amp;
+gzipped
+</li>
+</ul>
+<hr />
+<a name="PREAMBLE:" /><h3>PREAMBLE:</h3>
+
+<p class='para'>
+This
+document
+discusses
+changes
+made
+to
+the
+source
+of
+Plan9
+to
+get
+it
+going
+on
+at
+least
+one
+machine
+booted
+by
+LinuxBIOS.
+The
+goal
+of
+the
+project
+was
+to
+have
+a
+standalone
+Plan9
+cpu
+server
+that
+neither
+had
+nor
+required
+moving
+parts.
+Most
+of
+this
+was
+accomplished
+with
+the
+help
+of
+Ron
+Minnich,
+without
+whose
+support
+and
+in-depth
+knowledge
+of
+computer
+hardware
+minions
+would
+still
+be
+scratching
+their
+head
+trying
+to
+find
+out
+why
+nothing
+happens
+after
+the
+kernel
+is
+downloaded...
+</p>
+<hr />
+<a name="1._DEVELOPMENT_SETUP:" /><h3>1. DEVELOPMENT SETUP:</h3>
+
+<p class='para'>
+For
+a
+succesfull
+modification
+to
+the
+source
+one
+needs
+to
+have
+access
+to
+the
+following:
+</p>
+
+<ul>
+
+<li>
+1.1
+Plan9
+network
+(including
+file
+servers,
+cpu
+servers
+and
+terminals
+(<a href="http://pages.cpsc.ucalgary.ca/~mirtchov/lanlp9/">http://pages.cpsc.ucalgary.ca/~mirtchov/lanlp9/</a>)
+</li>
+
+<li>
+1.1.1
+It
+is
+possible
+to
+work
+from
+a
+standalone
+P9
+terminal,
+though
+this
+setup
+would
+be
+trickier
+</li>
+
+<li>
+1.2
+Plan9
+source
+(usually
+comes
+with
+access
+to
+the
+P9
+network
+and/or
+a
+P9
+installation)
+</li>
+
+<li>
+1.3
+A
+Linux
+machine
+(used
+to
+compile
+the
+LinuxBIOS
+part)
+</li>
+
+<li>
+1.4
+Some
+hardware
+that
+LinuxBIOS
+works
+with
+</li>
+
+<li>
+1.(5-9)
+Lots
+of
+patience
+</li>
+</ul>
+
+<p class='para'>
+Plan9
+setup:
+</p>
+
+<p class='para'>
+The
+setup
+for
+P9
+uses
+the
+fact
+that
+the
+operating
+system
+supports
+union
+directories.
+What
+that
+gives
+us
+is
+the
+ability
+to
+store
+only
+those
+files
+we
+modify
+in
+our
+local
+directory,
+and
+bind
+them
+when
+necessary
+on
+top
+of
+the
+standard
+kernel
+tree
+(in
+/sys/src/)...
+In
+fact
+this
+results
+in
+a
+carefully
+crafted
+namespace
+that
+could
+be
+used
+in
+a
+single
+terminal
+window
+(or,
+if
+so
+willing
+in
+an
+entire
+rio
+session
+on
+a
+cpu
+server)
+to
+present
+a
+decent
+development
+environment,
+while
+the
+rest
+of
+the
+screen,
+session
+or
+terminals
+keep
+the
+common,
+non-development
+view
+of
+the
+system.
+Ultimately
+this
+allows
+for
+several
+different
+developments
+to
+go
+on
+at
+the
+same
+time,
+(example
+will
+be
+shown
+in
+a
+bit)
+--
+compiling
+kernels
+in
+one
+window,
+9load
+bootloaders
+in
+another
+window,
+while
+being
+able
+to
+see
+the
+normal,
+unmodified
+kernel
+tree
+in
+a
+third
+window
+for
+comparison.
+All
+in
+the
+same
+directory.
+</p>
+
+<p class='para'>
+How
+it
+actually
+works:
+</p>
+
+<p class='para'>
+In
+brief,
+LinuxBIOS
+starts
+up
+on
+the
+hardware,
+find
+and
+loads
+Plan9's
+bootloader
+(9load
+masked
+as
+an
+elf32
+image
+so
+it
+can
+be
+recognized
+by
+LinuxBIOS),
+9load
+then
+prompts
+for
+kernel
+or
+attempts
+to
+etherboot
+one,
+downloads
+it,
+uncompresses
+it
+and
+jumps
+to
+it.
+Voila.
+</p>
+
+<p class='para'>
+Details
+follow:
+</p>
+
+<p class='para'>
+You
+compile
+(make)
+a
+9load
+image
+tailored
+to
+work
+with
+</p>
+
+<p class='para'>
+LinuxBIOS:
+</p>
+
+<pre>
+p9% lbbind # bind the development tree...
+p9% mk 9loadlb # in the mkfile there's a special
+8a -DLinuxBios -o ll.8 l.s # configuration for linuxbios
+8c -FVw -I. alarm.c # kernels carrying the necessary
+8c -FVw -I. cga.c # #define's and linking 9load
+8c -FVw -I. clock.c # at 0x800000
+8c -FVw -I. console.c
+8c -FVw -I. dosboot.c
+8c -FVw -I. donprint.c
+8c -FVw -I. devfloppy.c
+8c -FVw -I. dma.c
+8c -FVw -I. ilock.c
+8c -FVw -I. kbd.c
+8c -FVw -I. queue.c
+8c -FVw -I. trap.c
+8c -FVw -I. 8250.c
+warning: 8250.c:130 param declared and not used: arg
+8c -FVw -I. apm.c
+8c -FVw -I. boot.c
+8c -FVw -I. devpccard.c
+8c -FVw -I. conf.c
+8c -FVw -I. devi82365.c
+8c -FVw -I. devsd.c
+8c -FVw -I. inflate.c
+8c -FVw -I. load.c
+warning: load.c:159 no return at end of function: myboot
+load.c:280 function args not checked: pcihinv
+
+8c -FVw -I. memory.c
+8c -FVw -I. part.c
+8c -FVw -I. pci.c
+8c -FVw -I. sdata.c
+8c -FVw -I. sdmylex.c
+8c -FVw -I. sd53c8xx.c
+8c -FVw -I. sdscsi.c
+8c -FVw -I. bootp.c
+8c -FVw -I. ether.c
+8c -FVw -I. ether2114x.c
+8c -FVw -I. ether2000.c
+8c -FVw -I. ether589.c
+8c -FVw -I. ether79c970.c
+8c -FVw -I. ether8003.c
+8c -FVw -I. ether8139.c
+8c -FVw -I. ether82557.c
+8c -FVw -I. ether83815.c
+8c -FVw -I. ether8390.c
+8c -FVw -I. etherec2t.c
+8c -FVw -I. etherelnk3.c
+
+8l -o 9loadlb -H3 -T0x80800000 -l ll.8 alarm.8 cga.8 clock.8
+console.8 dosboot.8 donprint.8 devfloppy.8 dma.8 ilock.8 kbd.8
+queue.8 trap.8 8250.8 apm.8 boot.8 devpccard.8 conf.8 devi82365.8
+devsd.8 inflate.8 load.8 memory.8 part.8 pci.8 sdata.8 sdmylex.8
+sd53c8xx.8 sdscsi.8 bootp.8 ether.8 ether2114x.8 ether2000.8
+ether589.8 ether79c970.8 ether8003.8 ether8139.8 ether82557.8
+ether83815.8 ether8390.8 etherec2t.8 etherelnk3.8 -lflate -lc
+
+ls -l 9loadlb
+
+--rwxr-xr-x M 9 andrey andrey 178320 Jun 20 11:34 9loadlb
+
+p9%
+
+9loadlb is a special configuration in the mkfile that will
+
+#define 'LinuxBios' during the compilation and will link 9loadlb at
+0x800000 (that's where LinuxBIOS will jump to).
+
+Next step is to copy 9loadlb to the linux machine (usually you would
+scp it a level below the mkelf/ directory in snaresland):
+
+fbsd$ scp plan9:src/boot/pc/9loadlb ../9load.800000
+
+andrey@plan9.acl.lanl.gov's password:
+
+9loadlb 100% |*****************************| 174 KB 00:00
+
+fbsd$
+</pre>
+
+<p class='para'>
+Then
+run
+the
+'mymk'
+script
+in
+mkelf:
+</p>
+
+<pre>
+snares$ pwd
+/users/andrey/kern/mkelf
+snares$ ./mymk
+#!/bin/sh -v
+cd 9load
+cp ~/kern/9load.800000 .
+make all4
+./mkas &lt; 9load.800000 &gt; 9l.s
+as -o 9l.o 9l.s
+ld -T elfImage.lds.800000 -o 9l.elf 9l.o
+ld: warning: cannot find entry symbol startup_32; defaulting to
+00800000
+cp 9l.elf ..
+cd ..
+
+bin/mkelfImage --kernel=9l.elf
+
+Running gcc -O2 -DDEFAULT_ROOT_DEV='(((0x3&lt;&lt;8)| 0))'
+-DDEFAULT_COMMAND_LINE='""' -DDEFAULT_PROGRAM_VERSION='""' -c
+/users/andrey/kern/mkelf/share/mkelfImage/elf32-i386/convert_params.c -o /am/mother-v2-e5/vol/vol0/u0/andrey/kern/mkelf/convert_params_6384.o
+
+Running gcc -O2 -DDEFAULT_ROOT_DEV='(((0x3&lt;&lt;8)| 0))'
+-DDEFAULT_COMMAND_LINE='""' -DDEFAULT_PROGRAM_VERSION='""' -c
+/users/andrey/kern/mkelf/share/mkelfImage/elf32-i386/head.S -o
+/am/mother-v2-e5/vol/vol0/u0/andrey/kern/mkelf/head_6384.o
+
+Running ld -o elfImage.fat -T
+/users/andrey/kern/mkelf/share/mkelfImage/elf32-i386/elfImage.lds
+/am/mother-v2-e5/vol/vol0/u0/andrey/kern/mkelf/kernel_piggy_6384.o
+/am/mother-v2-e5/vol/vol0/u0/andrey/kern/mkelf/ramdisk_piggy_6384.o
+/am/mother-v2-e5/vol/vol0/u0/andrey/kern/mkelf/convert_params_6384.o
+/am/mother-v2-e5/vol/vol0/u0/andrey/kern/mkelf/head_6384.o Running
+ld -o elfImage.fat -T
+/users/andrey/kern/mkelf/share/mkelfImage/elf32-i386/elfImage.lds
+/am/mother-v2-e5/vol/vol0/u0/andrey/kern/mkelf/kernel_piggy_6384.o
+/am/mother-v2-e5/vol/vol0/u0/andrey/kern/mkelf/ramdisk_piggy_6384.o
+/am/mother-v2-e5/vol/vol0/u0/andrey/kern/mkelf/convert_params_6384.o
+/am/mother-v2-e5/vol/vol0/u0/andrey/kern/mkelf/head_6384.oBFD:
+elfImage.fat: warning: Empty loadable segment detected
+
+checksum: dc7c
+
+echo done
+
+done
+</pre>
+
+<p class='para'>
+The
+script
+is
+a
+bit
+ugly,
+but
+we
+strive
+not
+for
+beauty...
+You'll
+find
+it
+below,
+or
+in
+the
+linux
+bundle...
+Next
+step
+is
+to
+scp
+back
+the
+9load
+(masked
+as
+an
+elfImage)
+to
+a
+place
+where
+it
+could
+be
+burned
+in
+flash,
+or
+if
+you
+want
+to
+debug,
+downloaded
+by
+an
+etherboot
+LinuxBIOS:
+</p>
+
+<pre>
+fbsd$ scp elfImage plan9:/386/9pcblah
+andrey@plan9.acl.lanl.gov's password:
+elfImage 100% |*****************************| 190 KB 00:00
+scp: can't wstat /386/9pcblah: wstat -- attempt to change qid.vers
+fbsd$
+</pre>
+
+<p class='para'>
+Ignore
+the
+error
+message
+if
+you
+see
+it...
+In
+this
+case,
+the
+dhcp
+server
+has
+been
+instructed
+to
+provide
+/386/9pcblah
+as
+the
+kernel
+to
+a
+bootp
+request
+from
+the
+machine
+we
+work
+with
+(based
+on
+that
+machine's
+ethernet
+address,
+ask
+dpx@acl
+for
+more
+details).
+</p>
+
+<p class='para'>
+NOTE:
+if
+you
+think
+that
+the
+9load
+will
+work
+fine,
+just
+tell
+Ron
+to
+burn
+it
+in
+flash
+for
+you..
+In
+this
+case
+you
+need
+to
+put
+the
+9pccpu
+kernel
+in
+/386/9pcblah
+instead
+:)
+</p>
+
+<p class='para'>
+File
+organization:
+</p>
+
+<p class='para'>
+create
+a
+$home/src
+directory
+to
+store
+all
+the
+modified
+files
+in.
+the
+then
+in
+$home/src
+recreate
+all
+the
+directories
+present
+in
+/sys/src,
+which
+pertain
+in
+your
+current
+development.
+in
+my
+case
+it
+was
+/sys/src/9,
+/sys/src/boot,
+/sys/src/libauthconfig,
+and
+then
+recursively
+recreate
+all
+other
+directories
+present
+there.
+here's
+a
+real-life
+example:
+</p>
+
+<pre>
+p9% du /usr/andrey/src | awk '{print $2}'
+/usr/andrey/src/9/pc
+/usr/andrey/src/9/ip
+/usr/andrey/src/9/alphapc
+/usr/andrey/src/9/bitsy
+/usr/andrey/src/9/boot
+/usr/andrey/src/9/port
+/usr/andrey/src/9/mtx
+/usr/andrey/src/9
+/usr/andrey/src/libauthsrv
+/usr/andrey/src/boot/alphapc
+/usr/andrey/src/boot/arm
+/usr/andrey/src/boot/pc
+/usr/andrey/src/boot
+/usr/andrey/src/cmd/aux/vga
+/usr/andrey/src/cmd/aux
+/usr/andrey/src/cmd/auth/factotum
+/usr/andrey/src/cmd/auth/lib
+/usr/andrey/src/cmd/auth/secstore
+/usr/andrey/src/cmd/auth
+/usr/andrey/src/cmd
+/usr/andrey/src
+p9%
+</pre>
+
+<p class='para'>
+Then
+if
+you
+want
+to
+edit
+/sys/src/9/pc/pci.c
+just
+do:
+</p>
+
+<pre>
+cp /sys/src/9/pc/pci.c $home/src/9/pc/pci.c
+</pre>
+
+<p class='para'>
+Scripts:
+</p>
+
+<p class='para'>
+Several
+scripts
+are
+used
+to
+automate
+the
+binding
+process
+and
+to
+make
+your
+life
+easier.
+Remember
+that
+after
+the
+boot-up
+the
+machine
+is
+in
+a
+non-development
+state,
+i.e.
+it
+does
+not
+know
+that
+you
+have
+made
+any
+modification
+to
+the
+kernel
+source
+--
+you
+have
+to
+tell
+it
+to
+change
+the
+namespace
+accordingly,
+so
+that
+when
+you
+type
+'mk'
+in
+/sys/src/9/pc
+it
+will
+compile
+your
+own
+files
+instead
+of
+somebody
+else's...
+The
+scripts
+will
+do
+the
+modification
+to
+the
+namespace
+for
+you,
+just
+execute
+them
+before
+you
+start
+working
+on
+the
+code
+(think
+of
+it
+as
+a
+'start
+your
+engines'
+of
+some
+sort).
+Here
+are
+the
+scripts
+(they
+differ
+because
+one
+does
+binding
+of
+the
+$home/src/9
+as
+the
+kernel
+tree
+--
+something
+I
+use
+for
+writing
+drivers
+to
+support
+several
+graphics
+cards,
+i.e.
+non-LinuxBIOS
+kernels)
+and
+the
+other
+binds
+$home/src/linuxbios/
+which
+is
+the
+same
+as
+$home/src/9,
+but
+the
+files
+therein
+are
+LinuxBIOS-related.
+Copy
+those
+files
+in
+$home/bin/rc
+and
+chmod
+755
+them:
+</p>
+
+<pre>
+p9% cat /usr/andrey/bin/rc/kbind
+#!/bin/rc
+# this does bindings for the non-linuxbios kernel sources
+# and the 9load linuxbios sources
+
+# 9
+bind -cb $home/src/9/pc /sys/src/9/pc
+bind -cb $home/src/9/ip /sys/src/9/ip
+bind -cb $home/src/9/alphapc /sys/src/9/alphapc
+bind -cb $home/src/9/bitsy /sys/src/9/bitsy
+bind -cb $home/src/9/boot /sys/src/9/boot
+bind -cb $home/src/9/port /sys/src/9/port
+bind -cb $home/src/9/mtx /sys/src/9/mtx
+
+#boot
+bind -cb $home/src/boot/alphapc /sys/src/boot/alphapc
+bind -cb $home/src/boot/arm /sys/src/boot/arm
+bind -cb $home/src/boot/pc /sys/src/boot/pc
+
+#fs
+bind -cb $home/src/fs/port /sys/src/fs/port
+bind -cb $home/src/fs/choline /sys/src/fs/choline
+bind -cb $home/src/fs/dev /sys/src/fs/dev
+bind -cb $home/src/fs/emelie /sys/src/fs/emelie
+bind -cb $home/src/fs/ip /sys/src/fs/ip
+bind -cb $home/src/fs/pc /sys/src/fs/pc
+bind -cb $home/src/fs/roro /sys/src/fs/roro
+bind -cb $home/src/fs/sony /sys/src/fs/sony
+
+#cmd
+
+bind -cb $home/src/cmd /sys/src/cmd
+
+p9%
+</pre>
+
+<p class='para'>
+The
+#cmd
+part
+is
+not
+really
+necessary,
+but
+i
+keep
+in
+there
+</p>
+
+<p class='para'>
+stuff
+i
+do
+with
+P9
+commands...
+</p>
+
+<pre>
+p9% cat /usr/andrey/bin/rc/lbbind
+#!/bin/rc
+# linuxbios stuff
+
+# 9
+bind -cb $home/src/linuxbios/pc /sys/src/9/pc
+bind -cb $home/src/linuxbios/ip /sys/src/9/ip
+bind -cb $home/src/linuxbios/alphapc /sys/src/9/alphapc
+bind -cb $home/src/linuxbios/bitsy /sys/src/9/bitsy
+bind -cb $home/src/linuxbios/boot /sys/src/9/boot
+bind -cb $home/src/linuxbios/port /sys/src/9/port
+bind -cb $home/src/linuxbios/mtx /sys/src/9/mtx
+
+#boot
+bind -cb $home/src/boot/alphapc /sys/src/boot/alphapc
+bind -cb $home/src/boot/arm /sys/src/boot/arm
+bind -cb $home/src/boot/pc /sys/src/boot/pc
+
+#fs
+bind -cb $home/src/fs/port /sys/src/fs/port
+bind -cb $home/src/fs/choline /sys/src/fs/choline
+bind -cb $home/src/fs/dev /sys/src/fs/dev
+bind -cb $home/src/fs/emelie /sys/src/fs/emelie
+bind -cb $home/src/fs/ip /sys/src/fs/ip
+bind -cb $home/src/fs/pc /sys/src/fs/pc
+bind -cb $home/src/fs/roro /sys/src/fs/roro
+bind -cb $home/src/fs/sony /sys/src/fs/sony
+
+#cmd
+bind -cb $home/src/cmd /sys/src/cmd
+
+p9%
+</pre>
+
+<p class='para'>
+Actually,
+only
+the
+lbbind
+command
+is
+needed
+--
+that'll
+bind
+</p>
+
+<p class='para'>
+all
+sources
+from
+the
+source
+tree
+</p>
+
+<p class='para'>
+An
+example
+of
+a
+typical
+P9
+session
+follows:
+</p>
+
+<pre>
+p9% lbbind
+
+p9% cd /sys/src/9/pc
+
+# edit some files, make some changes, etc...
+
+#make a cpu kernel
+
+p9% mk 'CONF=pccpu'
+
+8c -FVw ether79c970.c
+
+8c -FVw vgabt485.c
+
+# lots of files being compiled, here's where your errors will happen
+#
+# now you have a decent kernel, copy it somewhere where it could be etherbooted
+
+p9% cp 9pccpu
+
+# clean up -- not really necessary, but sometimes fun :)
+
+p9% mk clean
+
+rm -f *.[v4586xq7] *.root.s cfs.h fs.h init.h conf.h *.out
+
+for(i in pc pccpu pcdisk)
+
+mk $i.clean
+
+rm -f pc.c [9bz]pc [9bz]pc.gz bootpc.*
+
+rm -f pccpu.c [9bz]pccpu [9bz]pccpu.gz bootpccpu.*
+
+rm -f pcdisk.c [9bz]pcdisk [9bz]pcdisk.gz bootpcdisk.*
+
+p9%
+
+# to stop a development session just delete the terminal window,
+# your files will be saved there :)
+</pre>
+<hr />Linux:
+<p class='para'>
+Here
+you'll
+need
+ron's
+help!
+CVS
+update
+the
+latest
+from
+the
+freebios
+distribution,
+then
+guntar
+the
+mkelf.tgz
+file
+included,
+then
+get
+Ron
+to
+make
+LinuxBIOS
+proper
+so
+you
+can
+combine
+it
+with
+9loadlb...
+I
+pretty
+much
+know
+nothing
+about
+this
+process.
+As
+far
+as
+I
+am
+concerned
+I
+may
+as
+well
+be
+sitting
+around
+waving
+a
+chicket
+at
+the
+screen
+while
+Ron
+does
+everything...
+After
+the
+setup,
+just
+use
+the
+'mymk'
+script
+as
+above
+and
+enjoy
+:)
+</p>
+<hr />
+<a name="2._SOURCE_CODE_DIFFS_WITH_EXPLANATIONS:" /><h3>2. SOURCE CODE DIFFS WITH EXPLANATIONS:</h3>
+
+<p class='para'>
+/sys/src/boot/pc/mkfile
+--
+the
+file
+was
+changed
+to
+accomodate
+my
+Plan9
+endeavours.
+a
+new
+target
+was
+added,
+namely
+the
+9loadlb
+linuxbios-enabled
+kernel.
+the
+difference
+is
+that
+the
+linuxbios
+code
+is
+#ifdef-ed
+LinuxBios:
+</p>
+
+<pre>
+p9% diff boot/pc/mkfile /sys/src/boot/pc/mkfile
+7d6
+&lt; 9loadlb\
+95,98d93
+&lt; 9loadlb: ll.$O $CORE $LOAD $ETHER
+&lt; $LD -o $target -H3 -T0x80800000 -l $prereq -lflate -lc
+&lt; ls -l $target
+&lt;
+118,120d112
+&lt;
+&lt; ll.$O: l.s
+&lt; $AS -DLinuxBios -o ll.$O l.s
+p9%
+</pre>
+
+<p class='para'>
+/sys/src/boot/pc/l.s
+--
+the
+real
+mode
+code
+is
+commented
+out
+(rather,
+ifdef'd),
+9load
+is
+entered
+in
+protected
+mode.
+code
+is
+added
+to
+load
+the
+GDT.
+some
+attempts
+to
+fix
+the
+IRQ
+routing
+problem
+but
+nothing
+is
+tested
+extensively.
+we
+ended
+up
+chasing
+a
+bug
+for
+a
+long
+time
+with:
+</p>
+
+<pre>
+MOV AX, SS
+</pre>
+
+<p class='para'>
+and
+ended
+up
+fixing
+it
+somewhat
+miraculously.
+it
+never
+appears
+in
+normal
+bios
+boots...
+</p>
+
+<p class='para'>
+stuff
+like:
+</p>
+
+<pre>
+MOVL $0x80, DX
+MOVB $0x19, AL
+OUTB
+</pre>
+
+<p class='para'>
+is
+simply
+outputting
+to
+the
+post
+card
+(ask
+Ron
+for
+details
+on
+Post-Card
+debugging!
+It's
+the
+most
+fun
+you
+can
+have
+without
+having
+to
+go
+outside
+and
+exercise!
+</p>
+
+<p class='para'>
+diff:
+</p>
+
+<pre>
+p9% diff boot/pc/l.s /sys/src/boot/pc/l.s
+20,24d19
+&lt;
+&lt; MOVL $0x80, DX
+&lt; MOVB $0x11, AL
+&lt; OUTB
+&lt;
+27c22
+&lt; #ifndef LinuxBios
+---
+&gt;
+200,202d194
+&lt;
+&lt;
+&lt;
+209c201
+&lt; MOVL $1,AX
+---
+&gt; LWI(1, rAX)
+213,216d204
+&lt; /* MOVL CR0,AX
+&lt; ORL $1,AX
+&lt; MOVL AX,CR0
+&lt; */
+227,238c215,218
+&lt;
+&lt; #endif /* LinuxBios */
+&lt; /* begin andrey messing around */
+&lt;
+&lt; MOVL $0x80, DX
+&lt; MOVB $0x11, AL
+&lt; OUTB
+&lt;
+&lt; MOVL tgdtptr-KZERO(SB),GDTR /**/
+&lt;
+&lt;
+&lt; MOVW $SELECTOR(1, SELGDT, 0),AX /**/
+---
+&gt; /* MOVW $SELECTOR(1, SELGDT, 0),AX /**/
+&gt; BYTE $0xc7
+&gt; BYTE $0xc0
+&gt; WORD $SELECTOR(1, SELGDT, 0)
+239a220
+&gt; MOVW AX,SS
+243d223
+&lt; MOVW AX,SS
+245,249d224
+&lt; MOVL $0x80, DX
+&lt; MOVB $0x12, AL
+&lt; OUTB
+&lt;
+&lt; #ifndef LinuxBios
+255,256c230,231
+&lt; #endif /* linuxbios */
+&lt; TEXT mode32bit(SB),$0
+---
+&gt;
+&gt; TEXT mode32bit(SB),$0
+266,270d240
+&lt;
+&lt; MOVL $0x80, DX
+&lt; MOVB $0x13, AL
+&lt; OUTB
+&lt;
+274,277d243
+&lt; MOVL $0x80, DX
+&lt; MOVB $0x14, AL
+&lt; OUTB
+&lt;
+290,292d255
+&lt;
+&lt;
+&lt;
+308d270
+&lt;
+320d281
+&lt;
+345,348d305
+&lt; MOVL $0x80, DX
+&lt; MOVB $0x17, AL
+&lt; OUTB
+&lt;
+361,363d317
+&lt; MOVL $0x80, DX
+&lt; MOVB $0x18, AL
+&lt; OUTB
+371,374d324
+&lt;
+&lt; MOVL $0x80, DX
+&lt; MOVB $0x19, AL
+&lt; OUTB
+p9%
+</pre>
+
+<p class='para'>
+/sys/src/boot/pc/ether.c
+--
+modified
+to
+probe
+for
+ethernet
+cards
+rather
+than
+expect
+it
+to
+be
+configured
+from
+plan9.ini
+(there
+is
+no
+plan9.ini).
+all
+ether
+devices
+found
+are
+given
+irq
+9
+(the
+geode
+hardwires
+the
+INTP
+lines
+to
+10,
+but
+for
+some
+reason
+10
+does
+not
+work)
+</p>
+
+<pre>
+p9% diff boot/pc/ether.c /sys/src/boot/pc/ether.c
+41d40
+&lt;
+62,63c61,62
+&lt; // if(isaconfig("ether", ctlrno, ctlr) == 0)
+&lt; // continue;
+---
+&gt; if(isaconfig("ether", ctlrno, ctlr) == 0)
+&gt; continue;
+66,67d64
+&lt; memset(ctlr, 0, sizeof(Ether));
+&lt; strcpy(ctlr-&gt;type, ethercards[n].type);
+73,74c70
+&lt; i = (*ethercards[n].reset)(ctlr);
+&lt; if(i &lt; 0) {
+---
+&gt; if((*ethercards[n].reset)(ctlr)){
+76,78d71
+&lt; continue;
+&lt; } else if(i) {
+&lt; splx(x);
+86d78
+&lt; //ctlr-&gt;irq = 9;
+p9%
+</pre>
+
+<p class='para'>
+/sys/src/boot/pc/load.c
+--
+hardcoded
+to
+boot
+off
+'ether0'
+as
+soon
+as
+it
+has
+finished
+finding
+and
+configuring
+the
+(missing)
+pci
+devices
+and
+hard
+drives.
+if
+the
+bootp
+off
+ether0
+fails
+(e.g.
+a
+bad
+kernel
+is
+given)
+load.c
+prompts
+for
+another
+boot
+device.
+the
+'i'm
+too
+big'
+check
+is
+commented
+out.
+console
+support
+is
+hardwired
+(no
+plan9.ini
+to
+turn
+it
+on).
+lots
+of
+debuging
+output
+to
+the
+post
+card.
+the
+console()
+initialization
+is
+moved
+way
+ahead
+of
+everything
+else
+--
+I
+wanted
+to
+have
+as
+much
+debugging
+output
+as
+possible!
+</p>
+
+<pre>
+p9% diff boot/pc/load.c /sys/src/boot/pc/load.c
+125d124
+&lt;
+149,162d147
+&lt; static int
+&lt; myboot(char* file)
+&lt; {
+&lt; char *eth = "ether0";
+&lt; Type *tp;
+&lt; Medium *mp;
+&lt;
+&lt; for(tp = types; tp-&gt;type != Tnil; tp++)
+&lt; for(mp = tp-&gt;media; mp; mp = mp-&gt;next)
+&lt; if(strcmp(mp-&gt;name, eth) == 0)
+&lt; boot(mp, file);
+&lt;
+&lt; }
+&lt;
+252,254d236
+&lt; delay(100000);
+&lt;
+&lt; outb(0x80, 0x20);
+256d237
+&lt; outb(0x80, 0x21);
+258,264d238
+&lt; outb(0x80, 0x22);
+&lt;
+&lt; outb(0x80, 0x27);
+&lt; consinit("0", "115200");
+&lt; outb(0x80, 0x28);
+&lt; kbdinit();
+&lt;
+266d239
+&lt; outb(0x80, 0x23);
+268d240
+&lt; outb(0x80, 0x24);
+270d241
+&lt; outb(0x80, 0x25);
+272d242
+&lt; outb(0x80, 0x26);
+274,277c244
+&lt; outb(0x80, 0x27);
+&lt; // consinit("0", "115200");
+&lt; outb(0x80, 0x28);
+&lt; // kbdinit();
+---
+&gt; kbdinit();
+279,283c246,247
+&lt; print("hi!\n");
+&lt; pcihinv(nil);
+&lt; outb(0x80, 0x29);
+&lt; // if((ulong)&amp;end &gt; (KZERO|(640*1024)))
+&lt; // panic("i'm too big\n");
+---
+&gt; if((ulong)&amp;end &gt; (KZERO|(640*1024)))
+&gt; panic("i'm too big\n");
+285d248
+&lt; outb(0x80, 0x30);
+287d249
+&lt; outb(0x80, 0x31);
+297d258
+&lt; outb(0x80, 0x32);
+299d259
+&lt; outb(0x80, 0x33);
+301,304c261,262
+&lt; // if((p = getconf("console")) != nil)
+&lt; // consinit(p, getconf("baud"));
+&lt;
+&lt; outb(0x80, 0x34);
+---
+&gt; if((p = getconf("console")) != nil)
+&gt; consinit(p, getconf("baud"));
+306d263
+&lt; outb(0x80, 0x35);
+308d264
+&lt; outb(0x80, 0x36);
+318d273
+&lt; outb(0x80, 0x37);
+322d276
+&lt; outb(0x80, 0x38);
+337d290
+&lt; outb(0x80, 0x39);
+365,368d317
+&lt; outb(0x80, 0x40);
+&lt; myboot(file); /* hardcoded ether0 boot */
+&lt; outb(0x80, 0x41);
+&lt;
+443a393,395
+&gt; extern void diff(char*);
+&gt;
+&gt; ulong palloc;
+447,448d398
+&lt;
+&lt; static ulong palloc;
+464d413
+&lt;
+p9%
+</pre>
+
+<p class='para'>
+Everything
+else
+you'll
+find
+in
+the
+directory
+pertains
+to
+my
+attempts
+to
+fix
+the
+missing
+interrupts
+problem
+with
+the
+8259
+emulator
+(trap.c).
+To
+start
+clean
+you
+may
+want
+to
+remove
+those
+files...
+</p>
+<hr />Changes
+in
+the
+plan9
+kernel:
+<p class='para'>
+The
+configuration
+files
+are
+greatly
+simplified
+--
+I
+wanted
+to
+have
+as
+little
+unnecessary
+drivers
+as
+possible.
+I
+got
+the
+kernel
+down
+to
+365K,
+stripped
+and
+gzipped...
+</p>
+
+<p class='para'>
+/sys/src/9/pc/main.c
+--
+lots
+and
+lots
+of
+debugging
+information
+</p>
+
+<p class='para'>
+in
+main().
+i
+wanted
+to
+make
+sure
+that
+if
+I
+crash
+anywhere
+during
+execution
+I
+could
+simply
+se
+what
+the
+post
+card
+says
+and
+know
+which
+part
+of
+main()
+i
+was
+in...
+Also
+some
+pci
+debugging
+information
+was
+added
+(pcihinv()
+prints
+out
+the
+pci
+devices)
+</p>
+
+<pre>
+p9% diff linuxbios/pc/main.c /sys/src/9/pc/main.c
+76d75
+&lt; outb(0x80, 0xA0);
+78d76
+&lt; outb(0x80, 0xA0);
+80d77
+&lt; outb(0x80, 0xA1);
+82,83d78
+&lt; outb(0x80, 0xA2);
+&lt; kbdinit();
+85d79
+&lt; outb(0x80, 0xA3);
+88d81
+&lt; outb(0x80, 0xA4);
+91c84
+&lt; outb(0x80, 0xA6);
+---
+&gt; kbdinit();
+93d85
+&lt; outb(0x80, 0xA7);
+95d86
+&lt; outb(0x80, 0xA8);
+97d87
+&lt; outb(0x80, 0xA9);
+99d88
+&lt; outb(0x80, 0xAa);
+101d89
+&lt; outb(0x80, 0xAb);
+103d90
+&lt; outb(0x80, 0xAc);
+105d91
+&lt; outb(0x80, 0xAd);
+107d92
+&lt; outb(0x80, 0xAe);
+109d93
+&lt; outb(0x80, 0xAf);
+111d94
+&lt; outb(0x80, 0xb0);
+113d95
+&lt; outb(0x80, 0xb1);
+116d97
+&lt; outb(0x80, 0xb2);
+118d98
+&lt; outb(0x80, 0xb3);
+120d99
+&lt; outb(0x80, 0xb4
+
+</pre>
+<hr />
+<a name="3._SOURCE_CODE" /><h3>3. SOURCE CODE</h3>
+
+<p class='para'>
+(Missing?)
+</p>
+<hr>
+
+</div> <!-- ***************************** -->
+
+<hr class='banner_sep' />
+
+<div class='banner'>
+<ul>
+	<li><a href="../plan_9_wiki/">Wiki</a></li>
+	<li><a href="../Documentation/">Docs</a></li>
+	<li><a href="../news/">News</a></li>
+	<li><a href="../development/">Devel</a></li>
+	<li><a href="../papers/">Papers</a></li>
+	<li><a href="../download/">Download</a></li>
+
+</ul>
+</div>
+
+<hr class='footer_sep' />
+
+<div class='footer'>
+	<a href="./">Current Page</a> - 
+	<span class='last_mod'>Last modified Thu Apr 28 00:26:45 EDT 2005</span>
+	
+<br />
+	<div class='about_wiki'>
+<a href="http://plan9.bell-labs.com/plan9"><img align="middle" src="http://plan9.bell-labs.com/plan9/img/power36.gif" alt="Powered by Plan 9" /></a>
+	<a href="../about.html">About this Wiki</a>
+	</div>
+
+
+</div>
+
+</body></html>

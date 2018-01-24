@@ -1,0 +1,62 @@
+Cross domain authentication
+
+Cross domain authentication has been implemented in two different
+forms recently (Jul 2005), however there is still discussion about
+the "best" solution.
+
+IMPLEMENTATION 2
+
+Central authentication server
+[http://groups-beta.google.com/group/comp.os.plan9/msg/4625ee53672ef106?dmode=source&hl=en]
+
+IMPLEMENTATION 1
+
+Distributed authentication
+[http://groups-beta.google.com/group/comp.os.plan9/msg/3c379056e750c514?dmode=source&hl=en]
+
+A EARLIER, SIMILAR PROPOSAL
+
+(Taken from a post by David Presotto to the 9grid list:
+[http://nwn.definitive.org/pipermail/9grid/2004-September/000269.html])
+
+In the current scheme, when a user authenticates, he/she gets a list
+of domains that the server will accept and picks one to use (i.e. one
+he has a key for). That should provide the second part of the name,
+i.e., if I'm presotto authenticating via the domain bignose.com then
+I should be presotto@bignose.com. Tacking on the @bignose.com is
+currently missing.
+
+That of course leaves the server to map the domain bignose.com to an
+auth server that it trusts (i.e. has a key for and trusts others to
+authenticate via). Currently that's done via the lib/ndb entry
+
+! 	authdom=bignose.com auth=1.2.3.4
+
+So we have a way to trust other authentication domains but not yet a
+way to tag the resulting name. However, that's like 1 line of code in
+factotum.
+
+However, this requires that there be a shared key twixt each server
+and each domain that it trusts. I'll leave it up to you if that's too
+much.
+
+If the server is a cpu server, then the caller can export its
+factotum to its process on that cpu server so that it can
+authenticate further. Is this a good idea? Would we be letting too
+much access to the factotum? Might we want the user to start a second
+less capable factotum for 9net access?
+
+The client coming into the cpu server will need at least readonly
+access to binaries and to enough directory structure to set up a name
+space on that machine. I already had to make that work for the deep
+lens survey stuff. I made ken's group 'noworld' access work for that.
+If we put each 9net user in the 'noworld' group, then we can point
+him to a file server and he can only get at files that are accessible
+by his uid or by the 'noworld' group. You could even give him some
+write access if you wanted to. It keeps such users from accessing
+anything that was accidentally made world readable or writable. It
+does mean that you have to change the file server so that anyone
+coming in as a@b is just treated as a 'noworld' group user.
+
+My 2 cents.
+

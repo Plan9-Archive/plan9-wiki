@@ -1,0 +1,127 @@
+Plan 9 Wiki Wish List
+
+This page is a wish list for the Plan 9 Wiki documentation. Feel free
+to add items you think should be included in the Wiki, or remove
+items that have been added.
+
+ *	Make a wish list for documentation additions, changes, and
+	removals.
+ *	Make [sandbox] editable
+
+NETWORKING
+
+ *	How does one test whether the network connection is up? ip/ping?
+	(Yes, but first you must run 'ip/ipconfig ether /net/ether0
+	your-ip-address' or just 'ip/ipconfig') - it is often useful to cat
+	/net/ndb and cat /net/ipselftab to verify networking parameters are
+	set correctly.
+ *	Does 'ip/ipconfig ether /net/ether0 unbind' set the card to a
+	state where it can be reassigned with 'ip/ipconfig -g ga.te.way.addr
+	ether /net/ether0 ip.a.d.dr net.m.a.sk' or is there more to do?
+ *	Must the first server on the network (which will be the dhcp and
+	auth server) set its IP in /rc/bin/termrc (or cpurc) or can a
+	well-formed /lib/ndb/local assign it? Answer: This can absolutely be
+	set in /lib/ndb/local. To do this add an entry for the machine's MAC
+	address to the ndb file as ether=MACADRESS and then invoke
+	ip/ipconfig -N. The -N flag instructs ipconfig(8) to retrieve
+	parameters from /lib/ndb/local.
+ *	If after assigning the IP in /rc/bin/termrc and not getting a
+	"can't look up my ip" error from /ndb/dns, if one can't ip/ping
+	anything, what are the possible problems? Answer: to troubleshoot,
+	first verify that the ethernet device (#l) is bound to /net. Look at
+	/net/ndb and /net/ipselftab to check if the internet connection is
+	configured correctly. Ping is not always the best troubleshooting
+	tool. You might also try a srv tcp!something.on.local.subnet!port if
+	you have any listening services on any machines on your local
+	network. Even non plan-9 services can still be posted as a file
+	descriptor in /srv to see if the machine is able to dial out.
+
+WIKI DOCS
+
+Some docs on how to set up the wiki would be nice. The man page is a
+little thin, and there are a few html pages missing in the
+distribution (create.html for one). When the wiki does work, editing
+a page produces
+
+! Object not found
+! The object %s open %s failed: %r does not exist on this server.
+
+Note: wikifs must be started before httpd.
+
+IDEAL INSTALLATION
+
+CPU servers, File servers, auth servers, terminal servers... is there
+an overview of what the minimum recommended Plan 9 system somewhere?
+The docs hint that a standalone cpu server would be a good thing, as
+would a file server, and also an auth server. What is the ideal, and
+what are lesser but acceptable alternatives?
+
+-- Added page for the above at [Expanding your Grid]. Mycroftiv.
+
+You can do most things logging in as "glenda" or "none" with the
+default installation. However, part of the idea behind Plan 9 is
+being able to import resources from other machines and use them as if
+they were local. You can expand on the default installation by making
+it a hybrid CPU, Authentication, DHCP, and kfs file server. Follow
+the instructions in [Configuring a standalone CPU server]. It's
+recommended you read the following pages before attempting it:
+ *	[Kfs file system configuration] - set up new users
+ *	[Compiling kernels] - you need to recompile the kernel
+
+After converting your installation into a hybrid cpu/auth/kfs server
+it'll still seem pretty much the same as before. The difference is
+you can now serve other Plan 9 terminals and systems. See:
+
+ *	[Network configuration] - set up the database to serve up the
+	right DHCP info to other Plan 9 clients
+
+Remember to setup authentication properly and add users to the keyfs
+database. I think the syntax for auth(8) would be
+
+! auth/changeuser -p username
+
+this should generate the necessary keys for 'username'.
+
+On another machine you can then begin to experiment compiling the
+kernel for a terminal which uses the CPU, disk, or both from the
+server. Play around with the 'pcdisk' kernel config file instead of
+the 'pccpudisk' config file. My instructions are a bit brief but
+should give you some idea of what you're aiming for.
+
+Other important configuration files are /rc/bin/cpurc* for CPU
+servers, and /rc/bin/termrc* for setting up terminals. In the network
+database (/lib/ndb/local) of the server, you should setup the
+configuration for terminals with lines like
+
+! ip=192.168.0.3 sys=aquitania ether=abc12345def
+! 	cpu=your_cpu_server_ip_or_name
+! 	fs=you_file_server_ip_or_name
+! 	ether=001234fedabc
+! 	bootf=/386/9pxeload
+
+Sometimes it's hard to read web documentation without a
+web-browser... you can use the VNC client if you have a spare machine:
+
+! vncv machine_running_VNC_server
+
+DEVICE DRIVER HOWTO
+
+It would be nice if the Wiki had sections on how to write device
+drivers for vga, ether, and so on, describing the "theory of
+operations." Also, waserror()/poperror()/... stuff is really
+confusing. I'd like to see explanations on what they are for, when to
+use and how to use them.
+
+
+	*	[http://groups.google.com/groups?hl=en&lr=&ie=UTF-8&frame=right&th=f86d32adf40c6c11&seekm=4027e73e735755ac2e8dfcc603505f29%40plan9.bell-labs.com#link1]
+ *	The [notes on the Plan 9 kernel (3rd edition) |
+	http://plan9.escet.urjc.es/usr/nemo/9.ps.gz] describe the internals
+	of the kernel. Most things are still useful to understand the source
+	of the 4th edition.
+
+ *	[http://www.9atom.org/magic/man2html/9/error] Some kernel
+	facilities are described in Charles Forsyth's section 9 of the
+	manual.
+
+-- fgergo@gmail.com: using this page as sandbox (sorry!)
+[Happy_users'_thanks]

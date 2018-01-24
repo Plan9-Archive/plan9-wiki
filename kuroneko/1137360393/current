@@ -1,0 +1,25 @@
+kuroneko
+D1137360393
+Accollins (203.28.49.69)
+#Email: chris AT collins DOT id DOT au
+#
+#------------------------------------------------------ 
+#TODO:
+#
+# *	Write binpatch. Test bindiff/binpatch. streamline bindiff output.
+# *	Port to MIPS R4000/R5000 on SGI IP22 (Indy/ChallengeS/Indigo2)
+# *	Port to MIPS R3000 on MIPS RC3230 (if my RC3230 still works)
+# *	Port to MIPS R3000 on DECStation 5000/240
+# *	Port to PPC604/604e on OldWorld PCI PowerMac
+# *	Implement architecture/platform/binding independant driver
+#	framework
+# *	Port to Playstation 2 metal (?)
+#
+#IN PROGRESS:
+#
+# *	Port to Sparc32 on sun4m (SSLX/SS5/SS10/SS20)
+#
+#DONE:
+#
+# *	gotten plan9.xware.cx online (no public accounts yet)
+#

@@ -1,0 +1,23 @@
+DNSMASQ
+D1186659963
+Aglenda
+#[DNSMASQ | http://thekelleys.org.uk/dnsmasq/doc.html] is a small
+#combined DNS and DHCP server designed for NAT'ed networks.
+#
+#To configure it to send file and auth servers to plan9 machines, use
+#a command line similar to the following.
+#! 	dnsmasq -s some.domain \
+#! 		--dhcp-option-force vendor:plan9,128,fsip \
+#! 		--dhcp-option-force vendor:plan9,129,authip
+#
+#Here, fsip and authip are the IP addresses of your file- and
+#auth-servers. It would make sense to put these in /etc/hosts on the
+#computer running dnsmasq.
+#
+#It is necessary to 'force' the options since ip/ipconfig doesn't
+#actually request these.
+#
+#SEE ALSO
+#
+#ipconfig(8), [Network configuration]
+#

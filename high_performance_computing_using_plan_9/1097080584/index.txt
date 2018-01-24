@@ -1,0 +1,8 @@
+High Performance Computing Using Plan 9
+
+There are a couple of different efforts looking at using Plan 9 (and
+Plan 9 technolgoies) for HPC Applications.
+
+ *	PowerPC 64-bit port - [ericvh]
+ *	AMD64 port
+
